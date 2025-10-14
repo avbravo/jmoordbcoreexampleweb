@@ -26,8 +26,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = "/dashboard")
-public class DashboardController extends HttpServlet {
+@WebServlet(urlPatterns = "/dashboard_old2")
+public class DashboardController_old extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
