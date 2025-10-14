@@ -15,11 +15,11 @@ package com.jmoordb.core.ui;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class SidebarComponent implements WebComponent {
+public class SidebarComponentOld implements WebComponent {
     private final HttpServletRequest request;
     private final List<MenuLink> sidebarLinks;
 
-    public SidebarComponent(HttpServletRequest request, List<MenuLink> sidebarLinks) {
+    public SidebarComponentOld(HttpServletRequest request, List<MenuLink> sidebarLinks) {
         this.request = request;
         this.sidebarLinks = sidebarLinks;
     }

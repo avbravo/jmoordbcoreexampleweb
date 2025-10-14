@@ -4,10 +4,10 @@
  */
 package com.jmoordb.core.ui;
 
-public class FooterComponent implements WebComponent {
+public class FooterComponentOld implements WebComponent {
     private final String text;
 
-    public FooterComponent(String text) {
+    public FooterComponentOld(String text) {
         this.text = text;
     }
 

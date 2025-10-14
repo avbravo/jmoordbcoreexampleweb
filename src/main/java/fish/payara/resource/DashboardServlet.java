@@ -11,10 +11,10 @@ package fish.payara.resource;
 
 
 import com.jmoordb.core.ui.Alert;
-import com.jmoordb.core.ui.FooterComponent;
+import com.jmoordb.core.ui.FooterComponentOld;
 import com.jmoordb.core.ui.MenuLink;
-import com.jmoordb.core.ui.NavbarComponent;
-import com.jmoordb.core.ui.SidebarComponent;
+import com.jmoordb.core.ui.NavbarComponentOld;
+import com.jmoordb.core.ui.SidebarComponentOld;
 import com.jmoordb.core.ui.TableEditable;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.panel.CardGrid;
@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = "/dashboard")
+@WebServlet(urlPatterns = "/dashboard-old")
 public class DashboardServlet extends HttpServlet {
 
     @Override
@@ -59,13 +59,13 @@ public class DashboardServlet extends HttpServlet {
         // 3. **CREACIÓN DE COMPONENTES**
         
         // Navbar (Barra superior)
-        NavbarComponent navbar = new NavbarComponent(username, request, topMenu);
+        NavbarComponentOld navbar = new NavbarComponentOld(username, request, topMenu);
         
         // Sidebar (Panel izquierdo)
-        SidebarComponent sidebar = new SidebarComponent(request, sidebarLinks);
+        SidebarComponentOld sidebar = new SidebarComponentOld(request, sidebarLinks);
         
         // Footer (Pie de página)
-        FooterComponent footer = new FooterComponent("© 2024 Java Pure Framework. Todos los derechos reservados.");
+        FooterComponentOld footer = new FooterComponentOld("© 2024 Java Pure Framework. Todos los derechos reservados.");
         
         // Contenido Central (Usando CardGridComponent)
        // 3.1. **DATOS DE LA TABLA** 📊

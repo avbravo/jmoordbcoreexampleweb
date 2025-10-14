@@ -14,12 +14,12 @@ package com.jmoordb.core.ui;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class NavbarComponent implements WebComponent {
+public class NavbarComponentOld implements WebComponent {
     private final String username;
     private final HttpServletRequest request;
     private final List<MenuLink> topMenu;
 
-    public NavbarComponent(String username, HttpServletRequest request, List<MenuLink> topMenu) {
+    public NavbarComponentOld(String username, HttpServletRequest request, List<MenuLink> topMenu) {
         this.username = username;
         this.request = request;
         this.topMenu = topMenu;

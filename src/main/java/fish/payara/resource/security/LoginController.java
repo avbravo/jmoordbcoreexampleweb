@@ -130,6 +130,7 @@ public class LoginController extends HttpServlet {
             session.setAttribute("submittedRole", submittedRole);
             session.setMaxInactiveInterval(configurationProperties.getSessionMinutosExpiracion()); // Sesión de 30 minutos
 
+//            response.sendRedirect(request.getContextPath() + "/dashboard");
             response.sendRedirect(request.getContextPath() + "/dashboard");
         } else {
             // B. Credenciales Inválidas: Redirigir al GET con parámetro de error

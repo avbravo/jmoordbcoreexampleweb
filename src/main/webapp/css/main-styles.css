@@ -1,115 +1,234 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : 13 oct 2025, 20:46:09
-    Author     : avbravo
-*/
+/**
+ * =========================================================
+ * Estilos Generales y Variables de Tema
+ * =========================================================
+ */
 
-/* Variables base (White/Light Mode) */
+/* 1. Variables Globales (Light Mode por defecto) */
 :root {
-    --bg-main: #f8f9fa;       /* Light Gray */
-    --bg-secondary: #ffffff;  /* White */
-    --text-color: #212529;    /* Dark Text */
-    --border-color: #dee2e6;
-    --navbar-bg: #343a40;     /* Dark Navbar */
-    --navbar-text: #fff;
     --sidebar-width: 250px;
-    --sidebar-bg: #495057;    /* Gray Sidebar */
-    --sidebar-text: #adb5bd;
-    --sidebar-hover-bg: #6c757d;
+    --navbar-height: 56px;
+
+    /* Tema Claro */
+    --bg-main: #f8f9fa;        /* Fondo principal (gris claro) */
+    --bg-content: #ffffff;     /* Fondo de cards y paneles */
+    --bg-sidebar: #343a40;     /* Fondo del SideBar (oscuro) */
+    --text-color: #212529;     /* Color de texto principal */
+    --text-color-light: #f8f9fa; /* Color de texto claro */
+    --border-color: #dee2e6;
+    --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Dark Mode (Aplica cuando la clase 'dark-mode' está en el body) */
+/* 2. Variables Dark Mode (Aplicadas al body.dark-mode) */
 body.dark-mode {
-    --bg-main: #212529;
-    --bg-secondary: #343a40;
-    --text-color: #dee2e6;
-    --border-color: #495057;
-    --sidebar-bg: #2a2c3a;
-    --sidebar-text: #adb5bd;
-    --sidebar-hover-bg: #414352;
+    --bg-main: #121212;        /* Fondo principal (negro oscuro) */
+    --bg-content: #1e1e1e;     /* Fondo de cards y paneles */
+    --bg-sidebar: #1e1e1e;     /* Fondo del SideBar (aún más oscuro) */
+    --text-color: #f8f9fa;     /* Color de texto principal */
+    --text-color-light: #212529;
+    --border-color: #333333;
+    --shadow-color: rgba(255, 255, 255, 0.05);
 }
 
+/* Estilos de Body Base */
 body {
     background-color: var(--bg-main);
     color: var(--text-color);
-    margin: 0;
     min-height: 100vh;
-    display: flex; /* Para Sticky Footer */
-    flex-direction: column;
-    overflow-x: hidden;
-    padding-top: 60px; /* Espacio para navbar fixed */
+    display: flex;
+    flex-direction: column; /* Permite que el footer se pegue al fondo */
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Navbar */
-.navbar-custom {
-    background-color: var(--navbar-bg) !important;
-    color: var(--navbar-text) !important;
-}
-.navbar-custom .navbar-brand, .navbar-custom .navbar-text {
-    color: var(--navbar-text);
-}
-
-/* Sidebar & Content Layout */
-.sidebar {
-    width: var(--sidebar-width);
-    position: fixed;
-    top: 60px; /* Debajo del navbar */
-    left: calc(-1 * var(--sidebar-width)); /* Escondido */
-    height: calc(100% - 60px);
-    background-color: var(--sidebar-bg);
-    transition: left 0.3s ease;
-    z-index: 1029;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-    padding-top: 20px;
-}
-.sidebar.active { left: 0; }
-
-.main-content {
-    flex-grow: 1; 
-    padding: 20px;
-    margin-left: 0; 
-    transition: margin-left 0.3s ease;
-}
-.main-content.sidebar-open { margin-left: var(--sidebar-width); }
-
-/* Sidebar Links */
-.sidebar-nav .nav-link {
-    color: var(--sidebar-text);
-}
-.sidebar-nav .nav-link:hover, .sidebar-nav .nav-link.active {
-    background-color: var(--sidebar-hover-bg);
-    color: #fff;
-}
-
-/* Theme Toggle Button */
-.theme-toggle {
-    color: var(--navbar-text);
-    border: 1px solid var(--navbar-text);
-}
-
-/* Footer (Adaptado al tema) */
-.footer {
-    background-color: var(--bg-secondary) !important;
-    border-top: 1px solid var(--border-color);
-}
-.footer .text-muted {
-    color: var(--text-color) !important;
-}
-
-/* Componentes de Bootstrap en Dark Mode */
-body.dark-mode .card, body.dark-mode .form-control {
-    background-color: var(--bg-secondary);
+/* Adaptar elementos de Bootstrap al tema */
+.card {
+    background-color: var(--bg-content);
     color: var(--text-color);
     border-color: var(--border-color);
-}
-/* Media Query para responsividad móvil */
-@media (max-width: 768px) {
-    .sidebar { width: 200px; left: -200px; }
-    .main-content.sidebar-open { margin-left: 0; } /* Se superpone en móvil */
-    .sidebar-toggle.active { left: 5px; }
+    box-shadow: 0 0.5rem 1rem var(--shadow-color) !important;
+    transition: background-color 0.3s;
 }
 
+.card-header {
+    background-color: var(--bg-content) !important;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+/* Estilos para tablas */
+.table {
+    color: var(--text-color);
+}
+
+.table > :not(caption) > * > * {
+    background-color: transparent;
+    border-bottom-color: var(--border-color);
+}
+
+/**
+ * =========================================================
+ * 3. NavBar (Barra Superior Fija)
+ * =========================================================
+ */
+.navbar-custom {
+    background-color: #343a40 !important; /* Color fijo para contraste con Light/Dark mode */
+    height: var(--navbar-height);
+    box-shadow: 0 2px 4px var(--shadow-color);
+    z-index: 1050; /* Mayor que el sidebar */
+}
+
+.navbar-brand, .navbar-text, .navbar-custom a {
+    color: var(--text-color-light) !important;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-color-light) !important; /* Forzar color */
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
+    color: #ffffff;
+}
+
+/**
+ * =========================================================
+ * 4. SideBar (Menú Izquierdo)
+ * =========================================================
+ */
+.sidebar {
+    position: fixed;
+    top: var(--navbar-height); /* Empieza debajo de la NavBar fija */
+    bottom: 0;
+    left: calc(-1 * var(--sidebar-width)); /* Oculto inicialmente */
+    width: var(--sidebar-width);
+    z-index: 1040; /* Entre navbar y contenido principal */
+    background-color: var(--bg-sidebar); 
+    transition: all 0.3s ease;
+    overflow-y: auto;
+    padding-bottom: 20px;
+}
+
+.sidebar.active {
+    left: 0; /* Visible cuando la clase 'active' se añade por JS */
+}
+
+/* Estilos de navegación del SideBar */
+.sidebar-nav {
+    padding-left: 0;
+}
+
+.sidebar-header {
+    padding: 15px 20px 5px;
+    font-size: 0.75rem;
+    color: #adb5bd; /* Gris claro para el título de la sección */
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.sidebar-divider {
+    border-top: 1px solid #495057;
+    margin: 10px 0;
+}
+
+.sidebar .nav-link {
+    padding: 10px 20px;
+    color: #ced4da; /* Color de enlace inactivo */
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background-color: #495057; /* Fondo al pasar el mouse o activo */
+    color: #ffffff; /* Texto blanco en activo/hover */
+    border-left: 3px solid #007bff; /* Línea de color azul para activo */
+}
+
+
+/**
+ * =========================================================
+ * 5. Main Content (Panel Central)
+ * =========================================================
+ */
+.main-content {
+    padding-top: var(--navbar-height); 
+    margin-left: 0; /* Por defecto, no hay margen (para móvil) */
+    transition: margin-left 0.3s ease;
+    flex-grow: 1; 
+}
+
+/**
+ * =========================================================
+ * 6. Footer
+ * =========================================================
+ */
+.footer {
+    background-color: var(--bg-content) !important;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-color);
+    width: 100%;
+    margin-top: auto; /* Pega el footer al fondo del body flex */
+}
+
+.footer a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: var(--text-color);
+}
+
+
+/**
+ * =========================================================
+ * 7. Media Queries (Responsividad)
+ * =========================================================
+ */
+
+/* Desktop (>= 768px) */
+@media (min-width: 768px) {
+    /* Muestra el sidebar y empuja el contenido por defecto */
+    .sidebar.active {
+        left: 0; 
+    }
+    
+    /* El contenido principal se mueve a la derecha para dar espacio al sidebar */
+    .main-content.sidebar-open {
+        margin-left: var(--sidebar-width); 
+    }
+    
+    /* Oculta el botón hamburguesa en desktop si no quieres que colapse */
+    .sidebar-toggle-btn {
+        display: block; /* Mantenemos visible para permitir colapsar/expandir */
+    }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 767.98px) {
+    /* Oculta el sidebar por defecto en móvil */
+    .sidebar {
+        left: calc(-1 * var(--sidebar-width)); 
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra para simular superposición */
+    }
+    
+    /* Cuando se activa, se desliza sobre el contenido (superposición) */
+    .sidebar.active {
+        left: 0;
+    }
+    
+    /* El contenido principal siempre está sin margen en móvil */
+    .main-content, .main-content.sidebar-open {
+        margin-left: 0;
+    }
+    
+    /* Muestra el botón hamburguesa de la navbar */
+    .sidebar-toggle-btn {
+        display: block;
+    }
+    
+    /* Oculta elementos grandes de la navbar para ahorrar espacio */
+    .navbar-text {
+        display: none;
+    }
+}
