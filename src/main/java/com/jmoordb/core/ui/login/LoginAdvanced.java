@@ -19,17 +19,18 @@ public class LoginAdvanced implements WebComponent {
     private final String contextPath;
     private final WebComponent errorAlert; 
     private final Map<String, String> userRoles; // Clave: value (admin), Valor: texto a mostrar (Administrador)
-
+   private final String title;
     /**
      * Constructor para el componente de Login Avanzado.
      * @param contextPath Path base de la aplicación.
      * @param errorAlert Componente de alerta (puede ser null).
      * @param userRoles Mapa de roles (value HTML -> texto a mostrar).
      */
-    public LoginAdvanced(String contextPath, WebComponent errorAlert, Map<String, String> userRoles) {
+    public LoginAdvanced(String contextPath, WebComponent errorAlert, Map<String, String> userRoles,   String title) {
         this.contextPath = contextPath;
         this.errorAlert = errorAlert;
         this.userRoles = userRoles;
+        this.title = title;
     }
 
     @Override
@@ -100,7 +101,7 @@ public class LoginAdvanced implements WebComponent {
         
         Tag loginCard = new Tag("div").withClass("card shadow-lg")
             .withChild(new Tag("div").withClass("card-header bg-dark text-white text-center")
-                .withChild(new Tag("h2").withText("Advanced System Access")))
+                .withChild(new Tag("h2").withText(title)))
             .withChild(cardBody);
 
 

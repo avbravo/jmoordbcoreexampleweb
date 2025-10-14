@@ -14,6 +14,8 @@ package fish.payara.resource.security;
 import com.jmoordb.core.ui.Alert;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.login.LoginAdvanced;
+import fish.payara.config.ConfigurationProperties;
+import jakarta.inject.Inject;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +27,11 @@ import java.util.Map;
 @WebServlet(urlPatterns = "/login-advanced")
 public class LoginAdvancedServlet extends HttpServlet {
     
+        // <editor-fold defaultstate="collapsed" desc="Inject">
+    @Inject
+    ConfigurationProperties configurationProperties;
+
+// </editor-fold>
     // Roles disponibles (Value HTML -> Texto visible)
     private static final Map<String, String> ROLES_LIST = Map.of(
         "admin", "Administrador",
@@ -53,7 +60,7 @@ public class LoginAdvancedServlet extends HttpServlet {
         }
 
         // 1. Instanciar y renderizar el componente avanzado
-        LoginAdvanced login = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST);
+        LoginAdvanced login = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST, configurationProperties.getLoginTitle());
         
         response.getWriter().write(login.render());
     }

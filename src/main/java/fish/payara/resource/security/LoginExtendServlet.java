@@ -7,6 +7,8 @@ package fish.payara.resource.security;
 import com.jmoordb.core.ui.Alert;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.login.LoginExtended;
+import fish.payara.config.ConfigurationProperties;
+import jakarta.inject.Inject;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
@@ -14,6 +16,12 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/login-extended")
 public class LoginExtendServlet extends HttpServlet {
 
+    
+        // <editor-fold defaultstate="collapsed" desc="Inject">
+    @Inject
+    ConfigurationProperties configurationProperties;
+
+// </editor-fold>
     // Credenciales de prueba
     private static final String VALID_USERNAME = "admin";
     private static final String VALID_PASSWORD = "denver16";
@@ -45,7 +53,7 @@ public class LoginExtendServlet extends HttpServlet {
             }
         }
             // Instanciar y renderizar el componente de login
-            LoginExtended login= new LoginExtended(request.getContextPath(), errorComponent);
+            LoginExtended login= new LoginExtended(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle());
 
             response.getWriter().write(login.render());
         }

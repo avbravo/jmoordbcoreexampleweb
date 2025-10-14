@@ -18,10 +18,12 @@ public class LoginExtended implements WebComponent {
 
     private final String contextPath;
     private final WebComponent errorAlert; 
+    private final String title;
 
-    public LoginExtended(String contextPath, WebComponent errorAlert) {
+    public LoginExtended(String contextPath, WebComponent errorAlert, String title) {
         this.contextPath = contextPath;
         this.errorAlert = errorAlert;
+        this.title = title;
     }
 
     @Override
@@ -68,7 +70,7 @@ public class LoginExtended implements WebComponent {
         // 3. Estructura de Tarjeta de Bootstrap
         Tag loginCard = new Tag("div").withClass("card shadow-lg")
             .withChild(new Tag("div").withClass("card-header bg-dark text-white text-center")
-                .withChild(new Tag("h2").withText("System Access")))
+                .withChild(new Tag("h2").withText(title)))
             .withChild(cardBody);
 
 

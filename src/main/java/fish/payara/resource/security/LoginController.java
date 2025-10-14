@@ -27,9 +27,6 @@ import java.util.Map;
 public class LoginController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="Inject">
-//    @Inject
-//    @ConfigProperty(name = "login.style")
-//    private String loginStyle;
     @Inject
     ConfigurationProperties configurationProperties;
 
@@ -82,10 +79,10 @@ public class LoginController extends HttpServlet {
 
                 break;
             case "login-extend":
-                login = new LoginExtended(request.getContextPath(), errorComponent);
+                login = new LoginExtended(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle());
                 break;
             case "login-advanced":
-                login = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST);
+                login = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST,configurationProperties.getLoginTitle());
                 break;
 
         }
