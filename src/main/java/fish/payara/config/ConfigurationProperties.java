@@ -35,6 +35,9 @@ public class ConfigurationProperties {
     @Inject
     @ConfigProperty(name = "applicative.shortTitle")
     private String applicativeShortTitle;
+    @Inject
+    @ConfigProperty(name = "applicative.metaTitle")
+    private String applicativeMetaTitle;
     
     
  
@@ -45,6 +48,13 @@ public class ConfigurationProperties {
      */
     public ConfigurationProperties() {
     }
+
+    public String getApplicativeMetaTitle() {
+        return applicativeMetaTitle;
+    }
+    
+    
+    
     
     
     

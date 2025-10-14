@@ -75,16 +75,14 @@ public class LoginController extends HttpServlet {
         System.out.println("loginStyle " + configurationProperties.getLoginStyle());
         switch (configurationProperties.getLoginStyle()) {
             case "login-simple":
-                login = new LoginSimple(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle());
-
+                login = new LoginSimple(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle());
                 break;
             case "login-extend":
-                login = new LoginExtended(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle());
+                login = new LoginExtended(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle());
                 break;
             case "login-advanced":
-                login = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST,configurationProperties.getLoginTitle());
+                login = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle());
                 break;
-
         }
         // Instanciar y renderizar el componente de login
 
@@ -94,7 +92,6 @@ public class LoginController extends HttpServlet {
     // Maneja el envío del formulario de login (POST)
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("\t => doPost.....");
         // 1. Obtener los valores de las cajas de texto del formulario
         String submittedUsername = request.getParameter("username");
         String submittedPassword = request.getParameter("password");
@@ -102,8 +99,6 @@ public class LoginController extends HttpServlet {
         if (configurationProperties.getLoginStyle().equals("login-advanced")) {
             submittedRole = request.getParameter("userRole"); // <-- NUEVO
         }
-
-        System.out.println("\t username " + submittedUsername + " password " + submittedPassword + " role " + submittedRole);
 
         // 2. Lógica de autenticación: Compara los valores ingresados con los válidos
         boolean credentialsValid = Boolean.FALSE;
@@ -132,6 +127,7 @@ public class LoginController extends HttpServlet {
             // A. Credenciales Válidas: Crear sesión y redirigir al dashboard
             HttpSession session = request.getSession(true);
             session.setAttribute("usuario", submittedUsername);
+            session.setAttribute("submittedRole", submittedRole);
             session.setMaxInactiveInterval(configurationProperties.getSessionMinutosExpiracion()); // Sesión de 30 minutos
 
             response.sendRedirect(request.getContextPath() + "/dashboard");

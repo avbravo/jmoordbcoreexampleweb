@@ -19,11 +19,13 @@ public class LoginExtended implements WebComponent {
     private final String contextPath;
     private final WebComponent errorAlert; 
     private final String title;
+      private final String metaTitle;
 
-    public LoginExtended(String contextPath, WebComponent errorAlert, String title) {
+    public LoginExtended(String contextPath, WebComponent errorAlert, String title,String metaTitle) {
         this.contextPath = contextPath;
         this.errorAlert = errorAlert;
         this.title = title;
+        this.metaTitle = metaTitle;
     }
 
     @Override
@@ -87,7 +89,7 @@ public class LoginExtended implements WebComponent {
             .withChild(new Tag("head")
                 .withChild(new Tag("meta").withAttribute("charset", "UTF-8"))
                 .withChild(new Tag("meta").withAttribute("name", "viewport").withAttribute("content", "width=device-width, initial-scale=1"))
-                .withChild(new Tag("title").withText("Login - Java Pure Framework"))
+                .withChild(new Tag("title").withText(metaTitle))
                 .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"))
                 .withChild(new Tag("style").withText("body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f8f9fa; } .card { width: 100%; max-width: 400px; } body.dark-mode { background-color: #212529; }"))
             )

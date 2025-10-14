@@ -20,17 +20,19 @@ public class LoginAdvanced implements WebComponent {
     private final WebComponent errorAlert; 
     private final Map<String, String> userRoles; // Clave: value (admin), Valor: texto a mostrar (Administrador)
    private final String title;
+   private final String metaTitle;
     /**
      * Constructor para el componente de Login Avanzado.
      * @param contextPath Path base de la aplicación.
      * @param errorAlert Componente de alerta (puede ser null).
      * @param userRoles Mapa de roles (value HTML -> texto a mostrar).
      */
-    public LoginAdvanced(String contextPath, WebComponent errorAlert, Map<String, String> userRoles,   String title) {
+    public LoginAdvanced(String contextPath, WebComponent errorAlert, Map<String, String> userRoles,   String title,String metaTitle) {
         this.contextPath = contextPath;
         this.errorAlert = errorAlert;
         this.userRoles = userRoles;
         this.title = title;
+        this.metaTitle = metaTitle;
     }
 
     @Override
@@ -118,7 +120,7 @@ public class LoginAdvanced implements WebComponent {
             .withChild(new Tag("head")
                 .withChild(new Tag("meta").withAttribute("charset", "UTF-8"))
                 .withChild(new Tag("meta").withAttribute("name", "viewport").withAttribute("content", "width=device-width, initial-scale=1"))
-                .withChild(new Tag("title").withText("Login Advanced"))
+                .withChild(new Tag("title").withText(metaTitle))
                 .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"))
                 .withChild(new Tag("style").withText("body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f8f9fa; } .card { width: 100%; max-width: 400px; } body.dark-mode { background-color: #212529; }"))
             )
