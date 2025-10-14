@@ -1,0 +1,115 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 13 oct 2025, 20:46:09
+    Author     : avbravo
+*/
+
+/* Variables base (White/Light Mode) */
+:root {
+    --bg-main: #f8f9fa;       /* Light Gray */
+    --bg-secondary: #ffffff;  /* White */
+    --text-color: #212529;    /* Dark Text */
+    --border-color: #dee2e6;
+    --navbar-bg: #343a40;     /* Dark Navbar */
+    --navbar-text: #fff;
+    --sidebar-width: 250px;
+    --sidebar-bg: #495057;    /* Gray Sidebar */
+    --sidebar-text: #adb5bd;
+    --sidebar-hover-bg: #6c757d;
+}
+
+/* Dark Mode (Aplica cuando la clase 'dark-mode' está en el body) */
+body.dark-mode {
+    --bg-main: #212529;
+    --bg-secondary: #343a40;
+    --text-color: #dee2e6;
+    --border-color: #495057;
+    --sidebar-bg: #2a2c3a;
+    --sidebar-text: #adb5bd;
+    --sidebar-hover-bg: #414352;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-color);
+    margin: 0;
+    min-height: 100vh;
+    display: flex; /* Para Sticky Footer */
+    flex-direction: column;
+    overflow-x: hidden;
+    padding-top: 60px; /* Espacio para navbar fixed */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Navbar */
+.navbar-custom {
+    background-color: var(--navbar-bg) !important;
+    color: var(--navbar-text) !important;
+}
+.navbar-custom .navbar-brand, .navbar-custom .navbar-text {
+    color: var(--navbar-text);
+}
+
+/* Sidebar & Content Layout */
+.sidebar {
+    width: var(--sidebar-width);
+    position: fixed;
+    top: 60px; /* Debajo del navbar */
+    left: calc(-1 * var(--sidebar-width)); /* Escondido */
+    height: calc(100% - 60px);
+    background-color: var(--sidebar-bg);
+    transition: left 0.3s ease;
+    z-index: 1029;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+    padding-top: 20px;
+}
+.sidebar.active { left: 0; }
+
+.main-content {
+    flex-grow: 1; 
+    padding: 20px;
+    margin-left: 0; 
+    transition: margin-left 0.3s ease;
+}
+.main-content.sidebar-open { margin-left: var(--sidebar-width); }
+
+/* Sidebar Links */
+.sidebar-nav .nav-link {
+    color: var(--sidebar-text);
+}
+.sidebar-nav .nav-link:hover, .sidebar-nav .nav-link.active {
+    background-color: var(--sidebar-hover-bg);
+    color: #fff;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    color: var(--navbar-text);
+    border: 1px solid var(--navbar-text);
+}
+
+/* Footer (Adaptado al tema) */
+.footer {
+    background-color: var(--bg-secondary) !important;
+    border-top: 1px solid var(--border-color);
+}
+.footer .text-muted {
+    color: var(--text-color) !important;
+}
+
+/* Componentes de Bootstrap en Dark Mode */
+body.dark-mode .card, body.dark-mode .form-control {
+    background-color: var(--bg-secondary);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+/* Media Query para responsividad móvil */
+@media (max-width: 768px) {
+    .sidebar { width: 200px; left: -200px; }
+    .main-content.sidebar-open { margin-left: 0; } /* Se superpone en móvil */
+    .sidebar-toggle.active { left: 5px; }
+}
+
