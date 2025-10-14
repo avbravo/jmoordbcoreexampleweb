@@ -115,87 +115,7 @@ SideBar sideBar = new SideBar(request, sidebarSections);
             .withChild(new Tag("div").withClass("container-fluid pt-5 mt-3") // Añadido padding superior para navbar fija
                 .withChild(mainPanel));
         
-        
-        
-//        
-//        // Scripts de Lógica (Sidebar Toggle y Theme Toggle)
-//        String script = 
-//            // Script de Sidebar (Menú Hamburguesa) - Sin cambios
-//            "function toggleSidebar() {"
-//            + "  const sidebar = document.getElementById('mySidebar');"
-//            + "  const mainContent = document.querySelector('.main-content');"
-//            + "  sidebar.classList.toggle('active');"
-//            + "  if (window.innerWidth > 768) { mainContent.classList.toggle('sidebar-open'); }"
-//            + "}"
-//            // Script de Tema (Dark/White Mode) - Sin cambios en toggleTheme
-//            + "function toggleTheme() {"
-//            + "  const body = document.body;"
-//            + "  const icon = document.querySelector('.theme-toggle i');"
-//            + "  body.classList.toggle('dark-mode');"
-//            + "  const isDark = body.classList.contains('dark-mode');"
-//            + "  localStorage.setItem('theme', isDark ? 'dark' : 'light');"
-//            + "  icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';"
-//            + "}"
-//            // Cargar tema al inicio: Ahora carga Dark Mode si no hay preferencia guardada.
-//            + "(function loadTheme() {"
-//            + "  // Obtener la preferencia guardada, si no existe, usar 'dark' como defecto."
-//            + "  const savedTheme = localStorage.getItem('theme');"
-//            + "  const defaultTheme = 'dark';" // <-- NUEVO: Tema por defecto es 'dark'
-//            + "  const currentTheme = savedTheme || defaultTheme;" 
-//            + "  const icon = document.querySelector('.theme-toggle i');"
-//
-//            + "  if (currentTheme === 'dark') {"
-//            + "    document.body.classList.add('dark-mode');"
-//            + "    icon.className = 'fas fa-moon';" // Ícono de la luna para Dark Mode
-//            + "  } else {"
-//            + "    icon.className = 'fas fa-sun';"  // Ícono del sol para Light Mode
-//            + "  }"
-//            
-//            // Abrir sidebar en desktop por defecto (Lógica de sidebar se mantiene)
-//            + "  if (window.innerWidth > 768) { document.getElementById('mySidebar').classList.add('active'); }"
-//            + "})();";
-//            
-//        
-//// Scripts de Lógica (Sidebar Toggle y Theme Toggle)
-//String script = 
-//    // toggleSidebar y toggleTheme no necesitan ser modificados
-//    "function toggleSidebar() {"
-//    + "  const sidebar = document.getElementById('mySidebar');"
-//    + "  const mainContent = document.querySelector('.main-content');"
-//    + "  sidebar.classList.toggle('active');"
-//    + "  if (window.innerWidth >= 768) { mainContent.classList.toggle('sidebar-open'); }"
-//    + "}"
-//    + "function toggleTheme() {"
-//    + "  const body = document.body;"
-//    + "  const icon = document.querySelector('.theme-toggle i');" // Este selector es correcto
-//    + "  body.classList.toggle('dark-mode');"
-//    + "  const isDark = body.classList.contains('dark-mode');"
-//    + "  localStorage.setItem('theme', isDark ? 'dark' : 'light');"
-//    + "  icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';"
-//    + "}"
-//    
-//    // 💡 CORRECCIÓN CLAVE: Envolver la función loadTheme en DOMContentLoaded
-//    + "document.addEventListener('DOMContentLoaded', function() {"
-//    + "  // 1. Lógica de inicialización del Tema (loadTheme) "
-//    + "  const savedTheme = localStorage.getItem('theme');"
-//    + "  const defaultTheme = 'dark';" 
-//    + "  const currentTheme = savedTheme || defaultTheme;" 
-//    + "  const icon = document.querySelector('.theme-toggle i');" // ¡Ahora este elemento existe!
-//
-//    + "  if (icon) { " // Verificación de seguridad
-//    + "    if (currentTheme === 'dark') {"
-//    + "      document.body.classList.add('dark-mode');"
-//    + "      icon.className = 'fas fa-moon';" 
-//    + "    } else {"
-//    + "      icon.className = 'fas fa-sun';"  
-//    + "    }"
-//    + "  }"
-//    
-//    // 2. Inicializar Sidebar (mover aquí para garantizar que 'mySidebar' exista)
-//    + "  const sidebar = document.getElementById('mySidebar');"
-//    + "  if (window.innerWidth >= 768 && sidebar) { sidebar.classList.add('active'); }"
-//    
-//    + "});"; // Cierre del listener
+ 
 
 // Scripts de Lógica (toggleSidebar y toggleTheme)
         // **IMPORTANTE:** Definimos el contenido JS como texto sin los tags <script>
@@ -249,14 +169,7 @@ SideBar sideBar = new SideBar(request, sidebarSections);
             .withChild(scriptTag)
             .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
             
-//        Tag body = new Tag("body")
-//            .withChild(navBar)
-//            .withChild(sideBar)
-//            .withChild(mainContent)
-//            .withChild(footer)
-//            .withChild(new Tag("script").withText(script))
-//            .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
-//            
+
         // Renderizado Final del HTML
         String htmlCompleto = new Tag("html")
             .withChild(new Tag("head")
