@@ -36,7 +36,7 @@ public class LoginAdvanced implements WebComponent {
     public String render() {
         // 1. Contenido del Formulario
         Tag formContent = new Tag("form")
-            .withAttribute("action", contextPath + "/login-advanced") // Usamos un servlet distinto
+            .withAttribute("action", contextPath + "/login") // Usamos un servlet distinto
             .withAttribute("method", "POST");
             
         // 1.1. Campo SELECT/ROL

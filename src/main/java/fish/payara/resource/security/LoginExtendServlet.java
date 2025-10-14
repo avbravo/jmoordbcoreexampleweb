@@ -11,7 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/loginextended")
+@WebServlet(urlPatterns = "/login-extended")
 public class LoginExtendServlet extends HttpServlet {
 
     // Credenciales de prueba

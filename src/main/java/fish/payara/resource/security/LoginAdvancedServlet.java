@@ -34,7 +34,7 @@ public class LoginAdvancedServlet extends HttpServlet {
     
     // Credenciales de prueba (debe coincidir el rol)
     private static final String VALID_USERNAME = "admin";
-    private static final String VALID_PASSWORD = "denver";
+    private static final String VALID_PASSWORD = "denver16";
     private static final String VALID_ROLE = "supervisor"; // Rol esperado para el usuario tester
 
     @Override
@@ -53,9 +53,9 @@ public class LoginAdvancedServlet extends HttpServlet {
         }
 
         // 1. Instanciar y renderizar el componente avanzado
-        LoginAdvanced loginComponent = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST);
+        LoginAdvanced login = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST);
         
-        response.getWriter().write(loginComponent.render());
+        response.getWriter().write(login.render());
     }
 
     @Override

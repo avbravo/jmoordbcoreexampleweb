@@ -5,14 +5,14 @@
 package fish.payara.resource.security;
 
 import com.jmoordb.core.ui.Alert;
-import com.jmoordb.core.ui.login.Login;
+import com.jmoordb.core.ui.login.LoginSimple;
 import com.jmoordb.core.ui.WebComponent;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/login-simple")
+public class LoginSimpleServlet extends HttpServlet {
 
     // Credenciales de prueba
     private static final String VALID_USERNAME = "admin";
@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
             }
         }
             // Instanciar y renderizar el componente de login
-            Login login= new Login(request.getContextPath(), errorComponent);
+            LoginSimple login= new LoginSimple(request.getContextPath(), errorComponent,"System Access");
 
             response.getWriter().write(login.render());
         }
