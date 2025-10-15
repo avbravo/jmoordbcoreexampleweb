@@ -126,4 +126,45 @@ public class DashboardLayout {
                 .withChild(body)
                 .render();
     }
+    
+    
+    // Dentro de com.jmoordb.core.ui.layout.DashboardLayout.java (Método getModalActivationScript)
+
+private static String getModalActivationScript() {
+    // ⭐ CAMBIO CLAVE: Se añaden las funciones selectRow y handleUpdate
+    String script = 
+        // Lógica de Modal (la que ya tenías)
+        "document.addEventListener('DOMContentLoaded', function() {"
+        + "  const urlParams = new URLSearchParams(window.location.search);"
+        + "  const modal = document.getElementById('success-modal');"
+        + "  if (urlParams.get('status') === 'saved' && modal) {"
+        + "    modal.classList.remove('hidden');"
+        + "    history.replaceState(null, null, window.location.pathname + window.location.search.replace(/&?status=saved/, ''));"
+        + "  }"
+        + "  if (document.getElementById('success-modal-close')) {"
+        + "    document.getElementById('success-modal-close').addEventListener('click', function() { modal.classList.add('hidden'); });"
+        + "  }"
+        + "});"
+        
+        // ⭐ FUNCIÓN 1: Seleccionar Fila (Redirige al Controller con el ID)
+        + "function selectRow(id) {"
+        + "  window.location.href = '" + "/clientes" + "?id=' + id;" // Usamos /clientes ya que el contexto path se maneja en el servidor.
+        + "}"
+
+        // ⭐ FUNCIÓN 2: Actualizar (Cambia el ID oculto y envía el formulario)
+        + "function handleUpdate() {"
+        + "  const idInput = document.getElementById('id');"
+        + "  if (idInput && idInput.value !== '0') {"
+        + "    // El form ya tiene method=POST y action=clientes"
+        + "    document.getElementById('cliente-form').submit();"
+        + "  } else {"
+        + "    alert('Por favor, selecciona un registro de la tabla para actualizar.');"
+        + "  }"
+        + "}"
+        
+        // El resto del script
+        + ""; 
+        
+    return "<script>" + script + "</script>";
+}
 }
