@@ -105,42 +105,61 @@ public class NavBar implements WebComponent {
 
         Tag dropdownMenu = new Tag("ul").withClass(dropdownMenuClass);
 
-//        // Opción Bootstrap
-//        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
-//                .withAttribute("href", "javascript:void(0)")
-//                .withAttribute("onclick", "setCssFramework('bootstrap')")
-//                .withText("Bootstrap")));
-//
-//        // Opción Tailwind CSS
-//        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
-//                .withAttribute("href", "javascript:void(0)")
-//                .withAttribute("onclick", "setCssFramework('tailwind')")
-//                .withText("Tailwind CSS")));
+      
+    //         // Opción Bootstrap
+    //        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+    //                .withAttribute("href", "javascript:void(0)")
+    //                .withAttribute("onclick", "document.querySelector('.dropdown-toggle').click(); setCssFramework('bootstrap');") // ⭐ Prioriza el click de cierre
+    //                .withText("Bootstrap")));
+    //
+    //        // Opción Tailwind CSS
+    //        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+    //                .withAttribute("href", "javascript:void(0)")
+    //                .withAttribute("onclick", "document.querySelector('.dropdown-toggle').click(); setCssFramework('tailwind');") // ⭐ Prioriza el click de cierre
+    //                .withText("Tailwind CSS")));
+    //        
+        
+        
+        
+        
+// Opción Bootstrap
+dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+    .withAttribute("href", "javascript:void(0)")
+    // ⭐ SIMPLIFIED LOGIC: Call setCssFramework only. The reload handles the close.
+    .withAttribute("onclick", "setCssFramework('bootstrap');") 
+    .withText("Bootstrap")));
 
-//        
-//        // Opción Bootstrap
-//        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
-//                .withAttribute("href", "javascript:void(0)")
-//                .withAttribute("onclick", "setCssFramework('bootstrap'); document.querySelector('.dropdown-toggle').click();") // ⭐ AÑADIDA ACCIÓN PARA CERRAR
-//                .withText("Bootstrap")));
-//
-//        // Opción Tailwind CSS
-//        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
-//                .withAttribute("href", "javascript:void(0)")
-//                .withAttribute("onclick", "setCssFramework('tailwind'); document.querySelector('.dropdown-toggle').click();") // ⭐ AÑADIDA ACCIÓN PARA CERRAR
-//                .withText("Tailwind CSS")));
-//        
-         // Opción Bootstrap
-        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
-                .withAttribute("href", "javascript:void(0)")
-                .withAttribute("onclick", "document.querySelector('.dropdown-toggle').click(); setCssFramework('bootstrap');") // ⭐ Prioriza el click de cierre
-                .withText("Bootstrap")));
+// Opción Tailwind CSS
+dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+    .withAttribute("href", "javascript:void(0)")
+    // ⭐ SIMPLIFIED LOGIC: Call setCssFramework only. The reload handles the close.
+    .withAttribute("onclick", "setCssFramework('tailwind');") 
+    .withText("Tailwind CSS")));
 
-        // Opción Tailwind CSS
-        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
-                .withAttribute("href", "javascript:void(0)")
-                .withAttribute("onclick", "document.querySelector('.dropdown-toggle').click(); setCssFramework('tailwind');") // ⭐ Prioriza el click de cierre
-                .withText("Tailwind CSS")));
+
+
+
+//-----------------------------------
+
+
+//// 4. Selector de Framework CSS (Desplegable)
+//// ...
+//
+//// Opción Bootstrap
+//dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+//    .withAttribute("href", "javascript:void(0)")
+//    // ⭐ CORRECCIÓN: Usar setTimeout para garantizar que el cierre de Bootstrap ocurra ANTES de la recarga.
+//    .withAttribute("onclick", "document.querySelector('.dropdown-toggle').click(); setTimeout(() => setCssFramework('bootstrap'), 10);") 
+//    .withText("Bootstrap")));
+//
+//// Opción Tailwind CSS
+//dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+//    .withAttribute("href", "javascript:void(0)")
+//    // ⭐ CORRECCIÓN: Usar setTimeout para garantizar que el cierre de Bootstrap ocurra ANTES de la recarga.
+//    .withAttribute("onclick", "document.querySelector('.dropdown-toggle').click(); setTimeout(() => setCssFramework('tailwind'), 10);") 
+//    .withText("Tailwind CSS")));
+//// ...
+
 // ...
 
         
