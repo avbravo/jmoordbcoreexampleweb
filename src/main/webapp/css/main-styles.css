@@ -349,3 +349,44 @@ a:hover {
         display: none;
     }
 }
+
+
+/*
+ * Sección de Reglas Específicas para Modo Oscuro
+ * (Añade estas reglas dentro de tu bloque .dark-mode o en una sección de overrides)
+ */
+
+/* ================================================= */
+/* ⭐ CORRECCIÓN: Paginación Bootstrap en Dark Mode ⭐ */
+/* ================================================= */
+
+/* Fuerza el texto de todos los enlaces de paginación a blanco */
+.dark-mode .pagination .page-link {
+    /* Usar la variable de texto global */
+    color: var(--text-color) !important; 
+    /* Fondo y borde para Bootstrap, si no lo coge de Tailwind */
+    background-color: var(--bg-card) !important; 
+    border-color: var(--border-color) !important; 
+}
+
+/* Manejo del estado HOVER en Dark Mode */
+.dark-mode .pagination .page-item:not(.active) .page-link:hover {
+    background-color: var(--bg-hover) !important; /* Un gris más claro al pasar el mouse */
+    color: var(--text-color) !important;
+}
+
+/* Manejo del estado ACTIVO en Dark Mode */
+/* Asegura que el color de fondo y texto del botón activo sea visible */
+.dark-mode .pagination .page-item.active .page-link {
+    background-color: #0d6efd !important; /* Azul de Bootstrap o tu color principal */
+    color: #ffffff !important; 
+    border-color: #0d6efd !important;
+}
+
+/* Manejo del estado DESHABILITADO en Dark Mode */
+.dark-mode .pagination .page-item.disabled .page-link {
+    color: #495057 !important; /* Gris oscuro para deshabilitado */
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    cursor: not-allowed;
+}
