@@ -62,6 +62,8 @@ public class MenuService {
             // 2. Configuración
             boolean isSettingsActive = currentController.equals("SettingsController");
             adminLinks.add(new MenuLink("Configuración", "/admin/settings", isSettingsActive, "fas fa-cogs"));
+            
+            
 
             sections.put("MANAGEMENT", adminLinks);
         }
@@ -79,7 +81,13 @@ public class MenuService {
             // 2. Inventario
             boolean isInventoryActive = currentController.equals("InventoryReportsController");
             reportLinks.add(new MenuLink("Inventario", "/reports/inventory", isInventoryActive, "fas fa-warehouse"));
+            // 2. Clientes
+            
+            boolean isClinteActive = currentController.equals("ClienteController");
+            reportLinks.add(new MenuLink("Cliente", "/cliente/crud", isInventoryActive, "fas fa-solid fa-person"));
 
+            
+            
             sections.put("REPORTES", reportLinks);
         }
 
