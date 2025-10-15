@@ -32,8 +32,7 @@ public class NavBar implements WebComponent {
         String framework = (String) request.getSession().getAttribute("cssFramework");
         boolean isTailwind = "tailwind".equals(framework);
 
-        System.out.println("\t notificationCount.toString() "+notificationCount.toString());
-        
+       
         
         // Clases Condicionales
         String navClass = isTailwind ? "navbar-custom fixed top-0 left-0 right-0 z-50 flex items-center justify-between" : "navbar navbar-expand-lg navbar-custom fixed-top";
@@ -69,14 +68,32 @@ public class NavBar implements WebComponent {
         Tag rightContainer = new Tag("div").withClass(rightContainerClass);
 
         if (showNotification) {
+//            // 2. Icono de Notificaciones
+//            Tag notifIcon = new Tag("i").withClass("fas fa-bell");
+//            Tag badgeSpan = new Tag("span").withClass(badgeClass).withText(notificationCount.toString());
+//            Tag notifLink = new Tag("a").withClass(btnClass + " me-3 " + textLightClass + " relative")
+//                    .withAttribute("href", "#notifications")
+//                    .withChild(notifIcon)
+//                    .withChild(badgeSpan);
+//            rightContainer.withChild(notifLink);
+            
+            
             // 2. Icono de Notificaciones
             Tag notifIcon = new Tag("i").withClass("fas fa-bell");
             Tag badgeSpan = new Tag("span").withClass(badgeClass).withText(notificationCount.toString());
-            Tag notifLink = new Tag("a").withClass(btnClass + " me-3 " + textLightClass + " relative")
+            
+            // ⭐ 3. CAMBIO CLAVE: Añadir 'position-relative' al enlace
+            Tag notifLink = new Tag("a").withClass(btnClass + " me-3 " + textLightClass + " position-relative") 
                     .withAttribute("href", "#notifications")
                     .withChild(notifIcon)
                     .withChild(badgeSpan);
             rightContainer.withChild(notifLink);
+            
+            
+            
+            
+            
+            
         }
 
         // 3. Selector de Tema (Dark/White Mode)
