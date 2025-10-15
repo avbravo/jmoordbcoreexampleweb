@@ -84,7 +84,7 @@ public class MenuService {
             // 2. Clientes
             
             boolean isClinteActive = currentController.equals("ClienteController");
-            reportLinks.add(new MenuLink("Cliente", "/cliente/crud", isInventoryActive, "fas fa-solid fa-person"));
+            reportLinks.add(new MenuLink("Cliente", "/clientes", isInventoryActive, "fas fa-solid fa-person"));
 
             
             

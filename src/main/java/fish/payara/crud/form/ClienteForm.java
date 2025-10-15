@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fish.payara.crud.cliente;
+package fish.payara.crud.form;
 
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
@@ -24,7 +24,11 @@ public class ClienteForm implements WebComponent {
 
     @Override
     public String render() {
-        Tag form = new Tag("form").withAttribute("id", "cliente-form");
+//        Tag form = new Tag("form").withAttribute("id", "cliente-form");
+        Tag form = new Tag("form")
+                .withAttribute("id", "cliente-form")
+                .withAttribute("action", "clientes") // Apunta a @WebServlet("/clientes")
+                .withAttribute("method", "POST");
 
         // Clases de Tailwind/Bootstrap para divs de formulario adaptables
         String divClass = "mb-4";

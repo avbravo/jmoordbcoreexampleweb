@@ -2,16 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fish.payara.crud.cliente;
+package fish.payara.crud.form;
 
 /**
  *
  * @author avbravo
  */
-
-
-
-
 import fish.payara.model.Cliente;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ClienteService {
 
     private final List<Cliente> mockData = new ArrayList<>();
-    private final AtomicLong idGenerator = new AtomicLong(18L); 
+    private final AtomicLong idGenerator = new AtomicLong(18L);
 
     public ClienteService() {
         // Inicializar con datos de ejemplo
@@ -47,15 +43,26 @@ public class ClienteService {
     public List<Cliente> findAll() {
         return mockData;
     }
-    
+
     public long count() {
         return mockData.size();
     }
-    
+
     public Optional<Cliente> findById(Long id) {
         return mockData.stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst();
+    }
+
+    public Cliente save(Cliente cliente) {
+        if (cliente.getId() == 0L) {
+            Long newId = idGenerator.getAndIncrement();
+            cliente.setId(newId);
+            this.mockData.add(cliente);
+            return cliente;
+        } else {
+            return cliente;
+        }
     }
 
     // El resto de métodos CRUD (save, delete, findByNombre) se omiten por espacio, 

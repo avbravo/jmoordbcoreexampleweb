@@ -2,14 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fish.payara.crud.cliente;
+package fish.payara.crud.form;
 
 
 
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.table.PaginatedTable;
-import com.jmoordb.core.ui.buttons.CrudButtons;
 import fish.payara.controller.table.TableDataClienteConverter;
 import fish.payara.model.Cliente;
 import java.util.List;
@@ -39,7 +38,7 @@ public class ClientesPage implements WebComponent {
         Tag mainContainer = new Tag("div").withClass("container mx-auto p-4");
 
         // 1. Botones CRUD
-        mainContainer.withChild(new CrudButtons());
+        mainContainer.withChild(new CrudButtonsCliente());
         
         // 2. Formulario de Cliente
         Tag formPanel = new Tag("div").withClass("bg-white p-6 rounded-lg shadow-xl mb-6 dark:bg-gray-800");

@@ -14,8 +14,8 @@ import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
 import com.jmoordb.core.ui.menu.MenuLink; // Asumimos MenuLink
 import com.jmoordb.core.ui.panel.Panel;
-import fish.payara.crud.cliente.ClienteService;
-import fish.payara.crud.cliente.ClientesPage;
+import fish.payara.crud.form.ClienteService;
+import fish.payara.crud.form.ClientesPage;
 import fish.payara.dashboard.MenuService;
 import fish.payara.model.Cliente;
 import jakarta.servlet.annotation.WebServlet;
@@ -145,4 +145,52 @@ public class ClienteController extends HttpServlet {
     }
     
     // @Override protected void doPost(HttpServletRequest request, HttpServletResponse response) { ... }
+    
+    
+    
+    // Dentro de com.jmoordb.controller.ClienteController.java
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
+        // 1. Obtener los parámetros del formulario
+        String idParam = request.getParameter("id");
+        String nombre = request.getParameter("nombre");
+        String montoParam = request.getParameter("monto");
+        String longitudeParam = request.getParameter("longitude");
+        
+        // 2. Convertir y validar (Manejo básico de errores)
+        Long id = 0L;
+        Double monto = 0.0;
+        Double longitude = 0.0;
+        
+        try {
+            // El ID es 0 o null si es una nueva creación
+            if (idParam != null && !idParam.isEmpty()) {
+                id = Long.parseLong(idParam);
+            }
+            if (montoParam != null) monto = Double.parseDouble(montoParam);
+            if (longitudeParam != null) longitude = Double.parseDouble(longitudeParam);
+        } catch (NumberFormatException e) {
+            // Manejo de error: podrías redirigir a la misma página con un mensaje de error
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Datos numéricos inválidos.");
+            return;
+        }
+
+        // 3. Crear el objeto Cliente
+        Cliente cliente = new Cliente(id, nombre, monto, longitude);
+        
+        // 4. Determinar la operación (Crear o Actualizar)
+        if (id == 0L) {
+            // ⭐ OPERACIÓN DE CREACIÓN
+            clienteService.save(cliente);
+        } else {
+            // OPERACIÓN DE ACTUALIZACIÓN (Asumimos que el mismo botón manejará la actualización en el futuro)
+            // Por ahora, solo queremos que funcione la creación.
+            clienteService.save(cliente);
+        }
+
+        // 5. Redirigir al usuario a la página principal del CRUD (para ver la lista actualizada)
+        response.sendRedirect(request.getContextPath() + "/clientes");
+    }
 }

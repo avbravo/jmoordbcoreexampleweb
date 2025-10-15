@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.jmoordb.core.ui.buttons;
+package fish.payara.crud.form;
 
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
@@ -11,7 +11,7 @@ import com.jmoordb.core.ui.WebComponent;
  *
  * @author avbravo
  */
-public class CrudButtons implements WebComponent {
+public class CrudButtonsCliente implements WebComponent {
 
     @Override
     public String render() {
@@ -19,12 +19,18 @@ public class CrudButtons implements WebComponent {
 
         // --- Contenedor de Botones CRUD ---
         Tag buttonGroup = new Tag("div").withClass("flex gap-2");
-        
         // Crear
-        Tag createButton = new Tag("button").withAttribute("type", "button")
-                                            .withAttribute("onclick", "handleCreate()")
-                                            .withClass("btn btn-primary bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-700 dark:hover:bg-blue-600")
-                                            .withText("Crear");
+    // ⭐ CAMBIO 2: Cambiar la función 'onclick' a enviar el formulario
+    Tag createButton = new Tag("button").withAttribute("type", "button")
+                                        .withAttribute("onclick", "document.getElementById('cliente-form').submit()")
+                                        .withClass("btn btn-primary bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-700 dark:hover:bg-blue-600")
+                                        .withText("Crear");
+        
+//        // Crear
+//        Tag createButton = new Tag("button").withAttribute("type", "button")
+//                                            .withAttribute("onclick", "handleCreate()")
+//                                            .withClass("btn btn-primary bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-700 dark:hover:bg-blue-600")
+//                                            .withText("Crear");
         // Actualizar
         Tag updateButton = new Tag("button").withAttribute("type", "button")
                                             .withAttribute("onclick", "handleUpdate()")
