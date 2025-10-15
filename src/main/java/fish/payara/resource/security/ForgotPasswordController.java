@@ -10,7 +10,7 @@ package fish.payara.resource.security;
  */
 
 
-import com.jmoordb.core.ui.Alert;
+import com.jmoordb.core.ui.alert.Alert;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.login.PasswordRecovery;
 import jakarta.servlet.annotation.WebServlet;

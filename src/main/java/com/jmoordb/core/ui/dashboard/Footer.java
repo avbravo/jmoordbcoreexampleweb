@@ -14,38 +14,18 @@ import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 
 public class Footer implements WebComponent {
-    private final String copyrightText;
+     private final String text;
 
-    public Footer(String copyrightText) {
-        this.copyrightText = copyrightText;
+    public Footer(String text) {
+        this.text = text;
     }
 
-    @Override
+     @Override
     public String render() {
-        // Estructura principal: <footer> con clase para auto-margin (mt-auto)
-        Tag footer = new Tag("footer").withClass("footer mt-auto py-3 bg-light-custom");
-        
-        // Contenedor interno para centrar el contenido
-        Tag container = new Tag("div").withClass("container text-center");
-        
-        // 1. Texto de Copyright
-        container.withChild(new Tag("span").withClass("text-muted d-block")
-            .withText(copyrightText));
-            
-        // 2. Enlaces Legales o de Información
-        container.withChild(new Tag("div").withClass("small mt-1")
-            .withChild(new Tag("a").withAttribute("href", "/privacy").withText("Privacy Policy"))
-            .withText(" | ")
-            .withChild(new Tag("a").withAttribute("href", "/terms").withText("Terms of Use")));
-        
-        // 3. Iconos de Redes Sociales (Ejemplo con Font Awesome)
-        container.withChild(new Tag("div").withClass("social-icons mt-2")
-            .withChild(new Tag("a").withAttribute("href", "#").withClass("mx-2 text-secondary").withChild(new Tag("i").withClass("fab fa-twitter")))
-            .withChild(new Tag("a").withAttribute("href", "#").withClass("mx-2 text-secondary").withChild(new Tag("i").withClass("fab fa-facebook")))
-            .withChild(new Tag("a").withAttribute("href", "#").withClass("mx-2 text-secondary").withChild(new Tag("i").withClass("fab fa-linkedin")))
-        );
-
-        footer.withChild(container);
-        return footer.render();
+        return new Tag("footer").withClass("footer py-3 mt-4")
+            .withChild(new Tag("div").withClass("container-fluid")
+                .withChild(new Tag("p").withClass("text-center mb-0")
+                    .withText(text)))
+            .render();
     }
 }

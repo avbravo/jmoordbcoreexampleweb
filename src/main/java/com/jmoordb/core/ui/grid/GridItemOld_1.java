@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.jmoordb.core.ui.panel;
+package com.jmoordb.core.ui.grid;
 
 import com.jmoordb.core.ui.WebComponent;
 
@@ -12,7 +12,7 @@ import com.jmoordb.core.ui.WebComponent;
  *
  * @author avbravo
  */
-public class GridItem {
+public class GridItemOld_1 {
 
     private final WebComponent component;
     private final int colSm; // Ancho en pantallas pequeñas (Small, por defecto)
@@ -28,7 +28,7 @@ public class GridItem {
      * @param colMd El ancho de la columna en Tablets (col-md-*).
      * @param colLg El ancho de la columna en Desktops (col-lg-*).
      */
-    public GridItem(WebComponent component, int colSm, int colMd, int colLg) {
+    public GridItemOld_1(WebComponent component, int colSm, int colMd, int colLg) {
         // Validación simple para asegurar que los valores son válidos
         if (colSm < 1 || colSm > 12 || colMd < 1 || colMd > 12 || colLg < 1 || colLg > 12) {
             throw new IllegalArgumentException("Todos los anchos de columna deben estar entre 1 y 12.");

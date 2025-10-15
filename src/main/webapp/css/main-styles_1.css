@@ -163,24 +163,7 @@ a:hover {
     box-shadow: 0 2px 4px var(--shadow-color);
     z-index: 1050; /* Máximo z-index para estar arriba de todo */
 }
-/* ⭐ NUEVA REGLA: Fondo y borde para el menú desplegable (dropdown) */
-.navbar-custom .dropdown-menu {
-    background-color: var(--bg-content) !important; /* Usa el fondo de cards, que es oscuro */
-    border: 1px solid var(--border-color);
-    box-shadow: 0 0.5rem 1rem var(--shadow-color) !important;
-}
 
-/* ⭐ NUEVA REGLA: Color de texto para los ítems del menú desplegable */
-.navbar-custom .dropdown-item {
-    color: var(--text-color) !important; /* Usa el color de texto del tema (gris claro) */
-    background-color: transparent !important;
-}
-
-.navbar-custom .dropdown-item:hover, 
-.navbar-custom .dropdown-item:focus {
-    background-color: #495057 !important; /* Un gris más oscuro para hover */
-    color: #ffffff !important;
-}
 .navbar-brand, .navbar-text, .navbar-custom a, .theme-toggle {
     color: #f8f9fa !important; /* Texto claro forzado para visibilidad en barra oscura */
     text-decoration: none;

@@ -12,7 +12,7 @@ package com.jmoordb.core.ui.dashboard;
 
 
 
-import com.jmoordb.core.ui.MenuLink;
+import com.jmoordb.core.ui.menu.MenuLink;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import jakarta.servlet.http.HttpServletRequest;
