@@ -8,7 +8,6 @@ import com.jmoordb.core.ui.alert.Alert;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.login.LoginSimple;
 import com.jmoordb.core.ui.login.LoginAdvanced;
-import com.jmoordb.core.ui.login.LoginExtended;
 import fish.payara.config.ConfigurationProperties;
 import jakarta.inject.Inject;
 import jakarta.servlet.annotation.WebServlet;
@@ -77,9 +76,7 @@ public class LoginController extends HttpServlet {
             case "login-simple":
                 login = new LoginSimple(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle());
                 break;
-            case "login-extend":
-                login = new LoginExtended(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle());
-                break;
+         
             case "login-advanced":
                 login = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle());
                 break;

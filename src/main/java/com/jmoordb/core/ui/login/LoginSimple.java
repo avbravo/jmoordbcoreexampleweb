@@ -69,11 +69,40 @@ public class LoginSimple implements WebComponent {
                 .withChild(cardBody); // <-- Añadimos el cardBody ensamblado
 
         // 4. Ensamblaje de la página completa
-        Tag body = new Tag("body").withChild(loginCard)
-                .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
+//        Tag body = new Tag("body").withChild(loginCard)
+//                .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
 
         
-         // 5. Estilos y Ensamblaje HTML
+//           // 4. Ensamblaje de la página completa
+//        // ⭐ AÑADIR CLASE 'dark-mode' AL BODY
+//        Tag body = new Tag("body").withClass("dark-mode") 
+//                .withChild(new Tag("div").withClass("container-login") // Contenedor para centrar
+//                    .withChild(loginCard))
+//                .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
+//
+//        
+//        
+//         // 5. Estilos y Ensamblaje HTML
+//        String customStyles = ""
+//                + ":root { --bg-main: #121212; --bg-content: #1e1e1e; --text-color: #F0F4F8; }" // Definir variables del tema oscuro
+//                + "body.dark-mode { background-color: var(--bg-main); color: var(--text-color); }"
+//                + "body { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }"
+//                + ".container-login { width: 100%; max-width: 400px; }"
+//                + ".card { border: 1px solid rgba(255, 255, 255, 0.1); }"
+//                + ".card-body.bg-content { background-color: var(--bg-content) !important; color: var(--text-color); }"
+//                + ".form-label { color: var(--text-color); }" // Asegurar que el label sea visible
+//                + "a.btn-link { color: #adb5bd !important; }" // Ajustar enlace para tema oscuro
+//                + ".form-control { background-color: #343a40; color: var(--text-color); border-color: #495057; }"
+//                + ".form-control:focus { background-color: #343a40; color: var(--text-color); border-color: #6c757d; box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25); }";
+//        
+         // 4. Ensamblaje de la página completa
+        // ⭐ AÑADIR CLASE 'dark-mode' AL BODY
+        Tag body = new Tag("body").withClass("dark-mode") 
+                .withChild(new Tag("div").withClass("container-login") // Contenedor para centrar
+                    .withChild(loginCard))
+                .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
+
+        // 5. Estilos y Ensamblaje HTML
         String customStyles = ""
                 + ":root { --bg-main: #121212; --bg-content: #1e1e1e; --text-color: #F0F4F8; }" // Definir variables del tema oscuro
                 + "body.dark-mode { background-color: var(--bg-main); color: var(--text-color); }"
@@ -81,12 +110,14 @@ public class LoginSimple implements WebComponent {
                 + ".container-login { width: 100%; max-width: 400px; }"
                 + ".card { border: 1px solid rgba(255, 255, 255, 0.1); }"
                 + ".card-body.bg-content { background-color: var(--bg-content) !important; color: var(--text-color); }"
-                + ".form-label { color: var(--text-color); }" // Asegurar que el label sea visible
+                
+                // ⭐ CAMBIO CLAVE: Colocar el color de los labels en negro (#000000)
+                + "body.dark-mode .form-label { color: #000000 !important; }" 
+                
                 + "a.btn-link { color: #adb5bd !important; }" // Ajustar enlace para tema oscuro
                 + ".form-control { background-color: #343a40; color: var(--text-color); border-color: #495057; }"
                 + ".form-control:focus { background-color: #343a40; color: var(--text-color); border-color: #6c757d; box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25); }";
-        
-        
+
         
         Tag html = new Tag("html")
                 .withChild(new Tag("head")
