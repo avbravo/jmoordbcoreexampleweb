@@ -98,18 +98,45 @@ public class NavBar implements WebComponent {
 
         Tag dropdownMenu = new Tag("ul").withClass(dropdownMenuClass);
 
-        // Opción Bootstrap
+//        // Opción Bootstrap
+//        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+//                .withAttribute("href", "javascript:void(0)")
+//                .withAttribute("onclick", "setCssFramework('bootstrap')")
+//                .withText("Bootstrap")));
+//
+//        // Opción Tailwind CSS
+//        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+//                .withAttribute("href", "javascript:void(0)")
+//                .withAttribute("onclick", "setCssFramework('tailwind')")
+//                .withText("Tailwind CSS")));
+
+//        
+//        // Opción Bootstrap
+//        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+//                .withAttribute("href", "javascript:void(0)")
+//                .withAttribute("onclick", "setCssFramework('bootstrap'); document.querySelector('.dropdown-toggle').click();") // ⭐ AÑADIDA ACCIÓN PARA CERRAR
+//                .withText("Bootstrap")));
+//
+//        // Opción Tailwind CSS
+//        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+//                .withAttribute("href", "javascript:void(0)")
+//                .withAttribute("onclick", "setCssFramework('tailwind'); document.querySelector('.dropdown-toggle').click();") // ⭐ AÑADIDA ACCIÓN PARA CERRAR
+//                .withText("Tailwind CSS")));
+//        
+         // Opción Bootstrap
         dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
                 .withAttribute("href", "javascript:void(0)")
-                .withAttribute("onclick", "setCssFramework('bootstrap')")
+                .withAttribute("onclick", "document.querySelector('.dropdown-toggle').click(); setCssFramework('bootstrap');") // ⭐ Prioriza el click de cierre
                 .withText("Bootstrap")));
 
         // Opción Tailwind CSS
         dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
                 .withAttribute("href", "javascript:void(0)")
-                .withAttribute("onclick", "setCssFramework('tailwind')")
+                .withAttribute("onclick", "document.querySelector('.dropdown-toggle').click(); setCssFramework('tailwind');") // ⭐ Prioriza el click de cierre
                 .withText("Tailwind CSS")));
+// ...
 
+        
         frameworkDropdown.withChild(dropdownButton).withChild(dropdownMenu);
         rightContainer.withChild(frameworkDropdown);
 
