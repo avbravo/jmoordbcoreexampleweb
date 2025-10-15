@@ -18,12 +18,12 @@ import com.jmoordb.core.ui.WebComponent;
 import java.util.List;
 import java.util.Map;
 
-public class TableEditable implements WebComponent { 
+public class TableBasic implements WebComponent { 
 
     private final List<String> headers;
     private final Map<String, List<String>> data;
 
-    public TableEditable(List<String> headers, Map<String, List<String>> data) {
+    public TableBasic(List<String> headers, Map<String, List<String>> data) {
         this.headers = headers;
         this.data = data;
     }

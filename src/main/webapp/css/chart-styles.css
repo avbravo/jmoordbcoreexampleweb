@@ -1,0 +1,21 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 15 oct 2025, 10:38:13
+    Author     : avbravo
+*/
+
+.chart-container {
+    position: relative;
+    /* Define un tamaño para asegurar que Chart.js pueda dibujar */
+    height: 400px; 
+    width: 100%;
+    padding: 15px; /* Pequeño padding dentro del panel */
+}
+
+/* Ajuste para modo oscuro si lo necesitas */
+.dark-mode .chart-container canvas {
+    background-color: transparent !important;
+}
