@@ -33,59 +33,45 @@
     --bg-sidebar: #212529;     /* Fondo del SideBar */
     --text-color: #e9ecef;     /* Texto muy claro (Alto contraste) */
     --text-link-secondary: #adb5bd; /* Gris medio para enlaces y cabeceras */
-    
-      /* ⭐ NUEVO TEXTO PRINCIPAL: Gris muy luminoso, excelente contraste */
-    --text-color: #F0F4F8;     
-    
-    /* ⭐ NUEVO TEXTO SECUNDARIO: Gris claro para enlaces y cabeceras */
-    --text-link-secondary: #adb5bd; 
-    
-    
     --border-color: #333333;    /* Bordes sutiles */
     --shadow-color: rgba(255, 255, 255, 0.05); /* Sombra suave para Dark Mode */
     --active-color: #007bff;   /* Azul para indicadores de activo */
 }
-#-- desde
 
+/* 2. Variables de Tema (Aplicación de Modo Claro) 
+body.dark-mode {
+     Si el modo oscuro está activo, las variables base se mantienen 
+       --bg-main: #121212;         Fondo principal (Negro muy oscuro) 
+    --bg-content: #1e1e1e;      Fondo de cards y paneles 
+    
+     ⭐ TEXTO PRINCIPAL: Casi blanco para alto contraste 
+    --text-color: #e9ecef;     
+    --text-color: #1e1e1e;     
+    
+    
+     ⭐ TEXTO SECUNDARIO (Enlaces, títulos de sidebar): Gris claro 
+    --text-link-secondary: #adb5bd; 
+    
+    --border-color: #333333;    
+     ... (otras variables) ... 
+}*/
 
-/* ⭐ REGLAS CRÍTICAS PARA FORZAR EL COLOR DE TEXTO EN BOOTSTRAP DARK MODE ⭐ */
-
-/* Fuerza el color de texto principal en el BODY y contenedores de texto genéricos */
-body.dark-mode,
-body.dark-mode p,
-body.dark-mode span,
-body.dark-mode label,
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3,
-body.dark-mode h4,
-body.dark-mode h5,
-body.dark-mode h6 {
-    color: var(--text-color) !important; /* Fuerza el gris claro sobre las clases de texto de BS */
-}
-
-/* Asegura que el texto en tablas use el color claro */
-.table, .table th, .table td {
-    color: var(--text-color) !important;
-}
-
-/* Estilos de Cards y Paneles */
-.card {
-    background-color: var(--bg-content);
-    color: var(--text-color); /* Se mantiene, pero se refuerza con la regla anterior */
-    /* ... (resto) ... */
-}
-
-/* Ajuste de links */
-a {
-    color: var(--text-link-secondary);
-    text-decoration: none;
-}
-
-a:hover {
-    color: var(--text-color);
-}
-#-- hasta
+/* 2. Variables Dark Mode (Ajustadas para ALTO CONTRASTE) */
+/*body.dark-mode {
+    --bg-main: #121212;        
+    --bg-content: #1e1e1e;     
+    --bg-sidebar: #212529;     
+    
+     ⭐ CAMBIO PRINCIPAL: Blanco puro para el texto principal 
+    --text-color: #FFFFFF;     
+    
+     ⭐ CAMBIO SECUNDARIO: Gris muy claro (casi blanco) para enlaces y cabeceras secundarias 
+    --text-link-secondary: #f0f0f0; 
+    
+    --border-color: #333333;    
+    --shadow-color: rgba(255, 255, 255, 0.05); 
+    --active-color: #007bff;
+}*/
 
 /* 2. Variables Dark Mode (Contraste con Gris Claro) */
 body.dark-mode {

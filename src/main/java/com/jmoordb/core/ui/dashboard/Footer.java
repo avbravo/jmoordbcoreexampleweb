@@ -10,21 +10,33 @@ package com.jmoordb.core.ui.dashboard;
  */
 
 
+
+
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class Footer implements WebComponent {
-     private final String text;
+    private final String text;
+    private final HttpServletRequest request;
 
-    public Footer(String text) {
+    public Footer(String text, HttpServletRequest request) {
         this.text = text;
+        this.request = request;
     }
 
-     @Override
+    @Override
     public String render() {
+        String framework = (String) request.getSession().getAttribute("cssFramework");
+        boolean isTailwind = "tailwind".equals(framework);
+
+        // Clases Condicionales
+        String containerClass = isTailwind ? "w-full mx-auto px-4" : "container-fluid";
+        String pClass = isTailwind ? "text-center mb-0 text-sm" : "text-center mb-0";
+
         return new Tag("footer").withClass("footer py-3 mt-4")
-            .withChild(new Tag("div").withClass("container-fluid")
-                .withChild(new Tag("p").withClass("text-center mb-0")
+            .withChild(new Tag("div").withClass(containerClass)
+                .withChild(new Tag("p").withClass(pClass)
                     .withText(text)))
             .render();
     }

@@ -10,13 +10,13 @@ package fish.payara.resource;
  */
 
 
-
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/set-framework")
-public class SetFrameworkServlet extends HttpServlet {
+// ⭐ MAPEO CORRECTO: La URL debe coincidir con la que usa el JavaScript
+@WebServlet(urlPatterns = "/set-framework1")
+public class SetFrameworkServlet1 extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

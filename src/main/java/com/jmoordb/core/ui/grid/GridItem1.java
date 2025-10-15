@@ -6,19 +6,18 @@ package com.jmoordb.core.ui.grid;
 
 
 
-
-
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest; // Necesario
+// ... (otros imports)
 
-public class GridItem implements WebComponent {
+public class GridItem1 implements WebComponent {
     private final String title;
     private final String content;
     private final String iconClass;
-    private final HttpServletRequest request;
+    private final HttpServletRequest request; // Añadir la solicitud
 
-    public GridItem(String title, String content, String iconClass, HttpServletRequest request) {
+    public GridItem1(String title, String content, String iconClass, HttpServletRequest request) {
         this.title = title;
         this.content = content;
         this.iconClass = iconClass;
@@ -33,16 +32,16 @@ public class GridItem implements WebComponent {
         if (isTailwind) {
             // ⭐ ESTRUCTURA CON CLASES DE TAILWIND
             
-            // bg-content (de main-styles.css) | flex items-center (d-flex align-items-center) | p-4 rounded-lg shadow-md
-            Tag card = new Tag("div").withClass("card flex items-center p-4 rounded-lg shadow-md"); 
+            // Flexbox (d-flex -> flex), Shadow (shadow-sm -> shadow-md), BG/Paddings (bg-white -> bg-content / p-4)
+            Tag card = new Tag("div").withClass("card p-4 rounded-lg shadow-md bg-content flex items-center justify-between text-text-color"); 
             
             // Icono
-            Tag iconContainer = new Tag("div").withClass("flex-shrink-0 p-3 mr-4 rounded-full bg-blue-600 text-white");
+            Tag iconContainer = new Tag("div").withClass("flex-shrink-0 p-3 mr-4 rounded-full bg-blue-500 text-white");
             iconContainer.withChild(new Tag("i").withClass(iconClass + " text-xl"));
             
             // Contenido
             Tag textContainer = new Tag("div").withClass("flex-grow");
-            textContainer.withChild(new Tag("h2").withClass("text-xl font-semibold mb-0").withText(title));
+            textContainer.withChild(new Tag("h2").withClass("text-xl font-bold mb-0").withText(title));
             textContainer.withChild(new Tag("p").withClass("text-gray-400 text-sm").withText(content));
             
             card.withChild(iconContainer).withChild(textContainer);

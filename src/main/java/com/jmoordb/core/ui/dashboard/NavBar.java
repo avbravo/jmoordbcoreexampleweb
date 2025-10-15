@@ -8,8 +8,6 @@ package com.jmoordb.core.ui.dashboard;
  *
  * @author avbravo
  */
-
-
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,10 +16,10 @@ public class NavBar implements WebComponent {
 
     private final String username;
     private final HttpServletRequest request;
-    private final Integer notificationCount;
+    private final Integer notificationCount; 
     private final Boolean showNotification;
 
-    public NavBar(String username, HttpServletRequest request, Boolean showNotification,Integer notificationCount ) {
+    public NavBar(String username, HttpServletRequest request, Boolean showNotification, Integer notificationCount) {
         this.username = username;
         this.request = request;
         this.notificationCount = notificationCount;
@@ -31,79 +29,104 @@ public class NavBar implements WebComponent {
     @Override
     public String render() {
         String contextPath = request.getContextPath();
-        String currentFramework = (String) request.getSession().getAttribute("cssFramework");
+        String framework = (String) request.getSession().getAttribute("cssFramework");
+        boolean isTailwind = "tailwind".equals(framework);
+
+        System.out.println("\t notificationCount.toString() "+notificationCount.toString());
         
+        
+        // Clases Condicionales
+        String navClass = isTailwind ? "navbar-custom fixed top-0 left-0 right-0 z-50 flex items-center justify-between" : "navbar navbar-expand-lg navbar-custom fixed-top";
+        String containerClass = isTailwind ? "w-full mx-auto px-4 flex items-center justify-between" : "container-fluid";
+        String rightContainerClass = isTailwind ? "flex items-center space-x-3 ml-auto mr-3" : "d-flex align-items-center ms-auto me-3";
+        String btnClass = isTailwind ? "p-2 text-sm rounded-md" : "btn btn-sm";
+        String dropdownBtnClass = isTailwind ? "bg-transparent hover:bg-gray-700 p-2 text-sm rounded-md text-white dropdown-toggle" : "btn btn-sm dropdown-toggle text-light";
+        String textLightClass = isTailwind ? "text-white" : "text-light";
+//        String badgeClass = isTailwind ? "absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5" : "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger";
+  // ⭐ CORRECCIÓN: Se añadió 'text-white' para Bootstrap para asegurar la visibilidad del número.
+        String badgeClass = isTailwind
+                ? "absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5"
+                : "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-white";
+
         // Estructura principal: <nav>
-        Tag navBar = new Tag("nav").withClass("navbar navbar-expand-lg navbar-custom fixed-top");
-        Tag containerFluid = new Tag("div").withClass("container-fluid");
+        Tag navBar = new Tag("nav").withClass(navClass);
+        Tag containerFluid = new Tag("div").withClass(containerClass);
 
         // 1. Botón Hamburguesa (Sidebar Toggle)
-        Tag sidebarToggle = new Tag("button").withClass("btn btn-sm me-3 sidebar-toggle-btn")
-            .withAttribute("onclick", "toggleSidebar()")
-            .withChild(new Tag("i").withClass("fas fa-bars"));
-        
+        Tag sidebarToggle = new Tag("button").withClass(btnClass + " me-3 sidebar-toggle-btn " + textLightClass)
+                .withAttribute("onclick", "toggleSidebar()")
+                .withChild(new Tag("i").withClass("fas fa-bars"));
+
         containerFluid.withChild(sidebarToggle);
-        
+
         // Marca/Logo
-        containerFluid.withChild(new Tag("a").withClass("navbar-brand")
-            .withAttribute("href", contextPath + "/dashboard")
-            .withText("Dashboard Central"));
-            
+        String brandClass = isTailwind ? "text-xl font-bold hover:text-white" : "navbar-brand";
+        containerFluid.withChild(new Tag("a").withClass(brandClass)
+                .withAttribute("href", contextPath + "/dashboard")
+                .withText("Dashboard Central"));
+
         // Contenedor de la derecha
-        Tag rightContainer = new Tag("div").withClass("d-flex align-items-center ms-auto me-3");
-        
-        // 2. Icono de Notificaciones
-        if(showNotification){
-             rightContainer.withChild(new Tag("a").withClass("btn btn-sm me-3 text-white position-relative")
-            .withAttribute("href", "#notifications")
-            .withChild(new Tag("i").withClass("fas fa-bell"))
-            .withChild(new Tag("span").withClass("position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger").withText(notificationCount.toString()))); 
-        
+        Tag rightContainer = new Tag("div").withClass(rightContainerClass);
+
+        if (showNotification) {
+            // 2. Icono de Notificaciones
+            Tag notifIcon = new Tag("i").withClass("fas fa-bell");
+            Tag badgeSpan = new Tag("span").withClass(badgeClass).withText(notificationCount.toString());
+            Tag notifLink = new Tag("a").withClass(btnClass + " me-3 " + textLightClass + " relative")
+                    .withAttribute("href", "#notifications")
+                    .withChild(notifIcon)
+                    .withChild(badgeSpan);
+            rightContainer.withChild(notifLink);
         }
-       
+
         // 3. Selector de Tema (Dark/White Mode)
-        rightContainer.withChild(new Tag("button").withClass("btn btn-sm me-3 theme-toggle text-light")
-            .withAttribute("onclick", "toggleTheme()")
-            .withChild(new Tag("i").withClass("fas fa-sun"))); // El ícono se actualiza por JS
-        
-        // ⭐ 4. Selector de Framework CSS (Desplegable)
+        rightContainer.withChild(new Tag("button").withClass(btnClass + " me-3 theme-toggle " + textLightClass)
+                .withAttribute("onclick", "toggleTheme()")
+                .withChild(new Tag("i").withClass("fas fa-sun")));
+
+          // ⭐ 4. Selector de Framework CSS (Desplegable)
+        String dropdownMenuClass = isTailwind ? "absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-content z-50" : "dropdown-menu dropdown-menu-end";
+        String dropdownItemClass = isTailwind ? "block px-4 py-2 text-sm text-text-color hover:bg-gray-700" : "dropdown-item";
+
         Tag frameworkDropdown = new Tag("div").withClass("dropdown me-3");
 
-        Tag dropdownButton = new Tag("button").withClass("btn btn-sm dropdown-toggle text-light")
-            .withAttribute("type", "button")
-            .withAttribute("data-bs-toggle", "dropdown") 
-            .withAttribute("aria-expanded", "false")
-            .withText(currentFramework.toUpperCase());
+        Tag dropdownButton = new Tag("button").withClass(dropdownBtnClass)
+                .withAttribute("type", "button")
+                .withAttribute("data-bs-toggle", "dropdown")
+                .withAttribute("aria-expanded", "false")
+                .withText(framework.toUpperCase());
 
-        Tag dropdownMenu = new Tag("ul").withClass("dropdown-menu dropdown-menu-end");
+        Tag dropdownMenu = new Tag("ul").withClass(dropdownMenuClass);
 
         // Opción Bootstrap
-        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass("dropdown-item")
-            .withAttribute("href", "javascript:void(0)")
-            .withAttribute("onclick", "setCssFramework('bootstrap')")
-            .withText("Bootstrap")));
+        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+                .withAttribute("href", "javascript:void(0)")
+                .withAttribute("onclick", "setCssFramework('bootstrap')")
+                .withText("Bootstrap")));
 
         // Opción Tailwind CSS
-        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass("dropdown-item")
-            .withAttribute("href", "javascript:void(0)")
-            .withAttribute("onclick", "setCssFramework('tailwind')")
-            .withText("Tailwind CSS")));
+        dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+                .withAttribute("href", "javascript:void(0)")
+                .withAttribute("onclick", "setCssFramework('tailwind')")
+                .withText("Tailwind CSS")));
 
         frameworkDropdown.withChild(dropdownButton).withChild(dropdownMenu);
         rightContainer.withChild(frameworkDropdown);
-        
+
         // 5. Información de Usuario Logeado
-        rightContainer.withChild(new Tag("span").withClass("navbar-text me-3 text-white-50") 
-            .withText("Hello, " + username));
-        
+        String usernameClass = isTailwind ? "hidden md:block text-sm text-gray-400 mr-3" : "navbar-text me-3 text-white-50";
+        rightContainer.withChild(new Tag("span").withClass(usernameClass)
+                .withText("Hello, " + username));
+
         // 6. Botón de Logout
-        rightContainer.withChild(new Tag("a").withClass("btn btn-outline-danger btn-sm")
-            .withAttribute("href", contextPath + "/logout")
-            .withText("Logout"));
-            
+        String logoutBtnClass = isTailwind ? "border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 text-sm rounded-md" : "btn btn-outline-danger btn-sm";
+        rightContainer.withChild(new Tag("a").withClass(logoutBtnClass)
+                .withAttribute("href", contextPath + "/logout")
+                .withText("Logout"));
+
         containerFluid.withChild(rightContainer);
         navBar.withChild(containerFluid);
-        
+
         return navBar.render();
     }
 }

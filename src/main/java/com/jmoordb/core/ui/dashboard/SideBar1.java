@@ -12,18 +12,18 @@ package com.jmoordb.core.ui.dashboard;
 
 
 
+import com.jmoordb.core.ui.menu.MenuLink;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
-import com.jmoordb.core.ui.menu.MenuLink;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
-public class SideBar implements WebComponent {
+public class SideBar1 implements WebComponent {
     private final HttpServletRequest request;
     private final Map<String, List<MenuLink>> menuSections; 
 
-    public SideBar(HttpServletRequest request, Map<String, List<MenuLink>> menuSections) {
+    public SideBar1(HttpServletRequest request, Map<String, List<MenuLink>> menuSections) {
         this.request = request;
         this.menuSections = menuSections;
     }
@@ -31,42 +31,40 @@ public class SideBar implements WebComponent {
     @Override
     public String render() {
         String contextPath = request.getContextPath();
-        String framework = (String) request.getSession().getAttribute("cssFramework");
-        boolean isTailwind = "tailwind".equals(framework);
         
-        // Las clases 'sidebar' y 'shadow-lg' son definidas en main-styles.css
+        // 1. Estructura principal del Sidebar (con las clases CSS para el layout fijo)
         Tag sidebar = new Tag("div").withClass("sidebar shadow-lg")
             .withAttribute("id", "mySidebar");
             
-        // Estructura de menú: 'nav flex-column' (BS) vs. 'flex flex-col' (TW)
-        String menuClasses = isTailwind ? "flex flex-col sidebar-nav mt-4" : "nav flex-column sidebar-nav mt-4";
-        Tag menuUl = new Tag("ul").withClass(menuClasses);
+        // 2. Inicializar el <ul> donde irán todos los menús
+        Tag menuUl = new Tag("ul").withClass("nav flex-column sidebar-nav mt-4");
         
+        // 3. Generar secciones de menú, títulos y separadores
         menuSections.forEach((sectionTitle, links) -> {
             
+            // Si el título no está vacío, añade el título de la sección
             if (sectionTitle != null && !sectionTitle.isEmpty()) {
                 menuUl.withChild(new Tag("li").withClass("sidebar-header").withText(sectionTitle));
             } else {
-                // 'sidebar-divider' es clase de main-styles.css
+                // Si el título es vacío, añade un separador
                 menuUl.withChild(new Tag("li").withChild(new Tag("hr").withClass("sidebar-divider")));
             }
 
-            if (links != null) {
-                String liClasses = isTailwind ? "my-1" : "nav-item";
-                String linkClasses = isTailwind ? "nav-link block" : "nav-link";
-
+            // 4. Añadir Enlaces de la Sección
+            if (links != null) { // CRÍTICO: Asegurarse de que la lista no es nula
                 links.forEach(link -> {
                     String activeClass = link.isActive() ? "active" : "";
-                    String iconMargin = isTailwind ? "mr-2" : "me-2";
-
-                    Tag icon = new Tag("i").withClass(link.getIconClass() + " " + iconMargin);
                     
-                    Tag anchor = new Tag("a").withClass(linkClasses + " " + activeClass)
+                    Tag icon = new Tag("i").withClass(link.getIconClass() + " me-2");
+                    
+                    Tag anchor = new Tag("a").withClass("nav-link " + activeClass)
                         .withAttribute("href", contextPath + link.getUrl())
+                        // Añade el ícono como un hijo
                         .withChild(icon) 
+                        // Añade el texto como contenido (usando la versión corregida de Tag.withText)
                         .withText(link.getText()); 
                     
-                    menuUl.withChild(new Tag("li").withClass(liClasses).withChild(anchor));
+                    menuUl.withChild(new Tag("li").withClass("nav-item").withChild(anchor));
                 });
             }
         });
