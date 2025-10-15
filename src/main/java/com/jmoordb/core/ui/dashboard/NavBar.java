@@ -68,32 +68,22 @@ public class NavBar implements WebComponent {
         Tag rightContainer = new Tag("div").withClass(rightContainerClass);
 
         if (showNotification) {
-//            // 2. Icono de Notificaciones
-//            Tag notifIcon = new Tag("i").withClass("fas fa-bell");
-//            Tag badgeSpan = new Tag("span").withClass(badgeClass).withText(notificationCount.toString());
-//            Tag notifLink = new Tag("a").withClass(btnClass + " me-3 " + textLightClass + " relative")
-//                    .withAttribute("href", "#notifications")
-//                    .withChild(notifIcon)
-//                    .withChild(badgeSpan);
-//            rightContainer.withChild(notifLink);
-            
             
             // 2. Icono de Notificaciones
             Tag notifIcon = new Tag("i").withClass("fas fa-bell");
             Tag badgeSpan = new Tag("span").withClass(badgeClass).withText(notificationCount.toString());
             
-            // ⭐ 3. CAMBIO CLAVE: Añadir 'position-relative' al enlace
-            Tag notifLink = new Tag("a").withClass(btnClass + " me-3 " + textLightClass + " position-relative") 
+            // ⭐ Asegúrate de que el enlace sea 'relative' (tanto para Tailwind como para Bootstrap)
+            String linkClasses = isTailwind 
+                ? btnClass + " me-3 " + textLightClass + " relative" 
+                : btnClass + " me-3 " + textLightClass + " position-relative";
+                
+            Tag notifLink = new Tag("a").withClass(linkClasses) 
                     .withAttribute("href", "#notifications")
                     .withChild(notifIcon)
                     .withChild(badgeSpan);
+            
             rightContainer.withChild(notifLink);
-            
-            
-            
-            
-            
-            
         }
 
         // 3. Selector de Tema (Dark/White Mode)
