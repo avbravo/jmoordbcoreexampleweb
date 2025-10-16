@@ -25,6 +25,8 @@ public class Script extends Tag{
         
     }
   
-   
+     public Tag build(){
+      return this;
+   }
     
 }

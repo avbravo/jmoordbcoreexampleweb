@@ -10,22 +10,27 @@ import com.jmoordb.core.ui.Tag;
  *
  * @author avbravo
  */
-public class Div extends Tag{
-    
+public class Form extends Tag {
+
     /**
      * Color red, blue
+     *
      * @param tagName
-     * @param color 
+     * @param color
      */
-    public Div() {
-        
-        super("div");
-   
-        
+    public Form() {
+
+        super("form");
+
     }
-    
-   public Tag build(){
-      return this;
-   }
-    
+
+    public Form id(String id) {
+        withAttribute("id", id);
+        return this;
+    }
+
+    public Tag build() {
+        return this;
+    }
+
 }

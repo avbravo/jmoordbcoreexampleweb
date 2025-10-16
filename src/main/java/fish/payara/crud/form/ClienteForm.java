@@ -4,7 +4,11 @@
  */
 package fish.payara.crud.form;
 
+import com.jmoordb.core.ui.Div;
+import com.jmoordb.core.ui.Input;
+import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.TypeInput;
 import com.jmoordb.core.ui.WebComponent;
 import fish.payara.model.Cliente;
 
@@ -64,6 +68,28 @@ public class ClienteForm implements WebComponent {
                                 .withClass(inputClass).withAttribute("required", "true").withAttribute(readOnlyAttr, "")
                 )
         );
+        
+
+//        form.withChild(
+//                new Div().withClass(divClass).withChild(
+//                        new Label().forField("nombre2")
+//                                .text("Nombre")
+//                                .classStyle(labelClass)
+//                                .build()
+//                ).withChild(
+//                        new Input().typeInput(TypeInput.TEXT).id("nombre2")
+//                                .name("nombre2").value(cliente.getNombre())
+//                                .required(true)
+//                                .readonly(isEditable)
+//                                .classStyle(inputClass)
+//                                .build()
+//                )
+//        );
+        
+        
+        
+        
+        
 
         // --- Campo Monto ---
         form.withChild(
