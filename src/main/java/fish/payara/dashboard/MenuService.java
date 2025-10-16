@@ -81,12 +81,28 @@ public class MenuService {
             // 2. Inventario
             boolean isInventoryActive = currentController.equals("InventoryReportsController");
             reportLinks.add(new MenuLink("Inventario", "/reports/inventory", isInventoryActive, "fas fa-warehouse"));
-            // 2. Clientes
+            // 3. Clientes
             
-            boolean isClinteActive = currentController.equals("ClienteController");
-            reportLinks.add(new MenuLink("Cliente", "/clientes", isInventoryActive, "fas fa-solid fa-person"));
+            boolean isClienteActive = currentController.equals("ClienteController");
+            reportLinks.add(new MenuLink("Cliente", "/clientes", isClienteActive, "fas fa-solid fa-person"));
+            
+            // 4. ModalTest
+            
+              boolean isModalDashboardActive = currentController.equals("ModalDashboardController");
+            reportLinks.add(new MenuLink("Modal", "/modal", isModalDashboardActive, "fas fa-solid fa-microscope"));
 
             
+              boolean isModalSimpleActive = currentController.equals("ModalSimpleController");
+            reportLinks.add(new MenuLink("Modal Simple", "/modal-simple", isModalSimpleActive, "fas fa-solid fa-microscope"));
+
+            
+            boolean isModalTestActive = currentController.equals("ModalController");
+            reportLinks.add(new MenuLink("Modal Varios", "/modal-test", isInventoryActive, "fas fa-solid fa-microscope"));
+            
+            
+            
+          
+
             
             sections.put("REPORTES", reportLinks);
         }
