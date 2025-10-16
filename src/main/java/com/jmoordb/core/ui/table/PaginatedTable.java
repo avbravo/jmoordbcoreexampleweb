@@ -65,7 +65,7 @@ public class PaginatedTable implements WebComponent {
         String rowClassOdd = "bg-gray-50 border-b dark:bg-transparent dark:border-gray-700";
         
       rowIndex = 0;
-
+String cellTextClass = " dark:text-white"; // ⭐ CLASE A AÑADIR
         allData.forEach((id, values) -> {
             // Aplica alternancia y hover
             String currentRowClass = ((rowIndex % 2 == 0) ? rowClassEven : rowClassOdd) 
@@ -78,11 +78,16 @@ public class PaginatedTable implements WebComponent {
 
             // Columna ID (tomada de la clave del Map)
             trBody.withChild(new Tag("td").withClass("px-6 py-4 font-medium whitespace-nowrap").withText(id));
-
+// ⭐ APLICAR CLASE DE TEXTO
+    trBody.withChild(new Tag("td").withClass("px-6 py-4 font-medium whitespace-nowrap" + cellTextClass).withText(id));
+    
             // Columnas de datos (tomadas de la lista de valores)
             values.forEach(value
-                    -> trBody.withChild(new Tag("td").withClass("px-6 py-4").withText(value))
+                   -> trBody.withChild(new Tag("td").withClass("px-6 py-4" + cellTextClass).withText(value))
             );
+//            values.forEach(value
+//                    -> trBody.withChild(new Tag("td").withClass("px-6 py-4").withText(value))
+//            );
             tbody.withChild(trBody);
             rowIndex++;
         });

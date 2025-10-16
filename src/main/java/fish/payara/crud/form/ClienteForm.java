@@ -32,11 +32,17 @@ public class ClienteForm implements WebComponent {
 
         // Clases de Tailwind/Bootstrap para divs de formulario adaptables
         String divClass = "mb-4";
-        String labelClass = "block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300";
-        String inputClass = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-white";
-
+     //   String labelClass = "block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300";
+        String labelClass = "block text-gray-700 text-sm font-bold mb-2 dark:text-white";
+    //    String inputClass = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-white";
+        // ⭐ CAMBIO CRÍTICO 2: Asegurar que el input tenga texto BLANCO sobre fondo oscuro
+         String inputClass = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-white";
+// Dentro de ClienteForm.java
+        
         String readOnlyAttr = isEditable ? "" : "readonly";
 
+        
+        
         // --- Campo ID (Oculto o No Editable) ---
         form.withChild(
                 new Tag("div").withClass(divClass).withChild(

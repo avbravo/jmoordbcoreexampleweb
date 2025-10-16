@@ -156,7 +156,7 @@ public class ClienteController extends HttpServlet {
         // 1. Obtener los parámetros del formulario
         String idParam = request.getParameter("id");
         String nombre = request.getParameter("nombre");
-        String montoParam = request.getParameter("monto");
+        String latitude = request.getParameter("latitude");
         String longitudeParam = request.getParameter("longitude");
         
         // 2. Convertir y validar (Manejo básico de errores)
@@ -169,7 +169,7 @@ public class ClienteController extends HttpServlet {
             if (idParam != null && !idParam.isEmpty()) {
                 id = Long.parseLong(idParam);
             }
-            if (montoParam != null) monto = Double.parseDouble(montoParam);
+            if (latitude != null) monto = Double.parseDouble(latitude);
             if (longitudeParam != null) longitude = Double.parseDouble(longitudeParam);
         } catch (NumberFormatException e) {
             // Manejo de error: podrías redirigir a la misma página con un mensaje de error
@@ -183,7 +183,10 @@ public class ClienteController extends HttpServlet {
         // 4. Determinar la operación (Crear o Actualizar)
         if (id == 0L) {
             // ⭐ OPERACIÓN DE CREACIÓN
-            clienteService.save(cliente);
+          Cliente savedCliente=  clienteService.save(cliente);
+            String redirectUrl = request.getContextPath() + "/clientes?status=saved&id=" + savedCliente.getId();
+    response.sendRedirect(redirectUrl);
+
         } else {
             // OPERACIÓN DE ACTUALIZACIÓN (Asumimos que el mismo botón manejará la actualización en el futuro)
             // Por ahora, solo queremos que funcione la creación.

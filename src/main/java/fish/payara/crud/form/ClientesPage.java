@@ -47,7 +47,7 @@ public class ClientesPage implements WebComponent {
         mainContainer.withChild(formPanel);
 
         // 3. Tabla de Registros (Paginada)
-        List<String> headers = List.of("Nombre", "Monto", "Longitude");
+        List<String> headers = List.of("Nombre", "Latitude", "Longitude");
         Map<String, List<String>> tableData = TableDataClienteConverter.convert(clienteList); 
         
         Tag tablePanel = new Tag("div").withClass("bg-white p-6 rounded-lg shadow-xl dark:bg-gray-800");

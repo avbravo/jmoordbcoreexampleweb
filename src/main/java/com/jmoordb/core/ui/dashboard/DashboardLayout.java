@@ -29,7 +29,8 @@ public class DashboardLayout {
         String contextPath = request.getContextPath();
         String cssFramework = (String) request.getSession().getAttribute("cssFramework");
         if (cssFramework == null || (!cssFramework.equals("tailwind") && !cssFramework.equals("bootstrap"))) {
-            cssFramework = "bootstrap";
+//            cssFramework = "bootstrap";
+            cssFramework = "tailwind";
         }
         boolean isTailwind = "tailwind".equals(cssFramework);
 

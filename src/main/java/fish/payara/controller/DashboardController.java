@@ -41,7 +41,8 @@ public class DashboardController extends HttpServlet {
         // ⭐ 1. Obtener Framework CSS (necesario para construir contenido específico)
         String cssFramework = (String) session.getAttribute("cssFramework");
         if (cssFramework == null || (!cssFramework.equals("tailwind") && !cssFramework.equals("bootstrap"))) {
-            cssFramework = "bootstrap";
+//            cssFramework = "bootstrap";
+            cssFramework = "tailwind";
             session.setAttribute("cssFramework", cssFramework);
         }
         
