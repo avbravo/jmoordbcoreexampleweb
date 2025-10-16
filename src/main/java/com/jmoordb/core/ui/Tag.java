@@ -8,6 +8,7 @@ package com.jmoordb.core.ui;
  *
  * @author avbravo
  */
+import com.jmoordb.core.ui.script.ScriptUtil;
 import java.util.*;
 
 public class Tag implements WebComponent {
@@ -63,6 +64,20 @@ public class Tag implements WebComponent {
         return this;
     }
 
+     public Tag onClick(String function){
+      attributes.put("onclick", function);
+        return this;
+    }
+     public Tag closeModal(String modal, String function){
+         withText(ScriptUtil.closeModal(modal, function));
+
+        return this;
+    }
+     public Tag modalTailwindConfig(){
+         withText("<script>tailwind.config = { darkMode: 'class', theme: { extend: {}, }, }</script>");
+
+        return this;
+    }
     /**
      * Permite acceder a la lista de hijos (útil para modificar el último hijo o
      * anidación compleja).

@@ -37,7 +37,7 @@ public class ReporteVentasController extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         // 1. Validar Sesión
-        if (session == null || session.getAttribute("usuario") == null) {
+        if (session == null || session.getAttribute("username") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }

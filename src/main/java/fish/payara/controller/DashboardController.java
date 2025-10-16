@@ -31,7 +31,7 @@ public class DashboardController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null) {
+        if (session == null || session.getAttribute("username") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
@@ -50,6 +50,7 @@ public class DashboardController extends HttpServlet {
         
          // ⭐ SIMULACIÓN DE ROL (DEBE VENIR DE LA SESIÓN O DB)
         String userRol = (String) session.getAttribute("userRol"); // Asumimos que el rol está en sesión
+        System.out.println("\t >> DashboardController.userRol "+userRol);
         if (userRol == null) userRol = "ADMIN"; // Valor por defecto para prueba
 
         // ⭐ 2. DEFINICIÓN DE MENÚS SIMPLIFICADA

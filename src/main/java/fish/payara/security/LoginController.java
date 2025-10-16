@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fish.payara.resource.security;
+package fish.payara.security;
 
 import com.jmoordb.core.ui.alert.Alert;
 import com.jmoordb.core.ui.WebComponent;
@@ -94,7 +94,7 @@ public class LoginController extends HttpServlet {
         String submittedPassword = request.getParameter("password");
         String submittedRole = "";
         if (configurationProperties.getLoginStyle().equals("login-advanced")) {
-            submittedRole = request.getParameter("userRole"); // <-- NUEVO
+            submittedRole = request.getParameter("userRol"); // <-- NUEVO
         }
 
         // 2. Lógica de autenticación: Compara los valores ingresados con los válidos
@@ -127,8 +127,11 @@ public class LoginController extends HttpServlet {
             session.setAttribute("username", submittedUsername);
             session.setAttribute("iduser", 0L);
             session.setAttribute("name", submittedUsername);
-            session.setAttribute("userRole", submittedRole);
+            session.setAttribute("userRol", submittedRole);
             session.setAttribute("idrol", 0L);
+            session.setAttribute("cssFramework", "tailwind");
+
+            
             
             session.setMaxInactiveInterval(configurationProperties.getSessionMinutosExpiracion()); // Sesión de 30 minutos
 

@@ -44,7 +44,7 @@ public class LoginAdvanced implements WebComponent {
             
         // 1.1. Campo SELECT/ROL
         Tag selectTag = new Tag("select")
-            .withAttribute("name", "userRole")
+            .withAttribute("name", "userRol")
             .withClass("form-select")
             .withAttribute("required", "true");
             
@@ -63,7 +63,7 @@ public class LoginAdvanced implements WebComponent {
         );
         
         formContent.withChild(new Tag("div").withClass("mb-3")
-            .withChild(new Tag("label").withAttribute("for", "userRole").withClass("form-label").withText("Rol:"))
+            .withChild(new Tag("label").withAttribute("for", "userRol").withClass("form-label").withText("Rol:"))
             .withChild(selectTag)
         );
         
@@ -151,89 +151,7 @@ public class LoginAdvanced implements WebComponent {
                 .withChild(new Tag("style").withText(customStyles)) // Estilos Inyectados
             )
             .withChild(body);
-//        // Estilos customizados para Dark Mode y layout
-//        String customStyles = ""
-//                // Definición de variables CSS para el tema oscuro
-//                + ":root { --bg-main: #121212; --bg-content: #1e1e1e; --text-color: #F0F4F8; }" 
-//                // Layout y fondo oscuro del body
-//                + "body { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }"
-//                + "body.dark-mode { background-color: var(--bg-main); color: var(--text-color); }" 
-//                // Estilos de la tarjeta de login
-//                + ".container-login { width: 100%; max-width: 400px; }"
-//                + ".card { border: 1px solid rgba(255, 255, 255, 0.1); }"
-//                + ".card-body.bg-content { background-color: var(--bg-content) !important; color: var(--text-color); }"
-//                
-//                // ⭐ CORRECCIÓN CLAVE: Asegurar que el color del texto sea claro
-//                + "body.dark-mode .form-label { color: var(--text-color) !important; }" // ¡IMPORTANTE! Forzar color para labels
-//                + "a.btn-link { color: #adb5bd !important; }" 
-//                
-//                // Input, Select y focus (fondo oscuro, texto claro)
-//                + ".form-control, .form-select { background-color: #343a40; color: var(--text-color); border-color: #495057; }"
-//                // ⭐ Corregir texto de opciones dentro del Select
-//                + ".form-select option { background-color: #343a40; color: var(--text-color); }"
-//                
-//                + ".form-control:focus, .form-select:focus { background-color: #343a40; color: var(--text-color); border-color: #6c757d; box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25); }";
-//                
-//        // ⭐ Body recibe la clase 'dark-mode'
-//        Tag body = new Tag("body").withClass("dark-mode")
-//            .withChild(new Tag("div").withText(content)) // Añadir el contenido del login
-//            .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
-//
-//        Tag html = new Tag("html")
-//            .withChild(new Tag("head")
-//                .withChild(new Tag("meta").withAttribute("charset", "UTF-8"))
-//                .withChild(new Tag("meta").withAttribute("name", "viewport").withAttribute("content", "width=device-width, initial-scale=1"))
-//                .withChild(new Tag("title").withText(metaTitle))
-//                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"))
-//                .withChild(new Tag("style").withText(customStyles)) // Estilos Inyectados
-//            )
-//            .withChild(body);
-//        // Estilos customizados para Dark Mode y layout
-//        String customStyles = ""
-//                // Definición de variables CSS para el tema oscuro
-//                + ":root { --bg-main: #121212; --bg-content: #1e1e1e; --text-color: #F0F4F8; }" 
-//                // Layout y fondo oscuro del body
-//                + "body { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }"
-//                + "body.dark-mode { background-color: var(--bg-main); color: var(--text-color); }" 
-//                // Estilos de la tarjeta de login
-//                + ".container-login { width: 100%; max-width: 400px; }"
-//                + ".card { border: 1px solid rgba(255, 255, 255, 0.1); }"
-//                + ".card-body.bg-content { background-color: var(--bg-content) !important; color: var(--text-color); }"
-//                // Estilos para elementos de formulario en Dark Mode
-//                + ".form-label { color: var(--text-color); }" 
-//                + "a.btn-link { color: #adb5bd !important; }" 
-//                // Input, Select y focus
-//                + ".form-control, .form-select { background-color: #343a40; color: var(--text-color); border-color: #495057; }"
-//                + ".form-control:focus, .form-select:focus { background-color: #343a40; color: var(--text-color); border-color: #6c757d; box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25); }";
-//                
-//        // ⭐ Body recibe la clase 'dark-mode'
-//        Tag body = new Tag("body").withClass("dark-mode")
-//            // .withText(content) estaba antes, ahora usamos withChild(new Tag("div").withText(content))
-//            .withChild(new Tag("div").withText(content)) // Añadir el contenido del login
-//            .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
-//
-//        Tag html = new Tag("html")
-//            .withChild(new Tag("head")
-//                .withChild(new Tag("meta").withAttribute("charset", "UTF-8"))
-//                .withChild(new Tag("meta").withAttribute("name", "viewport").withAttribute("content", "width=device-width, initial-scale=1"))
-//                .withChild(new Tag("title").withText(metaTitle))
-//                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"))
-//                .withChild(new Tag("style").withText(customStyles)) // Estilos Inyectados
-//            )
-//            .withChild(body);
-            
-//        Tag body = new Tag("body").withText(content)
-//            .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
-//
-//        Tag html = new Tag("html")
-//            .withChild(new Tag("head")
-//                .withChild(new Tag("meta").withAttribute("charset", "UTF-8"))
-//                .withChild(new Tag("meta").withAttribute("name", "viewport").withAttribute("content", "width=device-width, initial-scale=1"))
-//                .withChild(new Tag("title").withText(metaTitle))
-//                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"))
-//                .withChild(new Tag("style").withText("body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f8f9fa; } .card { width: 100%; max-width: 400px; } body.dark-mode { background-color: #212529; }"))
-//            )
-//            .withChild(body);
+
         return html;
     }
 }

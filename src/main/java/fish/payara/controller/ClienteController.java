@@ -38,7 +38,7 @@ public class ClienteController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("usuario") == null) {
+        if (session == null || session.getAttribute("username") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }

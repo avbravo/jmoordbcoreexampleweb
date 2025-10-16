@@ -31,7 +31,7 @@ public class MenuSideBar {
             String currentController,
             String username,
             String rol) {
-
+rol = rol.toUpperCase();
         // Usamos LinkedHashMap para mantener el orden de inserción de las secciones.
         Map<String, List<MenuLink>> sections = new LinkedHashMap<>();
 
@@ -53,7 +53,7 @@ public class MenuSideBar {
         // =========================================================
         // B. SECCIÓN: GESTIÓN (Solo visible para ADMIN)
         // =========================================================
-        if (rol.equals("ADMIN")) {
+        if (rol.equals("ADMIN") || rol.equals("SUPERVISOR")) {
             List<MenuLink> adminLinks = new ArrayList<>();
             // 1. Usuarios
             boolean isUsersActive = currentController.equals("UsersController");
@@ -71,7 +71,7 @@ public class MenuSideBar {
         // =========================================================
         // C. SECCIÓN: REPORTES (Disponible para ADMIN y USER)
         // =========================================================
-        if (rol.equals("ADMIN") || rol.equals("USER")) {
+        if (rol.equals("ADMIN") || rol.equals("USER") || rol.equals("SUPERVISOR")) {
             List<MenuLink> reportLinks = new ArrayList<>();
 
             // 1. Ventas
@@ -92,18 +92,12 @@ public class MenuSideBar {
 
             
               boolean isModalActive = currentController.equals("ModalController");
-            reportLinks.add(new MenuLink("Modal", "/modal", isModalActive, "fas fa-solid fa-microscope"));
+            reportLinks.add(new MenuLink("Modal", "/modal", isModalActive, "fas fa-solid fa-window-restore"));
             
+ 
+          
             
-              boolean isModalSimpleActive = currentController.equals("ModalSimpleController");
-            reportLinks.add(new MenuLink("Modal Simple", "/modal-simple", isModalSimpleActive, "fas fa-solid fa-microscope"));
 
-            
-            boolean isModalTestActive = currentController.equals("ModalController");
-            reportLinks.add(new MenuLink("Modal Multiple", "/modal-multiple", isInventoryActive, "fas fa-solid fa-microscope"));
-            
-            
-            
           
 
             

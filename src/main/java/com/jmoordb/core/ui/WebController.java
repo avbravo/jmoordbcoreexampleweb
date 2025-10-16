@@ -20,7 +20,7 @@ public interface WebController {
         try {
             HttpSession session = request.getSession(false);
             // 1. Validar Sesión
-            if (session == null || session.getAttribute("usuario") == null) {
+            if (session == null || session.getAttribute("username") == null) {
 
             } else {
                 result = Boolean.TRUE;
@@ -47,7 +47,7 @@ public interface WebController {
             } else {
                 result.setIduser(Long.parseLong(session.getAttribute("iduser").toString()));
             }
-            result.setName((String) session.getAttribute("iduser"));
+          
             result.setUserRol((String) session.getAttribute("userRol"));
 
             if (session.getAttribute("idrol").toString() == null || session.getAttribute("idrol").toString().equals("")) {
@@ -73,7 +73,7 @@ public interface WebController {
         try {
             HttpSession session = request.getSession(false);
             // 1. Validar Sesión
-            if (session == null || session.getAttribute("usuario") == null) {
+            if (session == null || session.getAttribute("username") == null) {
 
             } else {
                 result = Boolean.TRUE;

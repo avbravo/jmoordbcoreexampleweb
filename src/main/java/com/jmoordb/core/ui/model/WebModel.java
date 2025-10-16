@@ -134,6 +134,73 @@ public class WebModel {
         this.isTailwind = isTailwind;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.isAuthentication);
+        hash = 59 * hash + Objects.hashCode(this.hasAuthorization);
+        hash = 59 * hash + Objects.hashCode(this.username);
+        hash = 59 * hash + Objects.hashCode(this.name);
+        hash = 59 * hash + Objects.hashCode(this.iduser);
+        hash = 59 * hash + Objects.hashCode(this.userRol);
+        hash = 59 * hash + Objects.hashCode(this.idRol);
+        hash = 59 * hash + Objects.hashCode(this.primaryBtnClass);
+        hash = 59 * hash + Objects.hashCode(this.secondaryBtnClass);
+        hash = 59 * hash + Objects.hashCode(this.cssFramework);
+        hash = 59 * hash + Objects.hashCode(this.isTailwind);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final WebModel other = (WebModel) obj;
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.userRol, other.userRol)) {
+            return false;
+        }
+        if (!Objects.equals(this.primaryBtnClass, other.primaryBtnClass)) {
+            return false;
+        }
+        if (!Objects.equals(this.secondaryBtnClass, other.secondaryBtnClass)) {
+            return false;
+        }
+        if (!Objects.equals(this.cssFramework, other.cssFramework)) {
+            return false;
+        }
+        if (!Objects.equals(this.isAuthentication, other.isAuthentication)) {
+            return false;
+        }
+        if (!Objects.equals(this.hasAuthorization, other.hasAuthorization)) {
+            return false;
+        }
+        if (!Objects.equals(this.iduser, other.iduser)) {
+            return false;
+        }
+        if (!Objects.equals(this.idRol, other.idRol)) {
+            return false;
+        }
+        return Objects.equals(this.isTailwind, other.isTailwind);
+    }
+
+    @Override
+    public String toString() {
+        return "WebModel{" + "isAuthentication=" + isAuthentication + ", hasAuthorization=" + hasAuthorization + ", username=" + username + ", name=" + name + ", iduser=" + iduser + ", userRol=" + userRol + ", idRol=" + idRol + ", primaryBtnClass=" + primaryBtnClass + ", secondaryBtnClass=" + secondaryBtnClass + ", cssFramework=" + cssFramework + ", isTailwind=" + isTailwind + '}';
+    }
+
  
     
    
