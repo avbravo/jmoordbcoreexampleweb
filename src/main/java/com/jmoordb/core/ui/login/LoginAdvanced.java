@@ -154,4 +154,8 @@ public class LoginAdvanced implements WebComponent {
 
         return html;
     }
+    
+      public WebComponent build(){
+      return this;
+   }
 }

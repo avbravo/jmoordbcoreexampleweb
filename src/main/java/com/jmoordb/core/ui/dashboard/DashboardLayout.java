@@ -25,7 +25,7 @@ public class DashboardLayout {
             String username,
             WebComponent mainContent,
             Map<String, List<MenuLink>> sidebarSections,
-            String title, List<Tag>... headerAdditional) {
+            String title, String footerText, List<Tag>... headerAdditional) {
 
         // 1. OBTENER ESTADO ACTUAL Y CONFIGURACIONES
         String contextPath = request.getContextPath();
@@ -41,7 +41,7 @@ public class DashboardLayout {
         // Asumiendo que las notificaciones son siempre TRUE y el conteo es 5 para el ejemplo
         NavBar navBar = new NavBar(username, request, Boolean.TRUE, 5);
         SideBar sideBar = new SideBar(request, sidebarSections);
-        Footer footer = new Footer("© 2024 Modern Dashboard Framework.", request);
+        Footer footer = new Footer(footerText, request);
 
         // 3. SCRIPTS DE LÓGICA (Se mantienen y se inyectan en el body)
         String scriptContent
@@ -140,19 +140,7 @@ public class DashboardLayout {
                 .withChild(head )
                 .withChild(body)
                 .render();
-//        return new Tag("html")
-//                .withChild(new Tag("head")
-//                        .withChild(new Tag("meta").withAttribute("charset", "UTF-8"))
-//                        .withChild(new Tag("meta").withAttribute("name", "viewport").withAttribute("content", "width=device-width, initial-scale=1"))
-//                        .withChild(new Tag("title").withText(title))
-//                        .withChild(frameworkLink)
-//                        // ⭐ 3. Cargar el CSS de la gráfica
-//                        .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/chart-styles.css"))
-//                        .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/main-styles.css"))
-//                        .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"))
-//                )
-//                .withChild(body)
-//                .render();
+
     }
 
     // Dentro de com.jmoordb.core.ui.layout.DashboardLayout.java (Método getModalActivationScript)

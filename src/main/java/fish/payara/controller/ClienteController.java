@@ -65,7 +65,8 @@ public class ClienteController extends HttpServlet {
             username, 
             mainPanel, 
             sidebarSections, 
-            "Clientes CRUD" 
+            "Clientes CRUD" ,
+            "© 2024 Modern Dashboard Framework."
         );
         
         response.getWriter().write(htmlCompleto);

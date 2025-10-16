@@ -77,5 +77,7 @@ public class NotificationModal implements WebComponent {
              .render(); 
     }
     
-
+    public WebComponent build(){
+      return this;
+   }
 }

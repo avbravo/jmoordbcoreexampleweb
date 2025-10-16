@@ -18,5 +18,7 @@ public class MapComponent implements WebComponent {
         return new Tag("div").withClass("h-96 bg-gray-300 dark:bg-gray-700 flex items-center justify-center rounded-lg")
             .withText("Mapa de Sucursales (Simulado)").render();
     }
-    
+      public WebComponent build(){
+      return this;
+   }
 }

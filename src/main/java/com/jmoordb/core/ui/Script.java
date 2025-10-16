@@ -24,6 +24,12 @@ public class Script extends Tag{
         
         
     }
+    
+     public Script closeModal(String modal, String function){
+         withText(ScriptUtil.closeModal(modal, function));
+
+        return this;
+    }
   
      public Tag build(){
       return this;

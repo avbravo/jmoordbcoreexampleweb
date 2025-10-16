@@ -88,4 +88,8 @@ public class PasswordRecovery implements WebComponent {
             .withChild(body);
         return html;
     }
+    
+      public WebComponent build(){
+      return this;
+   }
 }

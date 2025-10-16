@@ -132,4 +132,8 @@ public class LoginSimple implements WebComponent {
 
         return html.render();
     }
+    
+      public WebComponent build(){
+      return this;
+   }
 }

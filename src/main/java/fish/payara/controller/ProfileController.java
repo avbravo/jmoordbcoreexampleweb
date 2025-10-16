@@ -82,7 +82,8 @@ public class ProfileController extends HttpServlet {
                 username, 
                 mainPanel, // Contenido específico que se inyecta
                 sidebarSections, // Estructura del menú
-                "User Profile"
+                "User Profile",
+                "© 2024 Modern Dashboard Framework."
         );
             
         response.getWriter().write(htmlCompleto);

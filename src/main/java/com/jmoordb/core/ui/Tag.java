@@ -64,15 +64,15 @@ public class Tag implements WebComponent {
         return this;
     }
 
-     public Tag onClick(String function){
-      attributes.put("onclick", function);
-        return this;
-    }
-     public Tag closeModal(String modal, String function){
-         withText(ScriptUtil.closeModal(modal, function));
-
-        return this;
-    }
+//     public Tag onClick(String function){
+//      attributes.put("onclick", function);
+//        return this;
+//    }
+//     public Tag closeModal(String modal, String function){
+//         withText(ScriptUtil.closeModal(modal, function));
+//
+//        return this;
+//    }
      public Tag modalTailwindConfig(){
          withText("<script>tailwind.config = { darkMode: 'class', theme: { extend: {}, }, }</script>");
 

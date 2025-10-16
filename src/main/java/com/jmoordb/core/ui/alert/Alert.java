@@ -53,4 +53,8 @@ public class Alert implements WebComponent {
 
         return alerta.render();
     }
+    
+      public WebComponent build(){
+      return this;
+   }
 }

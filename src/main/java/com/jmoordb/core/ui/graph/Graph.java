@@ -19,5 +19,9 @@ public class Graph implements WebComponent {
         return new Tag("div").withClass("h-64 bg-gray-300 dark:bg-gray-700 flex items-center justify-center rounded-lg")
             .withText("Gráfica de " + title + " (Simulada)").render();
     }
+    
+      public WebComponent build(){
+      return this;
+   }
 }
 

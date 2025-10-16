@@ -69,4 +69,8 @@ public class GridItem implements WebComponent {
             return card.render();
         }
     }
+    
+      public WebComponent build(){
+      return this;
+   }
 }

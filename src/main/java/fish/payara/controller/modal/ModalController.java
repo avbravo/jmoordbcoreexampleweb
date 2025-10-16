@@ -55,6 +55,7 @@ public class ModalController extends HttpServlet implements WebController {
                 content(request), // Contenido específico que se inyecta
                 sidebarSections, // Estructura del menúò
                 "Modal",
+                "© 2024 Modern Dashboard Framework.",
                 headers
         );
         response.setContentType("text/html;charset=UTF-8");
@@ -67,7 +68,7 @@ public class ModalController extends HttpServlet implements WebController {
         WebComponent mainPanel = null;
         try {
 
-            WebComponent infoModal = new NotificationModal(
+            NotificationModal infoModal = new NotificationModal(
                     "infoModal",// 
                     "Prueba de Notificación",
                     "Este es un mensaje de prueba con nivel de Información. Puedes usarlo para éxito o mensajes generales.",
@@ -75,22 +76,26 @@ public class ModalController extends HttpServlet implements WebController {
             );
 
             // Modal de Error (Rojo/X)
-            WebComponent errorModal = new NotificationModal(
+            NotificationModal errorModal = new NotificationModal(
                     "errorModal", // ID único
                     "Error Crítico",
                     "No se pudo conectar a la base de datos. Por favor, revisa la conexión.",
                     "Error"
             );
 
-            Tag buttonInfo = new Button("Mostrar Modal ", "blue")
-                    .onClick("openInfoModal()");
-            // Cerrar el modal mediante el Script()
-            Tag scriptCloseInfoModal = new Script().closeModal("infoModal", "openInfoModal");
+            Button buttonInfo = new Button("Mostrar Modal")
+                    .color("blue")
+                    .onClick("openInfoModalEvent()");
 
-            Tag buttonError = new Button("Error ", "red")
+            Script scriptCloseInfoModal = new Script()
+                    .closeModal("infoModal", "openInfoModalEvent");
+            
+
+            Button buttonError = new Button("Error")
+                    .color("red")
                     .onClick("openErrorModal()");
-            // Cerrar el modal mediante el Script()
-            Tag scriptCloseError = new Script().closeModal("errorModal", "openErrorModal");
+
+            Script scriptCloseError = new Script().closeModal("errorModal", "openErrorModal");
 
 // 3. CONSTRUCCIÓN DEL CONTENIDO PRINCIPAL 
             WebComponent webContent = new Div().withClass("p-8 min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900")
@@ -102,7 +107,7 @@ public class ModalController extends HttpServlet implements WebController {
                     .withChild(buttonError)
                     .withChild(scriptCloseError);
 
-            // SE anade modalTaildwindConfiguration al header para el modal mediante un Script para otros casos no es necesario
+            // Se anade modalTaildwindConfiguration al header para el modal mediante un Script para otros casos no es necesario
             headers = new ArrayList<>();
             headers.add(new Script().modalTailwindConfig());
 

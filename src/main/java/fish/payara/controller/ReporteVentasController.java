@@ -207,7 +207,8 @@ public class ReporteVentasController extends HttpServlet {
                 username,
                 mainContent,
                 sidebarSections,
-                "Sales Report"
+                "Sales Report",
+                "© 2024 Modern Dashboard Framework."
         );
 
         response.getWriter().write(htmlCompleto);

@@ -50,4 +50,7 @@ public class CardGrid implements WebComponent {
         
         return row.render();
     }
+      public WebComponent build(){
+      return this;
+   }
 }

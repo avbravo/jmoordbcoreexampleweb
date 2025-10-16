@@ -118,6 +118,7 @@ public class DashboardController extends HttpServlet {
                 mainPanel, // Contenido específico que se inyecta
                 sidebarSections, // Estructura del menú
                 "Modern Responsive Dashboard" // Título
+                ,"© 2024 Modern Dashboard Framework."
         );
             
         response.getWriter().write(htmlCompleto);
