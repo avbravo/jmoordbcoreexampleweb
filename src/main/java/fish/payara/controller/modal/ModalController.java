@@ -1,121 +1,114 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package fish.payara.controller.modal;
+
+/**
+ *
+ * @author avbravo
+ */
+
 
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.alert.NotificationModal;
+import com.jmoordb.core.ui.dashboard.DashboardLayout;
+import com.jmoordb.core.ui.modal.NotificationModal;
+import com.jmoordb.core.ui.menu.MenuLink; // Importar MenuLink para la Sidebar
+import com.jmoordb.core.ui.panel.Panel;
+import fish.payara.dashboard.MenuService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-@WebServlet( urlPatterns = {"/modal-test"})
+@WebServlet(name = "ModalController", urlPatterns = {"/modal-test"})
 public class ModalController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+          HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("usuario") == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+        
+        // --- Setup Mínimo para el Dashboard ---
+     String username = (String) session.getAttribute("usuario");
+         String userRol = (String) session.getAttribute("rol"); 
+        if (userRol == null) userRol = "ADMIN"; 
+        String title = "Prueba de Modal en Dashboard";
 
-        // --- 1. Crear DOS instancias del NotificationModal (Reutilización) ---
-        
-        // Modal de Información (Azul/Check)
-        WebComponent infoModal = new NotificationModal(
-                "infoModal", // ID único
-                "Operación Exitosa",
-                "El proceso ha finalizado correctamente y los datos se guardaron.",
-                "Informacion" 
+        // Simular las secciones del menú lateral (requerido por DashboardLayout)
+      
+             Map<String, List<MenuLink>> sidebarSections = MenuService.getSidebarSections(
+            this.getClass().getSimpleName(), 
+            username, 
+            userRol
         );
-        
-        // Modal de Error (Rojo/X)
+        // --- 1. Crear el NotificationModal (Error para el ejemplo) ---
         WebComponent errorModal = new NotificationModal(
-                "errorModal", // ID único
-                "Error Crítico",
-                "No se pudo conectar a la base de datos. Por favor, revisa la conexión.",
-                "Error" 
+                "errorModal", 
+                "Error de Prueba de Modal",
+                "Este modal se activó mediante un botón dentro del contenido principal del dashboard.",
+                "Error" // Nivel que genera icono y color rojo
         );
-        
-        // --- 2. Crear los botones de activación ---
-        Tag infoButton = new Tag("button")
-                .withAttribute("onclick", "openModal('infoModal')") // Llama a la función JS con el ID
-                .withClass("px-4 py-2 mr-4 bg-blue-500 text-white rounded hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800")
-                .withText("Mostrar Información");
 
-        Tag errorButton = new Tag("button")
+        // --- 2. Crear el Contenido Principal (Botón) ---
+        Tag activationButton = new Tag("button")
                 .withAttribute("onclick", "openModal('errorModal')") // Llama a la función JS con el ID
-                .withClass("px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-800")
-                .withText("Mostrar Error");
-        
-        // 3. Crear el contenedor principal
-        Tag mainContent = new Tag("div").withClass("p-8 min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900")
-                .withChild(new Tag("h1").withClass("text-3xl font-bold mb-8 text-gray-900 dark:text-white").withText("Test de Componente Modal Reutilizable"))
-                .withChild(new Tag("div").withClass("flex").withChild(infoButton).withChild(errorButton));
+                .withClass("px-6 py-3 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 transition duration-150")
+                .withText("Abrir Modal de Error");
 
-        // 4. Crear el Script GENÉRICO para abrir y cerrar CUALQUIER modal
-//        String scriptContent = 
-//                  "function openModal(id) {"
-//                + "  document.getElementById(id).classList.remove('hidden');"
-//                + "}"
-//                + "document.addEventListener('DOMContentLoaded', function() {"
-//                + "  // Configuración de Dark Mode para el <html>"
-//                + "  if (localStorage.getItem('theme') === 'dark') { document.documentElement.classList.add('dark'); }"
-//                
-//                + "  // Lógica para cerrar ambos modales usando un selector genérico basado en su ID"
-//                + "  const modalIds = ['infoModal', 'errorModal'];"
-//                + "  modalIds.forEach(id => {"
-//                + "    const modal = document.getElementById(id);"
-//                + "    const closeButton = document.getElementById(id + '-close');"
-//                + "    if (closeButton) {"
-//                + "      closeButton.addEventListener('click', function() {"
-//                + "        modal.classList.add('hidden');"
-//                + "      });"
-//                + "    }"
-//                + "  });"
-//                + "});";
-     String scriptContent = 
-                  "function openTestModal() {"
-                + "  document.getElementById('myTestModal').classList.remove('hidden');"
-                + "}"
-                + "document.addEventListener('DOMContentLoaded', function() {"
-                + "  const modal = document.getElementById('myTestModal');"
-                + "  const closeButton = document.getElementById('myTestModal-close');"
-                + "  if (closeButton) {"
-                + "    closeButton.addEventListener('click', function() {"
-                + "      modal.classList.add('hidden');"
-                + "    });"
-                + "  }"
-                + "});";
+        Tag mainContentContainer = new Tag("div").withClass("bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl min-h-[400px]")
+                .withChild(new Tag("h2").withClass("text-2xl font-semibold mb-6 text-gray-800 dark:text-white").withText("Contenido de Prueba del Modal"))
+                .withChild(activationButton);
 
-        Tag scriptTag = new Tag("script").withText(scriptContent);
-        
-        System.out.println("scriptContent "+scriptContent);
-        
-        // 5. Ensamblar la página HTML mínima
-        // Incluir ambos modales en el body para que estén disponibles
-        Tag body = new Tag("body")
-                .withChild(mainContent)
-                .withChild(infoModal) // Modal 1
-                .withChild(errorModal); // Modal 2
-//                .withChild(scriptTag);
-        
-        // 6. Configuración de Tailwind CSS
-        Tag head = new Tag("head")
-                .withChild(new Tag("meta").withAttribute("charset", "UTF-8"))
-                .withChild(new Tag("meta").withAttribute("name", "viewport").withAttribute("content", "width=device-width, initial-scale=1.0"))
-                .withChild(new Tag("title").withText("Modal Test Reusable"))
-                // ⭐ SOLUCIÓN: Inyectar el script ANTES de que el body se cargue.
-//        .withChild(scriptTag)
-                .withChild(new Tag("script").withAttribute("src", "https://cdn.tailwindcss.com"));
-        
-        String tailwindConfig = "<script>tailwind.config = { darkMode: 'class', theme: { extend: {}, }, }</script>";
-        head.withChild(new Tag("script").withText(tailwindConfig));
+//        // --- 3. Invocar DashboardLayout ---
+//        String htmlCompleto = DashboardLayout.buildPage(
+//            request, 
+//            username, 
+//            mainContentContainer, // Contenido principal con el botón
+//            sidebarSections, 
+//            title, 
+//            errorModal // ⭐ El modal se pasa como componente y se inyecta en el <body>
+//        );
+  // Contenido de ejemplo para el panel de perfil
+        WebComponent mainPanel = new Tag("div")
+            .withChild(header)
+            .withChild(new Tag("p").withText("Email: " + username.toLowerCase() + "@example.com"))
+            .withChild(new Tag("p").withText("Role: Administrator"))
+            .withChild(new Tag("hr"))
+            .withChild(new Tag("button").withClass("btn btn-primary").withText("Edit Profile"))
+            .withChild(new Tag("button").withClass("btn btn-secondary ms-2").withText("Change Password"));
+           
+        String htmlCompleto = DashboardLayout.buildPage(
+            request, 
+            username, 
+            mainPanel, 
+            sidebarSections, 
+            "Modal" 
+        );
 
-        // 7. Renderizado Final
-        String html = new Tag("html")
-                .withChild(head)
-                .withChild(body)
-                .render();
-
-        response.getWriter().write(html);
+        response.getWriter().write(htmlCompleto);
+    }
+    
+    // Función de utilidad para simular los enlaces del menú
+    private Map<String, List<MenuLink>> createDemoSidebarSections(String contextPath) {
+        Map<String, List<MenuLink>> sections = new HashMap<>();
+        List<MenuLink> mainLinks = new ArrayList<>();
+        mainLinks.add(new MenuLink("Clientes", contextPath + "/clientes", "fas fa-users"));
+        mainLinks.add(new MenuLink("Modal Test", contextPath + "/modal-test", "fas fa-bell"));
+        sections.put("Principal", mainLinks);
+        return sections;
     }
 }

@@ -80,7 +80,16 @@ public class ModalDashboardController extends HttpServlet {
         // Cerrar el modal
         Tag scriptTag = new Tag("script").withText(ScriptUtil.closeModal("myTestModal","openTestModal" ));
         // ⭐ CLAVE: Obtener y preparar el contenido
+         // 6. Configuración de Tailwind CSS y Dark Mode
+        Tag head = new Tag("head")
+                .withChild(new Tag("meta").withAttribute("charset", "UTF-8"))
+                .withChild(new Tag("meta").withAttribute("name", "viewport").withAttribute("content", "width=device-width, initial-scale=1.0"))
+                .withChild(new Tag("title").withText("Modal Test"))
+                .withChild(new Tag("script").withAttribute("src", "https://cdn.tailwindcss.com"));
         
+        // Aseguramos que Tailwind esté configurado para el modo oscuro con 'class'
+        String tailwindConfig = "<script>tailwind.config = { darkMode: 'class', theme: { extend: {}, }, }</script>";
+        head.withChild(new Tag("script").withText(tailwindConfig));
         
         WebComponent clienteCrudContent = getClienteContent(request);
         
