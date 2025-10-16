@@ -16,7 +16,7 @@ import com.jmoordb.core.ui.menu.MenuLink; // Asumimos MenuLink
 import com.jmoordb.core.ui.panel.Panel;
 import fish.payara.crud.form.ClienteService;
 import fish.payara.crud.form.ClientesPage;
-import fish.payara.dashboard.MenuService;
+import fish.payara.dashboard.MenuSideBar;
 import fish.payara.model.Cliente;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -43,11 +43,11 @@ public class ClienteController extends HttpServlet {
             return;
         }
         
-        String username = (String) session.getAttribute("usuario");
-        String userRol = (String) session.getAttribute("rol"); 
+        String username = (String) session.getAttribute("username");
+        String userRol = (String) session.getAttribute("userRol"); 
         if (userRol == null) userRol = "ADMIN"; 
         
-        Map<String, List<MenuLink>> sidebarSections = MenuService.getSidebarSections(
+        Map<String, List<MenuLink>> sidebarSections = MenuSideBar.getSidebarSections(
             this.getClass().getSimpleName(), 
             username, 
             userRol

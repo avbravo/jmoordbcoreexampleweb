@@ -10,7 +10,7 @@ package fish.payara.controller;
  */
 
 
-import fish.payara.dashboard.MenuService;
+import fish.payara.dashboard.MenuSideBar;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
@@ -36,7 +36,7 @@ public class DashboardController extends HttpServlet {
             return;
         }
         
-        String username = (String) session.getAttribute("usuario");
+        String username = (String) session.getAttribute("username");
         
         // ⭐ 1. Obtener Framework CSS (necesario para construir contenido específico)
         String cssFramework = (String) session.getAttribute("cssFramework");
@@ -49,12 +49,12 @@ public class DashboardController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
          // ⭐ SIMULACIÓN DE ROL (DEBE VENIR DE LA SESIÓN O DB)
-        String userRol = (String) session.getAttribute("rol"); // Asumimos que el rol está en sesión
+        String userRol = (String) session.getAttribute("userRol"); // Asumimos que el rol está en sesión
         if (userRol == null) userRol = "ADMIN"; // Valor por defecto para prueba
 
         // ⭐ 2. DEFINICIÓN DE MENÚS SIMPLIFICADA
         // Obtener la lista de menús desde el nuevo servicio.
-        Map<String, List<MenuLink>> sidebarSections = MenuService.getSidebarSections(
+        Map<String, List<MenuLink>> sidebarSections = MenuSideBar.getSidebarSections(
             this.getClass().getSimpleName(), // Pasa "DashboardController"
             username, 
             userRol

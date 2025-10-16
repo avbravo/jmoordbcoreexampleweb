@@ -8,7 +8,7 @@ package fish.payara.controller;
  *
  * @author avbravo
  */
-import fish.payara.dashboard.MenuService;
+import fish.payara.dashboard.MenuSideBar;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
@@ -42,15 +42,15 @@ public class ReporteVentasController extends HttpServlet {
             return;
         }
 
-        String username = (String) session.getAttribute("usuario");
+        String username = (String) session.getAttribute("username");
 
         // ⭐ SIMULACIÓN DE ROL
-        String userRol = (String) session.getAttribute("rol");
+        String userRol = (String) session.getAttribute("userRol");
         if (userRol == null) {
             userRol = "ADMIN"; // Asumimos un rol que tenga permiso para reportes
         }
         // 2. Definición del Menú y Marcado Activo
-        Map<String, List<MenuLink>> sidebarSections = MenuService.getSidebarSections(
+        Map<String, List<MenuLink>> sidebarSections = MenuSideBar.getSidebarSections(
                 "SalesReportsController", // Nombre de la clase del controlador (para marcar activo)
                 username,
                 userRol

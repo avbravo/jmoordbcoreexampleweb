@@ -122,9 +122,14 @@ public class LoginController extends HttpServlet {
         // 3. Control de Evento (Decisión)
         if (credentialsValid) {
             // A. Credenciales Válidas: Crear sesión y redirigir al dashboard
+            // Cuando se conecta a la base de datos rellena los otros campos
             HttpSession session = request.getSession(true);
-            session.setAttribute("usuario", submittedUsername);
-            session.setAttribute("submittedRole", submittedRole);
+            session.setAttribute("username", submittedUsername);
+            session.setAttribute("iduser", 0L);
+            session.setAttribute("name", submittedUsername);
+            session.setAttribute("userRole", submittedRole);
+            session.setAttribute("idrol", 0L);
+            
             session.setMaxInactiveInterval(configurationProperties.getSessionMinutosExpiracion()); // Sesión de 30 minutos
 
 //            response.sendRedirect(request.getContextPath() + "/dashboard");

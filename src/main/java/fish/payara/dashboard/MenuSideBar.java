@@ -14,7 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MenuService {
+public class MenuSideBar {
 
     /**
      * Construye la estructura completa del menú lateral (SideBar) basada en el
@@ -88,16 +88,19 @@ public class MenuService {
             
             // 4. ModalTest
             
-              boolean isModalDashboardActive = currentController.equals("ModalDashboardController");
-            reportLinks.add(new MenuLink("Modal", "/modal", isModalDashboardActive, "fas fa-solid fa-microscope"));
+           
 
+            
+              boolean isModalActive = currentController.equals("ModalController");
+            reportLinks.add(new MenuLink("Modal", "/modal", isModalActive, "fas fa-solid fa-microscope"));
+            
             
               boolean isModalSimpleActive = currentController.equals("ModalSimpleController");
             reportLinks.add(new MenuLink("Modal Simple", "/modal-simple", isModalSimpleActive, "fas fa-solid fa-microscope"));
 
             
             boolean isModalTestActive = currentController.equals("ModalController");
-            reportLinks.add(new MenuLink("Modal Varios", "/modal-test", isInventoryActive, "fas fa-solid fa-microscope"));
+            reportLinks.add(new MenuLink("Modal Multiple", "/modal-multiple", isInventoryActive, "fas fa-solid fa-microscope"));
             
             
             

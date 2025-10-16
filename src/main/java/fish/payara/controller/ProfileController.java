@@ -4,11 +4,8 @@
  */
 package fish.payara.controller;
 
-/**
- *
- * @author avbravo
- */
-import fish.payara.dashboard.MenuService;
+
+import fish.payara.dashboard.MenuSideBar;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
@@ -33,15 +30,27 @@ public class ProfileController extends HttpServlet {
             return;
         }
         
-        String username = (String) session.getAttribute("usuario");
-             // ⭐ SIMULACIÓN DE ROL (DEBE VENIR DE LA SESIÓN O DB)
-        String userRol = (String) session.getAttribute("rol"); // Asumimos que el rol está en sesión
-        if (userRol == null) userRol = "ADMIN"; // Valor por defecto para prueba
+        String username = (String) session.getAttribute("username");
+        String userRol = (String) session.getAttribute("userRol"); 
+        if (userRol == null) userRol = "ADMIN";
         
-        // ⭐ 2. DEFINICIÓN DE MENÚS SIMPLIFICADA
-        // Obtener la lista de menús desde el nuevo servicio.
-        Map<String, List<MenuLink>> sidebarSections = MenuService.getSidebarSections(
-            this.getClass().getSimpleName(), // Pasa "DashboardController"
+        // ⭐ 1. Determinar el Framework Actual
+        String cssFramework = (String) request.getSession().getAttribute("cssFramework");
+        boolean isTailwind = "tailwind".equals(cssFramework);
+
+        // ⭐ 2. Definir Clases CSS Condicionales
+        String primaryBtnClass = isTailwind 
+                ? "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-md transition duration-150" 
+                : "btn btn-primary";
+        
+        String secondaryBtnClass = isTailwind 
+                ? "bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-4 rounded shadow-md ml-2 transition duration-150" 
+                : "btn btn-secondary ms-2";
+
+
+        // 2. DEFINICIÓN DE MENÚS SIMPLIFICADA
+        Map<String, List<MenuLink>> sidebarSections = MenuSideBar.getSidebarSections(
+            this.getClass().getSimpleName(), 
             username, 
             userRol
         );
@@ -50,26 +59,30 @@ public class ProfileController extends HttpServlet {
         
         // 3. CONSTRUCCIÓN DEL CONTENIDO PRINCIPAL (ESPECÍFICO DEL PERFIL)
         
-        // Contenido de ejemplo para el panel de perfil
+        // Contenido de ejemplo para el panel de perfil. Usamos las clases condicionales.
         WebComponent profileContent = new Tag("div")
+            .withClass(isTailwind ? "space-y-4" : "") // Añadir espaciado de Tailwind
             .withChild(new Tag("p").withText("Username: " + username))
             .withChild(new Tag("p").withText("Email: " + username.toLowerCase() + "@example.com"))
             .withChild(new Tag("p").withText("Role: Administrator"))
-            .withChild(new Tag("hr"))
-            .withChild(new Tag("button").withClass("btn btn-primary").withText("Edit Profile"))
-            .withChild(new Tag("button").withClass("btn btn-secondary ms-2").withText("Change Password"));
+            .withChild(new Tag("hr").withClass(isTailwind ? "my-4 border-gray-300 dark:border-gray-600" : ""))
+            .withChild(new Tag("button").withClass(primaryBtnClass).withText("Edit Profile"))
+            .withChild(new Tag("button").withClass(secondaryBtnClass).withText("Change Password"));
 
         // Panel que contiene la información del perfil
+        // NOTA: La clase Panel debe manejar también su estilo interiormente usando el framework de la request.
         WebComponent mainPanel = new Panel("User Profile", profileContent, request);
         
         
         // 4. RENDERIZADO FINAL: Se utiliza la clase DashboardLayout
+        // Se asume que DashboardLayout ya maneja el parámetro WebComponent modal (el 5to argumento), 
+        // por lo que pasamos 'null' ya que no estamos mostrando un modal aquí.
         String htmlCompleto = DashboardLayout.buildPage(
                 request, 
                 username, 
                 mainPanel, // Contenido específico que se inyecta
                 sidebarSections, // Estructura del menú
-                "User Profile" // Título de la página
+                "User Profile"
         );
             
         response.getWriter().write(htmlCompleto);
