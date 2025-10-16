@@ -8,7 +8,6 @@ import com.jmoordb.core.ui.alert.NotificationModal;
 import com.jmoordb.core.ui.buttons.Button;
 import com.jmoordb.core.ui.Script;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
-import com.jmoordb.core.ui.menu.MenuLink;
 import com.jmoordb.core.ui.model.WebModel;
 import com.jmoordb.core.ui.panel.Panel;
 import fish.payara.dashboard.MenuSideBar;
@@ -19,7 +18,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @WebServlet(urlPatterns = {"/modal"})
 public class ModalController extends HttpServlet implements WebController {
@@ -33,33 +31,31 @@ public class ModalController extends HttpServlet implements WebController {
         /**
          * Valida los roles
          */
-        webModel = webModelOfSession(request);
-
-        if (!webModel.getIsAuthentication()) {
+        if(!(webModel = webModelOfSession(request)).getIsAuthentication()){
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
-        // 2. Obtiene los elementos del menu
-        Map<String, List<MenuLink>> sidebarSections = MenuSideBar.getSidebarSections(
-                this.getClass().getSimpleName(),
-                webModel.getUsername(),
-                webModel.getUserRol()
-        );
+
 
         /**
          * Construye los componentes mediante el DashboardLayout
          */
-        String htmlCompleto = DashboardLayout.buildPage(
-                request,
-                webModel.getUsername(),
-                content(request), // Contenido específico que se inyecta
-                sidebarSections, // Estructura del menúò
-                "Modal",
-                "© 2024 Modern Dashboard Framework.",
-                headers
-        );
         response.setContentType("text/html;charset=UTF-8");
-        response.getWriter().write(htmlCompleto);
+        response.getWriter().write(
+                DashboardLayout.buildPage(
+                        request,
+                        webModel.getUsername(),
+                        content(request), // Contenido específico que se inyecta
+                        MenuSideBar.getSidebarSections(
+                                this.getClass().getSimpleName(),
+                                webModel.getUsername(),
+                                webModel.getUserRol()
+                        ), // Estructura del menú
+                        "Modal",
+                        "© 2024 Modern Dashboard Framework.",
+                        headers
+                )
+        );
     }
 
     // <editor-fold defaultstate="collapsed" desc="WebComponent content(HttpServletRequest request)">
@@ -89,7 +85,6 @@ public class ModalController extends HttpServlet implements WebController {
 
             Script scriptCloseInfoModal = new Script()
                     .closeModal("infoModal", "openInfoModalEvent");
-            
 
             Button buttonError = new Button("Error")
                     .color("red")

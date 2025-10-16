@@ -32,40 +32,40 @@ public interface WebController {
     }
 
     default WebModel webModelOfSession(HttpServletRequest request) {
-        WebModel result = new WebModel();
+        WebModel webModel = new WebModel();
         try {
-            result.setIsAuthentication(Boolean.FALSE);
-            result.setHasAuthorization(Boolean.FALSE);
+             webModel.setIsAuthentication(Boolean.FALSE);
+             webModel.setHasAuthorization(Boolean.FALSE);
             HttpSession session = request.getSession(false);
             if (session == null) {
-                return result;
+                return  webModel ;
             }
-            result.setUsername((String) session.getAttribute("username"));
-            result.setName((String) session.getAttribute("name"));
+            webModel.setUsername((String) session.getAttribute("username"));
+           webModel.setName((String) session.getAttribute("name"));
             if (session.getAttribute("iduser").toString() == null || session.getAttribute("iduser").toString().equals("")) {
-                result.setIduser(0L);
+               webModel.setIduser(0L);
             } else {
-                result.setIduser(Long.parseLong(session.getAttribute("iduser").toString()));
+               webModel.setIduser(Long.parseLong(session.getAttribute("iduser").toString()));
             }
           
-            result.setUserRol((String) session.getAttribute("userRol"));
+          webModel.setUserRol((String) session.getAttribute("userRol"));
 
             if (session.getAttribute("idrol").toString() == null || session.getAttribute("idrol").toString().equals("")) {
-                result.setIdRol(0L);
+              webModel.setIdRol(0L);
             } else {
-                result.setIdRol(Long.parseLong(session.getAttribute("idrol").toString()));
+               webModel.setIdRol(Long.parseLong(session.getAttribute("idrol").toString()));
             }
 
-            result.setPrimaryBtnClass(primaryBtnClass(request));
-            result.setSecondaryBtnClass(secondaryBtnClass(request));
-            result.setIsAuthentication(isAuthentication(request));
-            result.setCssFramework(cssFramework(request));
-            result.setIsTailwind(isTailwind(request));
+       webModel.setPrimaryBtnClass(primaryBtnClass(request));
+         webModel.setSecondaryBtnClass(secondaryBtnClass(request));
+           webModel.setIsAuthentication(isAuthentication(request));
+           webModel.setCssFramework(cssFramework(request));
+            webModel.setIsTailwind(isTailwind(request));
 
         } catch (Exception e) {
             System.out.println("\t");
         }
-        return result;
+        return webModel;
     }
 
     default Boolean hasAuthorization(HttpServletRequest request, List<String> validRole) {
