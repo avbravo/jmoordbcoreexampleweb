@@ -5,6 +5,7 @@
 package fish.payara.crud.form;
 
 import com.jmoordb.core.ui.Div;
+import com.jmoordb.core.ui.Form;
 import com.jmoordb.core.ui.Input;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Tag;
@@ -29,6 +30,10 @@ public class ClienteForm implements WebComponent {
     @Override
     public String render() {
 //        Tag form = new Tag("form").withAttribute("id", "cliente-form");
+
+
+  
+
         Tag form = new Tag("form")
                 .withAttribute("id", "cliente-form")
                 .withAttribute("action", "clientes") // Apunta a @WebServlet("/clientes")

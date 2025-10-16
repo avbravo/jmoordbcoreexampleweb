@@ -24,8 +24,23 @@ public class Form extends Tag {
 
     }
 
+    public Form add(WebComponent webComponent) {
+     if (webComponent!= null) {
+         withChild(webComponent);
+        }
+
+        return this;
+    }
     public Form id(String id) {
         withAttribute("id", id);
+        return this;
+    }
+    public Form action(String action) {
+        withAttribute("action",action);
+        return this;
+    }
+    public Form method(String method) {
+        withAttribute("method",method);
         return this;
     }
 
