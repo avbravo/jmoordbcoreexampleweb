@@ -4,8 +4,25 @@
  */
 package com.jmoordb.core.ui.login;
 
+import com.jmoordb.core.ui.A;
+import com.jmoordb.core.ui.Body;
+import com.jmoordb.core.ui.Button;
+import com.jmoordb.core.ui.ButtonType;
+import com.jmoordb.core.ui.Div;
+import com.jmoordb.core.ui.Form;
+import com.jmoordb.core.ui.H2;
+import com.jmoordb.core.ui.Head;
+import com.jmoordb.core.ui.Html;
+import com.jmoordb.core.ui.Label;
+import com.jmoordb.core.ui.Link;
+import com.jmoordb.core.ui.Meta;
+import com.jmoordb.core.ui.Script;
+import com.jmoordb.core.ui.Style;
 import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.Title;
 import com.jmoordb.core.ui.WebComponent;
+import com.jmoordb.core.ui.input.InputPassword;
+import com.jmoordb.core.ui.input.InputText;
 
 public class LoginSimple implements WebComponent {
 
@@ -25,55 +42,56 @@ public class LoginSimple implements WebComponent {
     @Override
     public String render() {
         // 1. Contenido del Formulario
-        Tag formContent = new Tag("form")
-                .withAttribute("action", contextPath + "/login")
-                .withAttribute("method", "POST");
+        Form formContent = new Form()
+                .action( contextPath + "/login")
+                .method( "POST");
 
         // 1.1. Campo Usuario
-        formContent.withChild(new Tag("div").withClass("mb-3")
-                .withChild(new Tag("label").withAttribute("for", "username").withClass("form-label").withText("Username:"))
-                .withChild(new Tag("input").withAttribute("type", "text").withClass("form-control").withAttribute("id", "username").withAttribute("name", "username").withAttribute("required", "true"))
+        formContent.add(
+                 new Div().withClass("mb-3")
+                .add(new Label().forField("username").styleClass("form-label").text("Username:"))
+                .add(new InputText().styleClass("form-control").id("username").name("username").required(Boolean.TRUE))
         );
 
         // 1.2. Campo Contraseña
-        formContent.withChild(new Tag("div").withClass("mb-3")
-                .withChild(new Tag("label").withAttribute("for", "password").withClass("form-label").withText("Password:"))
-                .withChild(new Tag("input").withAttribute("type", "password").withClass("form-control").withAttribute("id", "password").withAttribute("name", "password").withAttribute("required", "true"))
+        formContent.add(new Div().withClass("mb-3")
+                .add(new Label().forField("password").styleClass("form-label").text("Password:"))
+                .add(new InputPassword().styleClass("form-control").id("password").name("password").required(Boolean.TRUE))
         );
 
         // 1.3. Botón de Submit
-        formContent.withChild(new Tag("div").withClass("d-grid gap-2")
-                .withChild(new Tag("button").withAttribute("type", "submit").withClass("btn btn-primary").withText("Log In"))
+        formContent.add(new Div().styleClass("d-grid gap-2")
+                .add(new Button().type(ButtonType.SUBMIT).styleClass("btn btn-primary").text("Log In"))
         );
 
         // Botón/Enlace para Olvidó Contraseña (Envía al nuevo servlet /forgot-password)
-        formContent.withChild(new Tag("a").withAttribute("href", contextPath + "/forgot-password")
-                .withClass("btn btn-link text-decoration-none text-center")
-                .withText("¿Olvidaste tu Contraseña?"));
+        formContent.add(new A().href(contextPath + "/forgot-password")
+                .styleClass("btn btn-link text-decoration-none text-center")
+                .text("¿Olvidaste tu Contraseña?"));
 
         // 2. Card Body (Contenido Central del Card)
-        Tag cardBody = new Tag("div").withClass("card-body"); // <-- Creamos la variable TAG aquí
+        Div cardBody = new Div().styleClass("card-body"); // <-- Creamos la variable TAG aquí
 
         // Inyectar alerta de error si existe (safe call en la variable cardBody)
         if (errorAlert != null) {
-            cardBody.withChild(errorAlert);
+            cardBody.add(errorAlert);
         }
 
         // Inyectar formulario
-        cardBody.withChild(formContent);
+        cardBody.add(formContent);
 
         // 3. Estructura de Tarjeta de Bootstrap
-        Tag loginCard = new Tag("div").withClass("card shadow-lg")
-                .withChild(new Tag("div").withClass("card-header bg-dark text-white text-center")
-                        .withChild(new Tag("h2").withText(title)))
-                .withChild(cardBody); // <-- Añadimos el cardBody ensamblado
+        Div loginCard = new Div().styleClass("card shadow-lg")
+                .add(new Div().styleClass("card-header bg-dark text-white text-center")
+                        .add(new H2().text(title)))
+                .add(cardBody); // <-- Añadimos el cardBody ensamblado
 
          // 4. Ensamblaje de la página completa
         // ⭐ AÑADIR CLASE 'dark-mode' AL BODY
-        Tag body = new Tag("body").withClass("dark-mode") 
-                .withChild(new Tag("div").withClass("container-login") // Contenedor para centrar
-                    .withChild(loginCard))
-                .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
+        Body body = new Body().styleClass("dark-mode") 
+                .add(new Div().styleClass("container-login") // Contenedor para centrar
+                    .add(loginCard))
+                .add(new Script().src("https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
 
         // 5. Estilos y Ensamblaje HTML
         String customStyles = ""
@@ -92,16 +110,16 @@ public class LoginSimple implements WebComponent {
                 + ".form-control:focus { background-color: #343a40; color: var(--text-color); border-color: #6c757d; box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25); }";
 
         
-        Tag html = new Tag("html")
-                .withChild(new Tag("head")
-                        .withChild(new Tag("meta").withAttribute("charset", "UTF-8"))
-                        .withChild(new Tag("meta").withAttribute("name", "viewport").withAttribute("content", "width=device-width, initial-scale=1"))
-                        .withChild(new Tag("title").withText(metaTitle))
-                        .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"))
-                        .withChild(new Tag("style").withText("body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f8f9fa; } .card { width: 100%; max-width: 400px; } body.dark-mode { background-color: #212529; }"))
-                         .withChild(new Tag("style").withText(customStyles)) // Estilos Inyectados 
+        Html html = new Html()
+                .add(new Head()
+                        .add(new Meta().charset("UTF-8"))
+                        .add(new Meta().name("viewport").content("width=device-width, initial-scale=1"))
+                        .add(new Title().text(metaTitle))
+                        .add(new Link().rel("stylesheet").href("https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"))
+                        .add(new Style().text("body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f8f9fa; } .card { width: 100%; max-width: 400px; } body.dark-mode { background-color: #212529; }"))
+                         .add(new Style().text(customStyles)) // Estilos Inyectados 
                 )
-                .withChild(body);
+                .add(body);
 
         return html.render();
     }
