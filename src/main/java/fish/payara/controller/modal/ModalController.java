@@ -5,10 +5,10 @@ import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.WebController;
 import com.jmoordb.core.ui.alert.NotificationModal;
-import com.jmoordb.core.ui.buttons.Button;
+import com.jmoordb.core.ui.Button;
 import com.jmoordb.core.ui.Script;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
-import com.jmoordb.core.ui.model.WebModel;
+import com.jmoordb.core.ui.model.WebModelSession;
 import com.jmoordb.core.ui.panel.Panel;
 import fish.payara.dashboard.MenuSideBar;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,7 +22,7 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/modal"})
 public class ModalController extends HttpServlet implements WebController {
 
-    WebModel webModel = new WebModel();
+    WebModelSession webModel = new WebModelSession();
     List<Tag> headers = new ArrayList<>();
 
     @Override
@@ -79,14 +79,16 @@ public class ModalController extends HttpServlet implements WebController {
                     "Error"
             );
 
-            Button buttonInfo = new Button("Mostrar Modal")
+            Button buttonInfo = new Button()
+                    .text("Mostrar Modal")
                     .color("blue")
                     .onClick("openInfoModalEvent()");
 
             Script scriptCloseInfoModal = new Script()
                     .closeModal("infoModal", "openInfoModalEvent");
 
-            Button buttonError = new Button("Error")
+            Button buttonError = new Button()
+                    .text("Error")
                     .color("red")
                     .onClick("openErrorModal()");
 

@@ -10,7 +10,7 @@ import com.jmoordb.core.ui.Tag;
  *
  * @author avbravo
  */
-public class Label extends Tag {
+public class Link extends Tag {
 
     /**
      * Color red, blue
@@ -18,35 +18,33 @@ public class Label extends Tag {
      * @param tagName
      * @param color
      */
-    public Label() {
+    public Link() {
 
-        super("label");
+        super("link");
 
     }
 
-   
+    public Link add(WebComponent webComponent) {
+     if (webComponent!= null) {
+         withChild(webComponent);
+        }
+
+        return this;
+    }
+  
+    
+     public Link rel(String rel) {
+        withAttribute("rel", rel);
+        return this;
+    }
+     public Link href(String href) {
+        withAttribute("href", href);
+        return this;
+    }
     
 
-    public Label text(String text) {
-        withText(text);
-        return this;
-    }
-  public Label styleClass(String styleClass) {
-      withClass(styleClass);
-        return this;
-    }
-
-
-    public Label forField(String field) {
-        withAttribute("for", field);
-        return this;
-    }
-    public Label id(String id) {
-        withAttribute("id", id);
-        return this;
-    }
-   
-
+     
+     
     public Tag build() {
         return this;
     }

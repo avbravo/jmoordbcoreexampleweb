@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.jmoordb.core.ui;
+package com.jmoordb.core.ui.input;
 
+import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.Tag;
 
 /**
  *
  * @author avbravo
  */
-public class Input extends Tag {
+public class InputFile extends Tag {
 
     /**
      * Color red, blue
@@ -18,60 +19,50 @@ public class Input extends Tag {
      * @param tagName
      * @param color
      */
-    public Input() {
+    public InputFile() {
 
-        super("label");
+        super("input");
+        withAttribute("type", "file");
 
     }
 
-    public Input text(String text) {
+    public InputFile text(String text) {
         withText(text);
         return this;
     }
+    public InputFile accept(String accept) {
+        withAttribute("id", accept);
+        return this;
+    }
 
-    public Input id(String id) {
+    public InputFile id(String id) {
         withAttribute("id", id);
         return this;
     }
     
-        public Input name(String name) {
+        public InputFile name(String name) {
         withAttribute("name", name);
         return this;
     }
 
-    public Input typeInput(TypeInput typeInput) {
-        switch (typeInput) {
-            case NUMBER:
-                withAttribute("type", "number");
-                break;
-            case TEXT:
-                withAttribute("type", "text");
-                break;
-            default:
-                withAttribute("type", "text");
-
-        }
-
-        return this;
-    }
-    public Input classStyle(String labelClass) {
-      withClass(labelClass);
+     public InputFile styleClass(String styleClass) {
+      withClass(styleClass);
         return this;
     }
 
 
 
-    public Input value(String value) {
+    public InputFile value(String value) {
         withAttribute("value", value);
         return this;
     }
 
-    public Input step(String step) {
+    public InputFile step(String step) {
         withAttribute("step", step);
         return this;
     }
 
-    public Input readonly(Boolean readonly) {
+    public InputFile readonly(Boolean readonly) {
         if (readonly) {
             withAttribute("readonly", "");
         }
@@ -79,7 +70,7 @@ public class Input extends Tag {
         return this;
     }
 
-    public Input required(Boolean required) {
+    public InputFile required(Boolean required) {
         if (required) {
             withAttribute("required", "true");
         }

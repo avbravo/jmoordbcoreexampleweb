@@ -96,7 +96,9 @@ public class LoginController extends HttpServlet {
         if (configurationProperties.getLoginStyle().equals("login-advanced")) {
             submittedRole = request.getParameter("userRol"); // <-- NUEVO
         }
-
+        System.out.println("\t...................................................................");
+        System.out.println("\t username "+submittedUsername +  " : "+submittedPassword + " : "+submittedRole);
+        System.out.println("\t...................................................................");
         // 2. Lógica de autenticación: Compara los valores ingresados con los válidos
         boolean credentialsValid = Boolean.FALSE;
 

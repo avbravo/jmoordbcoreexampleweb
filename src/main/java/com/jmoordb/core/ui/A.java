@@ -10,46 +10,35 @@ import com.jmoordb.core.ui.Tag;
  *
  * @author avbravo
  */
-public class Div extends Tag{
+public class A extends Tag{
     
     /**
      * Color red, blue
      * @param tagName
      * @param color 
      */
-    public Div() {
+    public A() {
         
-        super("div");
+        super("a");
            
     }
     
-     public Div styleClass(String styleClass) {
+    
+     public A href(String href) {
+        withAttribute("href",href);
+        return this;
+    }
+     public A text(String text) {
+         withText(text);
+        return this;
+    }
+    
+        
+    public A styleClass(String styleClass) {
       withClass(styleClass);
         return this;
     }
 
-       public Div text(String text) {
-        withText(text);
-        return this;
-    }
-     public Div id(String id) {
-        withAttribute("id", id);
-        return this;
-    }
-    
-        public Div name(String name) {
-        withAttribute("name", name);
-        return this;
-    }
-    
-        
-         public Div add(WebComponent webComponent) {
-     if (webComponent!= null) {
-         withChild(webComponent);
-        }
-
-        return this;
-    }
    public Tag build(){
       return this;
    }

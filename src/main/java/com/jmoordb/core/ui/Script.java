@@ -30,6 +30,11 @@ public class Script extends Tag{
 
         return this;
     }
+     public Script src(String src){
+     withAttribute("src", src);
+
+        return this;
+    }
   
      public Tag build(){
       return this;

@@ -4,16 +4,13 @@
  */
 package com.jmoordb.core.ui.model;
 
-import com.jmoordb.core.ui.menu.MenuLink;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
  *
  * @author avbravo
  */
-public class WebModel {
+public class WebModelSession {
 
     Boolean isAuthentication;
     Boolean hasAuthorization;
@@ -28,10 +25,10 @@ public class WebModel {
     Boolean isTailwind = Boolean.FALSE;
   
 
-    public WebModel() {
+    public WebModelSession() {
     }
 
-    public WebModel(Boolean isAuthentication, Boolean hasAuthorization, String username, String name, Long iduser, String userRol, Long idRol, String primaryBtnClass, String secondaryBtnClass, String cssFramework) {
+    public WebModelSession(Boolean isAuthentication, Boolean hasAuthorization, String username, String name, Long iduser, String userRol, Long idRol, String primaryBtnClass, String secondaryBtnClass, String cssFramework) {
         this.isAuthentication = isAuthentication;
         this.hasAuthorization = hasAuthorization;
         this.username = username;
@@ -162,7 +159,7 @@ public class WebModel {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final WebModel other = (WebModel) obj;
+        final WebModelSession other = (WebModelSession) obj;
         if (!Objects.equals(this.username, other.username)) {
             return false;
         }

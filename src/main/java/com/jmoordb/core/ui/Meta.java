@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.jmoordb.core.ui.buttons;
+package com.jmoordb.core.ui;
 
 import com.jmoordb.core.ui.Tag;
 
@@ -10,7 +10,7 @@ import com.jmoordb.core.ui.Tag;
  *
  * @author avbravo
  */
-public class Button extends Tag {
+public class Meta extends Tag {
 
     /**
      * Color red, blue
@@ -18,33 +18,42 @@ public class Button extends Tag {
      * @param tagName
      * @param color
      */
-    public Button(String tagName) {
+    public Meta() {
 
-        super("button");
-        withText(tagName);
-        
+        super("meta");
 
     }
 
-    public Button id(String id) {
-        withAttribute("id", id);
+    public Meta add(WebComponent webComponent) {
+     if (webComponent!= null) {
+         withChild(webComponent);
+        }
+
         return this;
     }
-    public Button color(String color) {
-       withClass("px-4 py-2 bg-" + color + "-500 text-white rounded hover:bg-" + color + "-600 dark:bg-" + color + "-700 dark:hover:bg-" + color + "-800");
+  
+        public Meta text(String text) {
+        withText(text);
         return this;
     }
-    public Button name(String name) {
+
+     public Meta charset(String charset) {
+        withAttribute("charset", charset);
+        return this;
+    }
+     public Meta name(String name) {
         withAttribute("name", name);
         return this;
     }
-
-    public Button onClick(String function) {
-        withAttribute("onclick", function);
+     public Meta content(String content) {
+        withAttribute("content", content);
         return this;
     }
 
+     
+     
     public Tag build() {
         return this;
     }
+
 }

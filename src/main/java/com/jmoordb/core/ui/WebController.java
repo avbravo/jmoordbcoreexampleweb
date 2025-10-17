@@ -4,7 +4,7 @@
  */
 package com.jmoordb.core.ui;
 
-import com.jmoordb.core.ui.model.WebModel;
+import com.jmoordb.core.ui.model.WebModelSession;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
@@ -31,8 +31,8 @@ public interface WebController {
         return result;
     }
 
-    default WebModel webModelOfSession(HttpServletRequest request) {
-        WebModel webModel = new WebModel();
+    default WebModelSession webModelOfSession(HttpServletRequest request) {
+        WebModelSession webModel = new WebModelSession();
         try {
              webModel.setIsAuthentication(Boolean.FALSE);
              webModel.setHasAuthorization(Boolean.FALSE);

@@ -4,54 +4,62 @@
  */
 package com.jmoordb.core.ui;
 
-import com.jmoordb.core.ui.Tag;
-
 /**
  *
  * @author avbravo
  */
-public class Div extends Tag{
-    
+public class Select extends Tag {
+
     /**
      * Color red, blue
+     *
      * @param tagName
-     * @param color 
+     * @param color
      */
-    public Div() {
-        
-        super("div");
-           
-    }
-    
-     public Div styleClass(String styleClass) {
-      withClass(styleClass);
-        return this;
+    public Select() {
+
+        super("select");
+
     }
 
-       public Div text(String text) {
-        withText(text);
-        return this;
-    }
-     public Div id(String id) {
+   
+    public Select id(String id) {
         withAttribute("id", id);
         return this;
     }
     
-        public Div name(String name) {
+        public Select name(String name) {
         withAttribute("name", name);
         return this;
     }
+
     
-        
-         public Div add(WebComponent webComponent) {
+  public Select styleClass(String styleClass) {
+      withClass(styleClass);
+        return this;
+    }
+
+
+
+
+    public Select required(Boolean required) {
+        if (required) {
+            withAttribute("required", "true");
+        }
+
+        return this;
+    }
+
+    
+      public Select add(WebComponent webComponent) {
      if (webComponent!= null) {
          withChild(webComponent);
         }
 
         return this;
     }
-   public Tag build(){
-      return this;
-   }
-    
+    public Tag build() {
+        return this;
+    }
+
 }

@@ -8,6 +8,6 @@ package com.jmoordb.core.ui;
  *
  * @author avbravo
  */
-public enum TypeInput {
-    NUMBER, TEXT, PASSWORD
+public enum ButtonType {
+    SUBMIT,RESET,BUTTON
 }
