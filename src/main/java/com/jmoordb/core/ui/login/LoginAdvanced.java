@@ -91,52 +91,39 @@ public class LoginAdvanced implements WebComponent {
                 .add(new Label().forField("username").styleClass("form-label").text("Username:"))
                 .add(new Tag("input").withAttribute("type", "text").withClass("form-control").withAttribute("id", "username").withAttribute("name", "username").withAttribute("required", "true"))
         );
-       
 
 //        // 1.3. Campo Password
         formContent.add(new Div().styleClass("mb-3")
                 .add(new Label().forField("password").styleClass("form-label").text("Password:"))
                 .add(new InputPassword().styleClass("form-control").id("password").name("password").required(Boolean.TRUE))
         );
-       
-
-
 
         // 1.4. Botones (Login + Olvidó Contraseña)
         Div buttonsContainer = new Div().styleClass("d-grid gap-2 mb-3");
 
-        
         buttonsContainer.add(
-                
-        new Button().type(ButtonType.SUBMIT).styleClass("btn btn-primary").text("Log in")
+                new Button().type(ButtonType.SUBMIT).styleClass("btn btn-primary").text("Log in")
         );
 
         // Enlace para Olvidó Contraseña
         buttonsContainer.withChild(new A().href(contextPath + "/forgot-password")
                 .styleClass("btn btn-link text-decoration-none text-center")
                 .text("¿Olvidaste tu Contraseña?"));
-        
-     
-        
-        
-        
 
         formContent.withChild(buttonsContainer);
 
         // 2. Card Body, Header y Ensamblaje (Similar a Login)
-       Div cardBody = new Div().styleClass("card-body");
+        Div cardBody = new Div().styleClass("card-body");
 
         if (errorAlert != null) {
             cardBody.withChild(errorAlert);
         }
         cardBody.withChild(formContent);
-        
-        
 
-       Div loginCard = new Div().styleClass("card shadow-lg")
+        Div loginCard = new Div().styleClass("card shadow-lg")
                 .add(
                         new Div().styleClass("card-header bg-dark text-white text-center")
-                        .add(new H2().text(title))
+                                .add(new H2().text(title))
                 )
                 .add(cardBody);
 
@@ -167,7 +154,7 @@ public class LoginAdvanced implements WebComponent {
                 + ".form-control:focus, .form-select:focus { background-color: #343a40; color: var(--text-color); border-color: #6c757d; box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25); }";
 
         // Body recibe la clase 'dark-mode'
-       Body body = new Body().styleClass("dark-mode")
+        Body body = new Body().styleClass("dark-mode")
                 .add(new Div().text(content))
                 .add(
                         new Script().src("https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js")
@@ -189,4 +176,6 @@ public class LoginAdvanced implements WebComponent {
     public WebComponent build() {
         return this;
     }
+
+    
 }

@@ -43,14 +43,14 @@ public class LoginSimple implements WebComponent {
     public String render() {
         // 1. Contenido del Formulario
         Form formContent = new Form()
-                .action( contextPath + "/login")
-                .method( "POST");
+                .action(contextPath + "/login")
+                .method("POST");
 
         // 1.1. Campo Usuario
         formContent.add(
-                 new Div().withClass("mb-3")
-                .add(new Label().forField("username").styleClass("form-label").text("Username:"))
-                .add(new InputText().styleClass("form-control").id("username").name("username").required(Boolean.TRUE))
+                new Div().withClass("mb-3")
+                        .add(new Label().forField("username").styleClass("form-label").text("Username:"))
+                        .add(new InputText().styleClass("form-control").id("username").name("username").required(Boolean.TRUE))
         );
 
         // 1.2. Campo Contraseña
@@ -86,11 +86,11 @@ public class LoginSimple implements WebComponent {
                         .add(new H2().text(title)))
                 .add(cardBody); // <-- Añadimos el cardBody ensamblado
 
-         // 4. Ensamblaje de la página completa
+        // 4. Ensamblaje de la página completa
         // ⭐ AÑADIR CLASE 'dark-mode' AL BODY
-        Body body = new Body().styleClass("dark-mode") 
+        Body body = new Body().styleClass("dark-mode")
                 .add(new Div().styleClass("container-login") // Contenedor para centrar
-                    .add(loginCard))
+                        .add(loginCard))
                 .add(new Script().src("https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
 
         // 5. Estilos y Ensamblaje HTML
@@ -101,15 +101,12 @@ public class LoginSimple implements WebComponent {
                 + ".container-login { width: 100%; max-width: 400px; }"
                 + ".card { border: 1px solid rgba(255, 255, 255, 0.1); }"
                 + ".card-body.bg-content { background-color: var(--bg-content) !important; color: var(--text-color); }"
-                
                 // ⭐ CAMBIO CLAVE: Colocar el color de los labels en negro (#000000)
-                + "body.dark-mode .form-label { color: #000000 !important; }" 
-                
+                + "body.dark-mode .form-label { color: #000000 !important; }"
                 + "a.btn-link { color: #adb5bd !important; }" // Ajustar enlace para tema oscuro
                 + ".form-control { background-color: #343a40; color: var(--text-color); border-color: #495057; }"
                 + ".form-control:focus { background-color: #343a40; color: var(--text-color); border-color: #6c757d; box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25); }";
 
-        
         Html html = new Html()
                 .add(new Head()
                         .add(new Meta().charset("UTF-8"))
@@ -117,14 +114,16 @@ public class LoginSimple implements WebComponent {
                         .add(new Title().text(metaTitle))
                         .add(new Link().rel("stylesheet").href("https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"))
                         .add(new Style().text("body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f8f9fa; } .card { width: 100%; max-width: 400px; } body.dark-mode { background-color: #212529; }"))
-                         .add(new Style().text(customStyles)) // Estilos Inyectados 
+                        .add(new Style().text(customStyles)) // Estilos Inyectados 
                 )
                 .add(body);
 
         return html.render();
     }
+
+    public WebComponent build() {
+        return this;
+    }
     
-      public WebComponent build(){
-      return this;
-   }
+   
 }

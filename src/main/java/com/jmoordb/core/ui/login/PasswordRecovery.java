@@ -70,9 +70,7 @@ public class PasswordRecovery implements WebComponent {
         buttonsContainer.add(
                 new Button().type(ButtonType.SUBMIT).styleClass("btn btn-warning").text("Enviar Enlace")
         );
-//        buttonsContainer.add(
-//                new Tag("button").withAttribute("type", "submit").withClass("btn btn-warning").withText("Enviar Enlace")
-//        );
+
         formContent.add(buttonsContainer);
 
         // Enlace para volver al Login
