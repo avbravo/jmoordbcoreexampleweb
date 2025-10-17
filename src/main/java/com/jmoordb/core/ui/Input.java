@@ -33,6 +33,11 @@ public class Input extends Tag {
         withAttribute("id", id);
         return this;
     }
+    
+        public Input name(String name) {
+        withAttribute("name", name);
+        return this;
+    }
 
     public Input typeInput(TypeInput typeInput) {
         switch (typeInput) {
@@ -54,10 +59,7 @@ public class Input extends Tag {
         return this;
     }
 
-    public Input name(String name) {
-        withAttribute("name", name);
-        return this;
-    }
+
 
     public Input value(String value) {
         withAttribute("value", value);

@@ -8,7 +8,6 @@ package com.jmoordb.core.ui;
  *
  * @author avbravo
  */
-import com.jmoordb.core.ui.script.ScriptUtil;
 import java.util.*;
 
 public class Tag implements WebComponent {
@@ -36,7 +35,14 @@ public class Tag implements WebComponent {
         }
         return this;
     }
+    public Tag add(WebComponent child) {
+        if (child != null) {
+            childs.add(child);
+        }
+        return this;
+    }
 
+    
     /**
      * Añade contenido de texto simple.
      */

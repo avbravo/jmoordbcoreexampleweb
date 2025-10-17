@@ -20,8 +20,18 @@ public class Div extends Tag{
     public Div() {
         
         super("div");
-   
-        
+           
+    }
+    
+    
+     public Div id(String id) {
+        withAttribute("id", id);
+        return this;
+    }
+    
+        public Div name(String name) {
+        withAttribute("name", name);
+        return this;
     }
     
    public Tag build(){
