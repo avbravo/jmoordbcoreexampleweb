@@ -14,7 +14,7 @@ import com.jmoordb.core.ui.Button;
 import com.jmoordb.core.ui.ButtonType;
 import com.jmoordb.core.ui.Div;
 import com.jmoordb.core.ui.Form;
-import com.jmoordb.core.ui.H3;
+import com.jmoordb.core.ui.headings.H3;
 import com.jmoordb.core.ui.Head;
 import com.jmoordb.core.ui.Html;
 import com.jmoordb.core.ui.Label;

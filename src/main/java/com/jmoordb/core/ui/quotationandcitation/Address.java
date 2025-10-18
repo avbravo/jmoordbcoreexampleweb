@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.jmoordb.core.ui;
+package com.jmoordb.core.ui.quotationandcitation;
 
 import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.WebComponent;
 
 /**
  *
  * @author avbravo
  */
-public class H5 extends Tag {
+public class Address extends Tag {
 
     /**
      * Color red, blue
@@ -18,17 +19,20 @@ public class H5 extends Tag {
      * @param tagName
      * @param color
      */
-    public H5() {
+    public Address() {
 
-        super("h5");
+        super("address");
 
     }
 
-    public H5 text(String text) {
-        withText(text);
+   
+    public Address add(WebComponent webComponent) {
+        if (webComponent != null) {
+            withChild(webComponent);
+        }
+
         return this;
     }
- 
 
     public Tag build() {
         return this;

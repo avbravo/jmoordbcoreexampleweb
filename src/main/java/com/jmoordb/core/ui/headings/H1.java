@@ -2,15 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.jmoordb.core.ui;
+package com.jmoordb.core.ui.headings;
 
+import com.jmoordb.core.ui.Form;
 import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.WebComponent;
 
 /**
  *
  * @author avbravo
  */
-public class H3 extends Tag {
+public class H1 extends Tag {
 
     /**
      * Color red, blue
@@ -18,18 +21,22 @@ public class H3 extends Tag {
      * @param tagName
      * @param color
      */
-    public H3() {
+    public H1() {
 
-        super("h3");
+        super("h1");
 
     }
 
-    public H3 text(String text) {
+    public H1 text(String text) {
         withText(text);
         return this;
     }
- 
+    public H1 style(String style) {
+         withAttribute("style", style);
 
+        return this;
+    }
+   
     public Tag build() {
         return this;
     }

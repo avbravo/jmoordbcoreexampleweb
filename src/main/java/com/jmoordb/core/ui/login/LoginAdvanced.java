@@ -20,13 +20,16 @@ import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.Button;
 import com.jmoordb.core.ui.ButtonType;
-import com.jmoordb.core.ui.H2;
+import com.jmoordb.core.ui.headings.H2;
 import com.jmoordb.core.ui.Head;
 import com.jmoordb.core.ui.Html;
 import com.jmoordb.core.ui.Link;
 import com.jmoordb.core.ui.Meta;
 import com.jmoordb.core.ui.Script;
 import com.jmoordb.core.ui.Style;
+import com.jmoordb.core.ui.P;
+import com.jmoordb.core.ui.headings.H1;
+import com.jmoordb.core.ui.quotationandcitation.BdoType;
 import java.util.Map;
 
 public class LoginAdvanced implements WebComponent {
@@ -86,9 +89,19 @@ public class LoginAdvanced implements WebComponent {
                 .add(selectTag)
         );
 
-        // 1.2. Campo Username
+//<bdo dir="rtl">This text will be written from right to left</bdo>
+        
+        formContent.add(new P()
+                .add(new H1().text("Hola").style("background-color:DodgerBlue;"))
+                .add(new H1().text("Adios").style("background-color:Tomato;"))
+        );
+
+      
+//        // 1.2. Campo Username
         formContent.add(new Div().styleClass("mb-3")
-                .add(new Label().forField("username").styleClass("form-label").text("Username:"))
+                .add(
+                        new Label().forField("username").styleClass("form-label").text("Username:")
+                )
                 .add(new Tag("input").withAttribute("type", "text").withClass("form-control").withAttribute("id", "username").withAttribute("name", "username").withAttribute("required", "true"))
         );
 
@@ -177,5 +190,4 @@ public class LoginAdvanced implements WebComponent {
         return this;
     }
 
-    
 }

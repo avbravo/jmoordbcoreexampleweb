@@ -5,12 +5,13 @@
 package com.jmoordb.core.ui;
 
 import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.WebComponent;
 
 /**
  *
  * @author avbravo
  */
-public class H1 extends Tag {
+public class Br extends Tag {
 
     /**
      * Color red, blue
@@ -18,17 +19,21 @@ public class H1 extends Tag {
      * @param tagName
      * @param color
      */
-    public H1() {
+    public Br() {
 
-        super("h1");
+        super("br");
 
     }
 
-    public H1 text(String text) {
-        withText(text);
+   
+
+    public Br add(WebComponent webComponent) {
+        if (webComponent != null) {
+            withChild(webComponent);
+        }
+
         return this;
     }
- 
 
     public Tag build() {
         return this;

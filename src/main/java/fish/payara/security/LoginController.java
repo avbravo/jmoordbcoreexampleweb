@@ -71,8 +71,7 @@ public class LoginController extends HttpServlet {
         }
         WebComponent login = null;
 
-        System.out.println("loginStyle " + configurationProperties.getLoginStyle());
-        switch (configurationProperties.getLoginStyle()) {
+           switch (configurationProperties.getLoginStyle()) {
             case "login-simple":
                 login = new LoginSimple(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle());
                 break;
