@@ -94,11 +94,18 @@ rol = rol.toUpperCase();
               boolean isModalActive = currentController.equals("ModalController");
             reportLinks.add(new MenuLink("Modal", "/modal", isModalActive, "fas fa-solid fa-window-restore"));
             
-              boolean isFetchlActive = currentController.equals("FetchController");
-            reportLinks.add(new MenuLink("Fetch", "/fetch", isModalActive, "fas fa-solid fa-plug"));
+              boolean isFetchActive = currentController.equals("FetchController");
+            reportLinks.add(new MenuLink("Fetch", "/fetch", isFetchActive, "fas fa-solid fa-plug"));
+            
+              boolean isImageActive = currentController.equals("ImageController");
+            reportLinks.add(new MenuLink("Image", "/image", isImageActive, "fas fa-image"));
+            
+              boolean isJettraViewActive = currentController.equals("JettraView");
+            reportLinks.add(new MenuLink("JettraView", "/api/jettra-view", isJettraViewActive, "fas fa-solid fa-plug"));
             
  
-          
+            boolean isFetchView = currentController.equals("FetchView");
+            reportLinks.add(new MenuLink("Fetch", "/fetch", isFetchView, "fas fa-solid fa-plug"));
             
 
           

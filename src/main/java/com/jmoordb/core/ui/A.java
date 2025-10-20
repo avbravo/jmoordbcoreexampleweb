@@ -38,6 +38,14 @@ public class A extends Tag{
       withClass(styleClass);
         return this;
     }
+    
+      public A add(WebComponent webComponent) {
+        if (webComponent != null) {
+            withChild(webComponent);
+        }
+
+        return this;
+    }
 
    public Tag build(){
       return this;
