@@ -34,7 +34,7 @@ public class Select extends Tag {
     }
 
     
-  public Select styleClass(String styleClass) {
+  public Select addClass(String styleClass) {
       withClass(styleClass);
         return this;
     }

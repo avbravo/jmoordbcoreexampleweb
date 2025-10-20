@@ -49,13 +49,15 @@ public class InputNumber extends Tag {
         return this;
     }
 
-     public InputNumber styleClass(String styleClass) {
-      withClass(styleClass);
+     public InputNumber addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
 
-
-
+    public InputNumber placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
+        return this;
+    }
     public InputNumber value(String value) {
         withAttribute("value", value);
         return this;

@@ -25,7 +25,7 @@ import java.util.List;
  * @author avbravo
  */
 //public abstract class JettraView implements WebController {
-public abstract class JettraView  {
+public abstract class JettraView {
 
     WebModelSession webModel = new WebModelSession();
     @Context
@@ -60,7 +60,7 @@ public abstract class JettraView  {
                 );
 
                 // response.sendRedirect(request.getContextPath() + "/login");
-                System.err.println("<h1>No tiene credenciales para utilizar esta opción");
+  
                 String html2 = "<h1>No tiene credenciales para utilizar esta opción</h1><br>"
                         + "<div class=\"p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400\" role=\"alert\">\n"
                         + "  <span class=\"font-medium\">Danger alert!</span> Change a few things up and try submitting again.\n"
@@ -126,9 +126,7 @@ public abstract class JettraView  {
     }
 
     // NOTA: Para POST/Formularios, la clase hija deberá definir su propio método @POST.
-    
-    
-      Boolean isAuthentication(HttpServletRequest request) {
+    Boolean isAuthentication(HttpServletRequest request) {
         Boolean result = Boolean.FALSE;
         try {
             HttpSession session = request.getSession(false);
@@ -144,35 +142,35 @@ public abstract class JettraView  {
         return result;
     }
 
-      WebModelSession webModelOfSession(HttpServletRequest request) {
+    WebModelSession webModelOfSession(HttpServletRequest request) {
         WebModelSession webModel = new WebModelSession();
         try {
-             webModel.setIsAuthentication(Boolean.FALSE);
-             webModel.setHasAuthorization(Boolean.FALSE);
+            webModel.setIsAuthentication(Boolean.FALSE);
+            webModel.setHasAuthorization(Boolean.FALSE);
             HttpSession session = request.getSession(false);
             if (session == null) {
-                return  webModel ;
+                return webModel;
             }
             webModel.setUsername((String) session.getAttribute("username"));
-           webModel.setName((String) session.getAttribute("name"));
+            webModel.setName((String) session.getAttribute("name"));
             if (session.getAttribute("iduser").toString() == null || session.getAttribute("iduser").toString().equals("")) {
-               webModel.setIduser(0L);
+                webModel.setIduser(0L);
             } else {
-               webModel.setIduser(Long.parseLong(session.getAttribute("iduser").toString()));
+                webModel.setIduser(Long.parseLong(session.getAttribute("iduser").toString()));
             }
-          
-          webModel.setUserRol((String) session.getAttribute("userRol"));
+
+            webModel.setUserRol((String) session.getAttribute("userRol"));
 
             if (session.getAttribute("idrol").toString() == null || session.getAttribute("idrol").toString().equals("")) {
-              webModel.setIdRol(0L);
+                webModel.setIdRol(0L);
             } else {
-               webModel.setIdRol(Long.parseLong(session.getAttribute("idrol").toString()));
+                webModel.setIdRol(Long.parseLong(session.getAttribute("idrol").toString()));
             }
 
-       webModel.setPrimaryBtnClass(primaryBtnClass(request));
-         webModel.setSecondaryBtnClass(secondaryBtnClass(request));
-           webModel.setIsAuthentication(isAuthentication(request));
-           webModel.setCssFramework(cssFramework(request));
+            webModel.setPrimaryBtnClass(primaryBtnClass(request));
+            webModel.setSecondaryBtnClass(secondaryBtnClass(request));
+            webModel.setIsAuthentication(isAuthentication(request));
+            webModel.setCssFramework(cssFramework(request));
             webModel.setIsTailwind(isTailwind(request));
 
         } catch (Exception e) {
@@ -181,7 +179,7 @@ public abstract class JettraView  {
         return webModel;
     }
 
-      Boolean hasAuthorization(HttpServletRequest request, List<String> validRole) {
+    Boolean hasAuthorization(HttpServletRequest request, List<String> validRole) {
         Boolean result = Boolean.FALSE;
         try {
             HttpSession session = request.getSession(false);
@@ -197,7 +195,7 @@ public abstract class JettraView  {
         return result;
     }
 
-      public String cssFramework(HttpServletRequest request) {
+    public String cssFramework(HttpServletRequest request) {
         String result = "";
         try {
             result = (String) request.getSession().getAttribute("cssFramework");
@@ -207,7 +205,7 @@ public abstract class JettraView  {
         return result;
     }
 
-      public Boolean isTailwind(HttpServletRequest request) {
+    public Boolean isTailwind(HttpServletRequest request) {
         Boolean result = Boolean.FALSE;
         try {
             boolean isTailwind = "tailwind".equals(cssFramework(request));
@@ -217,7 +215,7 @@ public abstract class JettraView  {
         return result;
     }
 
-      public String primaryBtnClass(HttpServletRequest request) {
+    public String primaryBtnClass(HttpServletRequest request) {
         String result = "";
         try {
             result = isTailwind(request)
@@ -229,7 +227,7 @@ public abstract class JettraView  {
         return result;
     }
 
-      public String secondaryBtnClass(HttpServletRequest request) {
+    public String secondaryBtnClass(HttpServletRequest request) {
         String result = "";
         try {
             result = isTailwind(request)
@@ -241,7 +239,5 @@ public abstract class JettraView  {
         }
         return result;
     }
-
-  
 
 }

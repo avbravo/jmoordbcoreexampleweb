@@ -41,12 +41,15 @@ public class InputColor extends Tag {
         return this;
     }
 
-     public InputColor styleClass(String styleClass) {
-      withClass(styleClass);
+     public InputColor addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
 
-
+    public InputColor placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
+        return this;
+    }
 
     public InputColor value(String value) {
         withAttribute("value", value);

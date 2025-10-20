@@ -41,8 +41,8 @@ public class InputHidden extends Tag {
         return this;
     }
 
-     public InputHidden styleClass(String styleClass) {
-      withClass(styleClass);
+     public InputHidden addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
 

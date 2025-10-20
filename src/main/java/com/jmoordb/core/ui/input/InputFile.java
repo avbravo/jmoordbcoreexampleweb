@@ -45,12 +45,15 @@ public class InputFile extends Tag {
         return this;
     }
 
-     public InputFile styleClass(String styleClass) {
-      withClass(styleClass);
+     public InputFile addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
 
-
+    public InputFile placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
+        return this;
+    }
 
     public InputFile value(String value) {
         withAttribute("value", value);

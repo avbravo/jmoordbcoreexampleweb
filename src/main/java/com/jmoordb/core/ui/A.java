@@ -34,7 +34,7 @@ public class A extends Tag{
     }
     
         
-    public A styleClass(String styleClass) {
+    public A addClass(String styleClass) {
       withClass(styleClass);
         return this;
     }

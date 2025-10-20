@@ -1,6 +1,8 @@
 package com.jmoordb.core.ui.alert; // ⭐ Paquete reutilizable
 
-import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.Button;
+import com.jmoordb.core.ui.Div;
+import com.jmoordb.core.ui.P;
 import com.jmoordb.core.ui.WebComponent;
 
 public class NotificationModal implements WebComponent {
@@ -51,28 +53,28 @@ public class NotificationModal implements WebComponent {
         }
 
         // Estructura HTML del Modal
-        return new Tag("div").withAttribute("id", id).withClass("hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50")
-             .withChild(new Tag("div").withClass("relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800")
-             .withChild(new Tag("div").withClass("mt-3 text-center")
+        return new Div().id(id).addClass("hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50")
+             .add(new Div().addClass("relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800")
+             .add(new Div().addClass("mt-3 text-center")
              
              // Icono Container
-             .withChild(
-                 new Tag("div").withClass("mx-auto flex items-center justify-center h-12 w-12 rounded-full " + iconContainerClass)
+             .add(
+                 new Div().addClass("mx-auto flex items-center justify-center h-12 w-12 rounded-full " + iconContainerClass)
                      .withText(iconHtml) 
              )
              
              // Título
-             .withChild(new Tag("h3").withClass("text-lg leading-6 font-medium text-gray-900 mt-2 dark:text-white").withText(title))
+             .add(new Div().addClass("text-lg leading-6 font-medium text-gray-900 mt-2 dark:text-white").withText(title))
              
              // Detalle
-             .withChild(new Tag("div").withClass("mt-2 px-7 py-3")
-             .withChild(new Tag("p").withClass("text-sm text-gray-500 dark:text-gray-400").withText(detail)))
+             .add(new Div().addClass("mt-2 px-7 py-3")
+             .add(new P().addClass("text-sm text-gray-500 dark:text-gray-400").withText(detail)))
              
              // Botón Cerrar
-             .withChild(new Tag("div").withClass("items-center px-4 py-3")
-             .withChild(new Tag("button").withAttribute("id", id + "-close")
-             .withClass("px-4 py-2 text-white rounded-md w-full shadow-sm " + buttonClass) 
-             .withText("Cerrar")))))
+             .add(new Div().addClass("items-center px-4 py-3")
+             .add(new Button().id(id + "-close")
+             .addClass("px-4 py-2 text-white rounded-md w-full shadow-sm " + buttonClass) 
+             .text("Cerrar")))))
              
              .render(); 
     }

@@ -41,11 +41,14 @@ public class InputRadio extends Tag {
         return this;
     }
 
-     public InputRadio styleClass(String styleClass) {
-      withClass(styleClass);
+     public InputRadio addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
-
+    public InputRadio placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
+        return this;
+    }
 
 
     public InputRadio value(String value) {

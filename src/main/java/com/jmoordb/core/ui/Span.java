@@ -4,16 +4,13 @@
  */
 package com.jmoordb.core.ui;
 
-import static com.jmoordb.core.ui.ButtonType.BUTTON;
-import static com.jmoordb.core.ui.ButtonType.RESET;
-import static com.jmoordb.core.ui.ButtonType.SUBMIT;
 import com.jmoordb.core.ui.Tag;
 
 /**
  *
  * @author avbravo
  */
-public class Body extends Tag {
+public class Span extends Tag {
 
     /**
      * Color red, blue
@@ -21,29 +18,34 @@ public class Body extends Tag {
      * @param tagName
      * @param color
      */
-    public Body() {
+    public Span() {
 
-        super("body");
+        super("span");
 
     }
 
-    public Body add(WebComponent webComponent) {
-        if (webComponent != null) {
-            withChild(webComponent);
-        }
+   
+    
 
-        return this;
-    }
-
- public Body text(String text) {
+    public Span text(String text) {
         withText(text);
         return this;
     }
-
-    public Body addClass(String styleClass) {
-        withClass(styleClass);
+  public Span addClass(String styleClass) {
+      withClass(styleClass);
         return this;
     }
+
+
+    public Span forField(String field) {
+        withAttribute("for", field);
+        return this;
+    }
+    public Span id(String id) {
+        withAttribute("id", id);
+        return this;
+    }
+   
 
     public Tag build() {
         return this;

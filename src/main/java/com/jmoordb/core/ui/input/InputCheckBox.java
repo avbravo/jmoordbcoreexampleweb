@@ -25,6 +25,11 @@ public class InputCheckBox extends Tag {
         withAttribute("type", "checkbox");
 
     }
+    
+        public InputCheckBox placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
+        return this;
+    }
 
     public InputCheckBox text(String text) {
         withText(text);
@@ -41,11 +46,10 @@ public class InputCheckBox extends Tag {
         return this;
     }
 
-     public InputCheckBox styleClass(String styleClass) {
-      withClass(styleClass);
+     public InputCheckBox addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
-
 
 
     public InputCheckBox value(String value) {

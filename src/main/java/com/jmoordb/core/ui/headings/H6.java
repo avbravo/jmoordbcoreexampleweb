@@ -25,16 +25,23 @@ public class H6 extends Tag {
 
     }
 
+    public H6 addClass(String styleClass) {
+
+        withClass(styleClass);
+        return this;
+    }
+
     public H6 text(String text) {
         withText(text);
         return this;
     }
- 
- public H6 style(String style) {
-         withAttribute("style", style);
+
+    public H6 style(String style) {
+        withAttribute("style", style);
 
         return this;
     }
+
     public Tag build() {
         return this;
     }

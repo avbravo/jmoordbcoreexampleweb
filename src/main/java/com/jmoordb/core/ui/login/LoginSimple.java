@@ -49,28 +49,28 @@ public class LoginSimple implements WebComponent {
         // 1.1. Campo Usuario
         formContent.add(
                 new Div().withClass("mb-3")
-                        .add(new Label().forField("username").styleClass("form-label").text("Username:"))
-                        .add(new InputText().styleClass("form-control").id("username").name("username").required(Boolean.TRUE))
+                        .add(new Label().forField("username").addClass("form-label").text("Username:"))
+                        .add(new InputText().addClass("form-control").id("username").name("username").required(Boolean.TRUE))
         );
 
         // 1.2. Campo Contraseña
         formContent.add(new Div().withClass("mb-3")
-                .add(new Label().forField("password").styleClass("form-label").text("Password:"))
-                .add(new InputPassword().styleClass("form-control").id("password").name("password").required(Boolean.TRUE))
+                .add(new Label().forField("password").addClass("form-label").text("Password:"))
+                .add(new InputPassword().addClass("form-control").id("password").name("password").required(Boolean.TRUE))
         );
 
         // 1.3. Botón de Submit
-        formContent.add(new Div().styleClass("d-grid gap-2")
-                .add(new Button().type(ButtonType.SUBMIT).styleClass("btn btn-primary").text("Log In"))
+        formContent.add(new Div().withClass("d-grid gap-2")
+                .add(new Button().type(ButtonType.SUBMIT).addClass("btn btn-primary").text("Log In"))
         );
 
         // Botón/Enlace para Olvidó Contraseña (Envía al nuevo servlet /forgot-password)
         formContent.add(new A().href(contextPath + "/forgot-password")
-                .styleClass("btn btn-link text-decoration-none text-center")
+                .addClass("btn btn-link text-decoration-none text-center")
                 .text("¿Olvidaste tu Contraseña?"));
 
         // 2. Card Body (Contenido Central del Card)
-        Div cardBody = new Div().styleClass("card-body"); // <-- Creamos la variable TAG aquí
+        Div cardBody = new Div().addClass("card-body"); // <-- Creamos la variable TAG aquí
 
         // Inyectar alerta de error si existe (safe call en la variable cardBody)
         if (errorAlert != null) {
@@ -81,15 +81,15 @@ public class LoginSimple implements WebComponent {
         cardBody.add(formContent);
 
         // 3. Estructura de Tarjeta de Bootstrap
-        Div loginCard = new Div().styleClass("card shadow-lg")
-                .add(new Div().styleClass("card-header bg-dark text-white text-center")
+        Div loginCard = new Div().addClass("card shadow-lg")
+                .add(new Div().addClass("card-header bg-dark text-white text-center")
                         .add(new H2().text(title)))
                 .add(cardBody); // <-- Añadimos el cardBody ensamblado
 
         // 4. Ensamblaje de la página completa
         // ⭐ AÑADIR CLASE 'dark-mode' AL BODY
-        Body body = new Body().styleClass("dark-mode")
-                .add(new Div().styleClass("container-login") // Contenedor para centrar
+        Body body = new Body().addClass("dark-mode")
+                .add(new Div().withClass("container-login") // Contenedor para centrar
                         .add(loginCard))
                 .add(new Script().src("https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
 

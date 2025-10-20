@@ -55,7 +55,7 @@ public class LoginController extends HttpServlet {
         if (errorParam != null && "true".equals(errorParam)) {
             // Usamos la clase AlertComponent para mostrar el error
             errorComponent = new Alert(
-                    "❌ Credenciales inválidas. Por favor, intentá de nuevo.",
+                    "❌Credenciales inválidas",
                     "danger",
                     true
             );

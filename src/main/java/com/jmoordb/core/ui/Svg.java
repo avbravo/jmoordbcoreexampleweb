@@ -10,7 +10,7 @@ import com.jmoordb.core.ui.Tag;
  *
  * @author avbravo
  */
-public class Div extends Tag {
+public class Svg extends Tag {
 
     /**
      * Color red, blue
@@ -18,38 +18,46 @@ public class Div extends Tag {
      * @param tagName
      * @param color
      */
-    public Div() {
+    public Svg() {
 
-        super("div");
+        super("svg");
 
     }
 
-    public Div addClass(String styleClass) {
+    public Svg addClass(String styleClass) {
 
         withClass(styleClass);
         return this;
     }
 
-    public Div text(String text) {
-        withText(text);
-        return this;
-    }
 
-    public Div id(String id) {
-        withAttribute("id", id);
+    public Svg aria_hidden(String aria_hidden ){
+        withAttribute("aria-hidden", aria_hidden);
         return this;
     }
+    
+    public Svg xmlns(String xmlns ){
+        withAttribute("xmlns", xmlns);
+        return this;
+    }
+    
+    public Svg fill(String fill ){
+        withAttribute("fill", fill);
+        return this;
+    }
+    public Svg viewBox(String viewBox ){
+        withAttribute("viewBox", viewBox);
+        return this;
+    }
+    
+    
 
-    public Div name(String name) {
-        withAttribute("name", name);
-        return this;
-    }
-    public Div attribute(String name, String value) {
+    public Svg attribute(String name, String value) {
         withAttribute(name, value);
         return this;
     }
 
-    public Div add(WebComponent webComponent) {
+    public Svg add(WebComponent webComponent) {
         if (webComponent != null) {
             withChild(webComponent);
         }

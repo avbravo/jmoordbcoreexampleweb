@@ -31,7 +31,7 @@ public class Label extends Tag {
         withText(text);
         return this;
     }
-  public Label styleClass(String styleClass) {
+  public Label addClass(String styleClass) {
       withClass(styleClass);
         return this;
     }

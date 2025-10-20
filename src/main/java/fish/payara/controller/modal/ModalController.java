@@ -95,7 +95,7 @@ public class ModalController extends HttpServlet implements WebController {
             Script scriptCloseError = new Script().closeModal("errorModal", "openErrorModal");
 
 // 3. CONSTRUCCIÓN DEL CONTENIDO PRINCIPAL 
-            WebComponent webContent = new Div().styleClass("p-8 min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900")
+            WebComponent webContent = new Div().withClass("p-8 min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900")
                     .withClass(webModel.getIsTailwind() ? "space-y-4" : "") // Añadir espaciado de Tailwind
                     .add(infoModal)
                     .add(buttonInfo)

@@ -56,29 +56,29 @@ public class PasswordRecovery implements WebComponent {
 
         // Campo de Identificación (Username/Email)
         formContent.add(
-                new Div().styleClass("mb-3")
+                new Div().withClass("mb-3")
                         .add(
-                                new Label().forField("identity").styleClass("form-label").text("Usuario o Email:"))
+                                new Label().forField("identity").addClass("form-label").text("Usuario o Email:"))
                         .add(
-                                new InputText().styleClass("form-control").id("identity").name("identity").required(Boolean.TRUE)
+                                new InputText().addClass("form-control").id("identity").name("identity").required(Boolean.TRUE)
                         )
         );
 
         // Botón de Submit
-        Div buttonsContainer = new Div().styleClass("d-grid gap-2");
+        Div buttonsContainer = new Div().addClass("d-grid gap-2");
 
         buttonsContainer.add(
-                new Button().type(ButtonType.SUBMIT).styleClass("btn btn-warning").text("Enviar Enlace")
+                new Button().type(ButtonType.SUBMIT).addClass("btn btn-warning").text("Enviar Enlace")
         );
 
         formContent.add(buttonsContainer);
 
         // Enlace para volver al Login
-        formContent.add(new P().styleClass("mt-3 text-center")
+        formContent.add(new P().addClass("mt-3 text-center")
                 .add(new A().href(contextPath + "/login").text("Volver al Login")));
 
         // 2. Card Body
-        Div cardBody = new Div().styleClass("card-body");
+        Div cardBody = new Div().addClass("card-body");
 
         if (messageAlert != null) {
             cardBody.add(messageAlert);
@@ -86,9 +86,9 @@ public class PasswordRecovery implements WebComponent {
         cardBody.add(formContent);
 
         // 3. Estructura de Tarjeta
-        Div recoveryCard = new Div().styleClass("card shadow-lg")
+        Div recoveryCard = new Div().addClass("card shadow-lg")
                 .add(
-                        new Div().styleClass("card-header bg-warning text-dark text-center")
+                        new Div().addClass("card-header bg-warning text-dark text-center")
                                 .add(
                                         new H3().text("Recuperar Contraseña")))
                 .add(cardBody);

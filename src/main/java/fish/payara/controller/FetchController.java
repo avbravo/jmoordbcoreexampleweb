@@ -66,7 +66,7 @@ public class FetchController extends HttpServlet implements WebController {
 
             Form formContent = new Form();
             formContent.add(
-                    new Div().styleClass("space-y-12")
+                    new Div().withClass("space-y-12")
                             .add(
                                     new Button().text("Fetch").type(ButtonType.BUTTON).id("btnFetch")
                             )
@@ -79,7 +79,7 @@ public class FetchController extends HttpServlet implements WebController {
                     .code(javaScriptCode());
 
             WebComponent webContent = 
-                    new Div().styleClass("p-8 min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900")
+                    new Div().withClass("p-8 min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900")
                     .withClass(webModel.getIsTailwind() ? "space-y-4" : "") // Añadir espaciado de Tailwind
                     .add(formContent)
                     .add(scriptFecth);

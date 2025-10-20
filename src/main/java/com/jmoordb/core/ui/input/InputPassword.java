@@ -41,12 +41,14 @@ public class InputPassword extends Tag {
         return this;
     }
 
-     public InputPassword styleClass(String styleClass) {
-      withClass(styleClass);
+     public InputPassword addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
-
-
+    public InputPassword placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
+        return this;
+    }
 
     public InputPassword value(String value) {
         withAttribute("value", value);

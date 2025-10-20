@@ -27,7 +27,7 @@ public class P extends Tag {
         return this;
     }
 
-    public P styleClass(String styleClass) {
+    public P addClass(String styleClass) {
         withClass(styleClass);
         return this;
     }

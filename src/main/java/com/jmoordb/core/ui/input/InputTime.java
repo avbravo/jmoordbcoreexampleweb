@@ -41,12 +41,15 @@ public class InputTime extends Tag {
         return this;
     }
 
-     public InputTime styleClass(String styleClass) {
-      withClass(styleClass);
+     public InputTime addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
 
-
+    public InputTime placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
+        return this;
+    }
 
     public InputTime value(String value) {
         withAttribute("value", value);

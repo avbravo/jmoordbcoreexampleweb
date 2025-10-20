@@ -36,13 +36,17 @@ public class InputDate extends Tag {
         return this;
     }
     
+        public InputDate placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
+        return this;
+    }
         public InputDate name(String name) {
         withAttribute("name", name);
         return this;
     }
 
-     public InputDate styleClass(String styleClass) {
-      withClass(styleClass);
+     public InputDate addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
 

@@ -10,7 +10,7 @@ import com.jmoordb.core.ui.Tag;
  *
  * @author avbravo
  */
-public class Form extends Tag {
+public class SvgPath extends Tag {
 
     /**
      * Color red, blue
@@ -18,34 +18,34 @@ public class Form extends Tag {
      * @param tagName
      * @param color
      */
-    public Form() {
+    public SvgPath() {
 
-        super("form");
+        super("path");
 
     }
 
-    public Form add(WebComponent webComponent) {
-     if (webComponent!= null) {
-         withChild(webComponent);
-        }
-
+    public SvgPath d(String d) {
+        withAttribute("d", d);
         return this;
     }
-    public Form id(String id) {
-        withAttribute("id", id);
+
+    public SvgPath stroke(String stroke) {
+        withAttribute("stroke", stroke);
         return this;
     }
-    public Form action(String action) {
-        withAttribute("action",action);
+
+    public SvgPath stroke_linecap(String stroke_linecap) {
+        withAttribute("stroke-linecap", stroke_linecap);
         return this;
     }
-    public Form method(String method) {
-        withAttribute("method",method);
+
+    public SvgPath stroke_linejoin(String stroke_linejoin) {
+        withAttribute("stroke-linejoin", stroke_linejoin);
         return this;
     }
-    
-      public Form addClass(String classe) {
-        withAttribute("class", classe);
+
+    public SvgPath stroke_width(String stroke_width) {
+        withAttribute("stroke-width", stroke_width);
         return this;
     }
 

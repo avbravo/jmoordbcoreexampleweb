@@ -41,8 +41,8 @@ public class InputText extends Tag {
         return this;
     }
 
-     public InputText styleClass(String styleClass) {
-      withClass(styleClass);
+     public InputText addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
 
@@ -50,6 +50,10 @@ public class InputText extends Tag {
 
     public InputText value(String value) {
         withAttribute("value", value);
+        return this;
+    }
+    public InputText placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
         return this;
     }
 

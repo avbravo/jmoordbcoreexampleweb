@@ -36,13 +36,17 @@ public class InputEmail extends Tag {
         return this;
     }
     
+        public InputEmail placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
+        return this;
+    }
         public InputEmail name(String name) {
         withAttribute("name", name);
         return this;
     }
 
-     public InputEmail styleClass(String styleClass) {
-      withClass(styleClass);
+     public InputEmail addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
 

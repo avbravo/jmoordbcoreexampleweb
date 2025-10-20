@@ -13,7 +13,7 @@ import com.jmoordb.core.ui.Tag;
  *
  * @author avbravo
  */
-public class Body extends Tag {
+public class Section extends Tag {
 
     /**
      * Color red, blue
@@ -21,13 +21,13 @@ public class Body extends Tag {
      * @param tagName
      * @param color
      */
-    public Body() {
+    public Section() {
 
-        super("body");
+        super("section");
 
     }
 
-    public Body add(WebComponent webComponent) {
+    public Section add(WebComponent webComponent) {
         if (webComponent != null) {
             withChild(webComponent);
         }
@@ -35,12 +35,9 @@ public class Body extends Tag {
         return this;
     }
 
- public Body text(String text) {
-        withText(text);
-        return this;
-    }
 
-    public Body addClass(String styleClass) {
+
+    public Section addClass(String styleClass) {
         withClass(styleClass);
         return this;
     }

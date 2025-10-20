@@ -49,7 +49,7 @@ public class Ul extends Tag {
     /**
      * Establece o concatena clases CSS específicas para la UL.
      */
-   public Ul styleClass(String styleClass) {
+   public Ul addClass(String styleClass) {
       withClass(styleClass);
         return this;
     }

@@ -25,6 +25,11 @@ public class H2 extends Tag {
 
     }
 
+        public H2 addClass(String styleClass) {
+
+        withClass(styleClass);
+        return this;
+    }
     public H2 text(String text) {
         withText(text);
         return this;

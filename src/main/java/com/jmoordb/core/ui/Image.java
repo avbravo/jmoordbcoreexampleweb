@@ -26,7 +26,7 @@ public class Image extends Tag {
 
    
    
-  public Image styleClass(String styleClass) {
+  public Image addClass(String styleClass) {
       withClass(styleClass);
         return this;
     }

@@ -50,7 +50,7 @@ public class Li extends Tag {
     /**
      * Establece o concatena clases CSS específicas para el ítem.
      */
-    public Li classStyle(String cssClass) {
+    public Li addClass(String cssClass) {
         withClass(cssClass);
         return this;
     }

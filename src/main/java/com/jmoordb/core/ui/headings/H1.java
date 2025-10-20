@@ -4,6 +4,7 @@
  */
 package com.jmoordb.core.ui.headings;
 
+import com.jmoordb.core.ui.Div;
 import com.jmoordb.core.ui.Form;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.Tag;
@@ -27,6 +28,12 @@ public class H1 extends Tag {
 
     }
 
+    
+    public H1 addClass(String styleClass) {
+
+        withClass(styleClass);
+        return this;
+    }
     public H1 text(String text) {
         withText(text);
         return this;

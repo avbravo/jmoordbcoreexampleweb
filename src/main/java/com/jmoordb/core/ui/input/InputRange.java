@@ -48,9 +48,12 @@ public class InputRange extends Tag {
         withAttribute("name", name);
         return this;
     }
-
-     public InputRange styleClass(String styleClass) {
-      withClass(styleClass);
+    public InputRange placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
+        return this;
+    }
+     public InputRange addClass(String withClass) {
+      withClass(withClass);
         return this;
     }
 

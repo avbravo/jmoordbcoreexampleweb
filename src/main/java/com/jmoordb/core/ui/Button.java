@@ -28,7 +28,7 @@ public class Button extends Tag {
 
     }
 
-    public Button styleClass(String styleClass) {
+    public Button addClass(String styleClass) {
         withClass(styleClass);
         return this;
     }
@@ -72,6 +72,19 @@ public class Button extends Tag {
 
     public Button onClick(String function) {
         withAttribute("onclick", function);
+        return this;
+    }
+
+    public Button attribute(String name, String value) {
+        withAttribute(name, value);
+        return this;
+    }
+    public Button data_dismiss_target(String data_dismiss_target) {
+        withAttribute("data-dismiss-target", data_dismiss_target);
+        return this;
+    }
+    public Button aria_label(String aria_label) {
+        withAttribute("aria-label",aria_label);
         return this;
     }
 
