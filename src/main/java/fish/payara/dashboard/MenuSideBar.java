@@ -94,6 +94,9 @@ rol = rol.toUpperCase();
               boolean isModalActive = currentController.equals("ModalController");
             reportLinks.add(new MenuLink("Modal", "/modal", isModalActive, "fas fa-solid fa-window-restore"));
             
+              boolean isFetchlActive = currentController.equals("FetchController");
+            reportLinks.add(new MenuLink("Fetch", "/fetch", isModalActive, "fas fa-solid fa-plug"));
+            
  
           
             

@@ -89,12 +89,6 @@ public class LoginAdvanced implements WebComponent {
                 .add(selectTag)
         );
 
-//<bdo dir="rtl">This text will be written from right to left</bdo>
-        
-        formContent.add(new P()
-                .add(new H1().text("Hola").style("background-color:DodgerBlue;"))
-                .add(new H1().text("Adios").style("background-color:Tomato;"))
-        );
 
       
 //        // 1.2. Campo Username

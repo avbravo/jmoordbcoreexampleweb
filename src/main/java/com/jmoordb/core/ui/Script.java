@@ -24,9 +24,18 @@ public class Script extends Tag{
         
         
     }
-    
+//        public Script modalTailwindConfig(){
+//                  withText("<script>tailwind.config = { darkMode: 'class', theme: { extend: {}, }, }</script>");
+//
+//        return this;
+//    }
      public Script closeModal(String modal, String function){
          withText(ScriptUtil.closeModal(modal, function));
+
+        return this;
+    }
+     public Script code(String code){
+         withText(code);
 
         return this;
     }
@@ -35,6 +44,7 @@ public class Script extends Tag{
 
         return this;
     }
+ 
   
      public Tag build(){
       return this;
