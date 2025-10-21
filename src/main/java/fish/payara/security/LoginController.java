@@ -73,11 +73,11 @@ public class LoginController extends HttpServlet {
 
            switch (configurationProperties.getLoginStyle()) {
             case "login-simple":
-                login = new LoginSimple(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle());
+                login = new LoginSimple(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle(),configurationProperties);
                 break;
          
             case "login-advanced":
-                login = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle());
+                login = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle(),configurationProperties);
                 break;
         }
         // Instanciar y renderizar el componente de login

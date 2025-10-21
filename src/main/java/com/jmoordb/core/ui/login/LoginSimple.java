@@ -32,10 +32,11 @@ import com.jmoordb.core.ui.headings.H1;
 import com.jmoordb.core.ui.headings.H4;
 import com.jmoordb.core.ui.headings.H5;
 import com.jmoordb.core.ui.input.InputText;
+import fish.payara.config.ConfigurationProperties;
 import java.util.Map;
 
 public class LoginSimple implements WebComponent {
-
+ ConfigurationProperties configurationProperties;
     private final String contextPath;
     private final WebComponent errorAlert;
     
@@ -49,11 +50,12 @@ public class LoginSimple implements WebComponent {
      * @param errorAlert Componente de alerta (puede ser null).
      * @param userRoles Mapa de roles (value HTML -> texto a mostrar).
      */
-    public LoginSimple(String contextPath, WebComponent errorAlert,  String title, String metaTitle) {
+    public LoginSimple(String contextPath, WebComponent errorAlert,  String title, String metaTitle,ConfigurationProperties configurationProperties) {
         this.contextPath = contextPath;
         this.errorAlert = errorAlert;
         this.title = title;
         this.metaTitle = metaTitle;
+        this.configurationProperties = configurationProperties;
     }
 
     @Override
@@ -122,11 +124,13 @@ public class LoginSimple implements WebComponent {
         if (errorAlert != null) {
             section.add(errorAlert);
         }
-        // Body recibe la clase 'dark-mode'
+
+        
+         // Body recibe la clase 'dark-mode'
         Body body = new Body().addClass("bg-gray-50 dark:bg-gray-900")
                 .add(section)
                 .add(
-                        new Script().src("https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js")
+                        new Script().src(configurationProperties.getFlowbiteMinJs())
                 );
 
         Html html = new Html()
@@ -134,11 +138,12 @@ public class LoginSimple implements WebComponent {
                         .add(new Meta().charset("UTF-8"))
                         .add(new Meta().name("viewport").content("width=device-width, initial-scale=1"))
                         .add(new Meta().text(metaTitle))
-                        .add(new Link().rel("stylesheet").href("https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css"))
-                        .add(new Script().src("https://cdn.tailwindcss.com"))
+                        .add(new Link().rel("stylesheet").href(configurationProperties.getFlowbiteMinCss()))
+                        .add(new Script().src(configurationProperties.getTailwindcssJs()))
                         .add(new Script().code("tailwind.config = {\n  darkMode: 'class',\n }"))
                 )
                 .add(body);
+
 
         return html.render();
 

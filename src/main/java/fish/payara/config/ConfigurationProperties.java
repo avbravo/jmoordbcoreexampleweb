@@ -17,7 +17,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 @ApplicationScoped
 public class ConfigurationProperties {
 
-     // <editor-fold defaultstate="collapsed" desc="Inject">
+    // <editor-fold defaultstate="collapsed" desc="Inject">
     @Inject
     @ConfigProperty(name = "login.style")
     private String loginStyle;
@@ -27,8 +27,7 @@ public class ConfigurationProperties {
     @Inject
     @ConfigProperty(name = "session.minutosExpiracion")
     private Integer sessionMinutosExpiracion;
-    
-    
+
     @Inject
     @ConfigProperty(name = "applicative.title")
     private String applicativeTitle;
@@ -38,7 +37,38 @@ public class ConfigurationProperties {
     @Inject
     @ConfigProperty(name = "applicative.metaTitle")
     private String applicativeMetaTitle;
-    
+
+    /**
+     * CSS y JS
+     *
+     */
+    @Inject
+    @ConfigProperty(name = "flowbite.min.js")
+    private String flowbiteMinJs;
+    @Inject
+    @ConfigProperty(name = "flowbite.min.css")
+ private String flowbiteMinCss;
+// Taildwin
+            @Inject
+    @ConfigProperty(name = "tailwindcss.js")
+ private String tailwindcssJs;
+// Bootstrap
+    @Inject
+    @ConfigProperty(name = "bootstrap.min.css")
+ private String bootstrapMinCss;
+        @Inject
+    @ConfigProperty(name = "bootstrap.bundle.min.js")
+ private String bootstrapBundleMinJs;
+
+//FontAwesome
+                    @Inject
+    @ConfigProperty(name = "font-awesom.all.min.css")
+ private String fontAwesomAllMinCss;
+
+// Chart
+            @Inject
+    @ConfigProperty(name = "chart.umd.min.js")
+     private String chartUmdMinJs;
     
  
 
@@ -52,22 +82,74 @@ public class ConfigurationProperties {
     public String getApplicativeMetaTitle() {
         return applicativeMetaTitle;
     }
-    
-    
-    
-    
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="get">
 
-    public Integer getSessionMinutosExpiracion() {
-        return sessionMinutosExpiracion;
+    public String getFlowbiteMinJs() {
+        return flowbiteMinJs;
+    }
+
+    public void setFlowbiteMinJs(String flowbiteMinJs) {
+        this.flowbiteMinJs = flowbiteMinJs;
+    }
+
+    public String getFlowbiteMinCss() {
+        return flowbiteMinCss;
+    }
+
+    public void setFlowbiteMinCss(String flowbiteMinCss) {
+        this.flowbiteMinCss = flowbiteMinCss;
+    }
+
+    public String getTailwindcssJs() {
+        return tailwindcssJs;
+    }
+
+    public void setTailwindcssJs(String tailwindcssJs) {
+        this.tailwindcssJs = tailwindcssJs;
+    }
+
+    public String getBootstrapMinCss() {
+        return bootstrapMinCss;
+    }
+
+    public void setBootstrapMinCss(String bootstrapMinCss) {
+        this.bootstrapMinCss = bootstrapMinCss;
+    }
+
+    public String getBootstrapBundleMinJs() {
+        return bootstrapBundleMinJs;
+    }
+
+    public void setBootstrapBundleMinJs(String bootstrapBundleMinJs) {
+        this.bootstrapBundleMinJs = bootstrapBundleMinJs;
+    }
+
+    public String getFontAwesomAllMinCss() {
+        return fontAwesomAllMinCss;
+    }
+
+    public void setFontAwesomAllMinCss(String fontAwesomAllMinCss) {
+        this.fontAwesomAllMinCss = fontAwesomAllMinCss;
+    }
+
+    public String getChartUmdMinJs() {
+        return chartUmdMinJs;
+    }
+
+    public void setChartUmdMinJs(String chartUmdMinJs) {
+        this.chartUmdMinJs = chartUmdMinJs;
     }
     
     
     
     
-        public String getLoginStyle() {
+    
+    public Integer getSessionMinutosExpiracion() {
+        return sessionMinutosExpiracion;
+    }
+
+    public String getLoginStyle() {
         return loginStyle;
     }
 
@@ -82,13 +164,6 @@ public class ConfigurationProperties {
     public String getLoginTitle() {
         return loginTitle;
     }
-    
-    
-    
-    
-    
+
 // </editor-fold>
-
-
-    
 }
