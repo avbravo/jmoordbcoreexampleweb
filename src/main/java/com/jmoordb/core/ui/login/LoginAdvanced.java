@@ -95,7 +95,7 @@ public class LoginAdvanced implements WebComponent {
                         new A()
                                 .addClass("flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white")
                                 .add(
-                                        new Image().addClass("w-8 h-8 mr-2").src("https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg").alt("logo")
+                                        new Image().addClass(configurationProperties.getLoginLogoClass()).src(configurationProperties.getLoginLogoSrc()).alt("logo")
                                 )
                                 .add(new H4().text(title).addClass("text-xl font-medium text-gray-900 dark:text-dark")
                                 )

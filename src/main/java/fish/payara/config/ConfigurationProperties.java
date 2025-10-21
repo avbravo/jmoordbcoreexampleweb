@@ -18,12 +18,22 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 public class ConfigurationProperties {
 
     // <editor-fold defaultstate="collapsed" desc="Inject">
+    //Login
     @Inject
     @ConfigProperty(name = "login.style")
     private String loginStyle;
     @Inject
     @ConfigProperty(name = "login.title")
     private String loginTitle;
+    
+     @Inject
+    @ConfigProperty(name = "login.logo.src")
+     private String loginLogoSrc;
+ @Inject
+    @ConfigProperty(name = "login.logo.class")
+ private String loginLogoClass;
+        
+        
     @Inject
     @ConfigProperty(name = "session.minutosExpiracion")
     private Integer sessionMinutosExpiracion;
@@ -85,6 +95,25 @@ public class ConfigurationProperties {
 
     // <editor-fold defaultstate="collapsed" desc="get">
 
+    public String getLoginLogoSrc() {
+        return loginLogoSrc;
+    }
+
+    public void setLoginLogoSrc(String loginLogoSrc) {
+        this.loginLogoSrc = loginLogoSrc;
+    }
+
+    public String getLoginLogoClass() {
+        return loginLogoClass;
+    }
+
+    public void setLoginLogoClass(String loginLogoClass) {
+        this.loginLogoClass = loginLogoClass;
+    }
+
+    
+    
+    
     public String getFlowbiteMinJs() {
         return flowbiteMinJs;
     }
