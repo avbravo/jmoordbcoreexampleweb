@@ -1,5 +1,20 @@
 # Tareas
 
+
+Taildwincss componentes https://tailwindcss.com/plus/ui-blocks/application-ui/feedback/alerts
+
+Flowbite
+https://flowbite.com/docs/getting-started/introduction/
+
+HopeUI
+https://hopeui.iqonic.design/
+
+
+HTML ETIQUETAS PARA USAR
+https://www.w3schools.com/html/html_images.asp
+
+
+
 ## Login
 - [x] Mejorar el login con Folbwie
 - [x] En el login pasar la imagen de logo desde Config
