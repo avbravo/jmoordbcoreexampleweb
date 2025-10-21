@@ -12,6 +12,7 @@ package fish.payara.security;
 
 import com.jmoordb.core.ui.alert.Alert;
 import com.jmoordb.core.ui.WebComponent;
+import com.jmoordb.core.ui.alert.AlertType;
 import com.jmoordb.core.ui.login.PasswordRecovery;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -33,7 +34,7 @@ public class ForgotPasswordController extends HttpServlet {
             // Mensaje de éxito después de un envío POST (simulado)
             messageAlert = new Alert(
                 "📧 Si tu usuario existe, recibirás un email con instrucciones.", 
-                "success", 
+                    AlertType.SUCCESS, 
                 true
             );
         }

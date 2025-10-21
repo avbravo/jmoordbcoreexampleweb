@@ -6,6 +6,7 @@ package fish.payara.security;
 
 import com.jmoordb.core.ui.alert.Alert;
 import com.jmoordb.core.ui.WebComponent;
+import com.jmoordb.core.ui.alert.AlertType;
 import com.jmoordb.core.ui.login.LoginSimple;
 import com.jmoordb.core.ui.login.LoginAdvanced;
 import fish.payara.config.ConfigurationProperties;
@@ -48,23 +49,25 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        WebComponent errorComponent = null;
+       // WebComponent errorComponent = null;
+        Alert alert = null;
         String errorParam = request.getParameter("error");
         String logoutParam = request.getParameter("logout"); // <-- NUEVA LÍNEA
 
         if (errorParam != null && "true".equals(errorParam)) {
             // Usamos la clase AlertComponent para mostrar el error
-            errorComponent = new Alert(
+            alert = new Alert(
                     "❌Credenciales inválidas",
-                    "danger",
+                    AlertType.DANGER,
                     true
             );
+
         } // Mostrar mensaje de éxito si viene del logout
         else {
             if (logoutParam != null && "true".equals(logoutParam)) { // <-- NUEVA LÍNEA
-                errorComponent = new Alert(
+                alert = new Alert(
                         "✅ Sesión cerrada exitosamente. ¡Regrese pronto!",
-                        "success",
+                        AlertType.INFO,
                         true
                 );
             }
@@ -73,11 +76,11 @@ public class LoginController extends HttpServlet {
 
            switch (configurationProperties.getLoginStyle()) {
             case "login-simple":
-                login = new LoginSimple(request.getContextPath(), errorComponent, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle(),configurationProperties);
+                login = new LoginSimple(request.getContextPath(), alert, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle(),configurationProperties);
                 break;
          
             case "login-advanced":
-                login = new LoginAdvanced(request.getContextPath(), errorComponent, ROLES_LIST, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle(),configurationProperties);
+                login = new LoginAdvanced(request.getContextPath(), alert, ROLES_LIST, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle(),configurationProperties);
                 break;
         }
         // Instanciar y renderizar el componente de login

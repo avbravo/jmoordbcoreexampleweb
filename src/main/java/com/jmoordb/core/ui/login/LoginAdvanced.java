@@ -26,11 +26,11 @@ import com.jmoordb.core.ui.Link;
 import com.jmoordb.core.ui.Meta;
 import com.jmoordb.core.ui.Script;
 import com.jmoordb.core.ui.Section;
+import com.jmoordb.core.ui.alert.Alert;
 import com.jmoordb.core.ui.headings.H1;
 import com.jmoordb.core.ui.headings.H4;
 import com.jmoordb.core.ui.input.InputText;
 import fish.payara.config.ConfigurationProperties;
-import jakarta.inject.Inject;
 import java.util.Map;
 
 public class LoginAdvanced implements WebComponent {
@@ -41,7 +41,7 @@ public class LoginAdvanced implements WebComponent {
 
 // </editor-fold>
     private final String contextPath;
-    private final WebComponent errorAlert;
+    private  Alert alert;
     private final Map<String, String> userRoles; // Clave: value (admin), Valor: texto a mostrar (Administrador)
     private final String title;
     private final String metaTitle;
@@ -53,9 +53,9 @@ public class LoginAdvanced implements WebComponent {
      * @param errorAlert Componente de alerta (puede ser null).
      * @param userRoles Mapa de roles (value HTML -> texto a mostrar).
      */
-    public LoginAdvanced(String contextPath, WebComponent errorAlert, Map<String, String> userRoles, String title, String metaTitle,ConfigurationProperties configurationProperties) {
+    public LoginAdvanced(String contextPath, Alert alert, Map<String, String> userRoles, String title, String metaTitle,ConfigurationProperties configurationProperties) {
         this.contextPath = contextPath;
-        this.errorAlert = errorAlert;
+        this.alert = alert;
         this.userRoles = userRoles;
         this.title = title;
         this.metaTitle = metaTitle;
@@ -153,8 +153,8 @@ public class LoginAdvanced implements WebComponent {
                                 )
                 );
 
-        if (errorAlert != null) {
-            section.add(errorAlert);
+        if (alert != null) {
+            section.add(alert);
         }
         // Body recibe la clase 'dark-mode'
         Body body = new Body().addClass("bg-gray-50 dark:bg-gray-900")
