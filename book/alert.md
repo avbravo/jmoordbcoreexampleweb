@@ -20,8 +20,7 @@ Declaración de Alerta
        
             alert = new Alert(
                     "❌Credenciales inválidas",
-                    AlertType.DANGER,
-                    true
+                    AlertType.DANGER
             );
       
 
