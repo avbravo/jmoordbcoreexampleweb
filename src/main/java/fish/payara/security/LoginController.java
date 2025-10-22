@@ -58,8 +58,7 @@ public class LoginController extends HttpServlet {
             // Usamos la clase AlertComponent para mostrar el error
             alert = new Alert(
                     "❌Credenciales inválidas",
-                    AlertType.DANGER,
-                    true
+                    AlertType.DANGER
             );
 
         } // Mostrar mensaje de éxito si viene del logout
@@ -67,8 +66,7 @@ public class LoginController extends HttpServlet {
             if (logoutParam != null && "true".equals(logoutParam)) { // <-- NUEVA LÍNEA
                 alert = new Alert(
                         "✅ Sesión cerrada exitosamente. ¡Regrese pronto!",
-                        AlertType.INFO,
-                        true
+                        AlertType.INFO
                 );
             }
         }

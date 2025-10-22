@@ -34,8 +34,7 @@ public class ForgotPasswordController extends HttpServlet {
             // Mensaje de éxito después de un envío POST (simulado)
             messageAlert = new Alert(
                 "📧 Si tu usuario existe, recibirás un email con instrucciones.", 
-                    AlertType.SUCCESS, 
-                true
+                    AlertType.SUCCESS
             );
         }
 

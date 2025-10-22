@@ -22,7 +22,7 @@ public class Alert implements WebComponent {
 
     private final String mensaje; 
     private final AlertType alertType; // success, danger, warning, info
-    private  boolean autoCerrar;
+
 
     /**
      * Constructor para generar un mensaje de alerta de Bootstrap.
@@ -40,11 +40,7 @@ public class Alert implements WebComponent {
         this.alertType = alertType;
     }
 
-    public Alert(String mensaje, AlertType alertType, boolean autoCerrar) {
-        this.mensaje = mensaje;
-        this.alertType = alertType;
-        this.autoCerrar = autoCerrar;
-    }
+  
 
     @Override
     public String render() {
