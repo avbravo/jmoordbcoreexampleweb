@@ -4,8 +4,7 @@
  */
 package fish.payara.view;
 
-import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.WebComponent;
+import com.jmoordb.core.ui.Div;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
 import com.jmoordb.core.ui.jettra.JettraView;
 import com.jmoordb.core.ui.menu.MenuLink;
@@ -39,7 +38,7 @@ public class JettraViewExampleView extends JettraView{
             this.getClass().getSimpleName(), username, userRol
         );
         
-        WebComponent mainContent = new Tag("div").withText("Vista generada con JAX-RS y WebComponents para: " + username);
+        Div mainContent = new Div().text("Vista generada con JAX-RS y WebComponents para: " + username);
 
         // --- Generación del Layout ---
         String htmlCompleto = DashboardLayout.buildPage(
