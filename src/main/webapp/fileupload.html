@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Subida de Imagen con HTMX y Previsualización</title>
+    <!--<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1k7T185X4zP4USyW2HT4XG5uSLH5KeTG7SblENbLwI/AScI19T9keiBsy9BEObm" crossorigin="anonymous"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
+    <style>
+        #preview-container {
+            margin-top: 15px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            display: none; /* Oculto por defecto */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Subir Imagen y Obtener ID</h1>
+    <hr>
+
+    <form hx-post="/jmoordbcoreexampleweb/api/files/upload" hx-target="#result-container" enctype="multipart/form-data">
+        <label for="image-file">Seleccionar Imagen:</label>
+        <input type="file" id="image-file" name="image-file" accept="image/*" required onchange="previewImage(event)">
+        <br><br>
+        <button type="submit">Subir Imagen</button>
+    </form>
+
+    <div id="preview-container">
+        <img id="image-preview" alt="Vista previa de la imagen">
+        <p id="preview-text">Aquí se mostrará la previsualización de la imagen.</p>
+    </div>
+
+    <h2>ID de Imagen Generado:</h2>
+    <div id="result-container">
+        <p>Esperando la subida...</p>
+    </div>
+
+    <hr>
+
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('image-preview');
+            const previewText = document.getElementById('preview-text');
+
+            if (file) {
+                // Crea un objeto FileReader para leer el contenido del archivo
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Establece la fuente de la imagen con los datos leídos
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    previewText.style.display = 'none';
+                }
+
+                // Lee el archivo como una URL de datos (Data URL)
+                reader.readAsDataURL(file);
+            } else {
+                // Restablece la vista previa si no se selecciona ningún archivo
+                preview.src = '';
+                preview.style.display = 'none';
+                previewText.style.display = 'block';
+            }
+        }
+    </script>
+
+    
+    
+   
+</body>
+</html>

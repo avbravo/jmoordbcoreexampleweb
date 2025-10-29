@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dropzone.js con Helidon MP</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .dropzone { 
+            border: 2px dashed #0087F7; 
+            border-radius: 5px; 
+            background: white; 
+            min-height: 150px; 
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Subida de Imágenes con Dropzone y Helidon</h1>
+    <p>Arrastra y suelta archivos o haz clic para subir imágenes a tu endpoint JAX-RS en Helidon.</p>
+
+    <form action="/jmoordbcoreexampleweb/api/files/uploadd" 
+          method="POST" 
+          class="dropzone" 
+          id="image-uploader">
+        </form>
+    
+    <div id="status-message" style="margin-top: 20px;"></div>
+
+    <script>
+        // Deshabilita la autodetección para configurarlo manualmente
+        Dropzone.autoDiscover = false;
+
+        // Inicializa Dropzone en el elemento con ID 'image-uploader'
+        var myDropzone = new Dropzone("#image-uploader", {
+            // URL de tu endpoint Helidon
+            url: "/jmoordbcoreexampleweb/api/files/upload", 
+            
+            // Nombre del campo de formulario que tu Helidon espera (@FormDataParam("file"))
+            paramName: "file", 
+            
+            // Tipos de archivos aceptados (p. ej., imágenes)
+            acceptedFiles: "image/*", 
+            
+            // Carga automáticamente el archivo al soltarlo/seleccionarlo
+            autoProcessQueue: true, 
+            
+            // Mensaje que se muestra en el área de soltar
+            dictDefaultMessage: "Arrastra y suelta imágenes aquí o haz clic para seleccionar.",
+            
+            // Permite subir varios archivos a la vez
+            uploadMultiple: false, 
+            
+            // Máximo de archivos en cola
+            maxFiles: 11 
+        });
+
+        // Manejar el éxito de la subida
+        myDropzone.on("success", function(file, response) {
+            // 'response' es el objeto JSON devuelto por Helidon (el FileUploadResponse)
+            const message = document.getElementById('status-message');
+            message.innerHTML = `✅ Subida exitosa! ID generado: <strong>${response.fileId}</strong> (Archivo Original: ${response.originalFileName})`;
+            message.style.color = 'green';
+        });
+
+        // Manejar errores de subida
+        myDropzone.on("error", function(file, errorMessage, xhr) {
+            const message = document.getElementById('status-message');
+            let errorText = errorMessage;
+            
+            // Intenta leer el cuerpo de la respuesta HTTP para errores más específicos
+            if (xhr && xhr.responseText) {
+                 try {
+                    errorText = JSON.parse(xhr.responseText).message || errorMessage;
+                 } catch (e) {
+                    errorText = xhr.responseText || errorMessage;
+                 }
+            }
+            
+            message.innerHTML = `❌ Error al subir ${file.name}: ${errorText}`;
+            message.style.color = 'red';
+        });
+
+        // Manejar el inicio de la subida de un nuevo archivo
+        myDropzone.on("sending", function(file) {
+             document.getElementById('status-message').innerHTML = `⏳ Subiendo archivo: ${file.name}...`;
+             document.getElementById('status-message').style.color = 'blue';
+        });
+        
+    </script>
+</body>
+</html>

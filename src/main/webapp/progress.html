@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Edición en Línea HTMX</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        table { border-collapse: collapse; width: 50%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .editable-cell {
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+        .editable-cell:hover {
+            background-color: #f0f0f0;
+        }
+        /* Estilos para el formulario de edición */
+        .edit-form input[type="text"] {
+            padding: 5px;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Edición de Producto</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre de Producto</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>101</td>
+                <td id="product-name-101" 
+                    class="editable-cell"
+                    hx-get="/product/101/edit" 
+                    hx-trigger="click" 
+                    hx-swap="outerHTML">
+                    Smartphone X9
+                </td>
+                <td>499.99 €</td>
+            </tr>
+            </tbody>
+    </table>
+
+</body>
+</html>

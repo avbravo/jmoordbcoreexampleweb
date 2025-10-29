@@ -31,7 +31,7 @@ public class MenuSideBar {
             String currentController,
             String username,
             String rol) {
-rol = rol.toUpperCase();
+        rol = rol.toUpperCase();
         // Usamos LinkedHashMap para mantener el orden de inserción de las secciones.
         Map<String, List<MenuLink>> sections = new LinkedHashMap<>();
 
@@ -62,8 +62,6 @@ rol = rol.toUpperCase();
             // 2. Configuración
             boolean isSettingsActive = currentController.equals("SettingsController");
             adminLinks.add(new MenuLink("Configuración", "/admin/settings", isSettingsActive, "fas fa-cogs"));
-            
-            
 
             sections.put("MANAGEMENT", adminLinks);
         }
@@ -82,35 +80,26 @@ rol = rol.toUpperCase();
             boolean isInventoryActive = currentController.equals("InventoryReportsController");
             reportLinks.add(new MenuLink("Inventario", "/reports/inventory", isInventoryActive, "fas fa-warehouse"));
             // 3. Clientes
-            
+
             boolean isClienteActive = currentController.equals("ClienteController");
             reportLinks.add(new MenuLink("Cliente", "/clientes", isClienteActive, "fas fa-solid fa-person"));
-            
-            // 4. ModalTest
-            
-           
 
-            
-              boolean isModalActive = currentController.equals("ModalController");
+            // 4. ModalTest
+            boolean isModalActive = currentController.equals("ModalController");
             reportLinks.add(new MenuLink("Modal", "/modal", isModalActive, "fas fa-solid fa-window-restore"));
-            
-              boolean isFetchActive = currentController.equals("FetchController");
+
+            boolean isFetchActive = currentController.equals("FetchController");
             reportLinks.add(new MenuLink("Fetch", "/fetch", isFetchActive, "fas fa-solid fa-plug"));
-            
-              boolean isImageActive = currentController.equals("ImageController");
+
+            boolean isImageActive = currentController.equals("ImageController");
             reportLinks.add(new MenuLink("Image", "/image", isImageActive, "fas fa-image"));
-            
-              boolean isJettraViewActive = currentController.equals("JettraView");
+
+            boolean isJettraViewActive = currentController.equals("JettraView");
             reportLinks.add(new MenuLink("JettraView", "/api/jettra-view", isJettraViewActive, "fas fa-solid fa-plug"));
-            
- 
+
             boolean isFetchView = currentController.equals("FetchView");
             reportLinks.add(new MenuLink("Fetch", "/fetch", isFetchView, "fas fa-solid fa-plug"));
-            
 
-          
-
-            
             sections.put("REPORTES", reportLinks);
         }
 
