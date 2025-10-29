@@ -41,8 +41,6 @@ public class FileStorage {
             fileExtension = originalFileName.substring(dotIndex);
         }
 
-        // 3. Crear el nuevo nombre del archivo
-        // El nuevo nombre será el ID generado más la extensión original
         String newFileName = fileId + fileExtension;
 
         Path uploadPath = Paths.get(System.getProperty("user.home"), imageDirectory);
@@ -56,37 +54,12 @@ public class FileStorage {
         Files.copy(fileStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
 
         if (uploadToIA) {
-            /**
-             * inicio envio del archivo
-             */
 
-//            FileUploader uploader = new FileUploader();
-//            System.out.println("\n targetPath.toString()" + targetPath.toString());
-//            System.out.println("\n targetPath.getFileName() " + targetPath.getFileName());
-//            System.out.println("\n targetPath.getFileName() " + targetPath.getFileName());
-//            // *Reemplaza con una ruta y URL válidas para prueba*
-////            String pathArchivo = "/home/usuario/imagen_prueba.jpg";
-//            String pathArchivo = targetPath.toString();
-//            String baseUrl = "http://localhost/docs#/default/procesar-imagen/";
-//            System.out.println("subiendo archivo al algoritmo");
-//            String idGenerado = uploader.sendImageAndGetId(pathArchivo, baseUrl);
-//
-//            if (idGenerado != null) {
-//                System.out.println("ID final para usar en la descarga: " + idGenerado);
-//            }
-
-            /**
-             * fin del envio del archivo
-             */
-            
-            /**
-             * Usando JAXRS directo sin RestClient
-             */
             JAXRSImageUploader j = new JAXRSImageUploader();
-            
-                    File file1 = new File(targetPath.toString());
-                    List<File> filesToUpload = new ArrayList<>();
-    filesToUpload.add(file1);
+
+            File file1 = new File(targetPath.toString());
+            List<File> filesToUpload = new ArrayList<>();
+            filesToUpload.add(file1);
 
             String uploadImages = j.uploadImages(filesToUpload);
         }
@@ -112,7 +85,7 @@ public class FileStorage {
             if (indicePunto != -1) {
                 nombreArchivoSinExtension = nombreArchivoCompleto.substring(0, indicePunto);
             }
-            // 4. Comparar con el nombre buscado
+
             if (nombreArchivoSinExtension.equals(id)) {
                 System.out.println("Archivo encontrado: " + archivo);
                 return Files.readAllBytes(archivo);

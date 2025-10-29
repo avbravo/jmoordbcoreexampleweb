@@ -61,19 +61,16 @@ public class FileController {
             @FormDataParam("file") FormDataContentDisposition fileDetail) {
 
         try {
-            System.out.println("Procesando archivo: " + fileDetail.getFileName());
 
-            // 1. Guardar y Renombrar (delegado al servicio)
             String generatedId = fileStorage.saveAndRenameImage(
                     uploadedInputStream,
-                    fileDetail.getFileName(),// Nombre de archivo original
+                    fileDetail.getFileName(),
                     Boolean.TRUE
             );
 
-            // 2. Devolver el ID generado
-            FileUploadResponse response = new FileUploadResponse(generatedId, fileDetail.getFileName());
-            
-          
+
+            FileUploadResponse response = new FileUploadResponse(generatedId, fileDetail.getFileName(), "");
+
             return Response.ok(response).build();
 
         } catch (Exception e) {
@@ -94,7 +91,6 @@ public class FileController {
                 .header("Access-Control-Allow-Headers", "Content-Type, Authorization")
                 .build();
     }
-
 
     @GET
     @Path("/{id}")
@@ -124,11 +120,10 @@ public class FileController {
         }
     }
 
-    
-      // --- 3. Método para devolver todos los IDs generados ---
+    // --- 3. Método para devolver todos los IDs generados ---
     @GET
     @Produces(MediaType.APPLICATION_JSON) // Usamos JSON para una colección de datos
-            @Operation(summary = "Devuelve la lista de id de las imagenes", description = "Devuelve la lista de id de las imagenes")
+    @Operation(summary = "Devuelve la lista de id de las imagenes", description = "Devuelve la lista de id de las imagenes")
     @APIResponse(responseCode = "201", description = "Cuando se retorna la lista de id")
     @APIResponse(responseCode = "500", description = "Servidor inalcanzable")
     @Tag(name = "BETA", description = "Esta api esta en desarrollo")
