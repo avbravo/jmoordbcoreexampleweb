@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
+    </head>
+    <body>
+<h2>Subida de Imagen con HTMX</h2>
+
+<form hx-post="/jmoordbcoreexampleweb/api/files/upload'" 
+      hx-target="#resultado-id-container" 
+      hx-swap="none" 
+      hx-ext="response-targets, response-content"
+      rt-json-fileIdAI="#imagen-id"
+      rc-json-fileIdAI="src"
+      rc-json-fileIdAI-prefix="http://localhost/ver-contour/"
+      rc-json-fileIdAI-suffix=""
+      enctype="multipart/form-data">
+    
+    <label>Selecciona una imagen para previsualizar.</label>
+    <input type="file" name="file" required>
+    <button type="submit">Subir Imagen</button>
+</form>
+
+<hr>
+
+<div id="resultado-id-container">
+    ### Detalles de la Imagen
+    
+    * **ID de Imagen:** <span id="imagen-id">Esperando la subida y el ID generado...</span>
+    
+    ### Previsualización
+    
+    <img id="imagen-preview" 
+         src="" 
+         alt="La imagen subida aparecerá aquí" 
+         style="max-width: 300px; border: 1px solid #ccc;"> 
+</div>
+    </body>
+</html>

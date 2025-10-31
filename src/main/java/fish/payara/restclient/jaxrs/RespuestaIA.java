@@ -13,6 +13,6 @@ import java.util.List;
  */
 public record RespuestaIA(
         @JsonbProperty("procesamiento de imagenes")
-        List<ProcesamientoImagen> procesamientoDeImagenes) {
+        List<ImagenIAResult> imagenIAResult) {
 
 }

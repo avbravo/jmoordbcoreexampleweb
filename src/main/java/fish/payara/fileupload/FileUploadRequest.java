@@ -16,8 +16,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Schema(description = "Estructura de la petición de subida de archivo.")
 public class FileUploadRequest {
-    
-    // Anotación @FormParam simulando el campo de formulario
     @FormParam("file")
     @Schema(type = SchemaType.STRING, format = "binary", description = "El archivo de imagen a subir.")
     public byte[] file; // El tipo es solo para la documentación en OpenAPI

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Doble Carga y Formulario Completo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="htmx-config" content='{"selfRequestsOnly": false}'>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
+        
+        <style>
+            /* --- ESTILOS GENERALES Y DE CARGA (Mantenidos) --- */
+            .upload-section {
+                border: 1px dashed #007bff;
+                padding: 15px;
+                margin-bottom: 25px;
+                border-radius: 5px;
+            }
+            .image-containers {
+                display: flex;
+                gap: 20px;
+                margin-top: 15px;
+            }
+            .image-container-box { flex: 1; }
+            .preview-box, #server-image-preview1, #server-image-preview2 {
+                max-width: 300px; max-height: 200px; overflow: hidden; border: 1px solid #ccc; margin-top: 10px; display: flex; justify-content: center; align-items: center; min-height: 100px; 
+            }
+            .preview-box img, #server-image-preview1 img, #server-image-preview2 img {
+                max-width: 100%; max-height: 100%; height: auto; width: auto; display: none;
+            }
+            #uploadButton1, #uploadButton2 {
+                padding: 8px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; min-width: 80px; margin-right: 10px; margin-top: 10px; 
+            }
+            #uploadButton1:disabled, #uploadButton2:disabled { background-color: #cccccc; cursor: not-allowed; }
+            .spinner { border: 3px solid rgba(255, 255, 255, 0.3); border-top-color: #fff; border-radius: 50%; width: 1em; height: 1em; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; }
+            @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+            button .htmx-indicator { display: none; }
+            .htmx-request .button-text { display: none; }
+            .htmx-request .htmx-indicator { display: inline-block; }
+
+            /* --- ESTILOS DE FORMULARIO PRINCIPAL Y RESULTADOS --- */
+            .result-fields-container {
+                margin-top: 15px;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+            .input-group {
+                margin-bottom: 10px;
+                display: flex;
+                flex-direction: column;
+            }
+            .input-group label { font-weight: bold; margin-bottom: 5px; }
+            .input-group input, .input-group select { 
+                padding: 8px; border: 1px solid #ccc; border-radius: 4px; background-color: #f9f9f9; 
+            }
+            
+            /* Contenedor de datos del paciente (Nuevos campos) */
+            #patient-data {
+                border: 2px solid #0056b3;
+                padding: 20px;
+                margin-bottom: 30px;
+                border-radius: 8px;
+            }
+            .form-row {
+                display: flex;
+                gap: 20px;
+                margin-bottom: 15px;
+            }
+            
+            /* Estilos del botón Save */
+            #saveButton {
+                padding: 12px 25px;
+                background-color: #28a745; /* Color verde */
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 1.1em;
+                margin-top: 20px;
+            }
+            #saveButton:disabled {
+                background-color: #90ee90;
+                cursor: not-allowed;
+            }
+            #save-feedback {
+                margin-top: 15px;
+                padding: 10px;
+                border-radius: 4px;
+                min-height: 20px;
+                border: 1px solid transparent;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Doble Subida de Archivos y Formulario de Paciente</h1>
+
+        <form id='mainForm'>
+            
+            <div id="patient-data">
+                <h2>Datos del Paciente</h2>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="nhrc">NHRC (Número de Historia Clínica):</label>
+                        <input type="text" id="nhrc" name="nhrc" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="prioridad">Prioridad:</label>
+                        <select id="prioridad" name="prioridad" required>
+                            <option value="">Seleccione</option>
+                            <option value="grave">Grave</option>
+                            <option value="alta">Alta</option>
+                            <option value="media">Media</option>
+                            <option value="baja">Baja</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="edad">Edad del Paciente:</label>
+                        <input type="number" id="edad" name="edad" required>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="upload-section">
+                <h2>Carga de Foto 1</h2>
+                <!--<form id='form1'>-->
+                    <input type='file' name='file' onchange="previewImage(event, 'image-preview1', 'placeholder-text1')">
+                    
+                    <button id="uploadButton1"
+                            hx-post='/jmoordbcoreexampleweb/api/files/upload' 
+                            hx-encoding='multipart/form-data'
+                            hx-swap="none"  
+                            hx-indicator="#uploadButton1 .htmx-indicator">
+                        <span class="button-text">Upload 1</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                <!--</form>-->
+
+                <div class="image-containers">
+                    <div class="image-container-box">
+                        <h3>Cliente (1)</h3>
+                        <div class="preview-box">
+                            <img id="image-preview1" alt="Vista previa de la imagen 1">
+                            <p id="placeholder-text1">Selecciona una imagen para previsualizar.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="image-container-box">
+                        <h3>Servidor (1)</h3>
+                        <div id="server-image-preview1" class="preview-box">
+                            <img id="server-image1" alt="Imagen del Servidor 1">
+                            <p id="server-placeholder1">La imagen aparecerá aquí después de la carga.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="result-fields1" class="result-fields-container">
+                    <p id="feedback-message1">Resultados de Carga 1:</p>
+                    <div class="input-group">
+                        <label for="fileIdInput1">fileId (enviado como **fileId1**):</label>
+                        <input type="text" id="fileIdInput1" name="fileId1" value="" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label for="originalFileNameInput1">originalFileName (enviado como **originalFileName1**):</label>
+                        <input type="text" id="originalFileNameInput1" name="originalFileName1" value="" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label for="photoIdInput1">photo_id (enviado como **photoId1**):</label>
+                        <input type="text" id="photoIdInput1" name="photoId1" value="" readonly>
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+
+            <div class="upload-section">
+                <h2>Carga de Foto 2</h2>
+                <!--<form id='form2'>-->
+                    <input type='file' name='file' onchange="previewImage(event, 'image-preview2', 'placeholder-text2')">
+                    
+                    <button id="uploadButton2"
+                            hx-post='/jmoordbcoreexampleweb/api/files/upload' 
+                            hx-encoding='multipart/form-data'
+                            hx-swap="none"  
+                            hx-indicator="#uploadButton2 .htmx-indicator">
+                        <span class="button-text">Upload 2</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                <!--</form>-->
+
+                <div class="image-containers">
+                    <div class="image-container-box">
+                        <h3>Cliente (2)</h3>
+                        <div class="preview-box">
+                            <img id="image-preview2" alt="Vista previa de la imagen 2">
+                            <p id="placeholder-text2">Selecciona una imagen para previsualizar.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="image-container-box">
+                        <h3>Servidor (2)</h3>
+                        <div id="server-image-preview2" class="preview-box">
+                            <img id="server-image2" alt="Imagen del Servidor 2">
+                            <p id="server-placeholder2">La imagen aparecerá aquí después de la carga.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="result-fields2" class="result-fields-container">
+                    <p id="feedback-message2">Resultados de Carga 2:</p>
+                    <div class="input-group">
+                        <label for="fileIdInput2">fileId (enviado como **fileId2**):</label>
+                        <input type="text" id="fileIdInput2" name="fileId2" value="" readonly>
+                        
+                        
+                    </div>
+                    <div class="input-group">
+                        <label for="originalFileNameInput2">originalFileName (enviado como **originalFileName2**):</label>
+                        <input type="text" id="originalFileNameInput2" name="originalFileName2" value="" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label for="photoIdInput2">photo_id (enviado como **photoId2**):</label>
+                        <input type="text" id="photoIdInput2" name="photoId2" value="" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <button id="saveButton"
+                    hx-post=' /jmoordbcoreexampleweb/api/FormularioController'
+                    hx-target="#save-feedback"
+                    hx-swap="innerHTML"
+                    hx-include="#mainForm"
+                    hx-indicator="#saveButton .htmx-indicator">
+                <span class="button-text">Save</span>
+                <span class="htmx-indicator spinner"></span>
+            </button>
+            <div id="save-feedback"></div>
+        </form>
+
+        <script>
+            // --- CONSTANTES Y REFERENCIAS GENERALES ---
+            const IMAGE_BASE_URL = 'http://localhost/ver-contour/';
+
+            // Mapeo de IDs de inputs y mensajes por número de carga
+            const INPUT_MAP = {
+                '1': {
+                    buttonId: 'uploadButton1',
+                    fileId: 'fileIdInput1',
+                    originalFileName: 'originalFileNameInput1',
+                    photoId: 'photoIdInput1',
+                    feedback: 'feedback-message1',
+                    serverImage: 'server-image1',
+                    serverPlaceholder: 'server-placeholder1'
+                },
+                '2': {
+                    buttonId: 'uploadButton2',
+                    fileId: 'fileIdInput2',
+                    originalFileName: 'originalFileNameInput2',
+                    photoId: 'photoIdInput2',
+                    feedback: 'feedback-message2',
+                    serverImage: 'server-image2',
+                    serverPlaceholder: 'server-placeholder2'
+                }
+            };
+            
+            function getElementRefs(suffix) {
+                const map = INPUT_MAP[suffix];
+                return {
+                    fileIdInput: document.getElementById(map.fileId),
+                    originalFileNameInput: document.getElementById(map.originalFileName),
+                    photoIdInput: document.getElementById(map.photoId),
+                    feedbackMessage: document.getElementById(map.feedback),
+                    serverImage: document.getElementById(map.serverImage),
+                    serverPlaceholder: document.getElementById(map.serverPlaceholder),
+                };
+            }
+
+            // --- LÓGICA CENTRALIZADA DE PREVISUALIZACIÓN DE IMAGEN CLIENTE ---
+            function previewImage(event, previewId, placeholderId) {
+                const file = event.target.files[0];
+                const preview = document.getElementById(previewId);
+                const placeholder = document.getElementById(placeholderId);
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                        placeholder.style.display = 'none';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '';
+                    preview.style.display = 'none';
+                    placeholder.style.display = 'block';
+                }
+            }
+
+            // --- HTMX EVENT HANDLERS ---
+            
+            // 1. Deshabilitar botones al inicio de la petición
+            htmx.on(document.body, 'htmx:beforeRequest', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                
+                // Lógica para botones de UPLOAD
+                if (buttonId.startsWith('uploadButton')) {
+                    const suffix = buttonId.slice(-1); 
+                    const refs = getElementRefs(suffix);
+                    
+                    evt.detail.elt.disabled = true;
+                    
+                    // Limpiar inputs, feedback e imágenes correspondientes
+                    refs.fileIdInput.value = '';
+                    refs.photoIdInput.value = '';
+                    refs.originalFileNameInput.value = '';
+                    refs.feedbackMessage.textContent = `Subiendo Foto ${suffix}...`;
+                    refs.serverImage.src = '';
+                    refs.serverImage.style.display = 'none';
+                    refs.serverPlaceholder.style.display = 'block';
+                    refs.serverPlaceholder.textContent = 'La imagen aparecerá aquí después de la carga.';
+                }
+                
+                // Lógica para el botón SAVE
+                if (buttonId === 'saveButton') {
+                    // Deshabilitar botón SAVE (CRUCIAL)
+                    evt.detail.elt.disabled = true;
+                    document.getElementById('save-feedback').innerHTML = "Guardando formulario, espere...";
+                    document.getElementById('save-feedback').style.borderColor = '#007bff';
+                    document.getElementById('save-feedback').style.backgroundColor = '#e6f0ff';
+                }
+            });
+
+            // 2. Habilitar botones al finalizar la petición
+            htmx.on(document.body, 'htmx:afterRequest', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                
+                // Re-habilitar botón de UPLOAD (1 o 2)
+                if (buttonId.startsWith('uploadButton')) {
+                    evt.detail.elt.disabled = false;
+                }
+                
+                // Re-habilitar botón SAVE
+                if (buttonId === 'saveButton') {
+                    // Si el servidor NO devuelve el botón en su respuesta (solo devuelve el mensaje de feedback),
+                    // re-habilitamos el botón manualmente.
+                    const saveButton = document.getElementById('saveButton');
+                    if (saveButton) {
+                        saveButton.disabled = false;
+                    }
+                }
+            });
+
+            // 3. Manejo de Respuesta JSON (UPLOAD) - Asignación de valores
+            htmx.on(document.body, 'htmx:afterSettle', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                const suffix = buttonId.slice(-1); 
+                
+                if (buttonId.startsWith('uploadButton') && evt.detail.successful) {
+                    const refs = getElementRefs(suffix);
+                    const xhr = evt.detail.xhr;
+
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        
+                        // Asignar valores a los inputs (que ahora tienen 'name' para el envío final)
+                        refs.fileIdInput.value = response.fileId || '';
+                        refs.photoIdInput.value = response.photo_id || '';
+                        refs.originalFileNameInput.value = response.originalFileName || '';
+                        
+                        refs.feedbackMessage.textContent = `✅ Carga ${suffix} exitosa.`;
+
+                        // Mostrar la imagen del servidor
+                        if (response.photo_id) {
+                            const imageUrl = IMAGE_BASE_URL + response.photo_id;
+                            refs.serverImage.src = imageUrl;
+                            refs.serverImage.style.display = 'block';
+                            refs.serverPlaceholder.style.display = 'none';
+
+                            refs.serverImage.onerror = function() {
+                                refs.serverImage.style.display = 'none';
+                                refs.serverPlaceholder.textContent = 'Error al cargar imagen.';
+                                refs.serverPlaceholder.style.display = 'block';
+                            };
+                        }
+
+                    } catch (e) {
+                        refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}: JSON inválido.`;
+                    }
+                } else if (buttonId.startsWith('uploadButton') && !evt.detail.successful) {
+                     const refs = getElementRefs(suffix);
+                     refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}. Código: ${evt.detail.xhr.status}`;
+                }
+            });
+            
+            // 4. Manejo de Respuesta (SAVE) - Feedback Visual
+             htmx.on(document.body, 'htmx:afterSettle', function(evt) {
+                 const buttonId = evt.detail.elt.id;
+                 if (buttonId === 'saveButton') {
+                     const feedbackDiv = document.getElementById('save-feedback');
+                     if (evt.detail.successful) {
+                        feedbackDiv.style.borderColor = '#28a745';
+                        feedbackDiv.style.backgroundColor = '#e2f0d9';
+                        // El texto fue insertado por hx-swap="innerHTML"
+                     } else {
+                        feedbackDiv.style.borderColor = '#dc3545';
+                        feedbackDiv.style.backgroundColor = '#f8d7da';
+                        // El texto de error también fue insertado por hx-swap si el backend lo retorna.
+                     }
+                 }
+            });
+        </script>
+    </body>
+</html>

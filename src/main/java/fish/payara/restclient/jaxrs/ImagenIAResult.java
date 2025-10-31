@@ -10,6 +10,6 @@ import jakarta.json.bind.annotation.JsonbProperty;
  *
  * @author avbravo
  */
-public record ProcesamientoImagen(@JsonbProperty("IMG ID")String imgid, String mensaje) {
+public record ImagenIAResult(@JsonbProperty("IMG ID")String imgid, String mensaje) {
 
 }

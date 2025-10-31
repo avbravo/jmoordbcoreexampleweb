@@ -8,6 +8,8 @@ package fish.payara.fileupload;
  *
  * @author avbravo
  */
+import fish.payara.config.ConfigurationProperties;
+import fish.payara.restclient.jaxrs.ImageGeneration;
 import fish.payara.restclient.jaxrs.JAXRSImageUploader;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -28,12 +30,17 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @ApplicationScoped
 public class FileStorage {
-
+//
+//    @Inject
+//    @ConfigProperty(name = "image.Directory")
+//    private String imageDirectory;
+    
     @Inject
-    @ConfigProperty(name = "image.Directory")
-    private String imageDirectory;
+    ConfigurationProperties configurationProperties;
+    @Inject
+    JAXRSImageUploader jAXRSImageUploader;
 
-    public String saveAndRenameImage(InputStream fileStream, String originalFileName, Boolean uploadToIA) throws IOException {
+    public ImageGeneration saveAndRenameImage(InputStream fileStream, String originalFileName, Boolean uploadToIA) throws IOException {
         String fileId = UUID.randomUUID().toString();
         String fileExtension = "";
         int dotIndex = originalFileName.lastIndexOf('.');
@@ -43,29 +50,26 @@ public class FileStorage {
 
         String newFileName = fileId + fileExtension;
 
-        Path uploadPath = Paths.get(System.getProperty("user.home"), imageDirectory);
+        Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
         Path targetPath = uploadPath.resolve(newFileName);
-        // Usa StandardCopyOption.REPLACE_EXISTING para evitar errores si el archivo ya existe (aunque el UUID lo hace poco probable)
+
         Files.copy(fileStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
 
+        String fileIdAI = "";
         if (uploadToIA) {
-
-            JAXRSImageUploader j = new JAXRSImageUploader();
-
+//            JAXRSImageUploader j = new JAXRSImageUploader();
             File file1 = new File(targetPath.toString());
             List<File> filesToUpload = new ArrayList<>();
             filesToUpload.add(file1);
-
-            String uploadImages = j.uploadImages(filesToUpload);
+            fileIdAI = jAXRSImageUploader.uploadImages(filesToUpload);
         }
 
-        // Devolver el ID generado
-        return fileId;
+        return new ImageGeneration(fileId, fileIdAI,configurationProperties.getIaUrlVerContour());
     }
 
     /**
@@ -75,7 +79,7 @@ public class FileStorage {
      * @return Los bytes de la imagen o null si no se encuentra.
      */
     public byte[] getImage(String id) throws IOException {
-        Path directorio = Paths.get(System.getProperty("user.home"), imageDirectory);
+        Path directorio = Paths.get(System.getProperty("user.home"),configurationProperties.getImageDirectory());
 
         //  Path path = imageMap.get(id);
         for (Path archivo : Files.newDirectoryStream(directorio)) {
@@ -85,11 +89,9 @@ public class FileStorage {
             if (indicePunto != -1) {
                 nombreArchivoSinExtension = nombreArchivoCompleto.substring(0, indicePunto);
             }
-
             if (nombreArchivoSinExtension.equals(id)) {
                 System.out.println("Archivo encontrado: " + archivo);
                 return Files.readAllBytes(archivo);
-
             }
         }
 
@@ -98,9 +100,8 @@ public class FileStorage {
 
     public Set<String> getAllIds() throws IOException {
         Set<String> result = new HashSet<>();;
-        Path directorio = Paths.get(System.getProperty("user.home"), imageDirectory);
+        Path directorio = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
 
-        //  Path path = imageMap.get(id);
         for (Path archivo : Files.newDirectoryStream(directorio)) {
             String nombreArchivoCompleto = archivo.getFileName().toString();
             String nombreArchivoSinExtension = nombreArchivoCompleto;

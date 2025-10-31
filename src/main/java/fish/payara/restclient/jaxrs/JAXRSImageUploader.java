@@ -12,7 +12,10 @@ package fish.payara.restclient.jaxrs;
 
 
 
+import fish.payara.config.ConfigurationProperties;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -25,11 +28,14 @@ import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 
+@Named
 @ApplicationScoped
 public class JAXRSImageUploader {
 
+    @Inject
+    ConfigurationProperties configurationProperties;
     // Ruta del endpoint de FastAPI. Ajusta si es necesario.
-    private final String ENDPOINT_URL = "http://localhost/procesar-imagen/"; 
+  //  private final String ENDPOINT_URL = "http://localhost/procesar-imagen/"; 
 
     /**
      * Sube múltiples archivos al endpoint de FastAPI que espera el campo 'files'.
@@ -37,57 +43,64 @@ public class JAXRSImageUploader {
      * * @param imageFiles Una lista de objetos File a subir.
      * @return El IMG ID de la primera imagen procesada (String) o un mensaje de error.
      */
-    public String uploadImages(List<File> imageFiles) {
+       public String uploadImages(List<File> imageFiles) {
         
         Client client = null;
         Response response = null;
         String resultadoProcesamiento = "Error al deserializar la respuesta o lista vacía.";
         
         try {
-
+            // 1. Registrar MultiPartFeature en el cliente
             client = ClientBuilder.newClient()
                 .register(MultiPartFeature.class); 
+            System.out.println("\t >> configurationProperties.getIaUrlProcesarimagen() "+configurationProperties.getIaUrlProcesarimagen());
+            WebTarget target = client.target(configurationProperties.getIaUrlProcesarimagen());
+//            WebTarget target = client.target(ENDPOINT_URL);
             
-            WebTarget target = client.target(ENDPOINT_URL);
-
+            // 2. Usar MultiPart de Jersey para crear la entidad de la petición
             MultiPart multiPart = new MultiPart();
             multiPart.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE); 
 
+            
+            // 3. Iterar sobre la lista de archivos y crear una parte para cada uno
             for (File imageFile : imageFiles) {
+                // Usamos "files" para coincidir con el campo de FastAPI
                 FileDataBodyPart filePart = new FileDataBodyPart("files", imageFile); 
                 multiPart.bodyPart(filePart);
+
             }
 
-
+            // 4. Crear la entidad de la petición
             Entity<MultiPart> multipartEntity = Entity.entity(multiPart, multiPart.getMediaType());
             
+        
+
+            // 5. Enviar la petición POST
             response = target.request(MediaType.APPLICATION_JSON)
                             .post(multipartEntity);
 
             // 6. Procesar la respuesta y mapearla a la clase RespuestaIA (usando JSON-B)
             if (response.getStatus() == Response.Status.OK.getStatusCode()) {
                 
+                // Deserializa el JSON a nuestro Record RespuestaIA.
                 RespuestaIA respuesta = response.readEntity(RespuestaIA.class);  
                 
-                System.out.println("\t[JAXRS] Archivos subidos exitosamente.");
-              //  System.out.println("\t >> RespuestaIA "+ respuesta.toString());
+           
 
                 // Extraemos el primer ID y mensaje para usar como resultado String 
-                List<ProcesamientoImagen> resultados = respuesta.procesamientoDeImagenes();
+                List<ImagenIAResult> resultados = respuesta.imagenIAResult();
                 if (resultados != null && !resultados.isEmpty()) {
-                    ProcesamientoImagen primeraImagen = resultados.get(0);
+                   ImagenIAResult primeraImagen = resultados.get(0);
                     resultadoProcesamiento = primeraImagen.imgid();
                     
-                    System.out.println("\t[JAXRS] Total de imágenes procesadas: " + resultados.size());
-                    System.out.println("\t[JAXRS] ID Generado (primera imagen): " + primeraImagen.imgid());
-                    System.out.println("\t[JAXRS] Mensaje: " + primeraImagen.mensaje());
+          
                     
                     return resultadoProcesamiento; // Devuelve el ID generado
                 } else {
                      return "Respuesta exitosa, pero la lista de procesamiento está vacía.";
                 }
             } else {
-                System.err.println("\t[JAXRS] Error al subir los archivos. Código de respuesta: " + response.getStatus());
+                
                 String errorBody = response.readEntity(String.class);
                 return "ERROR: " + response.getStatus() + " - " + errorBody;
             }

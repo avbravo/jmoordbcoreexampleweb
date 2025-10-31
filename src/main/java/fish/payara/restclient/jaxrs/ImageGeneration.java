@@ -8,6 +8,6 @@ package fish.payara.restclient.jaxrs;
  *
  * @author avbravo
  */
-public record ImageGeneration(String id, ProcesamientoImagen procesamientoImagen) {
+public record ImageGeneration(String fileId, String photo_id, String img_base_url) {
 
 }

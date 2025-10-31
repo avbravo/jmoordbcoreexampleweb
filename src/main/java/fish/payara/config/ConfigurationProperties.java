@@ -25,15 +25,14 @@ public class ConfigurationProperties {
     @Inject
     @ConfigProperty(name = "login.title")
     private String loginTitle;
-    
-     @Inject
+
+    @Inject
     @ConfigProperty(name = "login.logo.src")
-     private String loginLogoSrc;
- @Inject
+    private String loginLogoSrc;
+    @Inject
     @ConfigProperty(name = "login.logo.class")
- private String loginLogoClass;
-        
-        
+    private String loginLogoClass;
+
     @Inject
     @ConfigProperty(name = "session.minutosExpiracion")
     private Integer sessionMinutosExpiracion;
@@ -57,30 +56,51 @@ public class ConfigurationProperties {
     private String flowbiteMinJs;
     @Inject
     @ConfigProperty(name = "flowbite.min.css")
- private String flowbiteMinCss;
+    private String flowbiteMinCss;
 // Taildwin
-            @Inject
+    @Inject
     @ConfigProperty(name = "tailwindcss.js")
- private String tailwindcssJs;
+    private String tailwindcssJs;
 // Bootstrap
     @Inject
     @ConfigProperty(name = "bootstrap.min.css")
- private String bootstrapMinCss;
-        @Inject
+    private String bootstrapMinCss;
+    @Inject
     @ConfigProperty(name = "bootstrap.bundle.min.js")
- private String bootstrapBundleMinJs;
+    private String bootstrapBundleMinJs;
 
 //FontAwesome
-                    @Inject
+    @Inject
     @ConfigProperty(name = "font-awesom.all.min.css")
- private String fontAwesomAllMinCss;
+    private String fontAwesomAllMinCss;
 
 // Chart
-            @Inject
+    @Inject
     @ConfigProperty(name = "chart.umd.min.js")
-     private String chartUmdMinJs;
+    private String chartUmdMinJs;
+
     
- 
+    @Inject
+    @ConfigProperty(name = "image.Directory")
+    private String imageDirectory; 
+    
+    
+// Configuracion del endpoint del algoritmo IA
+    @Inject
+    @ConfigProperty(name = "ia.url.procesarimagen")
+    private String iaUrlProcesarimagen;
+
+    @Inject
+    @ConfigProperty(name = "ia.url.verContour")
+    private String iaUrlVerContour;
+
+    @Inject
+    @ConfigProperty(name = "ia.url.verPredictions")
+    private String iaUrlVerPredictions;
+
+    @Inject
+    @ConfigProperty(name = "ia.url.listarImagenes")
+    private String iaUrlListarImagenes;
 
 // </editor-fold>
     /**
@@ -89,11 +109,55 @@ public class ConfigurationProperties {
     public ConfigurationProperties() {
     }
 
+    // <editor-fold defaultstate="collapsed" desc="get">
+
+    public String getImageDirectory() {
+        return imageDirectory;
+    }
+
+    public void setImageDirectory(String imageDirectory) {
+        this.imageDirectory = imageDirectory;
+    }
+    
+    
+    
+    
+    
+    public String getIaUrlProcesarimagen() {
+        return iaUrlProcesarimagen;
+    }
+
+    public void setIaUrlProcesarimagen(String iaUrlProcesarimagen) {
+        this.iaUrlProcesarimagen = iaUrlProcesarimagen;
+    }
+
+    public String getIaUrlVerContour() {
+        return iaUrlVerContour;
+    }
+
+    public void setIaUrlVerContour(String iaUrlVerContour) {
+        this.iaUrlVerContour = iaUrlVerContour;
+    }
+
+    public String getIaUrlVerPredictions() {
+        return iaUrlVerPredictions;
+    }
+
+    public void setIaUrlVerPredictions(String iaUrlVerPredictions) {
+        this.iaUrlVerPredictions = iaUrlVerPredictions;
+    }
+
+    public String getIaUrlListarImagenes() {
+        return iaUrlListarImagenes;
+    }
+
+    public void setIaUrlListarImagenes(String iaUrlListarImagenes) {
+        this.iaUrlListarImagenes = iaUrlListarImagenes;
+    }
+
     public String getApplicativeMetaTitle() {
         return applicativeMetaTitle;
     }
-
-    // <editor-fold defaultstate="collapsed" desc="get">
 
     public String getLoginLogoSrc() {
         return loginLogoSrc;
@@ -111,9 +175,6 @@ public class ConfigurationProperties {
         this.loginLogoClass = loginLogoClass;
     }
 
-    
-    
-    
     public String getFlowbiteMinJs() {
         return flowbiteMinJs;
     }
@@ -169,11 +230,7 @@ public class ConfigurationProperties {
     public void setChartUmdMinJs(String chartUmdMinJs) {
         this.chartUmdMinJs = chartUmdMinJs;
     }
-    
-    
-    
-    
-    
+
     public Integer getSessionMinutosExpiracion() {
         return sessionMinutosExpiracion;
     }
