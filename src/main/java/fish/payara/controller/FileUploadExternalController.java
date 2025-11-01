@@ -12,7 +12,7 @@ import com.jmoordb.core.ui.fileupload.FileStorage;
 import fish.payara.config.ConfigurationProperties;
 import com.jmoordb.core.ui.fileupload.FileUploadRequest;
 import com.jmoordb.core.ui.fileupload.FileUploadResponse;
-import fish.payara.restclient.jaxrs.FileUploaderExternal;
+import fish.payara.fileupload.remote.FileUploaderExternal;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -75,51 +75,7 @@ public class FileUploadExternalController {
     }
    
     
-    public FileUploadResponse processResponse( InputStream uploadedInputStream,
-            FormDataContentDisposition fileDetail) {
-
-        try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-
-            String fileId
-                    = fileStorage.saveFile(
-                            uploadedInputStream,
-                            fileDetail.getFileName(),
-                            uploadPath
-                    );
-            String fileRemoteId = "";
-            if (fileId == "") {
-                //No lo guardo
-
-            } else {
-                //Enviarlo al servidor remoto
-                /**
-                 * Envia la imagen a un endpoint en otro microservicio
-                 */
-
-                Boolean uploadToExternal = Boolean.TRUE;
-                if (uploadToExternal) {
-
-                    File file1 = new File(fileStorage.getTargetPath(fileId, fileDetail.getFileName(), uploadPath));
-                    List<File> filesToUpload = new ArrayList<>();
-                    filesToUpload.add(file1);
-                    fileRemoteId = fileUploaderExternal.uploadImages(filesToUpload);
-                }
-
-            }
-
-            FileUploadResponse response = new FileUploadResponse(
-                    fileId, fileDetail.getFileName(), fileRemoteId, configurationProperties.getIaUrlImage());
-            
-
-            return response;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new FileUploadResponse("","", "", "");
-        }
-    }
-
+   
     @POST
     @Path("/upload2")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -436,4 +392,50 @@ public class FileUploadExternalController {
         java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
         return fileStorage.getAllIds(uploadPath);
     }
+    
+     public FileUploadResponse processResponse( InputStream uploadedInputStream,
+            FormDataContentDisposition fileDetail) {
+
+        try {
+            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
+
+            String fileId
+                    = fileStorage.saveFile(
+                            uploadedInputStream,
+                            fileDetail.getFileName(),
+                            uploadPath
+                    );
+            String fileRemoteId = "";
+            if (fileId == "") {
+                //No lo guardo
+
+            } else {
+                //Enviarlo al servidor remoto
+                /**
+                 * Envia la imagen a un endpoint en otro microservicio
+                 */
+
+                Boolean uploadToExternal = Boolean.TRUE;
+                if (uploadToExternal) {
+
+                    File file1 = new File(fileStorage.getTargetPath(fileId, fileDetail.getFileName(), uploadPath));
+                    List<File> filesToUpload = new ArrayList<>();
+                    filesToUpload.add(file1);
+                    fileRemoteId = fileUploaderExternal.uploadImages(filesToUpload);
+                }
+
+            }
+
+            FileUploadResponse response = new FileUploadResponse(
+                    fileId, fileDetail.getFileName(), fileRemoteId, configurationProperties.getIaUrlImage());
+            
+
+            return response;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new FileUploadResponse("","", "", "");
+        }
+    }
+
 }
