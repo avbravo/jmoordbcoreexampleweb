@@ -79,6 +79,12 @@ public class ConfigurationProperties {
     @ConfigProperty(name = "chart.umd.min.js")
     private String chartUmdMinJs;
 
+    // Directory
+    
+    @Inject
+    @ConfigProperty(name = "java.system.getproperty")
+    private String javaSystemGetProperty; 
+    
     
     @Inject
     @ConfigProperty(name = "image.Directory")
@@ -91,12 +97,12 @@ public class ConfigurationProperties {
     private String iaUrlProcesarimagen;
 
     @Inject
-    @ConfigProperty(name = "ia.url.verContour")
-    private String iaUrlVerContour;
+    @ConfigProperty(name = "ia.url.image")
+    private String iaUrlImage;
 
     @Inject
-    @ConfigProperty(name = "ia.url.verPredictions")
-    private String iaUrlVerPredictions;
+    @ConfigProperty(name = "ia.url.prediction")
+    private String iaUrlPrediction;
 
     @Inject
     @ConfigProperty(name = "ia.url.listarImagenes")
@@ -111,6 +117,17 @@ public class ConfigurationProperties {
 
     // <editor-fold defaultstate="collapsed" desc="get">
 
+    public String getJavaSystemGetProperty() {
+        return javaSystemGetProperty;
+    }
+
+    public void setJavaSystemGetProperty(String javaSystemGetProperty) {
+        this.javaSystemGetProperty = javaSystemGetProperty;
+    }
+
+    
+    
+    
     public String getImageDirectory() {
         return imageDirectory;
     }
@@ -131,21 +148,24 @@ public class ConfigurationProperties {
         this.iaUrlProcesarimagen = iaUrlProcesarimagen;
     }
 
-    public String getIaUrlVerContour() {
-        return iaUrlVerContour;
+    public String getIaUrlImage() {
+        return iaUrlImage;
     }
 
-    public void setIaUrlVerContour(String iaUrlVerContour) {
-        this.iaUrlVerContour = iaUrlVerContour;
+    public void setIaUrlImage(String iaUrlImage) {
+        this.iaUrlImage = iaUrlImage;
     }
 
-    public String getIaUrlVerPredictions() {
-        return iaUrlVerPredictions;
+    public String getIaUrlPrediction() {
+        return iaUrlPrediction;
     }
 
-    public void setIaUrlVerPredictions(String iaUrlVerPredictions) {
-        this.iaUrlVerPredictions = iaUrlVerPredictions;
+    public void setIaUrlPrediction(String iaUrlPrediction) {
+        this.iaUrlPrediction = iaUrlPrediction;
     }
+
+   
+
 
     public String getIaUrlListarImagenes() {
         return iaUrlListarImagenes;

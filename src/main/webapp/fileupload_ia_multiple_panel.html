@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Subida de Múltiples Imágenes con Resultados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Más ancho para el contenido de respuesta */
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .image-container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .upload-section {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 100px;
+            background-color: #e9e9e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: #888;
+            font-size: 14px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px dashed #ccc;
+        }
+        .image-placeholder img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .image-container button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 14px;
+            margin-top: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        .image-container button:hover {
+            background-color: #0056b3;
+        }
+        .hidden-input {
+            display: none;
+        }
+        /* ESTILOS PARA LA INFORMACIÓN DE RESPUESTA Y LA IMAGEN RESULTANTE */
+        .response-section {
+            text-align: left;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #ccc;
+        }
+        .response-data {
+            background-color: #f9f9f9;
+            border: 1px solid #e1e1e1;
+            padding: 10px;
+            margin-bottom: 10px;
+            max-height: 100px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .result-image-placeholder {
+            width: 100%;
+            height: 100px;
+            background-color: #d1e7dd; /* Color que sugiere éxito o resultado */
+            border: 1px solid #a3cfb4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f5132;
+            font-size: 14px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .result-image-placeholder img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .response-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>✅ 13 Contenedores de Subida y Visualización de Resultados</h1>
+
+    <div class="image-gallery">
+
+        <div class="image-container" data-upload-id="1">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview1">Imagen 1: Archivo Local</div>
+                <input type="file" id="upload1" name="upload1" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview1')">
+                <button type="button" onclick="uploadAndShowResult('upload1', 'response1', 'resultImage1')">Subir (upload1)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response1">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage1">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+
+        <div class="image-container" data-upload-id="2">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview2">Imagen 2: Archivo Local</div>
+                <input type="file" id="upload2" name="upload2" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview2')">
+                <button type="button" onclick="uploadAndShowResult('upload2', 'response2', 'resultImage2')">Subir (upload2)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response2">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage2">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+        
+        <div class="image-container" data-upload-id="3">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview3">Imagen 3: Archivo Local</div>
+                <input type="file" id="upload3" name="upload3" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview3')">
+                <button type="button" onclick="uploadAndShowResult('upload3', 'response3', 'resultImage3')">Subir (upload3)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response3">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage3">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+
+        <div class="image-container" data-upload-id="4">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview4">Imagen 4: Archivo Local</div>
+                <input type="file" id="upload4" name="upload4" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview4')">
+                <button type="button" onclick="uploadAndShowResult('upload4', 'response4', 'resultImage4')">Subir (upload4)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response4">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage4">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+        
+        <div class="image-container" data-upload-id="5">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview5">Imagen 5: Archivo Local</div>
+                <input type="file" id="upload5" name="upload5" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview5')">
+                <button type="button" onclick="uploadAndShowResult('upload5', 'response5', 'resultImage5')">Subir (upload5)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response5">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage5">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+
+        <div class="image-container" data-upload-id="6">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview6">Imagen 6: Archivo Local</div>
+                <input type="file" id="upload6" name="upload6" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview6')">
+                <button type="button" onclick="uploadAndShowResult('upload6', 'response6', 'resultImage6')">Subir (upload6)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response6">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage6">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+
+        <div class="image-container" data-upload-id="7">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview7">Imagen 7: Archivo Local</div>
+                <input type="file" id="upload7" name="upload7" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview7')">
+                <button type="button" onclick="uploadAndShowResult('upload7', 'response7', 'resultImage7')">Subir (upload7)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response7">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage7">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+
+        <div class="image-container" data-upload-id="8">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview8">Imagen 8: Archivo Local</div>
+                <input type="file" id="upload8" name="upload8" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview8')">
+                <button type="button" onclick="uploadAndShowResult('upload8', 'response8', 'resultImage8')">Subir (upload8)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response8">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage8">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+
+        <div class="image-container" data-upload-id="9">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview9">Imagen 9: Archivo Local</div>
+                <input type="file" id="upload9" name="upload9" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview9')">
+                <button type="button" onclick="uploadAndShowResult('upload9', 'response9', 'resultImage9')">Subir (upload9)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response9">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage9">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+
+        <div class="image-container" data-upload-id="10">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview10">Imagen 10: Archivo Local</div>
+                <input type="file" id="upload10" name="upload10" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview10')">
+                <button type="button" onclick="uploadAndShowResult('upload10', 'response10', 'resultImage10')">Subir (upload10)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response10">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage10">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+
+        <div class="image-container" data-upload-id="11">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview11">Imagen 11: Archivo Local</div>
+                <input type="file" id="upload11" name="upload11" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview11')">
+                <button type="button" onclick="uploadAndShowResult('upload11', 'response11', 'resultImage11')">Subir (upload11)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response11">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage11">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+
+        <div class="image-container" data-upload-id="12">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview12">Imagen 12: Archivo Local</div>
+                <input type="file" id="upload12" name="upload12" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview12')">
+                <button type="button" onclick="uploadAndShowResult('upload12', 'response12', 'resultImage12')">Subir (upload12)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response12">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage12">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+
+        <div class="image-container" data-upload-id="13">
+            <div class="upload-section">
+                <div class="image-placeholder" id="preview13">Imagen 13: Archivo Local</div>
+                <input type="file" id="upload13" name="upload13" accept="image/*" class="hidden-input" onchange="previewImage(event, 'preview13')">
+                <button type="button" onclick="uploadAndShowResult('upload13', 'response13', 'resultImage13')">Subir (upload13)</button>
+            </div>
+            <div class="response-section">
+                <div class="response-title">Respuesta del Endpoint:</div>
+                <div class="response-data" id="response13">...</div>
+                <div class="response-title" style="margin-top: 10px;">Imagen Obtenida:</div>
+                <div class="result-image-placeholder" id="resultImage13">Resultado (por ejemplo, con marca de agua)</div>
+            </div>
+        </div>
+
+        </div>
+
+    <script>
+        /**
+         * Muestra una vista previa de la imagen seleccionada por el usuario.
+         */
+        function previewImage(event, previewId) {
+            const previewContainer = document.getElementById(previewId);
+            // Limpia el contenido anterior
+            previewContainer.innerHTML = ''; 
+
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = 'Vista previa de la imagen';
+                    previewContainer.appendChild(img); 
+                }
+                reader.readAsDataURL(file);
+            } else {
+                 previewContainer.textContent = `Imagen ${previewId.replace('preview', '')}: Archivo Local`;
+            }
+        }
+
+        /**
+         * SIMULA la subida al endpoint y muestra la respuesta y la imagen resultante.
+         * En un entorno real, aquí harías una petición AJAX (fetch o XHR) al endpoint.
+         * @param {string} uploadId - El ID del input file (e.g., 'upload1').
+         * @param {string} responseId - El ID del div para la información retornada (e.g., 'response1').
+         * @param {string} resultImageId - El ID del div para la imagen de resultado (e.g., 'resultImage1').
+         */
+        function uploadAndShowResult(uploadId, responseId, resultImageId) {
+            // 1. Simular el clic en el input de archivo
+            const fileInput = document.getElementById(uploadId);
+            if (fileInput.files.length === 0) {
+                 // Si no hay archivo, solo abre el diálogo de selección.
+                fileInput.click();
+                return; 
+            }
+            
+            // 2. Obtener elementos de visualización
+            const responseContainer = document.getElementById(responseId);
+            const resultImageContainer = document.getElementById(resultImageId);
+            const file = fileInput.files[0];
+
+            // 3. Simular el proceso (En la vida real, aquí harías el fetch/POST)
+            responseContainer.textContent = `Enviando ${file.name} a /${uploadId}...`;
+            resultImageContainer.innerHTML = 'Procesando...';
+
+            setTimeout(() => {
+                // Simulación de respuesta del endpoint:
+                const endpointResponse = JSON.stringify({
+                    status: 'success',
+                    filename: file.name,
+                    size: `${(file.size / 1024).toFixed(2)} KB`,
+                    processed_time: `${Math.random().toFixed(2)}s`,
+                    result_image_url: 'placeholder_url_para_la_imagen_procesada.jpg'
+                }, null, 2); // El 'null, 2' formatea el JSON bonito
+
+                // 4. Mostrar la información retornada
+                responseContainer.textContent = endpointResponse;
+
+                // 5. Mostrar la imagen de resultado (Simulando que el servidor retorna la misma imagen o una procesada)
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    // Idealmente, aquí usarías la URL real retornada por el servidor
+                    img.src = e.target.result; 
+                    img.alt = 'Imagen de resultado procesada';
+                    resultImageContainer.innerHTML = '';
+                    resultImageContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+
+            }, 1500); // Espera 1.5 segundos para simular la latencia de la red y el procesamiento.
+        }
+
+    </script>
+
+</body>
+</html>

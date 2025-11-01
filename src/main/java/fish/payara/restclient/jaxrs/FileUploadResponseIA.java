@@ -11,8 +11,8 @@ import java.util.List;
  *
  * @author avbravo
  */
-public record RespuestaIA(
+public record FileUploadResponseIA(
         @JsonbProperty("procesamiento de imagenes")
-        List<ImagenIAResult> imagenIAResult) {
+        List<FileUploadIAJsonProperty> fileUploadIAResult) {
 
 }
