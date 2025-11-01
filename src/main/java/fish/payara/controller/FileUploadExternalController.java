@@ -67,11 +67,7 @@ public class FileUploadExternalController {
 
         try {
             
-
-            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-            System.out.println("\t FileUploadResponse "+response.toString());
-
-            return Response.ok(response).build();
+   return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,38 +122,6 @@ public class FileUploadExternalController {
             return new FileUploadResponse("","", "", "");
         }
     }
-//    @POST
-//    @Path("/upload1")
-//    @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
-//    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
-//            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
-//    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
-//    public Response upload1(
-//            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
-//            @FormDataParam("fileUpload1") InputStream uploadedInputStream,
-//            @FormDataParam("fileUpload1") FormDataContentDisposition fileDetail) {
-//
-//        try {
-//            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-//            FileUploadResponseExternal response = new FileUploadResponseExternal(fileStorageExternal.saveAndRenameImage(
-//                    uploadedInputStream,
-//                    fileDetail.getFileName(),
-//                    Boolean.TRUE,
-//                    uploadPath,
-//                    configurationProperties.getIaUrlImage()
-//            ), fileDetail.getFileName());
-//
-//            return Response.ok(response).build();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-//                    .entity("Error al procesar el archivo: " + e.getMessage())
-//                    .build();
-//        }
-//    }
 
     @POST
     @Path("/upload2")
@@ -171,8 +135,8 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload2") InputStream uploadedInputStream,
             @FormDataParam("fileUpload2") FormDataContentDisposition fileDetail) {
         try {
-             FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-            return Response.ok(response).build();
+             
+            return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -194,9 +158,7 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload3") InputStream uploadedInputStream,
             @FormDataParam("fileUpload3") FormDataContentDisposition fileDetail) {
         try {
-          FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-
-            return Response.ok(response).build();
+           return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -218,8 +180,7 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload4") InputStream uploadedInputStream,
             @FormDataParam("fileUpload4") FormDataContentDisposition fileDetail) {
         try {
-           FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-            return Response.ok(response).build();
+              return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -241,9 +202,7 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload5") InputStream uploadedInputStream,
             @FormDataParam("fileUpload5") FormDataContentDisposition fileDetail) {
         try {
-            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-
-            return Response.ok(response).build();
+             return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -265,8 +224,7 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload6") InputStream uploadedInputStream,
             @FormDataParam("fileUpload6") FormDataContentDisposition fileDetail) {
         try {
-             FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-            return Response.ok(response).build();
+              return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -288,9 +246,7 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload7") InputStream uploadedInputStream,
             @FormDataParam("fileUpload7") FormDataContentDisposition fileDetail) {
         try {
-            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-
-            return Response.ok(response).build();
+              return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -312,9 +268,7 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload8") InputStream uploadedInputStream,
             @FormDataParam("fileUpload8") FormDataContentDisposition fileDetail) {
         try {
-           FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-
-            return Response.ok(response).build();
+             return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -336,10 +290,7 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload9") InputStream uploadedInputStream,
             @FormDataParam("fileUpload9") FormDataContentDisposition fileDetail) {
         try {
-           FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-
-            return Response.ok(response).build();
-
+             return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -360,8 +311,7 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload10") InputStream uploadedInputStream,
             @FormDataParam("fileUpload10") FormDataContentDisposition fileDetail) {
         try {
-           FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-            return Response.ok(response).build();
+            return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -383,8 +333,7 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload11") InputStream uploadedInputStream,
             @FormDataParam("fileUpload11") FormDataContentDisposition fileDetail) {
         try {
-            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-            return Response.ok(response).build();
+           return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -406,8 +355,7 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload12") InputStream uploadedInputStream,
             @FormDataParam("fileUpload12") FormDataContentDisposition fileDetail) {
         try {
-            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-            return Response.ok(response).build();
+               return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -430,8 +378,7 @@ public class FileUploadExternalController {
             @FormDataParam("fileUpload13") FormDataContentDisposition fileDetail) {
         try {
 
-            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
-            return Response.ok(response).build();
+            return Response.ok(processResponse(uploadedInputStream, fileDetail)).build();
 
         } catch (Exception e) {
             e.printStackTrace();

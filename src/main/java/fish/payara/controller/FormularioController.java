@@ -4,7 +4,7 @@
  */
 package fish.payara.controller;
 
-import fish.payara.controller.formulario.Formulario;
+import fish.payara.controller.formulario.FormularioViewModel;
 import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -24,7 +24,7 @@ public class FormularioController {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED) // O MediaType.APPLICATION_JSON
 //    @Consumes( MediaType.APPLICATION_JSON) // O MediaType.APPLICATION_JSON
     @Produces(MediaType.APPLICATION_JSON)
-    public Response saveFormulario(@BeanParam Formulario formulario) {
+    public Response saveFormulario(@BeanParam FormularioViewModel formulario) {
         System.out.println("\t llego al metodo save");
         // Lógica para guardar los datos en la base de datos...
         // --- LOG DE VERIFICACIÓN ---
@@ -35,11 +35,11 @@ public class FormularioController {
         System.out.println("-----------------------------------------------------------");
         System.out.println("File ID 1: " + formulario.getFileId1());
         System.out.println("formulario.getOriginalFileName1(): " + formulario.getOriginalFileName1());
-        System.out.println("formulario.getPhotoId1(): " + formulario.getPhotoId1());
+        System.out.println("formulario.getFileRemoteId1(): " + formulario.getFileRemoteId1());
         System.out.println("-----------------------------------------------------------");
-        System.out.println("Photo ID 2: " + formulario.getPhotoId2());
+        System.out.println("Photo ID 2: " + formulario.getFileRemoteId2());
         System.out.println("formulario.getOriginalFileName2(): " + formulario.getOriginalFileName2());
-        System.out.println("formulario.getPhotoId2(): " + formulario.getPhotoId2());
+        System.out.println("formulario.getFileRemoteId2(): " + formulario.getFileRemoteId2());
         return Response.ok("Datos guardados correctamente.").build();
     }
 }

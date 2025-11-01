@@ -752,8 +752,7 @@
                         refs.feedbackMessage.textContent = `✅ Carga ${suffix} exitosa.`;
 
                         if (response.fileRemoteId) {
-                            console.log("response.fileRemoteI "+response.fileRemoteId);
-                            console.log("response.urlRemote "+response.urlRemote);
+                           
                             const imageUrl = response.urlRemote + response.fileRemoteId;
                             
                             refs.serverImage.src = imageUrl;

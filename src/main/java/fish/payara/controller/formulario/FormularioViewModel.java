@@ -18,7 +18,7 @@ import jakarta.ws.rs.FormParam;
 import jakarta.xml.bind.annotation.XmlRootElement; 
 
 @XmlRootElement
-public class Formulario {
+public class FormularioViewModel {
     
     // El valor dentro de @FormParam DEBE coincidir exactamente con el atributo 'name' del HTML
     
@@ -41,8 +41,8 @@ public class Formulario {
     @FormParam("fileId1")
     private String fileId1;
     
-    @FormParam("photoId1")
-    private String photoId1;
+    @FormParam("fileRemoteId1")
+    private String fileRemoteId1;
     
     @FormParam("originalFileName1")
     private String originalFileName1;
@@ -53,8 +53,8 @@ public class Formulario {
     @FormParam("fileId2")
     private String fileId2;
     
-    @FormParam("photoId2")
-    private String photoId2;
+    @FormParam("fileRemoteId2")
+    private String fileRemoteId2;
     
     @FormParam("originalFileName2")
     private String originalFileName2;
@@ -62,7 +62,7 @@ public class Formulario {
     // ***************************************************************
     // 1. CONSTRUCTOR POR DEFECTO (NECESARIO para JAX-RS/Payara)
     // ***************************************************************
-    public Formulario() {
+    public FormularioViewModel() {
         // Constructor por defecto
     }
 
@@ -96,8 +96,8 @@ public class Formulario {
         this.edad = edad;
     }
 
-    public String getPhotoId1() { return photoId1; }
-    public void setPhotoId1(String photoId1) { this.photoId1 = photoId1; }
+    public String getFileRemoteId1() { return fileRemoteId1; }
+    public void setFileRemoteId1(String fileRemoteId1) { this.fileRemoteId1 = fileRemoteId1; }
 
     public String getOriginalFileName1() { return originalFileName1; }
     public void setOriginalFileName1(String originalFileName1) { this.originalFileName1 = originalFileName1; }
@@ -106,8 +106,8 @@ public class Formulario {
     public String getFileId2() { return fileId2; }
     public void setFileId2(String fileId2) { this.fileId2 = fileId2; }
 
-    public String getPhotoId2() { return photoId2; }
-    public void setPhotoId2(String photoId2) { this.photoId2 = photoId2; }
+    public String getFileRemoteId2() { return fileRemoteId2; }
+    public void setFileRemoteId2(String fileRemoteId2) { this.fileRemoteId2 = fileRemoteId2; }
 
     public String getOriginalFileName2() { return originalFileName2; }
     public void setOriginalFileName2(String originalFileName2) { this.originalFileName2 = originalFileName2; }
