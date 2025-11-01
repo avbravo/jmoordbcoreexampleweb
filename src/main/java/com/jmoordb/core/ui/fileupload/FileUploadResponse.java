@@ -9,7 +9,6 @@ package com.jmoordb.core.ui.fileupload;
  * @author avbravo
  */
 
-import com.jmoordb.core.ui.fileupload.FileUploadId;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Schema(description = "Respuesta de la subida de archivo con el ID generado.")

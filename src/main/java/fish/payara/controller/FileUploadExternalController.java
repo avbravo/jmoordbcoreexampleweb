@@ -9,11 +9,9 @@ package fish.payara.controller;
  * @author avbravo
  */
 import com.jmoordb.core.ui.fileupload.FileStorage;
-import com.jmoordb.core.ui.fileupload.FileStorageExternal;
 import fish.payara.config.ConfigurationProperties;
 import com.jmoordb.core.ui.fileupload.FileUploadRequest;
 import com.jmoordb.core.ui.fileupload.FileUploadResponse;
-import com.jmoordb.core.ui.fileupload.FileUploadResponseExternal;
 import fish.payara.restclient.jaxrs.FileUploaderExternal;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -44,8 +42,7 @@ public class FileUploadExternalController {
 
     @Inject
     ConfigurationProperties configurationProperties;
-    @Inject
-    private FileStorageExternal fileStorageExternal;
+  
     @Inject
     private FileStorage fileStorage;
 
@@ -409,7 +406,7 @@ public class FileUploadExternalController {
     public Response downloadImage(@PathParam("id") String id) {
         try {
             java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            byte[] imageBytes = fileStorageExternal.getImage(id, uploadPath);
+            byte[] imageBytes = fileStorage.getImage(id, uploadPath);
 
             if (imageBytes != null) {
                 // Devuelve los bytes con un Content-Type apropiado. 
@@ -437,6 +434,6 @@ public class FileUploadExternalController {
     @Tag(name = "BETA", description = "Esta api esta en desarrollo")
     public Set<String> getAllImageIds() throws IOException {
         java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-        return fileStorageExternal.getAllIds(uploadPath);
+        return fileStorage.getAllIds(uploadPath);
     }
 }
