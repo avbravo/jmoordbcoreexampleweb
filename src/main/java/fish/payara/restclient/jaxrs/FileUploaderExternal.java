@@ -26,7 +26,7 @@ import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 
 @Named
 @ApplicationScoped
-public class FileUploaderExternalIA {
+public class FileUploaderExternal {
 
     @Inject
     ConfigurationProperties configurationProperties;
@@ -66,15 +66,16 @@ public class FileUploaderExternalIA {
             if (response.getStatus() == Response.Status.OK.getStatusCode()) {
 
                 // Deserializa el JSON a nuestro Record RespuestaIA.
-                FileUploadResponseIA respuesta = response.readEntity(FileUploadResponseIA.class);
+                FileUploadJsonResponse respuesta = response.readEntity(FileUploadJsonResponse.class);
 
                 // Extraemos el primer ID y mensaje para usar como resultado String 
-                List<FileUploadIAJsonProperty> resultados = respuesta.fileUploadIAResult();
+                List<FileUploadJsonProperty> resultados = respuesta.fileUploadIAResult();
                 if (resultados != null && !resultados.isEmpty()) {
-                    FileUploadIAJsonProperty primeraImagen = resultados.get(0);
-                    resultadoProcesamiento = primeraImagen.imgid();
+//                    FileUploadJsonProperty primeraImagen = resultados.get(0);
+//                    resultadoProcesamiento = primeraImagen.imgid();
 
-                    return resultadoProcesamiento; // Devuelve el ID generado
+//                    return resultadoProcesamiento; // Devuelve el ID generado
+                    return resultados.get(0).imgid(); // Devuelve el ID generado
                 } else {
                     return "Respuesta exitosa, pero la lista de procesamiento está vacía.";
                 }

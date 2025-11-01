@@ -8,6 +8,6 @@ package com.jmoordb.core.ui.fileupload;
  *
  * @author avbravo
  */
-public record FileUploadIdIA(String fileId, String photo_id, String img_base_url) {
+public record FileUploadIdExternal(String fileId, String photo_id, String img_base_url) {
 
 }

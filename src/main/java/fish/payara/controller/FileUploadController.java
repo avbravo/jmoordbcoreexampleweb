@@ -55,11 +55,12 @@ public class FileUploadController {
 
         try {
             java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponse response = new FileUploadResponse(fileStorage.saveAndRenameImage(
+            FileUploadResponse response = new FileUploadResponse(
+                    fileStorage.saveFile(
                     uploadedInputStream,
                     fileDetail.getFileName(),
                     uploadPath
-            ), fileDetail.getFileName());
+            ), fileDetail.getFileName(),"","");
 
             return Response.ok(response).build();
 

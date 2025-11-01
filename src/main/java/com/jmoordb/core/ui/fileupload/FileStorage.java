@@ -22,10 +22,39 @@ import java.util.UUID;
 @ApplicationScoped
 public class FileStorage {
 
-  
-
-    public FileUploadId saveAndRenameImage(InputStream fileStream, String originalFileName,Path uploadPath) throws IOException {
+    public String saveFile(InputStream fileStream, String originalFileName, Path uploadPath) throws IOException {
         String fileId = UUID.randomUUID().toString();
+        try {
+
+            String fileExtension = "";
+            int dotIndex = originalFileName.lastIndexOf('.');
+            if (dotIndex > 0) {
+                fileExtension = originalFileName.substring(dotIndex);
+            }
+
+            String newFileName = fileId + fileExtension;
+
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            Path targetPath = uploadPath.resolve(newFileName);
+
+            Files.copy(fileStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
+            /**
+             * Envia la imagen a un endpoint en otro microservicio
+             */
+
+        } catch (Exception e) {
+            System.out.println("\t saveFile() " + e.getLocalizedMessage());
+            fileId="";
+        }
+
+        return fileId;
+    }
+    
+     public String  getTargetPath( String fileId,String originalFileName,Path uploadPath) throws IOException {
+      //  String fileId = UUID.randomUUID().toString();
         String fileExtension = "";
         int dotIndex = originalFileName.lastIndexOf('.');
         if (dotIndex > 0) {
@@ -34,7 +63,7 @@ public class FileStorage {
 
         String newFileName = fileId + fileExtension;
 
-       
+
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
@@ -42,14 +71,12 @@ public class FileStorage {
 
         Path targetPath = uploadPath.resolve(newFileName);
 
-        Files.copy(fileStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
-/**
- * Envia la imagen a un endpoint en otro microservicio
- */
 
+       
 
-        return new FileUploadId(fileId);
+        return targetPath.toString();
     }
+
 
     /**
      * Devuelve la imagen (bytes) asociada a un ID.
@@ -57,8 +84,7 @@ public class FileStorage {
      * @param id El ID de la imagen.
      * @return Los bytes de la imagen o null si no se encuentra.
      */
-    public byte[] getImage(String id,Path uploadPath) throws IOException {
-        
+    public byte[] getImage(String id, Path uploadPath) throws IOException {
 
         //  Path path = imageMap.get(id);
         for (Path archivo : Files.newDirectoryStream(uploadPath)) {
@@ -78,7 +104,6 @@ public class FileStorage {
 
     public Set<String> getAllIds(Path uploadPath) throws IOException {
         Set<String> result = new HashSet<>();;
-        
 
         for (Path archivo : Files.newDirectoryStream(uploadPath)) {
             String nombreArchivoCompleto = archivo.getFileName().toString();

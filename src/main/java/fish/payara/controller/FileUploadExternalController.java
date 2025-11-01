@@ -8,16 +8,19 @@ package fish.payara.controller;
  *
  * @author avbravo
  */
-import com.jmoordb.core.ui.fileupload.FileStorageIA;
+import com.jmoordb.core.ui.fileupload.FileStorage;
+import com.jmoordb.core.ui.fileupload.FileStorageExternal;
 import fish.payara.config.ConfigurationProperties;
 import com.jmoordb.core.ui.fileupload.FileUploadRequest;
 import com.jmoordb.core.ui.fileupload.FileUploadResponse;
-import com.jmoordb.core.ui.fileupload.FileUploadResponseIA;
+import com.jmoordb.core.ui.fileupload.FileUploadResponseExternal;
+import fish.payara.restclient.jaxrs.FileUploaderExternal;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.io.File;
 import java.io.IOException;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -27,6 +30,8 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -35,12 +40,17 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("files")
 @RequestScoped
 
-public class FileUploadControllerIA {
+public class FileUploadExternalController {
 
     @Inject
     ConfigurationProperties configurationProperties;
     @Inject
-    private FileStorageIA fileStorage;
+    private FileStorageExternal fileStorageExternal;
+    @Inject
+    private FileStorage fileStorage;
+
+    @Inject
+    FileUploaderExternal fileUploaderExternal;
 
     @POST
     @Path("/upload1")
@@ -56,14 +66,10 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload1") FormDataContentDisposition fileDetail) {
 
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
+            
+
+            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
+            System.out.println("\t FileUploadResponse "+response.toString());
 
             return Response.ok(response).build();
 
@@ -74,6 +80,84 @@ public class FileUploadControllerIA {
                     .build();
         }
     }
+   
+    
+    public FileUploadResponse processResponse( InputStream uploadedInputStream,
+            FormDataContentDisposition fileDetail) {
+
+        try {
+            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
+
+            String fileId
+                    = fileStorage.saveFile(
+                            uploadedInputStream,
+                            fileDetail.getFileName(),
+                            uploadPath
+                    );
+            String fileRemoteId = "";
+            if (fileId == "") {
+                //No lo guardo
+
+            } else {
+                //Enviarlo al servidor remoto
+                /**
+                 * Envia la imagen a un endpoint en otro microservicio
+                 */
+
+                Boolean uploadToExternal = Boolean.TRUE;
+                if (uploadToExternal) {
+
+                    File file1 = new File(fileStorage.getTargetPath(fileId, fileDetail.getFileName(), uploadPath));
+                    List<File> filesToUpload = new ArrayList<>();
+                    filesToUpload.add(file1);
+                    fileRemoteId = fileUploaderExternal.uploadImages(filesToUpload);
+                }
+
+            }
+
+            FileUploadResponse response = new FileUploadResponse(
+                    fileId, fileDetail.getFileName(), fileRemoteId, configurationProperties.getIaUrlImage());
+            
+
+            return response;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new FileUploadResponse("","", "", "");
+        }
+    }
+//    @POST
+//    @Path("/upload1")
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+//    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+//            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+//    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+//    public Response upload1(
+//            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+//            @FormDataParam("fileUpload1") InputStream uploadedInputStream,
+//            @FormDataParam("fileUpload1") FormDataContentDisposition fileDetail) {
+//
+//        try {
+//            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
+//            FileUploadResponseExternal response = new FileUploadResponseExternal(fileStorageExternal.saveAndRenameImage(
+//                    uploadedInputStream,
+//                    fileDetail.getFileName(),
+//                    Boolean.TRUE,
+//                    uploadPath,
+//                    configurationProperties.getIaUrlImage()
+//            ), fileDetail.getFileName());
+//
+//            return Response.ok(response).build();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+//                    .entity("Error al procesar el archivo: " + e.getMessage())
+//                    .build();
+//        }
+//    }
 
     @POST
     @Path("/upload2")
@@ -87,15 +171,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload2") InputStream uploadedInputStream,
             @FormDataParam("fileUpload2") FormDataContentDisposition fileDetail) {
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
-
+             FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
             return Response.ok(response).build();
 
         } catch (Exception e) {
@@ -118,14 +194,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload3") InputStream uploadedInputStream,
             @FormDataParam("fileUpload3") FormDataContentDisposition fileDetail) {
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
+          FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
 
             return Response.ok(response).build();
 
@@ -149,15 +218,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload4") InputStream uploadedInputStream,
             @FormDataParam("fileUpload4") FormDataContentDisposition fileDetail) {
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
-
+           FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
             return Response.ok(response).build();
 
         } catch (Exception e) {
@@ -180,14 +241,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload5") InputStream uploadedInputStream,
             @FormDataParam("fileUpload5") FormDataContentDisposition fileDetail) {
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
+            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
 
             return Response.ok(response).build();
 
@@ -211,15 +265,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload6") InputStream uploadedInputStream,
             @FormDataParam("fileUpload6") FormDataContentDisposition fileDetail) {
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
-
+             FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
             return Response.ok(response).build();
 
         } catch (Exception e) {
@@ -242,14 +288,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload7") InputStream uploadedInputStream,
             @FormDataParam("fileUpload7") FormDataContentDisposition fileDetail) {
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
+            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
 
             return Response.ok(response).build();
 
@@ -273,14 +312,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload8") InputStream uploadedInputStream,
             @FormDataParam("fileUpload8") FormDataContentDisposition fileDetail) {
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
+           FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
 
             return Response.ok(response).build();
 
@@ -304,14 +336,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload9") InputStream uploadedInputStream,
             @FormDataParam("fileUpload9") FormDataContentDisposition fileDetail) {
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
+           FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
 
             return Response.ok(response).build();
 
@@ -335,15 +360,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload10") InputStream uploadedInputStream,
             @FormDataParam("fileUpload10") FormDataContentDisposition fileDetail) {
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
-
+           FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
             return Response.ok(response).build();
 
         } catch (Exception e) {
@@ -366,15 +383,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload11") InputStream uploadedInputStream,
             @FormDataParam("fileUpload11") FormDataContentDisposition fileDetail) {
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
-
+            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
             return Response.ok(response).build();
 
         } catch (Exception e) {
@@ -397,15 +406,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload12") InputStream uploadedInputStream,
             @FormDataParam("fileUpload12") FormDataContentDisposition fileDetail) {
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
-
+            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
             return Response.ok(response).build();
 
         } catch (Exception e) {
@@ -429,15 +430,7 @@ public class FileUploadControllerIA {
             @FormDataParam("fileUpload13") FormDataContentDisposition fileDetail) {
         try {
 
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            FileUploadResponseIA response = new FileUploadResponseIA(fileStorage.saveAndRenameImage(
-                    uploadedInputStream,
-                    fileDetail.getFileName(),
-                    Boolean.TRUE,
-                    uploadPath,
-                    configurationProperties.getIaUrlImage()
-            ), fileDetail.getFileName());
-
+            FileUploadResponse response = processResponse(uploadedInputStream, fileDetail);
             return Response.ok(response).build();
 
         } catch (Exception e) {
@@ -469,7 +462,7 @@ public class FileUploadControllerIA {
     public Response downloadImage(@PathParam("id") String id) {
         try {
             java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-            byte[] imageBytes = fileStorage.getImage(id, uploadPath);
+            byte[] imageBytes = fileStorageExternal.getImage(id, uploadPath);
 
             if (imageBytes != null) {
                 // Devuelve los bytes con un Content-Type apropiado. 
@@ -497,6 +490,6 @@ public class FileUploadControllerIA {
     @Tag(name = "BETA", description = "Esta api esta en desarrollo")
     public Set<String> getAllImageIds() throws IOException {
         java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
-        return fileStorage.getAllIds(uploadPath);
+        return fileStorageExternal.getAllIds(uploadPath);
     }
 }

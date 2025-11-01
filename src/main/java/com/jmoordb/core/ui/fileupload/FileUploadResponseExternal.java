@@ -9,11 +9,11 @@ package com.jmoordb.core.ui.fileupload;
  * @author avbravo
  */
 
-import com.jmoordb.core.ui.fileupload.FileUploadIdIA;
+import com.jmoordb.core.ui.fileupload.FileUploadIdExternal;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Schema(description = "Respuesta de la subida de archivo con el ID generado.")
-public class FileUploadResponseIA {
+public class FileUploadResponseExternal {
     @Schema(description = "Id de la imagen almacenada localmente",example = "a1b2c3d4-e5f6-7890-1234-567890abcdef")
     private String fileId;
     
@@ -27,7 +27,7 @@ public class FileUploadResponseIA {
     private  String img_base_url;
 
 
-   public FileUploadResponseIA(FileUploadIdIA imageGeneration, String originalFileName) {
+   public FileUploadResponseExternal(FileUploadIdExternal imageGeneration, String originalFileName) {
         this.fileId = imageGeneration.fileId();
         this.originalFileName = originalFileName;
         this.photo_id=imageGeneration.photo_id();

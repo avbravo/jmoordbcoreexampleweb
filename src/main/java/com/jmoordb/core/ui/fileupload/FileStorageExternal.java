@@ -8,9 +8,7 @@ package com.jmoordb.core.ui.fileupload;
  *
  * @author avbravo
  */
-import fish.payara.config.ConfigurationProperties;
-import com.jmoordb.core.ui.fileupload.FileUploadIdIA;
-import fish.payara.restclient.jaxrs.FileUploaderExternalIA;
+import fish.payara.restclient.jaxrs.FileUploaderExternal;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.io.File;
@@ -19,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,12 +25,12 @@ import java.util.Set;
 import java.util.UUID;
 
 @ApplicationScoped
-public class FileStorageIA {
+public class FileStorageExternal {
 
     @Inject
-    FileUploaderExternalIA jAXRSImageUploader;
+    FileUploaderExternal fileUploaderExternal;
 
-    public FileUploadIdIA saveAndRenameImage(InputStream fileStream, String originalFileName, Boolean uploadToIA,Path uploadPath, String iaUrlImage) throws IOException {
+    public FileUploadIdExternal saveAndRenameImage(InputStream fileStream, String originalFileName, Boolean uploadToIA,Path uploadPath, String iaUrlImage) throws IOException {
         String fileId = UUID.randomUUID().toString();
         String fileExtension = "";
         int dotIndex = originalFileName.lastIndexOf('.');
@@ -60,10 +57,10 @@ public class FileStorageIA {
             File file1 = new File(targetPath.toString());
             List<File> filesToUpload = new ArrayList<>();
             filesToUpload.add(file1);
-            fileIdAI = jAXRSImageUploader.uploadImages(filesToUpload);
+            fileIdAI = fileUploaderExternal.uploadImages(filesToUpload);
         }
 
-        return new FileUploadIdIA(fileId, fileIdAI,iaUrlImage);
+        return new FileUploadIdExternal(fileId, fileIdAI,iaUrlImage);
     }
 
     /**

@@ -2,14 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fish.payara.restclient.jaxrs;
-
-import jakarta.json.bind.annotation.JsonbProperty;
+package fish.payara.restclient.jaxrs.ui;
 
 /**
  *
  * @author avbravo
  */
-public record FileUploadIAJsonProperty(@JsonbProperty("IMG ID")String imgid, String mensaje) {
-
+public record UploadResult<T>(String message, T resultItem, boolean success) {
 }
