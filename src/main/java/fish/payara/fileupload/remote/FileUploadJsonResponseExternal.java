@@ -11,8 +11,8 @@ import java.util.List;
  *
  * @author avbravo
  */
-public record FileUploadJsonResponse(
+public record FileUploadJsonResponseExternal(
         @JsonbProperty("procesamiento de imagenes")
-        List<FileUploadJsonProperty> fileUploadIAResult) {
+        List<FileUploadJsonPropertyExternal> fileUploadIAResult) {
 
 }

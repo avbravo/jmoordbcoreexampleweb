@@ -327,7 +327,7 @@
                     <p id="feedback-message1">Resultados de Carga 1:</p>
                     <div class="input-group"><label for="fileIdInput1">ID de Archivo:</label><input type="text" id="fileIdInput1" name="fileId1" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput1">Nombre Original:</label><input type="text" id="originalFileNameInput1" name="originalFileName1" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput1">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput1" name="fileRemoteId1" value="" readonly></div>
+                    
                 </div>
             </div>
             
@@ -352,7 +352,7 @@
             // Mapeo de IDs de inputs y mensajes por número de carga
             const INPUT_MAP = {
                 // Secciones 1 a 4 (Existentes)
-                '1': { buttonId: 'uploadButton1', fileId: 'fileIdInput1', originalFileName: 'originalFileNameInput1', fileRemoteId: 'fileRemoteIdInput1', feedback: 'feedback-message1', serverImage: 'server-image1', serverPlaceholder: 'server-placeholder1' }
+                '1': { buttonId: 'uploadButton1', fileId: 'fileIdInput1', originalFileName: 'originalFileNameInput1',  feedback: 'feedback-message1', serverImage: 'server-image1', serverPlaceholder: 'server-placeholder1' }
                 
             };
             
@@ -366,7 +366,6 @@
                 return {
                     fileIdInput: document.getElementById(map.fileId),
                     originalFileNameInput: document.getElementById(map.originalFileName),
-                    fileRemoteIdInput: document.getElementById(map.fileRemoteId),
                     feedbackMessage: document.getElementById(map.feedback),
                     serverImage: document.getElementById(map.serverImage),
                     serverPlaceholder: document.getElementById(map.serverPlaceholder),
@@ -418,7 +417,7 @@
                         evt.detail.elt.disabled = true;
                         
                         refs.fileIdInput.value = '';
-                        refs.fileRemoteIdInput.value = '';
+             
                         refs.originalFileNameInput.value = '';
                         refs.feedbackMessage.textContent = `Subiendo Imagen ${suffix}...`; 
                         refs.serverImage.src = '';
@@ -469,7 +468,7 @@
                         const response = JSON.parse(xhr.responseText);
                         
                         refs.fileIdInput.value = response.fileId || '';
-                        refs.fileRemoteIdInput.value = response.photo_id || '';
+                   
                         refs.originalFileNameInput.value = response.originalFileName || '';
                         
                         refs.feedbackMessage.textContent = `✅ Carga ${suffix} exitosa.`;

@@ -66,10 +66,10 @@ public class FileUploaderExternal {
             if (response.getStatus() == Response.Status.OK.getStatusCode()) {
 
                 // Deserializa el JSON a nuestro Record RespuestaIA.
-                FileUploadJsonResponse respuesta = response.readEntity(FileUploadJsonResponse.class);
+                FileUploadJsonResponseExternal respuesta = response.readEntity(FileUploadJsonResponseExternal.class);
 
                 // Extraemos el primer ID y mensaje para usar como resultado String 
-                List<FileUploadJsonProperty> resultados = respuesta.fileUploadIAResult();
+                List<FileUploadJsonPropertyExternal> resultados = respuesta.fileUploadIAResult();
                 if (resultados != null && !resultados.isEmpty()) {
 //                    FileUploadJsonProperty primeraImagen = resultados.get(0);
 //                    resultadoProcesamiento = primeraImagen.imgid();
