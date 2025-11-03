@@ -700,11 +700,6 @@
                 <fieldset>
                     <legend>Motivo del Estudio</legend>
                     <div class="radio-group-container two-columns">
-
-
-
-
-
                         <div class="radio-item">
                             <input type="radio" id="motivo1" name="motivo" value="Vaginitis" required>
                             <label for="motivo1">Vaginitis</label>
@@ -1133,14 +1128,7 @@
             </div>
 
 
-
-
-
-
-            <hr>
-
-
-            <div class="upload-section">
+                      <div class="upload-section">
                 <h2>Carga 1: Radiografía Frontal</h2>
                 <input type='file' name='fileUpload1' onchange="previewImage(event, 'image-preview1', 'placeholder-text1')">
                 <button id="uploadButton1" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload1' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload1']" hx-indicator="#uploadButton1 .htmx-indicator">
@@ -1152,25 +1140,20 @@
                         <h3>Vista Previa Local</h3>
                         <div class="preview-box"><img id="image-preview1" alt="Vista previa de la imagen 1"><p id="placeholder-text1">Selecciona una imagen para previsualizar.</p></div>
                     </div>
-                    <div class="image-container-box">
-                        <h3>Imagen del Servidor</h3>
-                        <div id="server-image-preview1" class="preview-box"><img id="server-image1" alt="Imagen del Servidor 1"><p id="server-placeholder1">La imagen aparecerá aquí después de la carga.</p></div>
-                    </div>
                 </div>
                 <div id="result-fields1" class="result-fields-container">
                     <p id="feedback-message1">Resultados de Carga 1:</p>
                     <div class="input-group"><label for="fileIdInput1">ID de Archivo:</label><input type="text" id="fileIdInput1" name="fileId1" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput1">Nombre Original:</label><input type="text" id="originalFileNameInput1" name="originalFileName1" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput1">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput1" name="fileRemoteId1" value="" readonly></div>
                 </div>
             </div>
-
+            
             <hr>
 
             <div class="upload-section">
                 <h2>Carga 2: Radiografía Lateral</h2>
                 <input type='file' name='fileUpload2' onchange="previewImage(event, 'image-preview2', 'placeholder-text2')">
-                <button id="uploadButton2" hx-post='/jmoordbcoreexampleweb/api/files/upload2' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload2']" hx-indicator="#uploadButton2 .htmx-indicator">
+                <button id="uploadButton2" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload2' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload2']" hx-indicator="#uploadButton2 .htmx-indicator">
                     <span class="button-text">Subir Imagen 2</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>
@@ -1179,25 +1162,20 @@
                         <h3>Vista Previa Local</h3>
                         <div class="preview-box"><img id="image-preview2" alt="Vista previa de la imagen 2"><p id="placeholder-text2">Selecciona una imagen para previsualizar.</p></div>
                     </div>
-                    <div class="image-container-box">
-                        <h3>Imagen del Servidor</h3>
-                        <div id="server-image-preview2" class="preview-box"><img id="server-image2" alt="Imagen del Servidor 2"><p id="server-placeholder2">La imagen aparecerá aquí después de la carga.</p></div>
-                    </div>
                 </div>
                 <div id="result-fields2" class="result-fields-container">
                     <p id="feedback-message2">Resultados de Carga 2:</p>
                     <div class="input-group"><label for="fileIdInput2">ID de Archivo:</label><input type="text" id="fileIdInput2" name="fileId2" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput2">Nombre Original:</label><input type="text" id="originalFileNameInput2" name="originalFileName2" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput2">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput2" name="fileRemoteId2" value="" readonly></div>
                 </div>
             </div>
-
+            
             <hr>
 
             <div class="upload-section">
-                <h2>Carga 3: Radiografía Oblicua</h2>
+                <h2>Carga 3: Ecografía</h2>
                 <input type='file' name='fileUpload3' onchange="previewImage(event, 'image-preview3', 'placeholder-text3')">
-                <button id="uploadButton3" hx-post='/jmoordbcoreexampleweb/api/files/upload3' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload3']" hx-indicator="#uploadButton3 .htmx-indicator">
+                <button id="uploadButton3" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload3' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload3']" hx-indicator="#uploadButton3 .htmx-indicator">
                     <span class="button-text">Subir Imagen 3</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>
@@ -1206,25 +1184,20 @@
                         <h3>Vista Previa Local</h3>
                         <div class="preview-box"><img id="image-preview3" alt="Vista previa de la imagen 3"><p id="placeholder-text3">Selecciona una imagen para previsualizar.</p></div>
                     </div>
-                    <div class="image-container-box">
-                        <h3>Imagen del Servidor</h3>
-                        <div id="server-image-preview3" class="preview-box"><img id="server-image3" alt="Imagen del Servidor 3"><p id="server-placeholder3">La imagen aparecerá aquí después de la carga.</p></div>
-                    </div>
                 </div>
                 <div id="result-fields3" class="result-fields-container">
                     <p id="feedback-message3">Resultados de Carga 3:</p>
                     <div class="input-group"><label for="fileIdInput3">ID de Archivo:</label><input type="text" id="fileIdInput3" name="fileId3" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput3">Nombre Original:</label><input type="text" id="originalFileNameInput3" name="originalFileName3" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput3">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput3" name="fileRemoteId3" value="" readonly></div>
                 </div>
             </div>
 
             <hr>
-
+            
             <div class="upload-section">
-                <h2>Carga 4: Tomografía/Resonancia</h2>
+                <h2>Carga 4: Tomografía Computarizada</h2>
                 <input type='file' name='fileUpload4' onchange="previewImage(event, 'image-preview4', 'placeholder-text4')">
-                <button id="uploadButton4" hx-post='/jmoordbcoreexampleweb/api/files/upload4' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload4']" hx-indicator="#uploadButton4 .htmx-indicator">
+                <button id="uploadButton4" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload4' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload4']" hx-indicator="#uploadButton4 .htmx-indicator">
                     <span class="button-text">Subir Imagen 4</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>
@@ -1233,25 +1206,20 @@
                         <h3>Vista Previa Local</h3>
                         <div class="preview-box"><img id="image-preview4" alt="Vista previa de la imagen 4"><p id="placeholder-text4">Selecciona una imagen para previsualizar.</p></div>
                     </div>
-                    <div class="image-container-box">
-                        <h3>Imagen del Servidor</h3>
-                        <div id="server-image-preview4" class="preview-box"><img id="server-image4" alt="Imagen del Servidor 4"><p id="server-placeholder4">La imagen aparecerá aquí después de la carga.</p></div>
-                    </div>
                 </div>
                 <div id="result-fields4" class="result-fields-container">
                     <p id="feedback-message4">Resultados de Carga 4:</p>
                     <div class="input-group"><label for="fileIdInput4">ID de Archivo:</label><input type="text" id="fileIdInput4" name="fileId4" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput4">Nombre Original:</label><input type="text" id="originalFileNameInput4" name="originalFileName4" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput4">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput4" name="fileRemoteId4" value="" readonly></div>
                 </div>
             </div>
 
             <hr>
-
+            
             <div class="upload-section">
-                <h2>Carga 5: Documento Adicional 1</h2>
+                <h2>Carga 5: Resonancia Magnética</h2>
                 <input type='file' name='fileUpload5' onchange="previewImage(event, 'image-preview5', 'placeholder-text5')">
-                <button id="uploadButton5" hx-post='/jmoordbcoreexampleweb/api/files/upload5' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload5']" hx-indicator="#uploadButton5 .htmx-indicator">
+                <button id="uploadButton5" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload5' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload5']" hx-indicator="#uploadButton5 .htmx-indicator">
                     <span class="button-text">Subir Imagen 5</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>
@@ -1260,25 +1228,20 @@
                         <h3>Vista Previa Local</h3>
                         <div class="preview-box"><img id="image-preview5" alt="Vista previa de la imagen 5"><p id="placeholder-text5">Selecciona una imagen para previsualizar.</p></div>
                     </div>
-                    <div class="image-container-box">
-                        <h3>Imagen del Servidor</h3>
-                        <div id="server-image-preview5" class="preview-box"><img id="server-image5" alt="Imagen del Servidor 5"><p id="server-placeholder5">La imagen aparecerá aquí después de la carga.</p></div>
-                    </div>
                 </div>
                 <div id="result-fields5" class="result-fields-container">
                     <p id="feedback-message5">Resultados de Carga 5:</p>
                     <div class="input-group"><label for="fileIdInput5">ID de Archivo:</label><input type="text" id="fileIdInput5" name="fileId5" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput5">Nombre Original:</label><input type="text" id="originalFileNameInput5" name="originalFileName5" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput5">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput5" name="fileRemoteId5" value="" readonly></div>
                 </div>
             </div>
 
             <hr>
 
             <div class="upload-section">
-                <h2>Carga 6: Documento Adicional 2</h2>
+                <h2>Carga 6: Biopsia/Anatomía Patológica</h2>
                 <input type='file' name='fileUpload6' onchange="previewImage(event, 'image-preview6', 'placeholder-text6')">
-                <button id="uploadButton6" hx-post='/jmoordbcoreexampleweb/api/files/upload6' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload6']" hx-indicator="#uploadButton6 .htmx-indicator">
+                <button id="uploadButton6" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload6' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload6']" hx-indicator="#uploadButton6 .htmx-indicator">
                     <span class="button-text">Subir Imagen 6</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>
@@ -1287,25 +1250,20 @@
                         <h3>Vista Previa Local</h3>
                         <div class="preview-box"><img id="image-preview6" alt="Vista previa de la imagen 6"><p id="placeholder-text6">Selecciona una imagen para previsualizar.</p></div>
                     </div>
-                    <div class="image-container-box">
-                        <h3>Imagen del Servidor</h3>
-                        <div id="server-image-preview6" class="preview-box"><img id="server-image6" alt="Imagen del Servidor 6"><p id="server-placeholder6">La imagen aparecerá aquí después de la carga.</p></div>
-                    </div>
                 </div>
                 <div id="result-fields6" class="result-fields-container">
                     <p id="feedback-message6">Resultados de Carga 6:</p>
                     <div class="input-group"><label for="fileIdInput6">ID de Archivo:</label><input type="text" id="fileIdInput6" name="fileId6" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput6">Nombre Original:</label><input type="text" id="originalFileNameInput6" name="originalFileName6" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput6">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput6" name="fileRemoteId6" value="" readonly></div>
                 </div>
             </div>
 
             <hr>
 
             <div class="upload-section">
-                <h2>Carga 7: Documento Adicional 3</h2>
+                <h2>Carga 7: Historial de Consentimiento</h2>
                 <input type='file' name='fileUpload7' onchange="previewImage(event, 'image-preview7', 'placeholder-text7')">
-                <button id="uploadButton7" hx-post='/jmoordbcoreexampleweb/api/files/upload7' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload7']" hx-indicator="#uploadButton7 .htmx-indicator">
+                <button id="uploadButton7" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload7' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload7']" hx-indicator="#uploadButton7 .htmx-indicator">
                     <span class="button-text">Subir Imagen 7</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>
@@ -1314,25 +1272,20 @@
                         <h3>Vista Previa Local</h3>
                         <div class="preview-box"><img id="image-preview7" alt="Vista previa de la imagen 7"><p id="placeholder-text7">Selecciona una imagen para previsualizar.</p></div>
                     </div>
-                    <div class="image-container-box">
-                        <h3>Imagen del Servidor</h3>
-                        <div id="server-image-preview7" class="preview-box"><img id="server-image7" alt="Imagen del Servidor 7"><p id="server-placeholder7">La imagen aparecerá aquí después de la carga.</p></div>
-                    </div>
                 </div>
                 <div id="result-fields7" class="result-fields-container">
                     <p id="feedback-message7">Resultados de Carga 7:</p>
                     <div class="input-group"><label for="fileIdInput7">ID de Archivo:</label><input type="text" id="fileIdInput7" name="fileId7" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput7">Nombre Original:</label><input type="text" id="originalFileNameInput7" name="originalFileName7" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput7">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput7" name="fileRemoteId7" value="" readonly></div>
                 </div>
             </div>
 
             <hr>
-
+            
             <div class="upload-section">
-                <h2>Carga 8: Documento Adicional 4</h2>
+                <h2>Carga 8: Reporte de Laboratorio</h2>
                 <input type='file' name='fileUpload8' onchange="previewImage(event, 'image-preview8', 'placeholder-text8')">
-                <button id="uploadButton8" hx-post='/jmoordbcoreexampleweb/api/files/upload8' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload8']" hx-indicator="#uploadButton8 .htmx-indicator">
+                <button id="uploadButton8" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload8' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload8']" hx-indicator="#uploadButton8 .htmx-indicator">
                     <span class="button-text">Subir Imagen 8</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>
@@ -1341,25 +1294,20 @@
                         <h3>Vista Previa Local</h3>
                         <div class="preview-box"><img id="image-preview8" alt="Vista previa de la imagen 8"><p id="placeholder-text8">Selecciona una imagen para previsualizar.</p></div>
                     </div>
-                    <div class="image-container-box">
-                        <h3>Imagen del Servidor</h3>
-                        <div id="server-image-preview8" class="preview-box"><img id="server-image8" alt="Imagen del Servidor 8"><p id="server-placeholder8">La imagen aparecerá aquí después de la carga.</p></div>
-                    </div>
                 </div>
                 <div id="result-fields8" class="result-fields-container">
                     <p id="feedback-message8">Resultados de Carga 8:</p>
                     <div class="input-group"><label for="fileIdInput8">ID de Archivo:</label><input type="text" id="fileIdInput8" name="fileId8" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput8">Nombre Original:</label><input type="text" id="originalFileNameInput8" name="originalFileName8" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput8">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput8" name="fileRemoteId8" value="" readonly></div>
                 </div>
             </div>
 
             <hr>
 
             <div class="upload-section">
-                <h2>Carga 9: Documento Adicional 5</h2>
+                <h2>Carga 9: EKG/Electrocardiograma</h2>
                 <input type='file' name='fileUpload9' onchange="previewImage(event, 'image-preview9', 'placeholder-text9')">
-                <button id="uploadButton9" hx-post='/jmoordbcoreexampleweb/api/files/upload9' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload9']" hx-indicator="#uploadButton9 .htmx-indicator">
+                <button id="uploadButton9" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload9' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload9']" hx-indicator="#uploadButton9 .htmx-indicator">
                     <span class="button-text">Subir Imagen 9</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>
@@ -1368,25 +1316,20 @@
                         <h3>Vista Previa Local</h3>
                         <div class="preview-box"><img id="image-preview9" alt="Vista previa de la imagen 9"><p id="placeholder-text9">Selecciona una imagen para previsualizar.</p></div>
                     </div>
-                    <div class="image-container-box">
-                        <h3>Imagen del Servidor</h3>
-                        <div id="server-image-preview9" class="preview-box"><img id="server-image9" alt="Imagen del Servidor 9"><p id="server-placeholder9">La imagen aparecerá aquí después de la carga.</p></div>
-                    </div>
                 </div>
                 <div id="result-fields9" class="result-fields-container">
                     <p id="feedback-message9">Resultados de Carga 9:</p>
                     <div class="input-group"><label for="fileIdInput9">ID de Archivo:</label><input type="text" id="fileIdInput9" name="fileId9" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput9">Nombre Original:</label><input type="text" id="originalFileNameInput9" name="originalFileName9" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput9">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput9" name="fileRemoteId9" value="" readonly></div>
                 </div>
             </div>
 
             <hr>
 
             <div class="upload-section">
-                <h2>Carga 10: Documento Adicional 6</h2>
+                <h2>Carga 10: Foto Clínica 1</h2>
                 <input type='file' name='fileUpload10' onchange="previewImage(event, 'image-preview10', 'placeholder-text10')">
-                <button id="uploadButton10" hx-post='/jmoordbcoreexampleweb/api/files/upload10' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload10']" hx-indicator="#uploadButton10 .htmx-indicator">
+                <button id="uploadButton10" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload10' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload10']" hx-indicator="#uploadButton10 .htmx-indicator">
                     <span class="button-text">Subir Imagen 10</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>
@@ -1395,25 +1338,20 @@
                         <h3>Vista Previa Local</h3>
                         <div class="preview-box"><img id="image-preview10" alt="Vista previa de la imagen 10"><p id="placeholder-text10">Selecciona una imagen para previsualizar.</p></div>
                     </div>
-                    <div class="image-container-box">
-                        <h3>Imagen del Servidor</h3>
-                        <div id="server-image-preview10" class="preview-box"><img id="server-image10" alt="Imagen del Servidor 10"><p id="server-placeholder10">La imagen aparecerá aquí después de la carga.</p></div>
-                    </div>
                 </div>
                 <div id="result-fields10" class="result-fields-container">
                     <p id="feedback-message10">Resultados de Carga 10:</p>
                     <div class="input-group"><label for="fileIdInput10">ID de Archivo:</label><input type="text" id="fileIdInput10" name="fileId10" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput10">Nombre Original:</label><input type="text" id="originalFileNameInput10" name="originalFileName10" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput10">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput10" name="fileRemoteId10" value="" readonly></div>
                 </div>
             </div>
 
             <hr>
 
             <div class="upload-section">
-                <h2>Carga 11: Documento Adicional 7 (Opcional)</h2>
+                <h2>Carga 11: Foto Clínica 2</h2>
                 <input type='file' name='fileUpload11' onchange="previewImage(event, 'image-preview11', 'placeholder-text11')">
-                <button id="uploadButton11" hx-post='/jmoordbcoreexampleweb/api/files/upload11' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload11']" hx-indicator="#uploadButton11 .htmx-indicator">
+                <button id="uploadButton11" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload11' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload11']" hx-indicator="#uploadButton11 .htmx-indicator">
                     <span class="button-text">Subir Imagen 11</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>
@@ -1422,21 +1360,16 @@
                         <h3>Vista Previa Local</h3>
                         <div class="preview-box"><img id="image-preview11" alt="Vista previa de la imagen 11"><p id="placeholder-text11">Selecciona una imagen para previsualizar.</p></div>
                     </div>
-                    <div class="image-container-box">
-                        <h3>Imagen del Servidor</h3>
-                        <div id="server-image-preview11" class="preview-box"><img id="server-image11" alt="Imagen del Servidor 11"><p id="server-placeholder11">La imagen aparecerá aquí después de la carga.</p></div>
-                    </div>
                 </div>
                 <div id="result-fields11" class="result-fields-container">
                     <p id="feedback-message11">Resultados de Carga 11:</p>
                     <div class="input-group"><label for="fileIdInput11">ID de Archivo:</label><input type="text" id="fileIdInput11" name="fileId11" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput11">Nombre Original:</label><input type="text" id="originalFileNameInput11" name="originalFileName11" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput11">ID de Foto (Servidor):</label><input type="text" id="fileRemoteIdInput11" name="fileRemoteId11" value="" readonly></div>
                 </div>
             </div>
 
-
-            <hr> 
+            <hr>
+    
             <div class="cultivo-switch-section">
                 <fieldset>
                     <legend>Asociación de Imagen</legend>
@@ -1569,8 +1502,12 @@
             
             <hr>
 
-            <button type="submit" id="saveButton" hx-post='/jmoordbcoreexampleweb/api/data/save' hx-target='#save-feedback' hx-indicator="#saveButton .htmx-indicator">
-                <span class="button-text">Guardar Datos Completos</span>
+           <button id="saveButton"
+                    hx-post='/jmoordbcoreexampleweb/api/FormularioController'
+                    hx-target="#save-feedback"
+                    hx-swap="innerHTML"
+                    hx-include="#mainForm"  hx-indicator="#saveButton .htmx-indicator">
+                <span class="button-text">Guardar Expediente</span>
                 <span class="htmx-indicator spinner"></span>
             </button>
             <div id="save-feedback"></div>
@@ -1857,5 +1794,142 @@
             // [NUEVO LISTENER para Recuento Hongos]
             handleRecuentoHongosChange();
         });
+        
+        
+        
+        
+         const INPUT_MAP = {
+                '1': { buttonId: 'uploadButton1', fileId: 'fileIdInput1', originalFileName: 'originalFileNameInput1',  feedback: 'feedback-message1' },
+                '2': { buttonId: 'uploadButton2', fileId: 'fileIdInput2', originalFileName: 'originalFileNameInput2',  feedback: 'feedback-message2' },
+                '3': { buttonId: 'uploadButton3', fileId: 'fileIdInput3', originalFileName: 'originalFileNameInput3',  feedback: 'feedback-message3' },
+                '4': { buttonId: 'uploadButton4', fileId: 'fileIdInput4', originalFileName: 'originalFileNameInput4',  feedback: 'feedback-message4' },
+                '5': { buttonId: 'uploadButton5', fileId: 'fileIdInput5', originalFileName: 'originalFileNameInput5',  feedback: 'feedback-message5' },
+                '6': { buttonId: 'uploadButton6', fileId: 'fileIdInput6', originalFileName: 'originalFileNameInput6',  feedback: 'feedback-message6' },
+                '7': { buttonId: 'uploadButton7', fileId: 'fileIdInput7', originalFileName: 'originalFileNameInput7',  feedback: 'feedback-message7' },
+                '8': { buttonId: 'uploadButton8', fileId: 'fileIdInput8', originalFileName: 'originalFileNameInput8',  feedback: 'feedback-message8' },
+                '9': { buttonId: 'uploadButton9', fileId: 'fileIdInput9', originalFileName: 'originalFileNameInput9',  feedback: 'feedback-message9' },
+                '10': { buttonId: 'uploadButton10', fileId: 'fileIdInput10', originalFileName: 'originalFileNameInput10',  feedback: 'feedback-message10' },
+                '11': { buttonId: 'uploadButton11', fileId: 'fileIdInput11', originalFileName: 'originalFileNameInput11',  feedback: 'feedback-message11' }
+            };
+            
+            function getElementRefs(suffix) {
+                const map = INPUT_MAP[suffix];
+                if (!map) {
+                     console.error(`Error: Mapeo no encontrado para el sufijo ${suffix}`);
+                     return null;
+                }
+                return {
+                    fileIdInput: document.getElementById(map.fileId),
+                    originalFileNameInput: document.getElementById(map.originalFileName),
+                    feedbackMessage: document.getElementById(map.feedback),
+                };
+            }
+
+            // --- LÓGICA CENTRALIZADA DE PREVISUALIZACIÓN DE IMAGEN CLIENTE (Mantenida) ---
+            function previewImage(event, previewId, placeholderId) {
+                const file = event.target.files[0];
+                const preview = document.getElementById(previewId);
+                const placeholder = document.getElementById(placeholderId);
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                        placeholder.style.display = 'none';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '';
+                    preview.style.display = 'none';
+                    placeholder.style.display = 'block';
+                }
+            }
+            
+            // Función auxiliar para verificar sufijo (Actualizada para 1 a 11)
+            function isValidUploadSuffix(suffix) {
+                const num = parseInt(suffix);
+                return num >= 1 && num <= 11;
+            }
+
+            // --- HTMX EVENT HANDLERS ---
+            
+            // 1. Deshabilitar botones al inicio de la petición
+            htmx.on(document.body, 'htmx:beforeRequest', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                
+                if (buttonId.startsWith('uploadButton')) {
+                    const suffix = buttonId.replace('uploadButton', ''); 
+                    
+                    if (isValidUploadSuffix(suffix)) { 
+                        const refs = getElementRefs(suffix);
+                        if (!refs || !refs.fileIdInput) return; 
+                        
+                        evt.detail.elt.disabled = true;
+                        
+                        // Limpiar campos de resultado
+                        refs.fileIdInput.value = '';
+                        refs.originalFileNameInput.value = '';
+                        refs.feedbackMessage.textContent = `Subiendo Imagen ${suffix}...`; 
+                    }
+                }
+                
+                if (buttonId === 'saveButton') {
+                    evt.detail.elt.disabled = true;
+                    const feedbackDiv = document.getElementById('save-feedback');
+                    feedbackDiv.innerHTML = "Guardando formulario, espere...";
+                    feedbackDiv.className = 'pending'; 
+                }
+            });
+
+            // 2. Habilitar botones al finalizar la petición (Mantenida)
+            htmx.on(document.body, 'htmx:afterRequest', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                
+                if (buttonId.startsWith('uploadButton')) {
+                    evt.detail.elt.disabled = false;
+                }
+                
+                if (buttonId === 'saveButton') {
+                    const saveButton = document.getElementById('saveButton');
+                    if (saveButton) {
+                        saveButton.disabled = false;
+                    }
+                }
+            });
+
+            // 3. Manejo de Respuesta JSON (UPLOAD) - Asignación de valores
+            htmx.on(document.body, 'htmx:afterSettle', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                const suffix = buttonId.replace('uploadButton', ''); 
+
+                if (buttonId.startsWith('uploadButton') && evt.detail.successful) {
+                    if (!isValidUploadSuffix(suffix)) return; 
+                    
+                    const refs = getElementRefs(suffix);
+                    if (!refs || !refs.fileIdInput) return; 
+
+                    const xhr = evt.detail.xhr;
+
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        
+                        refs.fileIdInput.value = response.fileId || '';
+                        refs.originalFileNameInput.value = response.originalFileName || '';
+                        refs.feedbackMessage.textContent = `✅ Carga ${suffix} exitosa.`;
+
+                    } catch (e) {
+                        refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}: JSON inválido o incompleto.`;
+                        console.error(`Error al parsear JSON para carga ${suffix}:`, e);
+                    }
+                } else if (buttonId.startsWith('uploadButton') && !evt.detail.successful) {
+                    if (!isValidUploadSuffix(suffix)) return; 
+
+                    const refs = getElementRefs(suffix);
+                    if (!refs || !refs.fileIdInput) return; 
+                    refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}. Código: ${evt.detail.xhr.status}`;
+                }
+            });
+            
     </script>
 </html>

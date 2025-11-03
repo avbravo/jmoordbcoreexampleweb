@@ -12,24 +12,34 @@ package fish.payara.controller.formulario;
 // Importaciones de Jakarta EE:
 import jakarta.ws.rs.FormParam;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDate;
 
 @XmlRootElement
 public class FormularioViewModel {
 
-    // El valor dentro de @FormParam DEBE coincidir exactamente con el atributo 'name' del HTML
-    // -----------------------------------------------------------------
-    // CAMPOS DEL PACIENTE (Nuevos campos del formulario HTML)
+   
     // -----------------------------------------------------------------
     @FormParam("nhrc")
     private String nhrc;
-
-    @FormParam("prioridad")
-    private String prioridad;
+    
+    @FormParam("numeromuestra")
+    private String numeromuestra;
+    
+    @FormParam("fechaRegistro")
+    private String fechaRegistroString; // <-- Cambiado a String
+//// Campo para recibir la fecha del formulario HTMX
+//    @FormParam("fechaRegistro")
+//    private LocalDate fechaRegistro; // ¡Define el tipo como LocalDate!
 
     // Usamos Integer en lugar de int para permitir que el valor sea null si no se envía o es inválido.
     @FormParam("edad")
     private int edad;
+  
 
+    @FormParam("motivo")
+    private String motivo;
+    
+    
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 1 (Coinciden con name="...")
     // -----------------------------------------------------------------
@@ -181,14 +191,7 @@ public class FormularioViewModel {
         this.nhrc = nhrc;
     }
 
-    // Getters y Setters para prioridad
-    public String getPrioridad() {
-        return prioridad;
-    }
-
-    public void setPrioridad(String prioridad) {
-        this.prioridad = prioridad;
-    }
+    
 
 //    // Getters y Setters para edad (Ahora Integer)
 //    public Integer getEdad() { return edad; }
@@ -467,4 +470,39 @@ public class FormularioViewModel {
         this.originalFileName11 = originalFileName11;
     }
 
+    public String getNumeromuestra() {
+        return numeromuestra;
+    }
+
+    public void setNumeromuestra(String numeromuestra) {
+        this.numeromuestra = numeromuestra;
+    }
+ 
+    // <editor-fold defaultstate="collapsed" desc="set/get">
+    
+    
+       public String getFechaRegistroString() {
+        return fechaRegistroString;
+    }
+
+    public void setFechaRegistroString(String fechaRegistroString) {
+        this.fechaRegistroString = fechaRegistroString;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    
+    
+    
+// </editor-fold>
+
+ 
+    
+    
 }
