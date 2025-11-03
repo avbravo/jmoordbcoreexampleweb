@@ -37,9 +37,25 @@ public class FormularioController {
         System.out.println("formulario.getOriginalFileName1(): " + formulario.getOriginalFileName1());
         System.out.println("formulario.getFileRemoteId1(): " + formulario.getFileRemoteId1());
         System.out.println("-----------------------------------------------------------");
-        System.out.println("Photo ID 2: " + formulario.getFileRemoteId2());
+        System.out.println("File ID: " + formulario.getFileId2());
         System.out.println("formulario.getOriginalFileName2(): " + formulario.getOriginalFileName2());
         System.out.println("formulario.getFileRemoteId2(): " + formulario.getFileRemoteId2());
+        
+        
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("File ID: " + formulario.getFileId3());
+        System.out.println("formulario.getOriginalFileName3(): " + formulario.getOriginalFileName3());
+        System.out.println("formulario.getFileRemoteId3(): " + formulario.getFileRemoteId3());
+        
+        
+        System.out.println("---------------------[4]--------------------------------------");
+        System.out.println("File ID: " + formulario.getFileId4());
+        System.out.println("formulario.getOriginalFileName4(): " + formulario.getOriginalFileName4());
+        System.out.println("formulario.getFileRemoteId4(): " + formulario.getFileRemoteId4());
+        
+        
+        
+        
         return Response.ok("Datos guardados correctamente.").build();
     }
 }

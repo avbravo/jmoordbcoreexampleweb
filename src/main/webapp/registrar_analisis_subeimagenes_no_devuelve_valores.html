@@ -1143,7 +1143,7 @@
             <div class="upload-section">
                 <h2>Carga 1: Radiografía Frontal</h2>
                 <input type='file' name='fileUpload1' onchange="previewImage(event, 'image-preview1', 'placeholder-text1')">
-                <button id="uploadButton1" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload1' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload1']" hx-indicator="#uploadButton1 .htmx-indicator">
+                <button id="uploadButton1" hx-post='/jmoordbcoreexampleweb/api/files/upload1' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload1']" hx-indicator="#uploadButton1 .htmx-indicator">
                     <span class="button-text">Subir Imagen 1</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>

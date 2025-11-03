@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Once Cargas y Formulario Completo - Elegante</title>
+        <title>Multiple Cargas y Formulario Completo - Elegante</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="htmx-config" content='{"selfRequestsOnly": false}'>
@@ -9,17 +9,18 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         
         <style>
+            /* --- CSS (Mantenido Sin Cambios, solo se ajusta el flex-basis para que la vista previa ocupe todo el ancho si solo hay una) --- */
             :root {
-                --primary-color: #007bff; 
+                --primary-color: #007bff; /* Azul */ 
                 --primary-light: #e6f0ff;
-                --secondary-color: #6c757d; 
-                --success-color: #28a745; 
+                --secondary-color: #6c757d; /* Gris */ 
+                --success-color: #28a745; /* Verde */ 
                 --success-light: #e2f0d9;
-                --danger-color: #dc3545; 
+                --danger-color: #dc3545; /* Rojo */ 
                 --danger-light: #f8d7da;
-                --border-color: #ced4da; 
-                --background-light: #f8f9fa; 
-                --text-color: #343a40; 
+                --border-color: #ced4da; /* Gris claro */ 
+                --background-light: #f8f9fa; /* Gris muy claro */ 
+                --text-color: #343a40; /* Gris oscuro */ 
                 --white: #ffffff;
                 --shadow: rgba(0, 0, 0, 0.1);
             }
@@ -77,6 +78,7 @@
                 gap: 25px;
                 margin-top: 25px;
                 flex-wrap: wrap; 
+                justify-content: center; /* Centra el único contenedor de imagen si no hay más */
             }
             .image-container-box { 
                 flex: 1; 
@@ -85,6 +87,12 @@
                 padding: 15px;
                 border-radius: 8px;
                 box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+                /* Ajuste para que la caja ocupe el 100% si es la única, o la mitad si hubiera dos */
+                flex-basis: calc(50% - 12.5px); 
+            }
+            /* Si solo hay un .image-container-box, que ocupe todo el ancho */
+            .image-containers .image-container-box:only-child {
+                flex-basis: 100%;
             }
 
             .preview-box {
@@ -98,38 +106,17 @@
                 justify-content: center; 
                 align-items: center; 
                 background-color: var(--background-light);
-                position: relative;
-            }
-            
-            /* --- ESTILOS CORREGIDOS PARA PDF/IMAGENES (Mismos que antes, que son correctos) --- */
-            .preview-box > * {
-                max-width: 100%;
-                max-height: 100%;
-                height: auto;
-                width: auto;
-                object-fit: contain; 
             }
             .preview-box img {
-                display: none; 
-            }
-            .preview-box iframe.pdf-viewer {
-                width: 100%;
-                height: 100%;
-                border: none;
-                display: none; 
+                max-width: 100%; max-height: 100%; height: auto; width: auto; display: none;
+                object-fit: contain; 
             }
             .preview-box p {
                 color: var(--secondary-color);
                 text-align: center;
                 padding: 10px;
                 margin: 0;
-                display: block;
-                position: absolute; 
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
             }
-            /* --- FIN ESTILOS CORREGIDOS --- */
 
             input[type='file'] {
                 display: block;
@@ -327,30 +314,69 @@
 
 
             <div class="upload-section">
-                <h2>Carga 1: Documento (Imagen o PDF)</h2>
-                <input type='file' name='fileUpload1' accept=".jpg,.jpeg,.png,.gif,.pdf" onchange="previewFile(event, 'file-preview1', 'placeholder-text1')">
+                <h2>Carga 1: Radiografía Frontal</h2>
+                <input type='file' name='fileUpload1' onchange="previewImage(event, 'image-preview1', 'placeholder-text1')">
                 <button id="uploadButton1" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload1' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload1']" hx-indicator="#uploadButton1 .htmx-indicator">
-                    <span class="button-text">Subir Archivo 1</span>
+                    <span class="button-text">Subir Imagen 1</span>
                     <span class="htmx-indicator spinner"></span>
                 </button>
                 <div class="image-containers">
                     <div class="image-container-box">
                         <h3>Vista Previa Local</h3>
-                        <div class="preview-box">
-                            <img id="image-preview1" alt="Vista previa de la imagen 1">
-                            <iframe id="pdf-preview1" class="pdf-viewer" frameborder="0"></iframe>
-                            <p id="placeholder-text1">Selecciona un archivo (Imagen o PDF) para previsualizar.</p>
-                        </div>
+                        <div class="preview-box"><img id="image-preview1" alt="Vista previa de la imagen 1"><p id="placeholder-text1">Selecciona una imagen para previsualizar.</p></div>
                     </div>
                 </div>
                 <div id="result-fields1" class="result-fields-container">
                     <p id="feedback-message1">Resultados de Carga 1:</p>
                     <div class="input-group"><label for="fileIdInput1">ID de Archivo:</label><input type="text" id="fileIdInput1" name="fileId1" value="" readonly></div>
                     <div class="input-group"><label for="originalFileNameInput1">Nombre Original:</label><input type="text" id="originalFileNameInput1" name="originalFileName1" value="" readonly></div>
-                    <div class="input-group"><label for="fileRemoteIdInput1">ID de Foto/Doc (Servidor):</label><input type="text" id="fileRemoteIdInput1" name="fileRemoteId1" value="" readonly></div>
                 </div>
             </div>
             
+            <hr>
+
+            <div class="upload-section">
+                <h2>Carga 2: Radiografía Lateral</h2>
+                <input type='file' name='fileUpload2' onchange="previewImage(event, 'image-preview2', 'placeholder-text2')">
+                <button id="uploadButton2" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload2' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload2']" hx-indicator="#uploadButton2 .htmx-indicator">
+                    <span class="button-text">Subir Imagen 2</span>
+                    <span class="htmx-indicator spinner"></span>
+                </button>
+                <div class="image-containers">
+                    <div class="image-container-box">
+                        <h3>Vista Previa Local</h3>
+                        <div class="preview-box"><img id="image-preview2" alt="Vista previa de la imagen 2"><p id="placeholder-text2">Selecciona una imagen para previsualizar.</p></div>
+                    </div>
+                </div>
+                <div id="result-fields2" class="result-fields-container">
+                    <p id="feedback-message2">Resultados de Carga 2:</p>
+                    <div class="input-group"><label for="fileIdInput2">ID de Archivo:</label><input type="text" id="fileIdInput2" name="fileId2" value="" readonly></div>
+                    <div class="input-group"><label for="originalFileNameInput2">Nombre Original:</label><input type="text" id="originalFileNameInput2" name="originalFileName2" value="" readonly></div>
+                </div>
+            </div>
+            
+            <hr>
+
+            <div class="upload-section">
+                <h2>Carga 3: Ecografía</h2>
+                <input type='file' name='fileUpload3' onchange="previewImage(event, 'image-preview3', 'placeholder-text3')">
+                <button id="uploadButton3" hx-post='/jmoordbcoreexampleweb/api/filesuploadsimple/upload3' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload3']" hx-indicator="#uploadButton3 .htmx-indicator">
+                    <span class="button-text">Subir Imagen 3</span>
+                    <span class="htmx-indicator spinner"></span>
+                </button>
+                <div class="image-containers">
+                    <div class="image-container-box">
+                        <h3>Vista Previa Local</h3>
+                        <div class="preview-box"><img id="image-preview3" alt="Vista previa de la imagen 3"><p id="placeholder-text3">Selecciona una imagen para previsualizar.</p></div>
+                    </div>
+                </div>
+                <div id="result-fields3" class="result-fields-container">
+                    <p id="feedback-message3">Resultados de Carga 3:</p>
+                    <div class="input-group"><label for="fileIdInput3">ID de Archivo:</label><input type="text" id="fileIdInput3" name="fileId3" value="" readonly></div>
+                    <div class="input-group"><label for="originalFileNameInput3">Nombre Original:</label><input type="text" id="originalFileNameInput3" name="originalFileName3" value="" readonly></div>
+                </div>
+            </div>
+
             <hr>
 
 
@@ -367,22 +393,15 @@
 
         <script>
             // --- CONSTANTES Y REFERENCIAS GENERALES ---
-            const IMAGE_BASE_URL = 'http://localhost/ver-contour/';
+            // IMAGE_BASE_URL ya no es estrictamente necesario, pero se puede mantener si en el futuro se quiere usar
+            const IMAGE_BASE_URL = 'http://localhost/ver-contour/'; 
 
             // Mapeo de IDs de inputs y mensajes por número de carga
             const INPUT_MAP = {
-                '1': { 
-                    buttonId: 'uploadButton1', 
-                    fileId: 'fileIdInput1', 
-                    originalFileName: 'originalFileNameInput1', 
-                    fileRemoteId: 'fileRemoteIdInput1', 
-                    feedback: 'feedback-message1', 
-                    localImage: 'image-preview1', 
-                    localPdf: 'pdf-preview1', 
-                    placeholder: 'placeholder-text1', 
-                    serverImage: 'server-image1', 
-                    serverPlaceholder: 'server-placeholder1' 
-                }
+                // Ya no necesitamos 'serverImage' ni 'serverPlaceholder' aquí
+                '1': { buttonId: 'uploadButton1', fileId: 'fileIdInput1', originalFileName: 'originalFileNameInput1',  feedback: 'feedback-message1' },
+                '2': { buttonId: 'uploadButton2', fileId: 'fileIdInput2', originalFileName: 'originalFileNameInput2',  feedback: 'feedback-message2' },
+                '3': { buttonId: 'uploadButton3', fileId: 'fileIdInput3', originalFileName: 'originalFileNameInput3',  feedback: 'feedback-message3' }
             };
             
             function getElementRefs(suffix) {
@@ -394,80 +413,40 @@
                 return {
                     fileIdInput: document.getElementById(map.fileId),
                     originalFileNameInput: document.getElementById(map.originalFileName),
-                    fileRemoteIdInput: document.getElementById(map.fileRemoteId),
                     feedbackMessage: document.getElementById(map.feedback),
-                    serverImage: document.getElementById(map.serverImage),
-                    serverPlaceholder: document.getElementById(map.serverPlaceholder),
-                    localImage: document.getElementById(map.localImage),
-                    localPdf: document.getElementById(map.localPdf),
-                    placeholder: document.getElementById(map.placeholder),
+                    // Eliminamos las referencias a serverImage y serverPlaceholder
+                    // serverImage: document.getElementById(map.serverImage), 
+                    // serverPlaceholder: document.getElementById(map.serverPlaceholder),
                 };
             }
-            
-            // Variable global para almacenar el Object URL del PDF de la Carga 1 y poder revocarlo.
-            // Es vital para la gestión de memoria cuando se usa URL.createObjectURL.
-            let currentObjectURL1 = null; 
-            
-            // --- LÓGICA CENTRALIZADA DE PREVISUALIZACIÓN DE IMAGEN/PDF CLIENTE (SOLUCIÓN FINAL) ---
-            function previewFile(event, previewIdPrefix, placeholderId) {
-                const file = event.target.files[0];
-                const suffix = event.target.name.replace('fileUpload', '');
-                
-                const refs = getElementRefs(suffix);
-                if (!refs) return;
 
-                // 1. Limpiar vistas previas y resetear estilos
-                refs.localImage.style.display = 'none';
-                refs.localPdf.style.display = 'none';
-                refs.placeholder.style.display = 'block'; 
-                
-                refs.localImage.removeAttribute('src');
-                refs.localPdf.src = 'about:blank'; // Limpiar iframe de forma segura
-                
-                // 2. Limpiar el Object URL anterior (solo aplica para Carga 1 en esta versión)
-                if (suffix === '1' && currentObjectURL1) {
-                    URL.revokeObjectURL(currentObjectURL1); // Liberar memoria de la URL anterior
-                    currentObjectURL1 = null;
-                }
+            // --- LÓGICA CENTRALIZADA DE PREVISUALIZACIÓN DE IMAGEN CLIENTE (Mantenida) ---
+            function previewImage(event, previewId, placeholderId) {
+                const file = event.target.files[0];
+                const preview = document.getElementById(previewId);
+                const placeholder = document.getElementById(placeholderId);
 
                 if (file) {
-                    const fileType = file.type;
-
-                    if (fileType === 'application/pdf') {
-                        // **CAMBIO CLAVE: SOLUCIÓN ROBUSTA PARA PDF**
-                        currentObjectURL1 = URL.createObjectURL(file); // Crear URL temporal más fiable
-                        refs.localPdf.src = currentObjectURL1; 
-                        refs.localPdf.style.display = 'block'; 
-                        refs.placeholder.style.display = 'none'; 
-
-                    } else if (fileType.startsWith('image/')) {
-                        // Es una Imagen - Mantenemos FileReader para la imagen
-                        const reader = new FileReader();
-                        reader.onload = function (e) {
-                            refs.localImage.src = e.target.result;
-                            refs.localImage.style.display = 'block'; 
-                            refs.placeholder.style.display = 'none'; 
-                        }
-                        reader.readAsDataURL(file);
-                        
-                    } else {
-                        // Otro tipo de archivo
-                        refs.placeholder.textContent = `Archivo ${fileType} seleccionado. No se puede previsualizar.`;
-                        refs.placeholder.style.display = 'block'; 
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                        placeholder.style.display = 'none';
                     }
+                    reader.readAsDataURL(file);
                 } else {
-                    refs.placeholder.textContent = 'Selecciona un archivo (Imagen o PDF) para previsualizar.';
-                    refs.placeholder.style.display = 'block'; 
+                    preview.src = '';
+                    preview.style.display = 'none';
+                    placeholder.style.display = 'block';
                 }
             }
             
-            // Función auxiliar para verificar sufijo
+            // Función auxiliar para verificar sufijo (Mantenida)
             function isValidUploadSuffix(suffix) {
-                const num = parseInt(suffix);
-                return !isNaN(num) && num >= 1 && num <= 11; 
+                return suffix === '1' || suffix === '2' || suffix === '3';
             }
 
-            // --- HTMX EVENT HANDLERS (Sin cambios significativos) ---
+            // --- HTMX EVENT HANDLERS ---
             
             // 1. Deshabilitar botones al inicio de la petición
             htmx.on(document.body, 'htmx:beforeRequest', function(evt) {
@@ -478,18 +457,16 @@
                     
                     if (isValidUploadSuffix(suffix)) { 
                         const refs = getElementRefs(suffix);
-                        if (!refs) return; 
+                        if (!refs || !refs.fileIdInput) return; 
                         
                         evt.detail.elt.disabled = true;
                         
+                        // Limpiar campos de resultado
                         refs.fileIdInput.value = '';
-                        refs.fileRemoteIdInput.value = '';
                         refs.originalFileNameInput.value = '';
-                        refs.feedbackMessage.textContent = `Subiendo Archivo ${suffix}...`; 
+                        refs.feedbackMessage.textContent = `Subiendo Imagen ${suffix}...`; 
                         
-                        if (refs.serverImage) refs.serverImage.style.display = 'none';
-                        if (refs.serverPlaceholder) refs.serverPlaceholder.style.display = 'block';
-                        if (refs.serverPlaceholder) refs.serverPlaceholder.textContent = 'El archivo aparecerá aquí después de la carga.';
+                        // Ya no se manipulan serverImage y serverPlaceholder
                     }
                 }
                 
@@ -501,7 +478,7 @@
                 }
             });
 
-            // 2. Habilitar botones al finalizar la petición
+            // 2. Habilitar botones al finalizar la petición (Mantenida)
             htmx.on(document.body, 'htmx:afterRequest', function(evt) {
                 const buttonId = evt.detail.elt.id;
                 
@@ -526,7 +503,7 @@
                     if (!isValidUploadSuffix(suffix)) return; 
                     
                     const refs = getElementRefs(suffix);
-                    if (!refs) return; 
+                    if (!refs || !refs.fileIdInput) return; 
 
                     const xhr = evt.detail.xhr;
 
@@ -534,24 +511,24 @@
                         const response = JSON.parse(xhr.responseText);
                         
                         refs.fileIdInput.value = response.fileId || '';
-                        refs.fileRemoteIdInput.value = response.photo_id || '';
                         refs.originalFileNameInput.value = response.originalFileName || '';
-                        
                         refs.feedbackMessage.textContent = `✅ Carga ${suffix} exitosa.`;
 
+                        // Ya no hay lógica para mostrar la imagen del servidor
                     } catch (e) {
                         refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}: JSON inválido o incompleto.`;
+                        console.error(`Error al parsear JSON para carga ${suffix}:`, e);
                     }
                 } else if (buttonId.startsWith('uploadButton') && !evt.detail.successful) {
                     if (!isValidUploadSuffix(suffix)) return; 
 
                     const refs = getElementRefs(suffix);
-                    if (!refs) return; 
+                    if (!refs || !refs.fileIdInput) return; 
                     refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}. Código: ${evt.detail.xhr.status}`;
                 }
             });
             
-            // 4. Manejo de Respuesta (SAVE) - Feedback Visual
+            // 4. Manejo de Respuesta (SAVE) - Feedback Visual (Mantenida)
             htmx.on(document.body, 'htmx:afterSettle', function(evt) {
                 const buttonId = evt.detail.elt.id;
                 if (buttonId === 'saveButton') {

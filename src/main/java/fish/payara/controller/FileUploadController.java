@@ -54,13 +54,366 @@ public class FileUploadController {
             @FormDataParam("fileUpload1") FormDataContentDisposition fileDetail) {
 
         try {
-            java.nio.file.Path uploadPath = Paths.get(System.getProperty("user.home"), configurationProperties.getImageDirectory());
+           return processFileUpload(uploadedInputStream, fileDetail);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    @POST
+    @Path("/upload2")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload2(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload2") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload2") FormDataContentDisposition fileDetail) {
+
+        try {
+          return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    @POST
+    @Path("/upload3")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload3(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload3") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload3") FormDataContentDisposition fileDetail) {
+
+        try {
+           return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    @POST
+    @Path("/upload4")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload4(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload4") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload4") FormDataContentDisposition fileDetail) {
+
+        try {
+           return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    
+    @POST
+    @Path("/upload5")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload5(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload5") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload5") FormDataContentDisposition fileDetail) {
+
+        try {
+           return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    @POST
+    @Path("/upload6")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload6(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload6") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload6") FormDataContentDisposition fileDetail) {
+
+        try {
+           return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    @POST
+    @Path("/upload7")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload7(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload7") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload7") FormDataContentDisposition fileDetail) {
+
+        try {
+           return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    
+    @POST
+    @Path("/upload8")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload8(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload8") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload8") FormDataContentDisposition fileDetail) {
+
+        try {
+          return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    
+    @POST
+    @Path("/upload9")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload9(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload9") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload9") FormDataContentDisposition fileDetail) {
+
+        try {
+          return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    
+    @POST
+    @Path("/upload10")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload10(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload10") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload10") FormDataContentDisposition fileDetail) {
+
+        try {
+            return processFileUpload(uploadedInputStream, fileDetail);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    @POST
+    @Path("/upload11")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload11(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload11") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload11") FormDataContentDisposition fileDetail) {
+
+        try {
+          return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    @POST
+    @Path("/upload12")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload12(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload12") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload12") FormDataContentDisposition fileDetail) {
+
+        try {
+           return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    @POST
+    @Path("/upload13")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload13(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload13") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload13") FormDataContentDisposition fileDetail) {
+
+        try {
+          return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    @POST
+    @Path("/upload14")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload14(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload14") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload14") FormDataContentDisposition fileDetail) {
+
+        try {
+           return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    
+    
+    @POST
+    @Path("/upload15")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Sube una imagen, la renombra y devuelve el ID generado")
+    @APIResponse(responseCode = "200", description = "ID del archivo generado exitosamente",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = FileUploadResponse.class)))
+    @RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA, schema = @Schema(implementation = FileUploadRequest.class)))
+    public Response upload15(
+            // El nombre 'file' debe coincidir con el campo en el formulario/OpenAPI
+            @FormDataParam("fileUpload15") InputStream uploadedInputStream,
+            @FormDataParam("fileUpload15") FormDataContentDisposition fileDetail) {
+
+        try {
+           return processFileUpload(uploadedInputStream, fileDetail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al procesar el archivo: " + e.getMessage())
+                    .build();
+        }
+    }
+    
+    
+    
+    
+    
+    private Response processFileUpload(
+            InputStream uploadedInputStream,
+            FormDataContentDisposition fileDetail) {
+        
+        try {
+            java.nio.file.Path uploadPath = Paths.get(
+                System.getProperty("user.home"), 
+                configurationProperties.getImageDirectory()
+            );
+
             FileUploadResponse response = new FileUploadResponse(
-                    fileStorage.saveFile(
+                fileStorage.saveFile(
                     uploadedInputStream,
                     fileDetail.getFileName(),
                     uploadPath
-            ), fileDetail.getFileName(),"","");
+                ), 
+                fileDetail.getFileName(), 
+                "", 
+                ""
+            );
 
             return Response.ok(response).build();
 
@@ -71,6 +424,10 @@ public class FileUploadController {
                     .build();
         }
     }
+    
+    
+    
+    
 
     @OPTIONS
     @Path("/upload")
