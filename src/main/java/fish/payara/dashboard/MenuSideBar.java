@@ -9,12 +9,15 @@ package fish.payara.dashboard;
  * @author avbravo
  */
 import com.jmoordb.core.ui.menu.MenuLink;
+import com.jmoordb.core.ui.menu.MenuUIUtil;
+import fish.payara.view.AnalisisView;
+import fish.payara.view.ImageView;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MenuSideBar {
+public class MenuSideBar extends MenuUIUtil{
 
     /**
      * Construye la estructura completa del menú lateral (SideBar) basada en el
@@ -73,32 +76,34 @@ public class MenuSideBar {
             List<MenuLink> reportLinks = new ArrayList<>();
 
             // 1. Ventas
-            boolean isSalesActive = currentController.equals("SalesReportsController");
-            reportLinks.add(new MenuLink("Ventas", "/reports/sales", isSalesActive, "fas fa-chart-line"));
+       
+            reportLinks.add(new MenuLink("Ventas", "/reports/sales", currentController.equals("SalesReportsController"), "fas fa-chart-line"));
 
             // 2. Inventario
-            boolean isInventoryActive = currentController.equals("InventoryReportsController");
-            reportLinks.add(new MenuLink("Inventario", "/reports/inventory", isInventoryActive, "fas fa-warehouse"));
+
+            reportLinks.add(new MenuLink("Inventario", "/reports/inventory", currentController.equals("InventoryReportsController"), "fas fa-warehouse"));
             // 3. Clientes
 
-            boolean isClienteActive = currentController.equals("ClienteController");
-            reportLinks.add(new MenuLink("Cliente", "/clientes", isClienteActive, "fas fa-solid fa-person"));
+         
+            reportLinks.add(new MenuLink("Cliente", "/clientes", currentController.equals("ClienteController"), "fas fa-solid fa-person"));
 
-            // 4. ModalTest
-            boolean isModalActive = currentController.equals("ModalController");
-            reportLinks.add(new MenuLink("Modal", "/modal", isModalActive, "fas fa-solid fa-window-restore"));
+        
+     
+  
 
-            boolean isFetchActive = currentController.equals("FetchController");
-            reportLinks.add(new MenuLink("Fetch", "/fetch", isFetchActive, "fas fa-solid fa-plug"));
+            reportLinks.add(new MenuLink("JettraView", "/api/jettra-view",currentController.equals("JettraView"), "fas fa-solid fa-plug"));
 
-            boolean isImageActive = currentController.equals("ImageController");
-            reportLinks.add(new MenuLink("Image", "/image", isImageActive, "fas fa-image"));
+            reportLinks.add(new MenuLink("Fetch View", "/api/fetch-view", currentController.equals("FetchView"), "fas fa-solid fa-plug"));
+            
+            
 
-            boolean isJettraViewActive = currentController.equals("JettraView");
-            reportLinks.add(new MenuLink("JettraView", "/api/jettra-view", isJettraViewActive, "fas fa-solid fa-plug"));
-
-            boolean isFetchView = currentController.equals("FetchView");
-            reportLinks.add(new MenuLink("Fetch", "/fetch", isFetchView, "fas fa-solid fa-plug"));
+            reportLinks.add(new MenuLink("Modal View", "/api/modal-view", currentController.equals("ModalView"), "fas fa-solid fa-window-restore"));
+         
+            reportLinks.add(new MenuLink("Analisis View", "/api/analisis-view", isActive(currentController,AnalisisView.class), "fas fa-solid fa-plug"));
+            
+          
+            reportLinks.add(new MenuLink("Image View", "/api/image-view", isActive(currentController,ImageView.class), "fas fa-image"));
+ 
 
             sections.put("REPORTES", reportLinks);
         }

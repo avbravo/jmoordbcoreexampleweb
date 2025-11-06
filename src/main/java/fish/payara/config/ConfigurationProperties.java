@@ -32,7 +32,13 @@ public class ConfigurationProperties {
     @Inject
     @ConfigProperty(name = "login.logo.class")
     private String loginLogoClass;
+    @Inject
+    @ConfigProperty(name = "dashboard.footerText")
+    private String dashboardFooterText;
 
+    
+    
+    
     @Inject
     @ConfigProperty(name = "session.minutosExpiracion")
     private Integer sessionMinutosExpiracion;
@@ -123,6 +129,14 @@ public class ConfigurationProperties {
 
     public void setJavaSystemGetProperty(String javaSystemGetProperty) {
         this.javaSystemGetProperty = javaSystemGetProperty;
+    }
+
+    public String getDashboardFooterText() {
+        return dashboardFooterText;
+    }
+
+    public void setDashboardFooterText(String dashboardFooterText) {
+        this.dashboardFooterText = dashboardFooterText;
     }
 
     

@@ -169,7 +169,7 @@ dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownIt
         // 5. Información de Usuario Logeado
         String usernameClass = isTailwind ? "hidden md:block text-sm text-gray-400 mr-3" : "navbar-text me-3 text-white-50";
         rightContainer.withChild(new Tag("span").withClass(usernameClass)
-                .withText("Hello, " + username));
+                .withText(username));
 
         // 6. Botón de Logout
         String logoutBtnClass = isTailwind ? "border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 text-sm rounded-md" : "btn btn-outline-danger btn-sm";

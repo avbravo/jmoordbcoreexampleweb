@@ -4,79 +4,136 @@
  */
 package fish.payara.view;
 
+import com.jmoordb.core.ui.Button;
+import com.jmoordb.core.ui.ButtonType;
+import com.jmoordb.core.ui.Div;
+import com.jmoordb.core.ui.Form;
+import com.jmoordb.core.ui.Script;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
 import com.jmoordb.core.ui.jettra.JettraView;
-import com.jmoordb.core.ui.menu.MenuLink;
+import com.jmoordb.core.ui.model.WebModelSession;
+import com.jmoordb.core.ui.panel.Panel;
+import fish.payara.config.ConfigurationProperties;
 import fish.payara.dashboard.MenuSideBar;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.Path;
+import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Map;
 
- /*
+/*
  * @author avbravo
  */
 @Path("fetch-view") // ⭐ Define la URL final: /api/profile-view
 @RequestScoped
-public class FetchView extends JettraView{
+public class FetchView extends JettraView {
 
-   
+    // <editor-fold defaultstate="collapsed" desc="attributes()">
+    WebModelSession webModelSession = new WebModelSession();
+    List<Tag> headers = new ArrayList<>();
+    @Inject
+    ConfigurationProperties configurationProperties;
+// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="String init()">
     @Override
     protected String init() {
-         // Acceso a la sesión vía el @Context inyectado en la clase base
-        String username = (String) request.getSession().getAttribute("usuario");
-        String userRol = (String) request.getSession().getAttribute("rol");
-        if (userRol == null) userRol = "ADMIN";
-        if (username == null) username = "Invitado";
-        
-        // --- Lógica de la Vista ---
-        
-        Map<String, List<MenuLink>> sidebarSections = MenuSideBar.getSidebarSections(
-            this.getClass().getSimpleName(), username, userRol
-        );
-        
-        WebComponent mainContent = new Tag("div").withText("Vista generada con JAX-RS y WebComponents para: " + username);
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        // --- Generación del Layout ---
-        String htmlCompleto = DashboardLayout.buildPage(
-                request, 
-                username, 
-                mainContent,
-                sidebarSections, 
-                "JAX-RS HTML View",
-                null
-        );
-        
-        return htmlCompleto; // ⭐ Devuelve el String HTML completo
-    }
+        webModelSession = webModelOfSession(request);
 
-    
-    
-        
-    // Si quisieras manejar un POST, lo defines aquí mismo:
-    /*
-    @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response handlePost(@FormParam("username") String newUsername) {
-        request.getSession().setAttribute("usuario", newUsername);
-        
-        // Redirigir usando JAX-RS
-        return Response.seeOther(URI.create(request.getContextPath() + "/api/profile-view")).build();
+        return DashboardLayout.buildPage(
+                request,
+                webModelSession.getUsername(),
+                content(request),
+                MenuSideBar.getSidebarSections(
+                        this.getClass().getSimpleName(),
+                        webModelSession.getUsername(),
+                        webModelSession.getUserRol()
+                ),
+                "Fetch View",
+                configurationProperties.getDashboardFooterText() + " | " + webModelSession.getUserRol(),
+                headers
+        );
+
     }
-    */
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="WebComponent content(HttpServletRequest request)">
+
+    @Override
+    public WebComponent content(HttpServletRequest request) {
+        WebComponent mainContent = null;
+        try {
+
+            Form formContent = new Form();
+            formContent.add(
+                    new Div().withClass("space-y-12")
+                            .add(
+                                    new Button().text("Fetch").type(ButtonType.BUTTON).id("btnFetch")
+                            )
+                            .add(
+                                    new Div().id("divCaracteres")
+                            )
+            );
+
+            Script scriptFecth = new Script()
+                    .code(javaScriptCode());
+
+            WebComponent webContent
+                    = new Div().withClass("p-8 min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900")
+                            .withClass(webModelSession.getIsTailwind() ? "space-y-4" : "") // Añadir espaciado de Tailwind
+                            .add(formContent)
+                            .add(scriptFecth);
+
+            mainContent = new Panel("Fecth", webContent, request);
+        } catch (Exception e) {
+            System.out.println("\t content() " + e.getLocalizedMessage());
+        }
+        return mainContent;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String javaScriptCode()">
+    public String javaScriptCode() {
+        String result = "";
+        try {
+            result = """
+                     const btn = document.getElementById("btnFetch");
+                     const div = document.getElementById("divCaracteres");
+                     btn.addEventListener('click',() => {
+                           console.log('Fetch API');
+                          fetch('https://rickandmortyapi.com/api/character')
+                              .then((response) => response.json())
+                              .then((data) => renderCaracteres(data));
+                     });
+                     
+                     
+                     function renderCaracteres(data) { // Cambié 'caracteres' por 'data' para mayor claridad.
+                         // **AQUÍ ESTÁ LA CORRECCIÓN CLAVE:**
+                     console.log(data);
+                         // Acceder a la propiedad 'results' del objeto de respuesta de la API.
+                         const characters = data.results; 
+                         
+                         // Verifica que 'characters' sea un array antes de iterar
+                         if (Array.isArray(characters)) {
+                             characters.forEach(ch => {
+                                 // **CORRECCIÓN DE SINTAXIS:** Usar backticks (`) para el template literal
+                                 // y `${...}` para incrustar la variable.
+                                 div.innerHTML += `<img src="${ch.image}">`; 
+                             });
+                         } else {
+                             console.error("Error: 'results' no es un array o no existe en la respuesta de la API.");
+                         }
+                      }                    
+                     """;
+        } catch (Exception e) {
+            System.out.println("\t content() " + e.getLocalizedMessage());
+        }
+        return result;
+    }
+// </editor-fold>
 
 }

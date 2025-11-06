@@ -49,7 +49,7 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-       // WebComponent errorComponent = null;
+        // WebComponent errorComponent = null;
         Alert alert = null;
         String errorParam = request.getParameter("error");
         String logoutParam = request.getParameter("logout"); // <-- NUEVA LÍNEA
@@ -72,13 +72,13 @@ public class LoginController extends HttpServlet {
         }
         WebComponent login = null;
 
-           switch (configurationProperties.getLoginStyle()) {
+        switch (configurationProperties.getLoginStyle()) {
             case "login-simple":
-                login = new LoginSimple(request.getContextPath(), alert, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle(),configurationProperties);
+                login = new LoginSimple(request.getContextPath(), alert, configurationProperties.getLoginTitle(), configurationProperties.getApplicativeMetaTitle(), configurationProperties);
                 break;
-         
+
             case "login-advanced":
-                login = new LoginAdvanced(request.getContextPath(), alert, ROLES_LIST, configurationProperties.getLoginTitle(),configurationProperties.getApplicativeMetaTitle(),configurationProperties);
+                login = new LoginAdvanced(request.getContextPath(), alert, ROLES_LIST, configurationProperties.getLoginTitle(), configurationProperties.getApplicativeMetaTitle(), configurationProperties);
                 break;
         }
         // Instanciar y renderizar el componente de login
@@ -97,7 +97,7 @@ public class LoginController extends HttpServlet {
             submittedRole = request.getParameter("userRol"); // <-- NUEVO
         }
         System.out.println("\t...................................................................");
-        System.out.println("\t username "+submittedUsername +  " : "+submittedPassword + " : "+submittedRole);
+        System.out.println("\t username " + submittedUsername + " : " + submittedPassword + " : " + submittedRole);
         System.out.println("\t...................................................................");
         // 2. Lógica de autenticación: Compara los valores ingresados con los válidos
         boolean credentialsValid = Boolean.FALSE;
@@ -132,9 +132,9 @@ public class LoginController extends HttpServlet {
             session.setAttribute("userRol", submittedRole);
             session.setAttribute("idrol", 0L);
             session.setAttribute("cssFramework", "tailwind");
+            session.setAttribute("isAuthentication", Boolean.TRUE);
+            session.setAttribute("hasAuthorization", Boolean.TRUE);
 
-            
-            
             session.setMaxInactiveInterval(configurationProperties.getSessionMinutosExpiracion()); // Sesión de 30 minutos
 
 //            response.sendRedirect(request.getContextPath() + "/dashboard");

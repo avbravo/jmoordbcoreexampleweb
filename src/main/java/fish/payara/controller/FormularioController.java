@@ -4,7 +4,6 @@
  */
 package fish.payara.controller;
 
-import fish.payara.controller.formulario.AnalisisViewModel;
 import fish.payara.controller.formulario.FormularioViewModel;
 import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;

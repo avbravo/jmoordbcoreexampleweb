@@ -25,7 +25,9 @@ public class DashboardLayout {
             String username,
             WebComponent mainContent,
             Map<String, List<MenuLink>> sidebarSections,
-            String title, String footerText, List<Tag>... headerAdditional) {
+            String title,
+            String footerText, 
+            List<Tag>... headerAdditional) {
 
         // 1. OBTENER ESTADO ACTUAL Y CONFIGURACIONES
         String contextPath = request.getContextPath();

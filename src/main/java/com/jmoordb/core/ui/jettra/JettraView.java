@@ -8,7 +8,6 @@ import com.jmoordb.core.ui.Body;
 import com.jmoordb.core.ui.Html;
 import com.jmoordb.core.ui.Link;
 import com.jmoordb.core.ui.WebComponent;
-import com.jmoordb.core.ui.WebController;
 import com.jmoordb.core.ui.model.WebModelSession;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,6 +40,12 @@ public abstract class JettraView {
      */
     protected abstract String init();
 
+    
+    
+   protected abstract WebComponent content(HttpServletRequest request);
+       
+    
+    
     /**
      * Endpoint GET que produce HTML y llama a handleGet. La anotación @Path("")
      * aquí significa que la URL es la misma que la clase hija.
@@ -142,7 +147,7 @@ public abstract class JettraView {
         return result;
     }
 
-    WebModelSession webModelOfSession(HttpServletRequest request) {
+    public WebModelSession webModelOfSession(HttpServletRequest request) {
         WebModelSession webModel = new WebModelSession();
         try {
             webModel.setIsAuthentication(Boolean.FALSE);

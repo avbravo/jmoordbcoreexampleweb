@@ -18,39 +18,37 @@ import java.util.List;
 @XmlRootElement
 public class FormularioViewModel {
 
-   
     // -----------------------------------------------------------------
     @FormParam("nhrc")
     private String nhrc;
-    
+
     @FormParam("numeromuestra")
     private String numeromuestra;
-    
+
     @FormParam("fechaRegistro")
     private String fechaRegistroString; // <-- Cambiado a String
 
     @FormParam("edad")
     private int edad;
-  
 
     @FormParam("motivo")
     private String motivo;
 
     @FormParam("otroMotivo")
     private String otroMotivo;
-    
+
     @FormParam("diagnostico")
     private String diagnostico;
-    
+
     @FormParam("pcritsStatus")
     private List<String> pcritsStatus = new ArrayList<>();
-    
+
     @FormParam("ctPcrPositiva")
     private String ctPcrPositiva;
-    
+
     @FormParam("gramEtiquetado")
     private List<String> gramEtiquetado = new ArrayList<>();
-    
+
     @FormParam("leucocitosPresencia")
     private String leucocitosPresencia;
     @FormParam("otroLeucocitoValor")
@@ -59,40 +57,36 @@ public class FormularioViewModel {
     private String levadurasPresencia;
     @FormParam("otroLevaduraValor")
     private String otroLevaduraValor;
-    
+
     @FormParam("epitelialesPresencia")
     private String epitelialesPresencia;
-    
+
     @FormParam("otroEpitelialValor")
     private String otroEpitelialValor;
     @FormParam("nugentScore")
     private String nugentScore;
     @FormParam("resultadoCultivo")
     private List<String> resultadoCultivo;
-    
-    
-@FormParam("imagen11Cultivo")
-private String imagen11Cultivo;
 
+    @FormParam("imagen11Cultivo")
+    private String imagen11Cultivo;
 
-    
-@FormParam("recuentoHongos")
-private String recuentoHongos;
-    
-@FormParam("calidadTincion")
-private String calidadTincion;
+    @FormParam("recuentoHongos")
+    private String recuentoHongos;
 
-@FormParam("cultivoOrinaResultado")
-private String cultivoOrinaResultado;
+    @FormParam("calidadTincion")
+    private String calidadTincion;
 
-@FormParam("discrepancia")
-private String discrepancia;
+    @FormParam("cultivoOrinaResultado")
+    private String cultivoOrinaResultado;
+
+    @FormParam("discrepancia")
+    private String discrepancia;
 //@FormParam("discrepancia")
 //private String discrepancia;
 //@FormParam("discrepancia")
 //private String discrepancia;
-    
-    
+
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 1 (Coinciden con name="...")
     // -----------------------------------------------------------------
@@ -243,8 +237,6 @@ private String discrepancia;
     public void setNhrc(String nhrc) {
         this.nhrc = nhrc;
     }
-
-    
 
 //    // Getters y Setters para edad (Ahora Integer)
 //    public Integer getEdad() { return edad; }
@@ -530,11 +522,9 @@ private String discrepancia;
     public void setNumeromuestra(String numeromuestra) {
         this.numeromuestra = numeromuestra;
     }
- 
+
     // <editor-fold defaultstate="collapsed" desc="set/get">
-    
-    
-       public String getFechaRegistroString() {
+    public String getFechaRegistroString() {
         return fechaRegistroString;
     }
 
@@ -550,11 +540,7 @@ private String discrepancia;
         this.motivo = motivo;
     }
 
-    
-    
-    
 // </editor-fold>
-
     public String getOtroMotivo() {
         return otroMotivo;
     }
@@ -667,8 +653,6 @@ private String discrepancia;
         this.imagen11Cultivo = imagen11Cultivo;
     }
 
-    
-
     public String getRecuentoHongos() {
         return recuentoHongos;
     }
@@ -701,10 +685,9 @@ private String discrepancia;
         this.discrepancia = discrepancia;
     }
 
- public boolean isImagen11CultivoMarcada() {
+    public boolean isImagen11CultivoMarcada() {
         // Comprueba si el String no es null y si es el valor esperado ("si")
         return "si".equals(this.imagen11Cultivo);
     }
-    
-    
+
 }

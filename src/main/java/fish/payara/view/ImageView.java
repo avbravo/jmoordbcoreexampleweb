@@ -1,94 +1,97 @@
-package fish.payara.controller;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package fish.payara.view;
 
-import com.jmoordb.core.ui.Div;
-import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.WebComponent;
-import com.jmoordb.core.ui.WebController;
+import com.jmoordb.core.ui.A;
 import com.jmoordb.core.ui.Button;
 import com.jmoordb.core.ui.ButtonType;
+import com.jmoordb.core.ui.Div;
 import com.jmoordb.core.ui.Form;
+import com.jmoordb.core.ui.Image;
 import com.jmoordb.core.ui.Script;
+import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
+import com.jmoordb.core.ui.jettra.JettraView;
 import com.jmoordb.core.ui.model.WebModelSession;
 import com.jmoordb.core.ui.panel.Panel;
+import fish.payara.config.ConfigurationProperties;
 import fish.payara.dashboard.MenuSideBar;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import jakarta.ws.rs.Path;
 import java.util.ArrayList;
+
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/fetch"})
-public class FetchController extends HttpServlet implements WebController {
+/*
+ * @author avbravo
+ */
+@Path("image-view") // ⭐ Define la URL final: /api/profile-view
+@RequestScoped
+public class ImageView extends JettraView {
 
-    WebModelSession webModel = new WebModelSession();
+    // <editor-fold defaultstate="collapsed" desc="attributes()">
+    WebModelSession webModelSession = new WebModelSession();
     List<Tag> headers = new ArrayList<>();
+    @Inject
+    ConfigurationProperties configurationProperties;
+// </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="String init()">
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected String init() {
 
-        /**
-         * Valida los roles
-         */
-        if (!(webModel = webModelOfSession(request)).getIsAuthentication()) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
+        webModelSession = webModelOfSession(request);
 
-        /**
-         * Construye los componentes mediante el DashboardLayout
-         */
-        response.setContentType("text/html;charset=UTF-8");
-        response.getWriter().write(
-                DashboardLayout.buildPage(
-                        request,
-                        webModel.getUsername(),
-                        content(request), // Contenido específico que se inyecta
-                        MenuSideBar.getSidebarSections(
-                                this.getClass().getSimpleName(),
-                                webModel.getUsername(),
-                                webModel.getUserRol()
-                        ), // Estructura del menú
-                        "Fetch",
-                        "© 2024 Modern Dashboard Framework.",
-                        headers
-                )
+        return DashboardLayout.buildPage(
+                request,
+                webModelSession.getUsername(),
+                content(request),
+                MenuSideBar.getSidebarSections(
+                        this.getClass().getSimpleName(),
+                        webModelSession.getUsername(),
+                        webModelSession.getUserRol()
+                ),
+                "Image View",
+                configurationProperties.getDashboardFooterText() + " | " + webModelSession.getUserRol(),
+                headers
         );
-    }
 
+    }
+// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="WebComponent content(HttpServletRequest request)">
+
     @Override
     public WebComponent content(HttpServletRequest request) {
-        WebComponent mainPanel = null;
+        WebComponent mainContent = null;
         try {
-
             Form formContent = new Form();
             formContent.add(
                     new Div().withClass("space-y-12")
                             .add(
-                                    new Button().text("Fetch").type(ButtonType.BUTTON).id("btnFetch")
-                            )
-                            .add(
-                                    new Div().id("divCaracteres")
+                                    new A().href("login").text("Image as a Link")
+                                            .add(
+                                                    new Image().src("https://www.w3schools.com/images/w3schools_green.jpg")
+                                                            .alt("HTML Tutorial")
+                                                            .style("width:42px;height:42px;")
+                                            )
                             )
             );
 
-            Script scriptFecth = new Script()
-                    .code(javaScriptCode());
+            WebComponent webContent
+                    = new Div().withClass("p-8 min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900")
+                            .withClass(webModelSession.getIsTailwind() ? "space-y-4" : "") // Añadir espaciado de Tailwind
+                            .add(formContent);
 
-            WebComponent webContent = 
-                    new Div().withClass("p-8 min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900")
-                    .withClass(webModel.getIsTailwind() ? "space-y-4" : "") // Añadir espaciado de Tailwind
-                    .add(formContent)
-                    .add(scriptFecth);
-
-            mainPanel = new Panel("Fecth", webContent, request);
+            mainContent = new Panel("Image View", webContent, request);
         } catch (Exception e) {
             System.out.println("\t content() " + e.getLocalizedMessage());
         }
-        return mainPanel;
+        return mainContent;
     }
     // </editor-fold>
 
@@ -131,4 +134,5 @@ public class FetchController extends HttpServlet implements WebController {
         return result;
     }
 // </editor-fold>
+
 }
