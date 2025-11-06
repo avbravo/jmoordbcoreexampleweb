@@ -10,225 +10,221 @@ package fish.payara.controller.formulario;
  */
 // Usando tipos de datos apropiados (String para nhrc y foto IDs)
 // Importaciones de Jakarta EE:
-import jakarta.ws.rs.FormParam;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.json.bind.annotation.JsonbProperty;
 import java.util.ArrayList;
 import java.util.List;
 
-@XmlRootElement
-public class FormularioViewModel {
 
-   
-    // -----------------------------------------------------------------
-    @FormParam("nhrc")
+public class AnalisisViewModel {
+
+
+   @JsonbProperty("nhrc")
     private String nhrc;
     
-    @FormParam("numeromuestra")
+   @JsonbProperty("numeromuestra")
     private String numeromuestra;
     
-    @FormParam("fechaRegistro")
+   @JsonbProperty("fechaRegistro")
     private String fechaRegistroString; // <-- Cambiado a String
 
-    @FormParam("edad")
+   @JsonbProperty("edad")
     private int edad;
   
 
-    @FormParam("motivo")
+   @JsonbProperty("motivo")
     private String motivo;
 
-    @FormParam("otroMotivo")
+   @JsonbProperty("otroMotivo")
     private String otroMotivo;
     
-    @FormParam("diagnostico")
+   @JsonbProperty("diagnostico")
     private String diagnostico;
     
-    @FormParam("pcritsStatus")
+   @JsonbProperty("pcritsStatus")
     private List<String> pcritsStatus = new ArrayList<>();
     
-    @FormParam("ctPcrPositiva")
+   @JsonbProperty("ctPcrPositiva")
     private String ctPcrPositiva;
     
-    @FormParam("gramEtiquetado")
+   @JsonbProperty("gramEtiquetado")
     private List<String> gramEtiquetado = new ArrayList<>();
     
-    @FormParam("leucocitosPresencia")
+   @JsonbProperty("leucocitosPresencia")
     private String leucocitosPresencia;
-    @FormParam("otroLeucocitoValor")
+   @JsonbProperty("otroLeucocitoValor")
     private String otroLeucocitoValor;
-    @FormParam("levadurasPresencia")
+   @JsonbProperty("levadurasPresencia")
     private String levadurasPresencia;
-    @FormParam("otroLevaduraValor")
+   @JsonbProperty("otroLevaduraValor")
     private String otroLevaduraValor;
     
-    @FormParam("epitelialesPresencia")
+   @JsonbProperty("epitelialesPresencia")
     private String epitelialesPresencia;
     
-    @FormParam("otroEpitelialValor")
+   @JsonbProperty("otroEpitelialValor")
     private String otroEpitelialValor;
-    @FormParam("nugentScore")
+   @JsonbProperty("nugentScore")
     private String nugentScore;
-    @FormParam("resultadoCultivo")
-    private List<String> resultadoCultivo;
+   @JsonbProperty("resultadoCultivo")
+    private List<String> resultadoCultivo = new ArrayList<>();
     
     
-@FormParam("imagen11Cultivo")
+@JsonbProperty("imagen11Cultivo")
 private String imagen11Cultivo;
 
 
     
-@FormParam("recuentoHongos")
+@JsonbProperty("recuentoHongos")
 private String recuentoHongos;
     
-@FormParam("calidadTincion")
+@JsonbProperty("calidadTincion")
 private String calidadTincion;
 
-@FormParam("cultivoOrinaResultado")
+@JsonbProperty("cultivoOrinaResultado")
 private String cultivoOrinaResultado;
 
-@FormParam("discrepancia")
-private String discrepancia;
-//@FormParam("discrepancia")
-//private String discrepancia;
-//@FormParam("discrepancia")
+@JsonbProperty("discrepancia")
+private boolean discrepancia;
+//@JsonbProperty("discrepancia")
 //private String discrepancia;
     
     
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 1 (Coinciden con name="...")
     // -----------------------------------------------------------------
-    @FormParam("fileId1")
+   @JsonbProperty("fileId1")
     private String fileId1;
 
-    @FormParam("fileRemoteId1")
+   @JsonbProperty("fileRemoteId1")
     private String fileRemoteId1;
 
-    @FormParam("originalFileName1")
+   @JsonbProperty("originalFileName1")
     private String originalFileName1;
 
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 2 (Coinciden con name="...")
     // -----------------------------------------------------------------
-    @FormParam("fileId2")
+   @JsonbProperty("fileId2")
     private String fileId2;
 
-    @FormParam("fileRemoteId2")
+   @JsonbProperty("fileRemoteId2")
     private String fileRemoteId2;
 
-    @FormParam("originalFileName2")
+   @JsonbProperty("originalFileName2")
     private String originalFileName2;
 
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 3 (Coinciden con name="...")
     // -----------------------------------------------------------------
-    @FormParam("fileId3")
+   @JsonbProperty("fileId3")
     private String fileId3;
 
-    @FormParam("fileRemoteId3")
+   @JsonbProperty("fileRemoteId3")
     private String fileRemoteId3;
 
-    @FormParam("originalFileName3")
+   @JsonbProperty("originalFileName3")
     private String originalFileName3;
 
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 4 (Coinciden con name="...")
     // -----------------------------------------------------------------
-    @FormParam("fileId4")
+   @JsonbProperty("fileId4")
     private String fileId4;
 
-    @FormParam("fileRemoteId4")
+   @JsonbProperty("fileRemoteId4")
     private String fileRemoteId4;
 
-    @FormParam("originalFileName4")
+   @JsonbProperty("originalFileName4")
     private String originalFileName4;
 
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 5 (Coinciden con name="...")
     // -----------------------------------------------------------------
-    @FormParam("fileId5")
+   @JsonbProperty("fileId5")
     private String fileId5;
 
-    @FormParam("fileRemoteId5")
+   @JsonbProperty("fileRemoteId5")
     private String fileRemoteId5;
 
-    @FormParam("originalFileName5")
+   @JsonbProperty("originalFileName5")
     private String originalFileName5;
 
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 6 (Coinciden con name="...")
     // -----------------------------------------------------------------
-    @FormParam("fileId6")
+   @JsonbProperty("fileId6")
     private String fileId6;
 
-    @FormParam("fileRemoteId6")
+   @JsonbProperty("fileRemoteId6")
     private String fileRemoteId6;
 
-    @FormParam("originalFileName6")
+   @JsonbProperty("originalFileName6")
     private String originalFileName6;
 
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 7 (Coinciden con name="...")
     // -----------------------------------------------------------------
-    @FormParam("fileId7")
+   @JsonbProperty("fileId7")
     private String fileId7;
 
-    @FormParam("fileRemoteId7")
+   @JsonbProperty("fileRemoteId7")
     private String fileRemoteId7;
 
-    @FormParam("originalFileName7")
+   @JsonbProperty("originalFileName7")
     private String originalFileName7;
 
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 8 (Coinciden con name="...")
     // -----------------------------------------------------------------
-    @FormParam("fileId8")
+   @JsonbProperty("fileId8")
     private String fileId8;
 
-    @FormParam("fileRemoteId8")
+   @JsonbProperty("fileRemoteId8")
     private String fileRemoteId8;
 
-    @FormParam("originalFileName8")
+   @JsonbProperty("originalFileName8")
     private String originalFileName8;
 
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 9 (Coinciden con name="...")
     // -----------------------------------------------------------------
-    @FormParam("fileId9")
+   @JsonbProperty("fileId9")
     private String fileId9;
 
-    @FormParam("fileRemoteId9")
+   @JsonbProperty("fileRemoteId9")
     private String fileRemoteId9;
 
-    @FormParam("originalFileName9")
+   @JsonbProperty("originalFileName9")
     private String originalFileName9;
 
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 10 (Coinciden con name="...")
     // -----------------------------------------------------------------
-    @FormParam("fileId10")
+   @JsonbProperty("fileId10")
     private String fileId10;
 
-    @FormParam("fileRemoteId10")
+   @JsonbProperty("fileRemoteId10")
     private String fileRemoteId10;
 
-    @FormParam("originalFileName10")
+   @JsonbProperty("originalFileName10")
     private String originalFileName10;
 
     // -----------------------------------------------------------------
     // CAMPOS DE IMAGEN 11 (Coinciden con name="...")
     // -----------------------------------------------------------------
-    @FormParam("fileId11")
+   @JsonbProperty("fileId11")
     private String fileId11;
 
-    @FormParam("fileRemoteId11")
+   @JsonbProperty("fileRemoteId11")
     private String fileRemoteId11;
 
-    @FormParam("originalFileName11")
+   @JsonbProperty("originalFileName11")
     private String originalFileName11;
 
     // ***************************************************************
     // 1. CONSTRUCTOR POR DEFECTO (NECESARIO para JAX-RS/Payara)
     // ***************************************************************
-    public FormularioViewModel() {
+    public AnalisisViewModel() {
         // Constructor por defecto
     }
 
@@ -693,18 +689,18 @@ private String discrepancia;
         this.cultivoOrinaResultado = cultivoOrinaResultado;
     }
 
-    public String getDiscrepancia() {
+    public boolean getDiscrepancia() {
         return discrepancia;
     }
 
-    public void setDiscrepancia(String discrepancia) {
+    public void setDiscrepancia(boolean discrepancia) {
         this.discrepancia = discrepancia;
     }
 
- public boolean isImagen11CultivoMarcada() {
-        // Comprueba si el String no es null y si es el valor esperado ("si")
-        return "si".equals(this.imagen11Cultivo);
-    }
+// public boolean isImagen11CultivoMarcada() {
+//        // Comprueba si el String no es null y si es el valor esperado ("si")
+//        return "si".equals(this.imagen11Cultivo);
+//    }
     
     
 }

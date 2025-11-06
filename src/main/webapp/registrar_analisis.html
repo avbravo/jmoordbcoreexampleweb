@@ -808,7 +808,7 @@
 
 
                         <div class="checkbox-group positive-results-group column-one">
-                            <h3>Resultados (Col. 1)</h3>
+                            <!--<h3>Resultados (Col. 1)</h3>-->
                             <div class="checkbox-item">
                                 <input type="checkbox" id="pcrNoRealizada" name="pcritsStatus" value="No Realizada" class="pcrits-status-control">
                                 <label for="pcrNoRealizada">No Realizada</label>
@@ -830,21 +830,21 @@
                         </div>
 
                         <div class="checkbox-group positive-results-group column-two">
-                            <h3>Resultados (Col. 2)</h3>
+                            <!--<h3>Resultados (Col. 2)</h3>-->
                             <div class="checkbox-item">
-                                <input type="checkbox" id="pcrHerpes" name="pcritsResultados" value="+ Herpes (1 o 2)" class="pcrits-result">
+                                <input type="checkbox" id="pcrHerpes" name="pcritsStatus" value="+ Herpes (1 o 2)" class="pcrits-result">
                                 <label for="pcrHerpes">+ Herpes (1 o 2)</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="pcrVPH" name="pcritsResultados" value="+ VPH" class="pcrits-result">
+                                <input type="checkbox" id="pcrVPH" name="pcritsStatus" value="+ VPH" class="pcrits-result">
                                 <label for="pcrVPH">+ VPH</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="pcrMico" name="pcritsResultados" value="+ Micoplasma" class="pcrits-result">
+                                <input type="checkbox" id="pcrMico" name="pcritsStatus" value="+ Micoplasma" class="pcrits-result">
                                 <label for="pcrMico">+ Micoplasma</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="pcrTricho" name="pcritsResultados" value="+ Trichomonas" class="pcrits-result">
+                                <input type="checkbox" id="pcrTricho" name="pcritsStatus" value="+ Trichomonas" class="pcrits-result">
                                 <label for="pcrTricho">+ Trichomonas</label>
                             </div>
                         </div>
@@ -1378,7 +1378,7 @@
                         <label class="switch-label">¿Imagen 11 es Cultivo?</label>
 
                         <label class="toggle-switch">
-                            <input type="checkbox" id="imagen11Cultivo" name="imagen11Cultivo" value="si">
+                            <input type="checkbox" id="imagen11Cultivo" name="imagen11Cultivo" value="si" >
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -1393,33 +1393,34 @@
                 <fieldset>
                     <legend>Recuento crecimiento de la placa de hongos</legend>
                     <h3 style="margin-top: 5px; color: var(--secondary-color); font-size: 1em;">Información proporcionada por el observador</h3>
-
                     <div class="options-container" style="display: flex; flex-direction: column; gap: 15px;">
 
-                        <div class="checkbox-item no-growth-option" style="border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
-                            <input type="checkbox" id="hongoNoCrecimiento" name="hongoNoCrecimiento" value="No crecimiento" class="hongo-excluyente">
-                            <label for="hongoNoCrecimiento" style="font-weight: 600;">No crecimiento</label>
-                        </div>
+
+
 
                         <div class="radio-group-container growth-options" style="display: flex; gap: 30px;">
                             <div class="radio-item">
-                                <input type="radio" id="hongo1" name="recuentoHongos" value="10^1" class="hongo-cuantificacion" disabled>
+                                <input type="radio" id="hongo1" name="recuentoHongos" value="No crecimiento" class="hongo-cuantificacion" >
+                                <label for="hongo1">No crecimiento</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="hongo1" name="recuentoHongos" value="10^1" class="hongo-cuantificacion" >
                                 <label for="hongo1">10¹</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="hongo2" name="recuentoHongos" value="10^2" class="hongo-cuantificacion" disabled>
+                                <input type="radio" id="hongo2" name="recuentoHongos" value="10^2" class="hongo-cuantificacion" >
                                 <label for="hongo2">10²</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="hongo3" name="recuentoHongos" value="10^3" class="hongo-cuantificacion" disabled>
+                                <input type="radio" id="hongo3" name="recuentoHongos" value="10^3" class="hongo-cuantificacion" >
                                 <label for="hongo3">10³</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="hongo4" name="recuentoHongos" value="10^4" class="hongo-cuantificacion" disabled>
+                                <input type="radio" id="hongo4" name="recuentoHongos" value="10^4" class="hongo-cuantificacion" >
                                 <label for="hongo4">10⁴</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="hongo5" name="recuentoHongos" value="10^5" class="hongo-cuantificacion" disabled>
+                                <input type="radio" id="hongo5" name="recuentoHongos" value="10^5" class="hongo-cuantificacion" >
                                 <label for="hongo5">10⁵</label>
                             </div>
                         </div>
@@ -1490,7 +1491,7 @@
             <label class="switch-label">¿Hay Discrepancia?</label>
             
             <label class="toggle-switch">
-                <input type="checkbox" id="discrepanciaSwitch" name="discrepancia" value="si">
+                <input type="checkbox" id="discrepancia" name="discrepancia"  value="si" >
                 <span class="slider round"></span>
             </label>
         </div>
@@ -1757,35 +1758,7 @@
             handleCultivoChange();
         });
 
-        // FUNCIÓN PARA MANEJAR LA LÓGICA DE EXCLUSIVIDAD DE HONGOS
-        function handleRecuentoHongosChange() {
-            const noCrecimientoCheckbox = document.getElementById('hongoNoCrecimiento');
-            const cuantificacionRadios = document.querySelectorAll('.recuento-hongos-section .hongo-cuantificacion');
 
-            noCrecimientoCheckbox.addEventListener('change', () => {
-                if (noCrecimientoCheckbox.checked) {
-                    // Desmarcar y deshabilitar todas las opciones de cuantificación
-                    cuantificacionRadios.forEach(radio => {
-                        radio.checked = false;
-                        radio.disabled = true;
-                    });
-                } else {
-                    // Habilitar todas las opciones de cuantificación
-                    cuantificacionRadios.forEach(radio => {
-                        radio.disabled = false;
-                    });
-                }
-            });
-
-            cuantificacionRadios.forEach(radio => {
-                radio.addEventListener('change', () => {
-                    if (radio.checked) {
-                        // Si se selecciona una cuantificación, desmarcar "No crecimiento"
-                        noCrecimientoCheckbox.checked = false;
-                    }
-                });
-            });
-        }
 
 // *** IMPORTANTE: Asegúrate de llamar a esta función al cargar el DOM ***
         document.addEventListener('DOMContentLoaded', () => {
