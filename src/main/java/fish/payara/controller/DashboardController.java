@@ -17,6 +17,7 @@ import com.jmoordb.core.ui.dashboard.DashboardLayout;
 import com.jmoordb.core.ui.grid.CardGrid;
 import com.jmoordb.core.ui.grid.GridItem;
 import com.jmoordb.core.ui.menu.MenuLink;
+import com.jmoordb.core.ui.model.WebModelSession;
 import com.jmoordb.core.ui.panel.Panel;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -24,12 +25,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = "/dashboard")
+@WebServlet(urlPatterns = "/dashboard2")
 public class DashboardController extends HttpServlet {
-
+    WebModelSession webModelSession = new WebModelSession();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
+               webModelSession = webModelOfSession(request);
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("username") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -57,10 +58,15 @@ public class DashboardController extends HttpServlet {
         // Obtener la lista de menús desde el nuevo servicio.
         Map<String, List<MenuLink>> sidebarSections = MenuSideBar.getSidebarSections(
             this.getClass().getSimpleName(), // Pasa "DashboardController"
-            username, 
-            userRol
+           webModelSession
         );
         
+//        Map<String, List<MenuLink>> sidebarSections = MenuSideBar.getSidebarSections(
+//            this.getClass().getSimpleName(), // Pasa "DashboardController"
+//            username, 
+//            userRol
+//        );
+//        
         
 //        // ⭐ 2. DEFINICIÓN DE DATOS Y MENÚS (Estructura de la SideBar)
 //        Map<String, List<MenuLink>> sidebarSections = Map.of(
@@ -123,4 +129,38 @@ public class DashboardController extends HttpServlet {
             
         response.getWriter().write(htmlCompleto);
     }
+    
+     public WebModelSession webModelOfSession(HttpServletRequest request) {
+        WebModelSession webModel = new WebModelSession();
+        try {
+            webModel.setIsAuthentication(Boolean.FALSE);
+            webModel.setHasAuthorization(Boolean.FALSE);
+            HttpSession session = request.getSession(false);
+            if (session == null) {
+                return webModel;
+            }
+            webModel.setUsername((String) session.getAttribute("username"));
+            webModel.setName((String) session.getAttribute("name"));
+            if (session.getAttribute("iduser").toString() == null || session.getAttribute("iduser").toString().equals("")) {
+                webModel.setIduser(0L);
+            } else {
+                webModel.setIduser(Long.parseLong(session.getAttribute("iduser").toString()));
+            }
+
+            webModel.setUserRol((String) session.getAttribute("userRol"));
+
+            if (session.getAttribute("idrol").toString() == null || session.getAttribute("idrol").toString().equals("")) {
+                webModel.setIdRol(0L);
+            } else {
+                webModel.setIdRol(Long.parseLong(session.getAttribute("idrol").toString()));
+            }
+
+           
+
+        } catch (Exception e) {
+            System.out.println("\t");
+        }
+        return webModel;
+    }
+    
 }

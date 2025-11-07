@@ -44,7 +44,7 @@ public abstract class JettraView {
     
    protected abstract WebComponent content(HttpServletRequest request);
        
-    
+ protected abstract String javaScriptCode();
     
     /**
      * Endpoint GET que produce HTML y llama a handleGet. La anotación @Path("")

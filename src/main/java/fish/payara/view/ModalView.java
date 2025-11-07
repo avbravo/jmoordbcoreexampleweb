@@ -50,8 +50,7 @@ public class ModalView extends JettraView {
                 content(request),
                 MenuSideBar.getSidebarSections(
                         this.getClass().getSimpleName(),
-                        webModelSession.getUsername(),
-                        webModelSession.getUserRol()
+                        webModelSession
                 ),
                 "Modal View",
                 configurationProperties.getDashboardFooterText() + " | " + webModelSession.getUserRol(),
@@ -62,7 +61,6 @@ public class ModalView extends JettraView {
 // </editor-fold> 
 
     // <editor-fold defaultstate="collapsed" desc="protected WebComponent content(HttpServletRequest request)">
-
     @Override
     protected WebComponent content(HttpServletRequest request) {
         WebComponent mainContent = null;
@@ -114,4 +112,9 @@ public class ModalView extends JettraView {
         return mainContent;
     }
 // </editor-fold>
+
+    @Override
+    protected String javaScriptCode() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

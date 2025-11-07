@@ -46,8 +46,7 @@ public class JettraViewExampleView extends JettraView {
                 content(request),
                 MenuSideBar.getSidebarSections(
                         this.getClass().getSimpleName(),
-                        webModelSession.getUsername(),
-                        webModelSession.getUserRol()
+                        webModelSession
                 ),
                 "Jetrra View Example",
                 configurationProperties.getDashboardFooterText() + " | " + webModelSession.getUserRol(),
@@ -71,4 +70,9 @@ public class JettraViewExampleView extends JettraView {
         return mainContent;
     }
 // </editor-fold>
+
+    @Override
+    protected String javaScriptCode() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

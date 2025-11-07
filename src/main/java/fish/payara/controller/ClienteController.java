@@ -13,6 +13,7 @@ package fish.payara.controller;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
 import com.jmoordb.core.ui.menu.MenuLink; // Asumimos MenuLink
+import com.jmoordb.core.ui.model.WebModelSession;
 import com.jmoordb.core.ui.panel.Panel;
 import fish.payara.crud.form.ClienteService;
 import fish.payara.crud.form.ClientesPage;
@@ -30,13 +31,13 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = "/clientes")
 public class ClienteController extends HttpServlet {
-
+    WebModelSession webModelSession = new WebModelSession();
     private final ClienteService clienteService = new ClienteService(); 
     private final int DEFAULT_PAGE_SIZE = 10;
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
+                webModelSession = webModelOfSession(request);
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("username") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -49,9 +50,13 @@ public class ClienteController extends HttpServlet {
         
         Map<String, List<MenuLink>> sidebarSections = MenuSideBar.getSidebarSections(
             this.getClass().getSimpleName(), 
-            username, 
-            userRol
+            webModelSession
         );
+//        Map<String, List<MenuLink>> sidebarSections = MenuSideBar.getSidebarSections(
+//            this.getClass().getSimpleName(), 
+//            username, 
+//            userRol
+//        );
         
         response.setContentType("text/html;charset=UTF-8");
         
@@ -197,4 +202,38 @@ public class ClienteController extends HttpServlet {
         // 5. Redirigir al usuario a la página principal del CRUD (para ver la lista actualizada)
         response.sendRedirect(request.getContextPath() + "/clientes");
     }
+    
+      public WebModelSession webModelOfSession(HttpServletRequest request) {
+        WebModelSession webModel = new WebModelSession();
+        try {
+            webModel.setIsAuthentication(Boolean.FALSE);
+            webModel.setHasAuthorization(Boolean.FALSE);
+            HttpSession session = request.getSession(false);
+            if (session == null) {
+                return webModel;
+            }
+            webModel.setUsername((String) session.getAttribute("username"));
+            webModel.setName((String) session.getAttribute("name"));
+            if (session.getAttribute("iduser").toString() == null || session.getAttribute("iduser").toString().equals("")) {
+                webModel.setIduser(0L);
+            } else {
+                webModel.setIduser(Long.parseLong(session.getAttribute("iduser").toString()));
+            }
+
+            webModel.setUserRol((String) session.getAttribute("userRol"));
+
+            if (session.getAttribute("idrol").toString() == null || session.getAttribute("idrol").toString().equals("")) {
+                webModel.setIdRol(0L);
+            } else {
+                webModel.setIdRol(Long.parseLong(session.getAttribute("idrol").toString()));
+            }
+
+           
+
+        } catch (Exception e) {
+            System.out.println("\t");
+        }
+        return webModel;
+    }
+    
 }

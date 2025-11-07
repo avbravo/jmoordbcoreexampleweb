@@ -51,8 +51,7 @@ public class FetchView extends JettraView {
                 content(request),
                 MenuSideBar.getSidebarSections(
                         this.getClass().getSimpleName(),
-                        webModelSession.getUsername(),
-                        webModelSession.getUserRol()
+                      webModelSession
                 ),
                 "Fetch View",
                 configurationProperties.getDashboardFooterText() + " | " + webModelSession.getUserRol(),
@@ -97,6 +96,7 @@ public class FetchView extends JettraView {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="String javaScriptCode()">
+    @Override
     public String javaScriptCode() {
         String result = "";
         try {

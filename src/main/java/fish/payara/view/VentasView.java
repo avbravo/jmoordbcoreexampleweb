@@ -2,64 +2,77 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fish.payara.controller;
+package fish.payara.view;
 
-/**
- *
- * @author avbravo
- */
-import fish.payara.dashboard.MenuSideBar;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
-import com.jmoordb.core.ui.table.CustomTable;
 import com.jmoordb.core.ui.graph.MapComponent;
-import com.jmoordb.core.ui.menu.MenuLink;
+import com.jmoordb.core.ui.jettra.JettraView;
+import com.jmoordb.core.ui.model.WebModelSession;
 import com.jmoordb.core.ui.panel.Panel;
+import com.jmoordb.core.ui.table.CustomTable;
 import com.jmoordb.core.ui.table.PaginatedTable;
 import com.jmoordb.core.ui.table.TableBasic;
+import fish.payara.config.ConfigurationProperties;
 import fish.payara.controller.table.TableDataClienteConverter;
 import fish.payara.controller.table.TableDataProductoConverter;
+import fish.payara.dashboard.MenuSideBar;
 import fish.payara.graph.ProductSalesChart;
 import fish.payara.model.Cliente;
 import fish.payara.model.Producto;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
-import java.io.IOException;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.Path;
+import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = "/reports/sales")
-public class ReporteVentasController extends HttpServlet {
+/*
+ * @author avbravo
+ */
+@Path("ventas-view") // ⭐ Define la URL final: /api/profile-view
+@RequestScoped
+public class VentasView extends JettraView {
 
+    // <editor-fold defaultstate="collapsed" desc="attributes()">
+    WebModelSession webModelSession = new WebModelSession();
+    List<Tag> headers = new ArrayList<>();
+    @Inject
+    ConfigurationProperties configurationProperties;
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String init()">
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected String init() {
 
-        HttpSession session = request.getSession(false);
-        // 1. Validar Sesión
-        if (session == null || session.getAttribute("username") == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
+        webModelSession = webModelOfSession(request);
 
-        String username = (String) session.getAttribute("username");
-
-        // ⭐ SIMULACIÓN DE ROL
-        String userRol = (String) session.getAttribute("userRol");
-        if (userRol == null) {
-            userRol = "ADMIN"; // Asumimos un rol que tenga permiso para reportes
-        }
-        // 2. Definición del Menú y Marcado Activo
-        Map<String, List<MenuLink>> sidebarSections = MenuSideBar.getSidebarSections(
-                "SalesReportsController", // Nombre de la clase del controlador (para marcar activo)
-                username,
-                userRol
+        return DashboardLayout.buildPage(
+                request,
+                webModelSession.getUsername(),
+                content(request),
+                MenuSideBar.getSidebarSections(
+                        this.getClass().getSimpleName(),
+                        webModelSession
+                ),
+                "Ventas View",
+                configurationProperties.getDashboardFooterText() + " | " + webModelSession.getUserRol(),
+                headers
         );
 
-        response.setContentType("text/html;charset=UTF-8");
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="WebComponent content(HttpServletRequest request)">
 
-        // 3. CONSTRUCCIÓN DEL CONTENIDO PRINCIPAL (Diseño de Reporte en GRID)
-        // 1. Creación de datos de Productos (SIMULADOS)
+    @Override
+    public WebComponent content(HttpServletRequest request) {
+        WebComponent mainContent = null;
+        try {
+
+ // 1. Creación de datos de Productos (SIMULADOS)
         List<Producto> productosVendidos = List.of(
                 new Producto("P001", "Laptop Pro", 1200.00, 45),
                 new Producto("P002", "Monitor 27", 350.00, 90),
@@ -195,22 +208,59 @@ public class ReporteVentasController extends HttpServlet {
          * Contenedor Completo
          */
         // Contenedor principal que une las dos filas
-        WebComponent mainContent = new Tag("div")
+        WebComponent centralContent = new Tag("div")
                 .withChild(new Tag("h2").withText("Sales Report"))
                 .withChild(row1)
                 .withChild(row2)
                 .withChild(row3);
 
-        // 4. RENDERIZADO FINAL
-        String htmlCompleto = DashboardLayout.buildPage(
-                request,
-                username,
-                mainContent,
-                sidebarSections,
-                "Sales Report",
-                "© 2024 Modern Dashboard Framework."
-        );
-
-        response.getWriter().write(htmlCompleto);
+            mainContent = new Panel("Ventas", centralContent, request);
+        } catch (Exception e) {
+            System.out.println("\t content() " + e.getLocalizedMessage());
+        }
+        return mainContent;
     }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="String javaScriptCode()">
+    @Override
+    public String javaScriptCode() {
+        String result = "";
+        try {
+            result = """
+                     const btn = document.getElementById("btnFetch");
+                     const div = document.getElementById("divCaracteres");
+                     btn.addEventListener('click',() => {
+                           console.log('Fetch API');
+                          fetch('https://rickandmortyapi.com/api/character')
+                              .then((response) => response.json())
+                              .then((data) => renderCaracteres(data));
+                     });
+                     
+                     
+                     function renderCaracteres(data) { // Cambié 'caracteres' por 'data' para mayor claridad.
+                         // **AQUÍ ESTÁ LA CORRECCIÓN CLAVE:**
+                     console.log(data);
+                         // Acceder a la propiedad 'results' del objeto de respuesta de la API.
+                         const characters = data.results; 
+                         
+                         // Verifica que 'characters' sea un array antes de iterar
+                         if (Array.isArray(characters)) {
+                             characters.forEach(ch => {
+                                 // **CORRECCIÓN DE SINTAXIS:** Usar backticks (`) para el template literal
+                                 // y `${...}` para incrustar la variable.
+                                 div.innerHTML += `<img src="${ch.image}">`; 
+                             });
+                         } else {
+                             console.error("Error: 'results' no es un array o no existe en la respuesta de la API.");
+                         }
+                      }                    
+                     """;
+        } catch (Exception e) {
+            System.out.println("\t content() " + e.getLocalizedMessage());
+        }
+        return result;
+    }
+// </editor-fold>
+
 }

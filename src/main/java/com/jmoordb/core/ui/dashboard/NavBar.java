@@ -61,7 +61,7 @@ public class NavBar implements WebComponent {
         // Marca/Logo
         String brandClass = isTailwind ? "text-xl font-bold hover:text-white" : "navbar-brand";
         containerFluid.withChild(new Tag("a").withClass(brandClass)
-                .withAttribute("href", contextPath + "/dashboard")
+                .withAttribute("href", contextPath + "/api/dashboard")
                 .withText("Dashboard Central"));
 
         // Contenedor de la derecha

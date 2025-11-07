@@ -8,15 +8,12 @@ package com.jmoordb.core.ui.dashboard;
  *
  * @author avbravo
  */
-
-
-
-
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class Footer implements WebComponent {
+
     private final String text;
     private final HttpServletRequest request;
 
@@ -35,9 +32,9 @@ public class Footer implements WebComponent {
         String pClass = isTailwind ? "text-center mb-0 text-sm" : "text-center mb-0";
 
         return new Tag("footer").withClass("footer py-3 mt-4")
-            .withChild(new Tag("div").withClass(containerClass)
-                .withChild(new Tag("p").withClass(pClass)
-                    .withText(text)))
-            .render();
+                .withChild(new Tag("div").withClass(containerClass)
+                        .withChild(new Tag("p").withClass(pClass)
+                                .withText(text)))
+                .render();
     }
 }

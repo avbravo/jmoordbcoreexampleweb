@@ -4,10 +4,11 @@
  */
 package fish.payara.view;
 
-import com.jmoordb.core.ui.A;
+import com.jmoordb.core.ui.Button;
+import com.jmoordb.core.ui.ButtonType;
 import com.jmoordb.core.ui.Div;
 import com.jmoordb.core.ui.Form;
-import com.jmoordb.core.ui.Image;
+import com.jmoordb.core.ui.Script;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
@@ -27,9 +28,9 @@ import java.util.List;
 /*
  * @author avbravo
  */
-@Path("image-view") // ⭐ Define la URL final: /api/profile-view
+@Path("profile-view") // ⭐ Define la URL final: /api/profile-view
 @RequestScoped
-public class ImageView extends JettraView {
+public class ProfileView extends JettraView {
 
     // <editor-fold defaultstate="collapsed" desc="attributes()">
     WebModelSession webModelSession = new WebModelSession();
@@ -50,9 +51,9 @@ public class ImageView extends JettraView {
                 content(request),
                 MenuSideBar.getSidebarSections(
                         this.getClass().getSimpleName(),
-                       webModelSession
+                        webModelSession
                 ),
-                "Image View",
+                "Profile View",
                 configurationProperties.getDashboardFooterText() + " | " + webModelSession.getUserRol(),
                 headers
         );
@@ -65,25 +66,30 @@ public class ImageView extends JettraView {
     public WebComponent content(HttpServletRequest request) {
         WebComponent mainContent = null;
         try {
-            Form formContent = new Form();
-            formContent.add(
-                    new Div().withClass("space-y-12")
-                            .add(
-                                    new A().href("login").text("Image as a Link")
-                                            .add(
-                                                    new Image().src("https://www.w3schools.com/images/w3schools_green.jpg")
-                                                            .alt("HTML Tutorial")
-                                                            .style("width:42px;height:42px;")
-                                            )
-                            )
-            );
 
-            WebComponent webContent
-                    = new Div().withClass("p-8 min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900")
-                            .withClass(webModelSession.getIsTailwind() ? "space-y-4" : "") // Añadir espaciado de Tailwind
-                            .add(formContent);
+//            String cssFramework = (String) request.getSession().getAttribute("cssFramework");
+            String cssFramework =webModelSession.getCssFramework();
+            boolean isTailwind = "tailwind".equals(cssFramework);
 
-            mainContent = new Panel("Image View", webContent, request);
+            // ⭐ 2. Definir Clases CSS Condicionales
+            String primaryBtnClass = isTailwind
+                    ? "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-md transition duration-150"
+                    : "btn btn-primary";
+
+            String secondaryBtnClass = isTailwind
+                    ? "bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-4 rounded shadow-md ml-2 transition duration-150"
+                    : "btn btn-secondary ms-2";
+
+            WebComponent profileContent = new Tag("div")
+                    .withClass(isTailwind ? "space-y-4" : "") // Añadir espaciado de Tailwind
+                    .withChild(new Tag("p").withText("Username: " + webModelSession.getUsername()))
+                    .withChild(new Tag("p").withText("Email: " + webModelSession.getUsername().toLowerCase() + "@example.com"))
+                    .withChild(new Tag("p").withText("Role: Administrator"))
+                    .withChild(new Tag("hr").withClass(isTailwind ? "my-4 border-gray-300 dark:border-gray-600" : ""))
+                    .withChild(new Tag("button").withClass(primaryBtnClass).withText("Edit Profile"))
+                    .withChild(new Tag("button").withClass(secondaryBtnClass).withText("Change Password"));
+
+            mainContent = new Panel("Profile", profileContent, request);
         } catch (Exception e) {
             System.out.println("\t content() " + e.getLocalizedMessage());
         }
@@ -92,6 +98,7 @@ public class ImageView extends JettraView {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="String javaScriptCode()">
+    @Override
     public String javaScriptCode() {
         String result = "";
         try {

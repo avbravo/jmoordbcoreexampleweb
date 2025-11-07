@@ -4,13 +4,16 @@
  */
 package fish.payara.view;
 
-import com.jmoordb.core.ui.A;
+import com.jmoordb.core.ui.Button;
+import com.jmoordb.core.ui.ButtonType;
 import com.jmoordb.core.ui.Div;
 import com.jmoordb.core.ui.Form;
-import com.jmoordb.core.ui.Image;
+import com.jmoordb.core.ui.Script;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
+import com.jmoordb.core.ui.grid.CardGrid;
+import com.jmoordb.core.ui.grid.GridItem;
 import com.jmoordb.core.ui.jettra.JettraView;
 import com.jmoordb.core.ui.model.WebModelSession;
 import com.jmoordb.core.ui.panel.Panel;
@@ -27,9 +30,9 @@ import java.util.List;
 /*
  * @author avbravo
  */
-@Path("image-view") // ⭐ Define la URL final: /api/profile-view
+@Path("dashboard") // ⭐ Define la URL final: /api/profile-view
 @RequestScoped
-public class ImageView extends JettraView {
+public class DashboardView extends JettraView {
 
     // <editor-fold defaultstate="collapsed" desc="attributes()">
     WebModelSession webModelSession = new WebModelSession();
@@ -50,9 +53,9 @@ public class ImageView extends JettraView {
                 content(request),
                 MenuSideBar.getSidebarSections(
                         this.getClass().getSimpleName(),
-                       webModelSession
+                      webModelSession
                 ),
-                "Image View",
+                "Dashboard View",
                 configurationProperties.getDashboardFooterText() + " | " + webModelSession.getUserRol(),
                 headers
         );
@@ -65,25 +68,44 @@ public class ImageView extends JettraView {
     public WebComponent content(HttpServletRequest request) {
         WebComponent mainContent = null;
         try {
-            Form formContent = new Form();
-            formContent.add(
-                    new Div().withClass("space-y-12")
-                            .add(
-                                    new A().href("login").text("Image as a Link")
-                                            .add(
-                                                    new Image().src("https://www.w3schools.com/images/w3schools_green.jpg")
-                                                            .alt("HTML Tutorial")
-                                                            .style("width:42px;height:42px;")
-                                            )
-                            )
+
+             List<String[]> tableData = List.of(
+            new String[]{"John Doe", "Sales", "32"},
+            new String[]{"Jane Smith", "Marketing", "28"}
+        );
+
+        // ⭐ 3. CONSTRUCCIÓN DEL CONTENIDO PRINCIPAL (ESPECÍFICO DEL DASHBOARD)
+        
+        // 3.1. Tabla
+        String tableClasses = "table " + ("tailwind".equals(webModelSession.getCssFramework()) ? "w-full text-left" : "table-striped");
+        WebComponent table = new Tag("table").withClass(tableClasses)
+            .withChild(new Tag("thead").withChild(new Tag("tr")
+                .withChild(new Tag("th").withText("Name"))
+                .withChild(new Tag("th").withText("Department"))
+                .withChild(new Tag("th").withText("Age"))))
+            .withChild(new Tag("tbody")
+                .withChild(new Tag("tr").withChild(new Tag("td").withText(tableData.get(0)[0])).withChild(new Tag("td").withText(tableData.get(0)[1])).withChild(new Tag("td").withText(tableData.get(0)[2])))
+                .withChild(new Tag("tr").withChild(new Tag("td").withText(tableData.get(1)[0])).withChild(new Tag("td").withText(tableData.get(1)[1])).withChild(new Tag("td").withText(tableData.get(1)[2])))
             );
+            
+        // 3.2. Grid de Tarjetas
+        WebComponent grid = new CardGrid(List.of(
+            new GridItem("Users", "1,250", "fas fa-users", request),
+            new GridItem("Revenue", "$5,500", "fas fa-dollar-sign", request),
+            new GridItem("Orders", "532", "fas fa-shopping-cart", request),
+            new GridItem("Tickets", "12", "fas fa-ticket-alt", request)
+        ), 4, request);
+        
+        // 3.3. Contenido del Panel (Contenido Principal)
+        WebComponent mainPanelContent = new Tag("div")
+            .withChild(grid)
+            .withChild(new Tag("h4").withClass("mt-5").withText("Recent Activity"))
+            .withChild(table);
 
-            WebComponent webContent
-                    = new Div().withClass("p-8 min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900")
-                            .withClass(webModelSession.getIsTailwind() ? "space-y-4" : "") // Añadir espaciado de Tailwind
-                            .add(formContent);
+        // 3.4. Panel (Contenedor del contenido específico)
+   
 
-            mainContent = new Panel("Image View", webContent, request);
+            mainContent = new Panel("Dashboard", mainPanelContent, request);
         } catch (Exception e) {
             System.out.println("\t content() " + e.getLocalizedMessage());
         }
@@ -92,6 +114,7 @@ public class ImageView extends JettraView {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="String javaScriptCode()">
+    @Override
     public String javaScriptCode() {
         String result = "";
         try {
