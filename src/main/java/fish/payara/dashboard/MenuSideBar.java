@@ -8,10 +8,18 @@ package fish.payara.dashboard;
  *
  * @author avbravo
  */
+import com.jmoordb.core.ui.icon.FlowbiteIconSvg;
+import com.jmoordb.core.ui.icon.FontAwesomeIcon;
+import com.jmoordb.core.ui.jettra.JettraView;
 import com.jmoordb.core.ui.menu.MenuLink;
 import com.jmoordb.core.ui.menu.MenuUIUtil;
+import fish.payara.controller.ClienteController;
+import fish.payara.controller.DashboardController;
+import fish.payara.controller.ProfileController;
 import fish.payara.view.AnalisisView;
+import fish.payara.view.FetchView;
 import fish.payara.view.ImageView;
+import fish.payara.view.ModalView;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,6 +37,7 @@ public class MenuSideBar extends MenuUIUtil{
      * aunque no se usa aquí).
      * @param rol Rol del usuario logeado (ej. "ADMIN", "USER", "GUEST").
      * @return Mapa de secciones y listas de enlaces del menú.
+     * https://flowbite.com/icons/
      */
     public static Map<String, List<MenuLink>> getSidebarSections(
             String currentController,
@@ -44,12 +53,12 @@ public class MenuSideBar extends MenuUIUtil{
         List<MenuLink> mainLinks = new ArrayList<>();
 
         // 1. Dashboard (Disponible para todos)
-        boolean isDashboardActive = currentController.equals("DashboardController");
-        mainLinks.add(new MenuLink("Dashboard", "/dashboard", isDashboardActive, "fas fa-tachometer-alt"));
+      
+        mainLinks.add(new MenuLink("Dashboard", "/dashboard", isActive(currentController,DashboardController.class), FontAwesomeIcon.FA_S_TACHOMETER_ALT));
 
         // 2. Perfil (Disponible para todos)
-        boolean isProfileActive = currentController.equals("ProfileController");
-        mainLinks.add(new MenuLink("Perfil", "/profile", isProfileActive, "fas fa-user-circle"));
+       
+        mainLinks.add(new MenuLink("Perfil", "/profile",isActive(currentController,ProfileController.class),FontAwesomeIcon.FA_S_USER_CIRCLE));
 
         sections.put("MAIN NAVIGATION", mainLinks);
 
@@ -59,12 +68,14 @@ public class MenuSideBar extends MenuUIUtil{
         if (rol.equals("ADMIN") || rol.equals("SUPERVISOR")) {
             List<MenuLink> adminLinks = new ArrayList<>();
             // 1. Usuarios
-            boolean isUsersActive = currentController.equals("UsersController");
-            adminLinks.add(new MenuLink("Usuarios", "/admin/users", isUsersActive, "fas fa-users-cog"));
+          
+            adminLinks.add(new MenuLink("Usuarios", "/admin/users", isActive(currentController,ClienteController.class), FontAwesomeIcon.FA_S_USERS_COG));
 
             // 2. Configuración
-            boolean isSettingsActive = currentController.equals("SettingsController");
-            adminLinks.add(new MenuLink("Configuración", "/admin/settings", isSettingsActive, "fas fa-cogs"));
+
+            adminLinks.add(new MenuLink("Configuración", "/admin/settings", isActive(currentController,ClienteController.class),FontAwesomeIcon.FA_S_USERS_COG));
+         //   adminLinks.add(new MenuLink("Configuración", "/admin/settings", isActive(currentController,ClienteController.class),FlowbiteIconSvg.ADD_COLUMN_AFTER_OUTLINE));
+
 
             sections.put("MANAGEMENT", adminLinks);
         }
@@ -77,32 +88,34 @@ public class MenuSideBar extends MenuUIUtil{
 
             // 1. Ventas
        
-            reportLinks.add(new MenuLink("Ventas", "/reports/sales", currentController.equals("SalesReportsController"), "fas fa-chart-line"));
+//            reportLinks.add(new MenuLink("Ventas", "/reports/sales", isActive(currentController,ClienteController.class), "fas fa-chart-line"));
+            reportLinks.add(new MenuLink("Ventas", "/reports/sales", isActive(currentController,ClienteController.class),FontAwesomeIcon.FA_S_CHART_LINE));
 
             // 2. Inventario
 
-            reportLinks.add(new MenuLink("Inventario", "/reports/inventory", currentController.equals("InventoryReportsController"), "fas fa-warehouse"));
+//            reportLinks.add(new MenuLink("Inventario", "/reports/inventory",  isActive(currentController,ClienteController.class), "fas fa-warehouse"));
+            reportLinks.add(new MenuLink("Inventario", "/reports/inventory",  isActive(currentController,ClienteController.class), FontAwesomeIcon.FA_S_WAREHOUSE));
             // 3. Clientes
 
          
-            reportLinks.add(new MenuLink("Cliente", "/clientes", currentController.equals("ClienteController"), "fas fa-solid fa-person"));
+            reportLinks.add(new MenuLink("Cliente", "/clientes",isActive(currentController,ClienteController.class),FontAwesomeIcon.FA_S_PERSON));
 
         
      
   
 
-            reportLinks.add(new MenuLink("JettraView", "/api/jettra-view",currentController.equals("JettraView"), "fas fa-solid fa-plug"));
+            reportLinks.add(new MenuLink("JettraView", "/api/jettra-view",isActive(currentController,JettraView.class), FontAwesomeIcon.FA_S_PLUG));
 
-            reportLinks.add(new MenuLink("Fetch View", "/api/fetch-view", currentController.equals("FetchView"), "fas fa-solid fa-plug"));
+            reportLinks.add(new MenuLink("Fetch View", "/api/fetch-view", isActive(currentController,FetchView.class), FontAwesomeIcon.FA_S_PLUG));
             
             
 
-            reportLinks.add(new MenuLink("Modal View", "/api/modal-view", currentController.equals("ModalView"), "fas fa-solid fa-window-restore"));
+            reportLinks.add(new MenuLink("Modal View", "/api/modal-view", isActive(currentController,ModalView.class), FontAwesomeIcon.FA_S_WINDOW_RESTORE));
          
-            reportLinks.add(new MenuLink("Analisis View", "/api/analisis-view", isActive(currentController,AnalisisView.class), "fas fa-solid fa-plug"));
+            reportLinks.add(new MenuLink("Analisis View", "/api/analisis-view", isActive(currentController,AnalisisView.class),  FontAwesomeIcon.FA_S_PLUG));
             
           
-            reportLinks.add(new MenuLink("Image View", "/api/image-view", isActive(currentController,ImageView.class), "fas fa-image"));
+            reportLinks.add(new MenuLink("Image View", "/api/image-view", isActive(currentController,ImageView.class),  FontAwesomeIcon.FA_S_IMAGE));
  
 
             sections.put("REPORTES", reportLinks);
