@@ -1,7 +1,7 @@
 package com.jmoordb.core.ui.alert; // ⭐ Paquete reutilizable
 
 import com.jmoordb.core.ui.Button;
-import com.jmoordb.core.ui.Div;
+import com.jmoordb.core.ui.div.Div;
 import com.jmoordb.core.ui.P;
 import com.jmoordb.core.ui.WebComponent;
 

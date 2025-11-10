@@ -87,7 +87,35 @@ public class Button extends Tag {
         withAttribute("aria-label",aria_label);
         return this;
     }
+    public Button hx_post(String hx_post) {
+        withAttribute("hx-post",hx_post);
+        return this;
+    }
+    public Button hx_target(String hx_target) {
+        withAttribute("hx-target",hx_target);
+        return this;
+    }
+      
+    public Button hx_swap(String hx_swap) {
+        withAttribute("hx-swap",hx_swap);
+        return this;
+    }
+    public Button hx_include(String hx_include) {
+        withAttribute("hx-include",hx_include);
+        return this;
+    }
+    public Button hx_indicator(String hx_indicator) {
+        withAttribute("hx-indicator",hx_indicator);
+        return this;
+    }
+    
+  public Button add(WebComponent webComponent) {
+     if (webComponent!= null) {
+         withChild(webComponent);
+        }
 
+        return this;
+    }
     public Tag build() {
         return this;
     }

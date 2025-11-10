@@ -10,7 +10,7 @@ package com.jmoordb.core.ui.login;
  */
 import com.jmoordb.core.ui.A;
 import com.jmoordb.core.ui.Body;
-import com.jmoordb.core.ui.Div;
+import com.jmoordb.core.ui.div.Div;
 import com.jmoordb.core.ui.input.InputPassword;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Option;

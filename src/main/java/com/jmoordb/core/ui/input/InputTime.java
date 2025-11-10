@@ -25,6 +25,20 @@ public class InputTime extends Tag {
         withAttribute("type", "time");
 
     }
+    
+     public InputTime(String id, String name, String styleClass) {
+
+        super("input");
+ withAttribute("type", "time");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
 
     public InputTime text(String text) {
         withText(text);

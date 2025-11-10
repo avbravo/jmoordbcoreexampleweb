@@ -23,6 +23,35 @@ public class Label extends Tag {
         super("label");
 
     }
+    public Label(String text) {
+
+        super("label");
+        withText(text);
+    }
+    public Label(String text,String styleClass) {
+
+        super("label");
+        withText(text);
+        withClass(styleClass);
+        
+    }
+    public Label(String text,String styleClass,String forField) {
+
+        super("label");
+        withText(text);
+        if(styleClass == null || styleClass.equals("")){
+            
+        }else{
+              withClass(styleClass);
+        }
+        if(forField == null || forField.equals("")){
+            
+        }else{
+               withAttribute("for", forField);
+        }
+      
+       
+    }
 
    
     

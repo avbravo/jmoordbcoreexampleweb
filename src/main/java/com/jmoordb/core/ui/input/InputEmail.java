@@ -25,6 +25,20 @@ public class InputEmail extends Tag {
         withAttribute("type", "email");
 
     }
+    
+         public InputEmail(String id, String name, String styleClass) {
+
+        super("input");
+      withAttribute("type", "email");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
 
     public InputEmail text(String text) {
         withText(text);

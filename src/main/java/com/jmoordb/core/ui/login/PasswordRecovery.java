@@ -12,7 +12,7 @@ import com.jmoordb.core.ui.A;
 import com.jmoordb.core.ui.Body;
 import com.jmoordb.core.ui.Button;
 import com.jmoordb.core.ui.ButtonType;
-import com.jmoordb.core.ui.Div;
+import com.jmoordb.core.ui.div.Div;
 import com.jmoordb.core.ui.Form;
 import com.jmoordb.core.ui.headings.H3;
 import com.jmoordb.core.ui.Head;

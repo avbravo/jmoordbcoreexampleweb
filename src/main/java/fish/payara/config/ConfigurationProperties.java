@@ -19,6 +19,14 @@ public class ConfigurationProperties {
 
     // <editor-fold defaultstate="collapsed" desc="Inject">
     //Login
+//    @Inject
+//    @ConfigProperty(name = "application.name")
+//    private String applicationName;
+//    @Inject
+//    @ConfigProperty(name = "application.version")
+//    private String applicationVersion;
+
+    
     @Inject
     @ConfigProperty(name = "login.style")
     private String loginStyle;
@@ -57,6 +65,8 @@ public class ConfigurationProperties {
      * CSS y JS
      *
      */
+    
+
     @Inject
     @ConfigProperty(name = "flowbite.min.js")
     private String flowbiteMinJs;
@@ -122,6 +132,22 @@ public class ConfigurationProperties {
     }
 
     // <editor-fold defaultstate="collapsed" desc="get">
+
+//    public String getApplicationName() {
+//        return applicationName;
+//    }
+//
+//    public String getApplicationVersion() {
+//        return applicationVersion;
+//    }
+
+
+  
+    
+    
+    
+    
+    
 
     public String getJavaSystemGetProperty() {
         return javaSystemGetProperty;

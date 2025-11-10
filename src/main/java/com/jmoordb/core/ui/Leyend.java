@@ -2,19 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.jmoordb.core.ui.headings;
+package com.jmoordb.core.ui;
 
-import com.jmoordb.core.ui.div.Div;
-import com.jmoordb.core.ui.Form;
+import com.jmoordb.core.ui.input.*;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.WebComponent;
 
 /**
  *
  * @author avbravo
  */
-public class H1 extends Tag {
+public class Leyend extends Tag {
 
     /**
      * Color red, blue
@@ -22,27 +20,23 @@ public class H1 extends Tag {
      * @param tagName
      * @param color
      */
-    public H1() {
+    public Leyend() {
 
-        super("h1");
+        super("leyend");
 
     }
-
-    
-    public H1 addClass(String styleClass) {
-
-        withClass(styleClass);
-        return this;
-    }
-    public H1 text(String text) {
+       public Leyend text(String text) {
         withText(text);
         return this;
     }
-    public H1 style(String style) {
-         withAttribute("style", style);
+   public Leyend add(WebComponent webComponent) {
+     if (webComponent!= null) {
+         withChild(webComponent);
+        }
 
         return this;
     }
+
    
     public Tag build() {
         return this;

@@ -14,7 +14,10 @@ import com.jmoordb.core.ui.menu.MenuLink;
 import com.jmoordb.core.ui.menu.MenuUIUtil;
 import com.jmoordb.core.ui.model.WebModelSession;
 import fish.payara.controller.ClienteController;
-import fish.payara.controller.DashboardController;
+import fish.payara.view.AnalisisFlowBiteView;
+import fish.payara.view.AnalisisView;
+import fish.payara.view.PersonaView;
+import fish.payara.view.DashboardView;
 import fish.payara.view.FetchView;
 import fish.payara.view.ImageView;
 import fish.payara.view.ModalView;
@@ -59,7 +62,7 @@ public class MenuSideBar extends MenuUIUtil{
 
         // 1. Dashboard (Disponible para todos)
       
-        mainLinks.add(new MenuLink("Dashboard", "/api/dashboard", isActive(currentController,DashboardController.class), FontAwesomeIcon.FA_S_TACHOMETER_ALT));
+        mainLinks.add(new MenuLink("Dashboard", "/api/dashboard", isActive(currentController,DashboardView.class), FontAwesomeIcon.FA_S_TACHOMETER_ALT));
 
         // 2. Perfil (Disponible para todos)
        
@@ -105,6 +108,7 @@ public class MenuSideBar extends MenuUIUtil{
 
          
             reportLinks.add(new MenuLink("Cliente", "/clientes",isActive(currentController,ClienteController.class),FontAwesomeIcon.FA_S_PERSON));
+            reportLinks.add(new MenuLink("Persona View", "/api/persona-view",isActive(currentController,PersonaView.class),FontAwesomeIcon.FA_S_PERSON));
 
         
      
@@ -127,6 +131,22 @@ public class MenuSideBar extends MenuUIUtil{
 
             sections.put("REPORTES", reportLinks);
         }
+        
+           // =========================================================
+        // B. SECCIÓN: GESTIÓN (Solo visible para ADMIN)
+        // =========================================================
+        if (rol.equals("ADMIN") || rol.equals("SUPERVISOR")) {
+            List<MenuLink> microdeteccionLinks = new ArrayList<>();
+            // 1. Usuarios
+          
+            microdeteccionLinks.add(new MenuLink("Analisis", "/api/analisis-view", isActive(currentController,AnalisisView.class), FontAwesomeIcon.FA_S_GEM));
+            microdeteccionLinks.add(new MenuLink("Analisis FlowBite", "/api/analisisflowbite-view", isActive(currentController,AnalisisFlowBiteView.class), FontAwesomeIcon.FA_S_GEM));
+
+           
+
+            sections.put("Microdeteccion", microdeteccionLinks);
+        }
+
 
         return sections;
     }

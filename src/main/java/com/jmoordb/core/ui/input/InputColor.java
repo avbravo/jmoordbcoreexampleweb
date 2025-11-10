@@ -25,6 +25,20 @@ public class InputColor extends Tag {
         withAttribute("type", "color");
 
     }
+    
+     public InputColor(String id, String name, String styleClass) {
+
+        super("input");
+       withAttribute("type", "color");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
 
     public InputColor text(String text) {
         withText(text);

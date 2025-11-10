@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.jmoordb.core.ui;
+package com.jmoordb.core.ui.div;
 
 import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.WebComponent;
 
 /**
  *
@@ -21,6 +23,12 @@ public class Div extends Tag {
     public Div() {
 
         super("div");
+
+    }
+    public Div(String styleClass) {
+
+        super("div");
+        withClass(styleClass);
 
     }
 

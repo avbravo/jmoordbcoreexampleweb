@@ -26,6 +26,20 @@ public class InputPassword extends Tag {
 
     }
 
+      public InputPassword(String id, String name, String styleClass) {
+
+        super("input");
+         withAttribute("type", "password");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
+      
     public InputPassword text(String text) {
         withText(text);
         return this;

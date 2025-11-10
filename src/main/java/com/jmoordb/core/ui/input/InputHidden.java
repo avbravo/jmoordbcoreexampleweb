@@ -26,6 +26,20 @@ public class InputHidden extends Tag {
 
     }
 
+    public InputHidden(String id, String name, String styleClass) {
+
+        super("input");
+        withAttribute("type", "hidden");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
+
     public InputHidden text(String text) {
         withText(text);
         return this;
@@ -35,18 +49,16 @@ public class InputHidden extends Tag {
         withAttribute("id", id);
         return this;
     }
-    
-        public InputHidden name(String name) {
+
+    public InputHidden name(String name) {
         withAttribute("name", name);
         return this;
     }
 
-     public InputHidden addClass(String withClass) {
-      withClass(withClass);
+    public InputHidden addClass(String withClass) {
+        withClass(withClass);
         return this;
     }
-
-
 
     public InputHidden value(String value) {
         withAttribute("value", value);

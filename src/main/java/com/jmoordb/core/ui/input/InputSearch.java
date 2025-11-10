@@ -11,7 +11,7 @@ import com.jmoordb.core.ui.Tag;
  *
  * @author avbravo
  */
-public class InputRadio extends Tag {
+public class InputSearch extends Tag {
 
     /**
      * Color red, blue
@@ -19,17 +19,16 @@ public class InputRadio extends Tag {
      * @param tagName
      * @param color
      */
-    public InputRadio() {
+    public InputSearch() {
 
         super("input");
-        withAttribute("type", "radio");
+        withAttribute("type", "search");
 
     }
-
-     public InputRadio(String id, String name, String styleClass) {
+ public InputSearch(String id, String name, String styleClass) {
 
         super("input");
-   withAttribute("type", "radio");
+ withAttribute("type", "search");
         withAttribute("id", id);
         withAttribute("name", name);
         if (styleClass == null || styleClass.equals("")) {
@@ -39,43 +38,47 @@ public class InputRadio extends Tag {
         }
 
     }
-    
-    public InputRadio text(String text) {
+    public InputSearch text(String text) {
         withText(text);
         return this;
     }
 
-    public InputRadio id(String id) {
+    public InputSearch id(String id) {
         withAttribute("id", id);
         return this;
     }
     
-        public InputRadio name(String name) {
+        public InputSearch name(String name) {
         withAttribute("name", name);
         return this;
     }
+        public InputSearch onkeyup(String onkeyup) {
+        withAttribute("onkeyup", onkeyup);
+        return this;
+    }
 
-     public InputRadio addClass(String withClass) {
+     public InputSearch addClass(String withClass) {
       withClass(withClass);
         return this;
     }
-    public InputRadio placeholder(String placeholder) {
+
+
+
+    public InputSearch value(String value) {
+        withAttribute("value", value);
+        return this;
+    }
+    public InputSearch placeholder(String placeholder) {
         withAttribute("placeholder", placeholder);
         return this;
     }
 
-
-    public InputRadio value(String value) {
-        withAttribute("value", value);
-        return this;
-    }
-
-    public InputRadio step(String step) {
+    public InputSearch step(String step) {
         withAttribute("step", step);
         return this;
     }
 
-    public InputRadio readonly(Boolean readonly) {
+    public InputSearch readonly(Boolean readonly) {
         if (readonly) {
             withAttribute("readonly", "");
         }
@@ -83,7 +86,7 @@ public class InputRadio extends Tag {
         return this;
     }
 
-    public InputRadio required(Boolean required) {
+    public InputSearch required(Boolean required) {
         if (required) {
             withAttribute("required", "true");
         }

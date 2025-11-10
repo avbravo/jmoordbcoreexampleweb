@@ -26,6 +26,19 @@ public class InputText extends Tag {
 
     }
 
+    public InputText(String id, String name, String styleClass) {
+
+        super("input");
+   withAttribute("type", "text");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
     public InputText text(String text) {
         withText(text);
         return this;

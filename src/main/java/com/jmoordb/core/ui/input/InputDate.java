@@ -26,6 +26,20 @@ public class InputDate extends Tag {
 
     }
 
+    public InputDate(String id, String name, String styleClass) {
+
+        super("input");
+        withAttribute("type", "date");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
+
     public InputDate text(String text) {
         withText(text);
         return this;
@@ -35,22 +49,21 @@ public class InputDate extends Tag {
         withAttribute("id", id);
         return this;
     }
-    
-        public InputDate placeholder(String placeholder) {
+
+    public InputDate placeholder(String placeholder) {
         withAttribute("placeholder", placeholder);
         return this;
     }
-        public InputDate name(String name) {
+
+    public InputDate name(String name) {
         withAttribute("name", name);
         return this;
     }
 
-     public InputDate addClass(String withClass) {
-      withClass(withClass);
+    public InputDate addClass(String withClass) {
+        withClass(withClass);
         return this;
     }
-
-
 
     public InputDate value(String value) {
         withAttribute("value", value);

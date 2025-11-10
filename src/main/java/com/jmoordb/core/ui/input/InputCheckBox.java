@@ -25,8 +25,22 @@ public class InputCheckBox extends Tag {
         withAttribute("type", "checkbox");
 
     }
-    
-        public InputCheckBox placeholder(String placeholder) {
+
+    public InputCheckBox(String id, String name, String styleClass) {
+
+        super("input");
+        withAttribute("type", "checkbox");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
+
+    public InputCheckBox placeholder(String placeholder) {
         withAttribute("placeholder", placeholder);
         return this;
     }
@@ -40,17 +54,16 @@ public class InputCheckBox extends Tag {
         withAttribute("id", id);
         return this;
     }
-    
-        public InputCheckBox name(String name) {
+
+    public InputCheckBox name(String name) {
         withAttribute("name", name);
         return this;
     }
 
-     public InputCheckBox addClass(String withClass) {
-      withClass(withClass);
+    public InputCheckBox addClass(String withClass) {
+        withClass(withClass);
         return this;
     }
-
 
     public InputCheckBox value(String value) {
         withAttribute("value", value);

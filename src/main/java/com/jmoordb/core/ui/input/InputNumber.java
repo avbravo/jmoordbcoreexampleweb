@@ -25,6 +25,20 @@ public class InputNumber extends Tag {
         withAttribute("type", "number");
 
     }
+    
+     public InputNumber(String id, String name, String styleClass) {
+
+        super("input");
+        withAttribute("type", "number");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
 
     public InputNumber text(String text) {
         withText(text);

@@ -10,7 +10,7 @@ import com.jmoordb.core.ui.Tag;
  *
  * @author avbravo
  */
-public class Span extends Tag {
+public class InputGroup extends Tag {
 
     /**
      * Color red, blue
@@ -18,46 +18,45 @@ public class Span extends Tag {
      * @param tagName
      * @param color
      */
-    public Span() {
+    public InputGroup(String label, String Text, String id, String name,TypeInput typeInput) {
 
-        super("span");
+        super("div");
 
     }
-    public Span(String styleClass) {
 
-        super("span");
-   withClass(styleClass);
+    public InputGroup addClass(String styleClass) {
+
+        withClass(styleClass);
+        return this;
     }
 
-   
-    
-
-    public Span text(String text) {
+    public InputGroup text(String text) {
         withText(text);
         return this;
     }
-  public Span addClass(String styleClass) {
-      withClass(styleClass);
-        return this;
-    }
 
-
-    public Span forField(String field) {
-        withAttribute("for", field);
-        return this;
-    }
-    public Span id(String id) {
+    public InputGroup id(String id) {
         withAttribute("id", id);
         return this;
     }
-   
- public Span add(WebComponent webComponent) {
+
+    public InputGroup name(String name) {
+        withAttribute("name", name);
+        return this;
+    }
+    public InputGroup attribute(String name, String value) {
+        withAttribute(name, value);
+        return this;
+    }
+
+    public InputGroup add(WebComponent webComponent) {
         if (webComponent != null) {
             withChild(webComponent);
         }
 
         return this;
     }
+
     public Tag build() {
         return this;
     }

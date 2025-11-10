@@ -7,7 +7,7 @@ package com.jmoordb.core.ui.alert;
 import com.jmoordb.core.ui.A;
 import com.jmoordb.core.ui.Button;
 import com.jmoordb.core.ui.ButtonType;
-import com.jmoordb.core.ui.Div;
+import com.jmoordb.core.ui.div.Div;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Span;
 import com.jmoordb.core.ui.Svg;

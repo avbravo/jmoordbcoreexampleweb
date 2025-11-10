@@ -25,6 +25,20 @@ public class InputRange extends Tag {
         withAttribute("type", "range");
 
     }
+    
+     public InputRange(String id, String name, String styleClass) {
+
+        super("input");
+      withAttribute("type", "range");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
 
     public InputRange text(String text) {
         withText(text);

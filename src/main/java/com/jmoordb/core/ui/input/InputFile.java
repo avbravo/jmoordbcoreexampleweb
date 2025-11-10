@@ -26,10 +26,25 @@ public class InputFile extends Tag {
 
     }
 
+    public InputFile(String id, String name, String styleClass) {
+
+        super("input");
+        withAttribute("type", "file");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
+
     public InputFile text(String text) {
         withText(text);
         return this;
     }
+
     public InputFile accept(String accept) {
         withAttribute("id", accept);
         return this;
@@ -39,14 +54,14 @@ public class InputFile extends Tag {
         withAttribute("id", id);
         return this;
     }
-    
-        public InputFile name(String name) {
+
+    public InputFile name(String name) {
         withAttribute("name", name);
         return this;
     }
 
-     public InputFile addClass(String withClass) {
-      withClass(withClass);
+    public InputFile addClass(String withClass) {
+        withClass(withClass);
         return this;
     }
 
