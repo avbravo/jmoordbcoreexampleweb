@@ -7,8 +7,9 @@ package fish.payara.view;
 import com.jmoordb.core.ui.Button;
 import com.jmoordb.core.ui.div.Div;
 import com.jmoordb.core.ui.FieldSet;
-import com.jmoordb.core.ui.Form;
+import com.jmoordb.core.ui.form.Form;
 import com.jmoordb.core.ui.Label;
+import com.jmoordb.core.ui.Link;
 import com.jmoordb.core.ui.Span;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
@@ -51,6 +52,11 @@ public class AnalisisView extends JettraView {
         String contextPath = request.getContextPath();
         headers.add(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/microdetection.css"));
 
+        
+        
+          
+                  
+                  
         return DashboardLayout.buildPage(
                 request,
                 webModelSession.getUsername(),
@@ -62,6 +68,8 @@ public class AnalisisView extends JettraView {
                 "Profile View",
                 configurationProperties.getDashboardFooterText() + " | " + webModelSession.getUserRol(),
                 headers
+                
+              
         );
     }
 

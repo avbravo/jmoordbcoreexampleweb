@@ -5,7 +5,7 @@
 package fish.payara.crud.form.persona;
 
 import com.jmoordb.core.ui.div.Div;
-import com.jmoordb.core.ui.Form;
+import com.jmoordb.core.ui.form.Form;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;

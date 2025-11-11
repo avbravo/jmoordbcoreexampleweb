@@ -7,7 +7,7 @@ package fish.payara.view;
 import com.jmoordb.core.ui.Button;
 import com.jmoordb.core.ui.ButtonType;
 import com.jmoordb.core.ui.div.Div;
-import com.jmoordb.core.ui.Form;
+import com.jmoordb.core.ui.form.Form;
 import com.jmoordb.core.ui.Script;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;

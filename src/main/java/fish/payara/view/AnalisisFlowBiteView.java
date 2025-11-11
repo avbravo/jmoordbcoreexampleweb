@@ -5,21 +5,21 @@
 package fish.payara.view;
 
 import com.jmoordb.core.ui.Button;
-import com.jmoordb.core.ui.div.Div;
-import com.jmoordb.core.ui.Form;
 import com.jmoordb.core.ui.Label;
-import com.jmoordb.core.ui.Li;
-import com.jmoordb.core.ui.O;
-import com.jmoordb.core.ui.P;
+import com.jmoordb.core.ui.div.Div;
+import com.jmoordb.core.ui.form.Form;
 import com.jmoordb.core.ui.Span;
-import com.jmoordb.core.ui.Stepper.Stepper;
-import com.jmoordb.core.ui.Stepper.StepperData;
+import com.jmoordb.core.ui.stepper.Stepper;
+import com.jmoordb.core.ui.stepper.StepperData;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
+import com.jmoordb.core.ui.css.InputColCss;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
-import com.jmoordb.core.ui.headings.H3;
-import com.jmoordb.core.ui.input.InputDate;
+import com.jmoordb.core.ui.form.Grid;
+import com.jmoordb.core.ui.form.InputCol;
+import com.jmoordb.core.ui.form.InputRow;
 import com.jmoordb.core.ui.input.InputText;
+import com.jmoordb.core.ui.input.TypeInput;
 import com.jmoordb.core.ui.jettra.JettraView;
 import com.jmoordb.core.ui.model.WebModelSession;
 import com.jmoordb.core.ui.panel.Panel;
@@ -73,71 +73,36 @@ public class AnalisisFlowBiteView extends JettraView {
         try {
             String labelClass = "block mb-2 text-sm font-medium text-gray-900 dark:text-white";
             String inputClass = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+
             Form mainForm = new Form().id("mainForm")
-                    .add(new Div("mb-6")
-                            .add(new Label("Fecha de Registro", labelClass, "fechaRegistro"))
-                            .add(new InputDate("fechaRegistro", "fechaRegistro", inputClass).required(Boolean.TRUE))
-                    )
-                    .add(new Div("mb-6")
-                            .add(new Label("NHRC (Número de Historia Clínica)", labelClass, "nhrc"))
-                            .add(new InputText("nhrc", "nhrc", inputClass).required(Boolean.TRUE))
-                    )
-                    .add(new Div("mb-6")
-                            .add(new Label("Número de muestra", labelClass, "numeromuestra"))
-                            .add(new InputText("numeromuestra", "numeromuestra", inputClass).required(Boolean.TRUE))
-                    )
-                    .add(new Div("mb-6")
-                            .add(new Label("Edad del Paciente", labelClass, "edad"))
-                            .add(new InputText("edad", "edad", inputClass).required(Boolean.TRUE))
-                    )
-                    .add(new Div("mb-6")
-                            .add(new Label("Edad del Paciente", labelClass, "edad"))
-                            .add(new InputText("edad", "edad", inputClass).required(Boolean.TRUE))
-                    ) //                    
-                    ;
-           
+                    .add(new InputRow("Fecha de Registro", "fechaRegistro", "fechaRegistro", TypeInput.DATE))
+                    .add(new InputRow("NHRC (Número de Historia Clínica)", "nhrc", "nhrc", TypeInput.TEXT, Boolean.TRUE, Boolean.FALSE))
+                    .add(new InputRow("Número de muestra", "numeromuestra", "numeromuestra", TypeInput.TEXT, Boolean.TRUE, Boolean.FALSE))
+                    .add(new InputRow("Edad del Paciente", "edad", "edad", TypeInput.NUMBER, Boolean.TRUE, Boolean.FALSE));
+
+            Grid grid = new Grid();
+            grid.add(
+                    new InputCol("Fecha de Registro2", "fechaRegistro2", "fechaRegistro2", TypeInput.DATE));
+            grid.add(
+                    new InputCol("Fecha de Registro3", "fechaRegistro3", "fechaRegistro3", TypeInput.DATE));
+
+            grid.add(new InputCol(
+                    new Label("Apellido", InputColCss.Label.css, "apellido"),
+                    new InputText("apellido", "apellido", InputColCss.Input.css).required(Boolean.TRUE)));
+            grid.add(new InputCol(
+                    new Label("Salario", InputColCss.Label.css, "salario"),
+                    new InputText("salario", "salario", InputColCss.Input.css).required(Boolean.TRUE)));
+
+            mainForm.add(grid);
             /**
              * Stepper son divisor
              */
-            
             List<StepperData> stepperDatas = new ArrayList<>();
-            
+
             stepperDatas.add(new StepperData("1", "Motivo del Estudio", "Seleccione uno", Boolean.TRUE));
-            
+
             mainForm.add(new Stepper(stepperDatas));
 
-//  <div class="mb-6">
-//        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>
-//        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required />
-//    </div> 
-//    <div class="mb-6">
-//        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-//        <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
-//    </div> 
-//            Div divPatientData = new Div().id("patient-data")
-//                    .add(new H2().text("Datos del Paciente"))
-//                    .add(new Div().addClass("form-row")
-//                            .add(
-//                                    new Div().addClass("input-group")
-//                                            .add(new Label().forField("fechaRegistro").text("Fecha de Registro:").addClass(labelClass))
-//                                            .add(new InputDate().id("fechaRegistro").name("fechaRegistro").required(Boolean.TRUE).addClass(inputClass))
-//                            )
-//                            .add(
-//                                    new Div().addClass("input-group")
-//                                            .add(new Label().forField("nhrc").text("NHRC (Número de Historia Clínica)").addClass(labelClass))
-//                                            .add(new InputText().id("nhrc").name("nhrc").required(Boolean.TRUE).addClass(inputClass))
-//                            )
-//                            .add(
-//                                    new Div().addClass("input-group")
-//                                            .add(new Label().forField("numeromuestra").text("Número de muestra:").addClass(labelClass))
-//                                            .add(new InputText().id("numeromuestra").name("numeromuestra").required(Boolean.TRUE).addClass(inputClass))
-//                            )
-//                            .add(
-//                                    new Div().addClass("input-group")
-//                                            .add(new Label().forField("edad").text("Edad del Paciente:").addClass(labelClass))
-//                                            .add(new InputNumber().id("edad").name("edad").required(Boolean.TRUE).addClass(inputClass).min("0").max("125"))
-//                            )
-//                    );
 //            Div divReasonSection = new Div().id("reason-section")
 //                    .add(new FieldSet().text("Motivo del estudio"))
 //                    .add(

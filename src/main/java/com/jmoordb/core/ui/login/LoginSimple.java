@@ -19,7 +19,7 @@ import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.Button;
 import com.jmoordb.core.ui.ButtonType;
-import com.jmoordb.core.ui.Form;
+import com.jmoordb.core.ui.form.Form;
 import com.jmoordb.core.ui.Head;
 import com.jmoordb.core.ui.Html;
 import com.jmoordb.core.ui.Image;
