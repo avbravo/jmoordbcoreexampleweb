@@ -15,6 +15,7 @@
         <jakartaee-api.version>11.0.0</jakartaee-api.version>
         <payara.version>7.2025.1.Beta1</payara.version>
         <final.name>jmoordbcoreexampleweb</final.name>
+        <version.jmoordb-core-annotations>2.0.2</version.jmoordb-core-annotations>
     </properties>
     
     <dependencyManagement>
@@ -83,25 +84,42 @@
             <artifactId>jersey-hk2</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>com.avbravo</groupId>
             <artifactId>jmoordbcorecomponent</artifactId>
             <version>0.6.6</version>
         </dependency>-->
         
-           <dependency>
+        <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-multipart</artifactId>
             <version>3.0.18</version>
             <type>jar</type>
         </dependency>
         
- <dependency>
-    <groupId>org.microprofile-ext.openapi-ext</groupId>
-    <artifactId>openapi-ui</artifactId>
-    <version>1.1.3</version>
-    <scope>runtime</scope>
-</dependency>
+        <dependency>
+            <groupId>org.microprofile-ext.openapi-ext</groupId>
+            <artifactId>openapi-ui</artifactId>
+            <version>1.1.3</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+        
+        <dependency>
+            <groupId>com.github.avbravo</groupId>
+            <artifactId>jmoordb-core-annotations</artifactId>
+            <version>${version.jmoordb-core-annotations}</version>
+        </dependency>
+        
+        
+        
+                    
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <!--<version>4.0.6</version>-->
+            <version>4.6.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -121,7 +139,7 @@
                 </configuration>
             </plugin>
             <!-- Execute 'mvn clean package payara-micro:dev' to run the application. -->
-  <!-- Execute 'mvn clean package payara-micro:dev' to run the application. -->           
+            <!-- Execute 'mvn clean package payara-micro:dev' to run the application. -->           
             <plugin>
                 <groupId>fish.payara.maven.plugins</groupId>
                 <artifactId>payara-micro-maven-plugin</artifactId>
@@ -183,7 +201,7 @@
                     </images>
                 </configuration>
             </plugin>
-             <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>3.1.0</version>
@@ -198,7 +216,7 @@
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>
+            <!--            <plugin>
                 <groupId>com.googlecode.maven-download-plugin</groupId>
                 <artifactId>download-maven-plugin</artifactId>
                 <version>1.9.0</version>
@@ -256,6 +274,11 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+        </repository>
+        
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
     

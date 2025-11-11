@@ -17,14 +17,17 @@ import com.jmoordb.core.ui.css.GridColCss;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
 import com.jmoordb.core.ui.form.Grid;
 import com.jmoordb.core.ui.form.GridCol;
-import com.jmoordb.core.ui.form.InputRow;
+import com.jmoordb.core.ui.form.FormRow;
 import com.jmoordb.core.ui.input.InputText;
 import com.jmoordb.core.ui.input.TypeInput;
 import com.jmoordb.core.ui.jettra.JettraView;
 import com.jmoordb.core.ui.model.WebModelSession;
 import com.jmoordb.core.ui.panel.Panel;
+import com.jmoordb.core.ui.properties.JettraResourcesFiles;
 import fish.payara.config.ConfigurationProperties;
 import fish.payara.dashboard.MenuSideBar;
+import fish.payara.model.Motivo;
+import fish.payara.services.MotivoServices;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,12 +50,38 @@ public class AnalisisFlowBiteView extends JettraView {
     ConfigurationProperties configurationProperties;
 // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Inject()">
+    @Inject
+    MotivoServices motivoServices;
+
+    @Inject
+    JettraResourcesFiles jettraResourcesFiles;
+// </editor-fold>
+
     @Override
     protected String init() {
         webModelSession = webModelOfSession(request);
 //        String contextPath = request.getContextPath();
 //        headers.add(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/microdetection.css"));
 
+//        String message = jettraResourcesFiles.fromMessage("menubar.home");
+//        System.out.println("\tmessages.properties <bar.home> " + message);
+//
+//        String core = jettraResourcesFiles.fromCore("button.add");
+//        System.out.println("\tcore.properties<button.add> " + core);
+//
+//        String configuration = jettraResourcesFiles.fromConfiguration("application.title");
+//        System.out.println("\tconfiguration.properties<application.title> " + configuration);
+
+        List<Motivo> motivos = motivoServices.findAll();
+        if(motivos== null || motivos.isEmpty()){
+            
+        }else{
+            for(Motivo m:motivos){
+                System.out.println("\t "+m.getMotivo());
+            }
+        }
+        
         return DashboardLayout.buildPage(
                 request,
                 webModelSession.getUsername(),
@@ -73,10 +102,10 @@ public class AnalisisFlowBiteView extends JettraView {
         try {
 
             Form mainForm = new Form().id("mainForm")
-                    .add(new InputRow("Fecha de Registro", "fechaRegistro", "fechaRegistro", TypeInput.DATE))
-                    .add(new InputRow("NHRC (Número de Historia Clínica)", "nhrc", "nhrc", TypeInput.TEXT, Boolean.TRUE, Boolean.FALSE))
-                    .add(new InputRow("Número de muestra", "numeromuestra", "numeromuestra", TypeInput.TEXT, Boolean.TRUE, Boolean.FALSE))
-                    .add(new InputRow("Edad del Paciente", "edad", "edad", TypeInput.NUMBER, Boolean.TRUE, Boolean.FALSE));
+                    .add(new FormRow("Fecha de Registro", "fechaRegistro", "fechaRegistro", TypeInput.DATE))
+                    .add(new FormRow("NHRC (Número de Historia Clínica)", "nhrc", "nhrc", TypeInput.TEXT, Boolean.TRUE, Boolean.FALSE))
+                    .add(new FormRow("Número de muestra", "numeromuestra", "numeromuestra", TypeInput.TEXT, Boolean.TRUE, Boolean.FALSE))
+                    .add(new FormRow("Edad del Paciente", "edad", "edad", TypeInput.NUMBER, Boolean.TRUE, Boolean.FALSE));
 
             Grid grid = new Grid();
             grid.add(new GridCol("Fecha de Registro", "fechaRegistro", "fechaRegistro", TypeInput.DATE));

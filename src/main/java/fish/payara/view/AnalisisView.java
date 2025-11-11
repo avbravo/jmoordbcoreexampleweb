@@ -52,11 +52,6 @@ public class AnalisisView extends JettraView {
         String contextPath = request.getContextPath();
         headers.add(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/microdetection.css"));
 
-        
-        
-          
-                  
-                  
         return DashboardLayout.buildPage(
                 request,
                 webModelSession.getUsername(),
@@ -68,8 +63,6 @@ public class AnalisisView extends JettraView {
                 "Profile View",
                 configurationProperties.getDashboardFooterText() + " | " + webModelSession.getUserRol(),
                 headers
-                
-              
         );
     }
 

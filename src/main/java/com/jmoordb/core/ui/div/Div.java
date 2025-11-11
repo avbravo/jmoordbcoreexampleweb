@@ -5,7 +5,6 @@
 package com.jmoordb.core.ui.div;
 
 import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 
 /**

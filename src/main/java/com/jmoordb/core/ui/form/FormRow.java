@@ -8,7 +8,7 @@ package com.jmoordb.core.ui.form;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
-import com.jmoordb.core.ui.css.InputRowCss;
+import com.jmoordb.core.ui.css.FormRowCss;
 import com.jmoordb.core.ui.input.InputColor;
 import com.jmoordb.core.ui.input.InputDate;
 import com.jmoordb.core.ui.input.InputEmail;
@@ -27,10 +27,10 @@ import com.jmoordb.core.ui.input.TypeInput;
  *
  * @author avbravo
  */
-public class InputRow extends Tag {
+public class FormRow extends Tag {
 
-    String labelClass = InputRowCss.Label.css;
-    String inputClass = InputRowCss.Input.css;
+    String labelClass = FormRowCss.Label.css;
+    String inputClass = FormRowCss.Input.css;
 //    String labelClass = "block mb-2 text-sm font-medium text-gray-900 dark:text-white";
 //    String inputClass = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
@@ -40,7 +40,7 @@ public class InputRow extends Tag {
      * @param tagName
      * @param color
      */
-    public InputRow(String label, String idAndName) {
+    public FormRow(String label, String idAndName) {
         super("div");
         withClass("mb-6");
         add(
@@ -51,7 +51,7 @@ public class InputRow extends Tag {
         );
     }
 
-    public InputRow(String label, String id, String name) {
+    public FormRow(String label, String id, String name) {
 
         super("div");
         withClass("mb-6");
@@ -64,7 +64,7 @@ public class InputRow extends Tag {
 
     }
 
-    public InputRow(Label label, Tag input) {
+    public FormRow(Label label, Tag input) {
 
         super("div");
         withClass("mb-6");
@@ -73,7 +73,7 @@ public class InputRow extends Tag {
 
     }
 
-    public InputRow(String label, String id, String name, TypeInput typeInput) {
+    public FormRow(String label, String id, String name, TypeInput typeInput) {
 
         super("div");
         withClass("mb-6");
@@ -149,7 +149,7 @@ public class InputRow extends Tag {
 
     }
 
-    public InputRow(String label, String id, String name, TypeInput typeInput, Boolean required, Boolean readonly) {
+    public FormRow(String label, String id, String name, TypeInput typeInput, Boolean required, Boolean readonly) {
 
         super("div");
         withClass("mb-6");
@@ -226,12 +226,12 @@ public class InputRow extends Tag {
 
     }
 
-    public InputRow addClass(String styleClass) {
+    public FormRow addClass(String styleClass) {
         withClass(styleClass);
         return this;
     }
 
-    public InputRow add(WebComponent webComponent) {
+    public FormRow add(WebComponent webComponent) {
         if (webComponent != null) {
             withChild(webComponent);
         }
