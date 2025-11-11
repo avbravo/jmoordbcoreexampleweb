@@ -13,10 +13,10 @@ import com.jmoordb.core.ui.stepper.Stepper;
 import com.jmoordb.core.ui.stepper.StepperData;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
-import com.jmoordb.core.ui.css.InputColCss;
+import com.jmoordb.core.ui.css.GridColCss;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
 import com.jmoordb.core.ui.form.Grid;
-import com.jmoordb.core.ui.form.InputCol;
+import com.jmoordb.core.ui.form.GridCol;
 import com.jmoordb.core.ui.form.InputRow;
 import com.jmoordb.core.ui.input.InputText;
 import com.jmoordb.core.ui.input.TypeInput;
@@ -71,8 +71,6 @@ public class AnalisisFlowBiteView extends JettraView {
     protected WebComponent content(HttpServletRequest request) {
         WebComponent mainContent = null;
         try {
-            String labelClass = "block mb-2 text-sm font-medium text-gray-900 dark:text-white";
-            String inputClass = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
             Form mainForm = new Form().id("mainForm")
                     .add(new InputRow("Fecha de Registro", "fechaRegistro", "fechaRegistro", TypeInput.DATE))
@@ -81,17 +79,15 @@ public class AnalisisFlowBiteView extends JettraView {
                     .add(new InputRow("Edad del Paciente", "edad", "edad", TypeInput.NUMBER, Boolean.TRUE, Boolean.FALSE));
 
             Grid grid = new Grid();
-            grid.add(
-                    new InputCol("Fecha de Registro2", "fechaRegistro2", "fechaRegistro2", TypeInput.DATE));
-            grid.add(
-                    new InputCol("Fecha de Registro3", "fechaRegistro3", "fechaRegistro3", TypeInput.DATE));
+            grid.add(new GridCol("Fecha de Registro", "fechaRegistro", "fechaRegistro", TypeInput.DATE));
+            grid.add(new GridCol("Fecha de Registro3", "fechaRegistro3", "fechaRegistro3", TypeInput.DATE));
 
-            grid.add(new InputCol(
-                    new Label("Apellido", InputColCss.Label.css, "apellido"),
-                    new InputText("apellido", "apellido", InputColCss.Input.css).required(Boolean.TRUE)));
-            grid.add(new InputCol(
-                    new Label("Salario", InputColCss.Label.css, "salario"),
-                    new InputText("salario", "salario", InputColCss.Input.css).required(Boolean.TRUE)));
+            grid.add(new GridCol(
+                    new Label("Apellido", GridColCss.Label.css, "apellido"),
+                    new InputText("apellido", "apellido", GridColCss.Input.css).required(Boolean.TRUE)));
+            grid.add(new GridCol(
+                    new Label("Salario", GridColCss.Label.css, "salario"),
+                    new InputText("salario", "salario", GridColCss.Input.css).required(Boolean.TRUE)));
 
             mainForm.add(grid);
             /**

@@ -40,11 +40,6 @@ public class InputRow extends Tag {
      * @param tagName
      * @param color
      */
-    
-    
-    
-   
-
     public InputRow(String label, String idAndName) {
         super("div");
         withClass("mb-6");
@@ -68,7 +63,6 @@ public class InputRow extends Tag {
         );
 
     }
-
 
     public InputRow(Label label, Tag input) {
 
@@ -265,8 +259,4 @@ public class InputRow extends Tag {
         this.inputClass = inputClass;
     }
 
-    
-    
-    
-    
 }

@@ -8,7 +8,7 @@ package com.jmoordb.core.ui.form;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
-import com.jmoordb.core.ui.css.InputColCss;
+import com.jmoordb.core.ui.css.GridColCss;
 import com.jmoordb.core.ui.input.InputColor;
 import com.jmoordb.core.ui.input.InputDate;
 import com.jmoordb.core.ui.input.InputEmail;
@@ -27,26 +27,21 @@ import com.jmoordb.core.ui.input.TypeInput;
  *
  * @author avbravo
  */
-public class InputCol extends Tag {
+public class GridCol extends Tag {
 
-//    String labelClass = "block mb-2 text-sm font-medium text-gray-900 dark:text-white";
-//    String inputClass = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
-    String labelClass = InputColCss.Label.css;
-    String inputClass = InputColCss.Input.css;
+    String labelClass = GridColCss.Label.css;
+    String inputClass = GridColCss.Input.css;
+
     /**
      * Color red, blue
      *
      * @param tagName
      * @param color
      */
-    
-    
-    
-   
 
-    public InputCol(String label, String idAndName) {
+    // <editor-fold defaultstate="collapsed" desc="GridCol(String label, String idAndName)">
+    public GridCol(String label, String idAndName) {
         super("div");
-        withClass("mb-6");
         add(
                 new Label(label, labelClass, idAndName)
         );
@@ -54,11 +49,12 @@ public class InputCol extends Tag {
                 new InputText(idAndName, idAndName, inputClass)
         );
     }
+// </editor-fold>
 
-    public InputCol(String label, String id, String name) {
+    // <editor-fold defaultstate="collapsed" desc="GridCol(String label, String id, String name)">
+    public GridCol(String label, String id, String name) {
 
         super("div");
-        withClass("mb-6");
         add(
                 new Label(label, labelClass, id)
         );
@@ -67,21 +63,21 @@ public class InputCol extends Tag {
         );
 
     }
+// </editor-fold>
 
-
-    public InputCol(Label label, Tag input) {
-
+    // <editor-fold defaultstate="collapsed" desc="GridCol(Label label, Tag input)">
+    public GridCol(Label label, Tag input) {
         super("div");
-        withClass("mb-6");
         add(label);
         add(input);
 
     }
+// </editor-fold>
 
-    public InputCol(String label, String id, String name, TypeInput typeInput) {
+    // <editor-fold defaultstate="collapsed" desc="public GridCol(String label, String id, String name, TypeInput typeInput)">
+    public GridCol(String label, String id, String name, TypeInput typeInput) {
 
         super("div");
-        withClass("mb-6");
         add(
                 new Label(label, labelClass, id)
         );
@@ -153,11 +149,12 @@ public class InputCol extends Tag {
         }
 
     }
+// </editor-fold>
 
-    public InputCol(String label, String id, String name, TypeInput typeInput, Boolean required, Boolean readonly) {
+    // <editor-fold defaultstate="collapsed" desc=" public GridCol(String label, String id, String name, TypeInput typeInput, Boolean required, Boolean readonly) ">
+    public GridCol(String label, String id, String name, TypeInput typeInput, Boolean required, Boolean readonly) {
 
         super("div");
-        withClass("mb-6");
         add(
                 new Label(label, labelClass, id)
         );
@@ -230,13 +227,14 @@ public class InputCol extends Tag {
         }
 
     }
+// </editor-fold>
 
-    public InputCol addClass(String styleClass) {
+    public GridCol addClass(String styleClass) {
         withClass(styleClass);
         return this;
     }
 
-    public InputCol add(WebComponent webComponent) {
+    public GridCol add(WebComponent webComponent) {
         if (webComponent != null) {
             withChild(webComponent);
         }
@@ -264,8 +262,4 @@ public class InputCol extends Tag {
         this.inputClass = inputClass;
     }
 
-    
-    
-    
-    
 }
