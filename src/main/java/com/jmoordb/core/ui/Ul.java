@@ -25,6 +25,10 @@ public class Ul extends Tag {
     public Ul() {
         super("ul");
     }
+    public Ul(String styleClass) {
+        super("ul");
+        withClass(styleClass);
+    }
 
     // --- Métodos de Chaining Fluido específicos para UL ---
     
@@ -43,6 +47,10 @@ public class Ul extends Tag {
      */
     public Ul id(String id) {
         withAttribute("id", id);
+        return this;
+    }
+    public Ul aria_labelledby(String aria_labelledby) {
+        withAttribute("aria-labelledby", aria_labelledby);
         return this;
     }
     

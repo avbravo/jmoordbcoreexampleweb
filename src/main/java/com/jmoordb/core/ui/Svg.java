@@ -23,6 +23,13 @@ public class Svg extends Tag {
         super("svg");
 
     }
+     
+    public Svg(String styleClass) {
+
+        super("svg");
+             withClass(styleClass);
+
+    }
 
     public Svg addClass(String styleClass) {
 

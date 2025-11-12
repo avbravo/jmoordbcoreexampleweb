@@ -26,7 +26,7 @@ public class DashboardLayout {
             WebComponent mainContent,
             Map<String, List<MenuLink>> sidebarSections,
             String title,
-            String footerText, 
+            String footerText,
             List<Tag>... headerAdditional) {
 
         // 1. OBTENER ESTADO ACTUAL Y CONFIGURACIONES
@@ -102,23 +102,24 @@ public class DashboardLayout {
                 .withChild(dashboardContent)
                 .withChild(footer)
                 // ⭐ 1. Cargar la librería Chart.js
-                             .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"))
-               // .withChild(new Tag("script").withAttribute("src", contextPath + "/js/chart.umd.min.js"))
+                .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"))
                 // ⭐ 2. Cargar tu función de inicialización de Chart.js
                 .withChild(new Tag("script").withAttribute("src", contextPath + "/js/chart-setup.js"))
                 .withChild(new Tag("script").withAttribute("src", contextPath + "/js/htmx.min.js"))
+                .withChild(new Tag("script").withAttribute("src", contextPath + "/js/flowbite.min.js"))
+                .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/flowbite@4.0.0/dist/flowbite.min.js"))
                 .withChild(scriptTag)
-                                .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
-              //  .withChild(new Tag("script").withAttribute("src", contextPath + "/js/bootstrap.bundle.min.js"));
+                .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
+        //  .withChild(new Tag("script").withAttribute("src", contextPath + "/js/bootstrap.bundle.min.js"));
 
         // 5. INCLUSIÓN CONDICIONAL DEL CSS EXTERNO
         Tag frameworkLink;
         if (isTailwind) {
-         // frameworkLink = new Tag("script").withAttribute("src", "https://cdn.tailwindcss.com");
-        frameworkLink = new Tag("script").withAttribute("src", contextPath + "/js/tailwindcss.3.4.17.js");
+            // frameworkLink = new Tag("script").withAttribute("src", "https://cdn.tailwindcss.com");
+            frameworkLink = new Tag("script").withAttribute("src", contextPath + "/js/tailwindcss.3.4.17.js");
         } else {
             frameworkLink = new Tag("link").withAttribute("rel", "stylesheet")
-                   .withAttribute("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css");
+                    .withAttribute("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css");
 //            frameworkLink = new Tag("link").withAttribute("rel", "stylesheet")
 //                    .withAttribute("href", contextPath + "/cs/bootstrap.min.css");
         }
@@ -132,9 +133,9 @@ public class DashboardLayout {
                 .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/chart-styles.css"))
                 .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/main-styles.css"))
                 .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/main-styles.css"))
-//                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/microdetection.css"))
+                //                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/microdetection.css"))
                 .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"));
-              //  .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/all.min.css"));
+        //  .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/all.min.css"));
         // ⭐ Cuando un Controller necesita añadir mas parametros al header los pasa como una lista
         // se procesan en esta seccionñ
         List<Tag> moreHeader = new ArrayList<>();

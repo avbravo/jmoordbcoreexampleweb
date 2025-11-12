@@ -11,7 +11,9 @@ import com.jmoordb.core.ui.radio.RadioItemLink;
  * @author avbravo
  */
 public class Label extends Tag {
-
+String text;
+String subText;
+String id;
     /**
      * Color red, blue
      *
@@ -34,6 +36,7 @@ public class Label extends Tag {
 
         super("label");
         withText(text);
+        this.text=text;
         withClass(styleClass);
 
     }
@@ -41,6 +44,7 @@ public class Label extends Tag {
     public Label(String text, String styleClass, String forField) {
 
         super("label");
+        this.text = text;
         withText(text);
         if (styleClass == null || styleClass.equals("")) {
 
@@ -54,10 +58,18 @@ public class Label extends Tag {
         }
 
     }
+    
+     public Label setSubText(String subText) {
+                this.subText = text;
+                return this;
+
+    }
+     
 
     public Label(String text, String styleClass, String forField, RadioItemLink radioItemLink) {
 
         super("label");
+                this.text = text;
         withText(text);
         if (styleClass == null || styleClass.equals("")) {
 
@@ -74,6 +86,7 @@ public class Label extends Tag {
     }
 
     public Label text(String text) {
+                this.text = text;
         withText(text);
         return this;
     }
@@ -90,8 +103,23 @@ public class Label extends Tag {
 
     public Label id(String id) {
         withAttribute("id", id);
+        this.id=id;
         return this;
     }
+    
+    public String getText(){
+        return this.text;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getSubText() {
+        return subText;
+    }
+    
+    
 
     public Tag build() {
         return this;

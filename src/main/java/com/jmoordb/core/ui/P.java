@@ -31,6 +31,10 @@ public class P extends Tag {
         withText(text);
         return this;
     }
+    public P id(String id) {
+    withAttribute("id", id);
+        return this;
+    }
 
     public P addClass(String styleClass) {
         withClass(styleClass);

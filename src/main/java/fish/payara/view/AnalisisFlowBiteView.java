@@ -16,6 +16,7 @@ import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.css.GridColCss;
 import com.jmoordb.core.ui.css.RadioBorderCss;
 import com.jmoordb.core.ui.css.RadioCss;
+import com.jmoordb.core.ui.css.RadioDropdownCss;
 import com.jmoordb.core.ui.css.RadioHorizontalListGroupCss;
 import com.jmoordb.core.ui.css.RadioListGroupCss;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
@@ -31,11 +32,13 @@ import com.jmoordb.core.ui.panel.Panel;
 import com.jmoordb.core.ui.properties.JettraResourcesFiles;
 import com.jmoordb.core.ui.radio.Radio;
 import com.jmoordb.core.ui.radio.RadioBorder;
+import com.jmoordb.core.ui.radio.RadioDropdownButton;
 import com.jmoordb.core.ui.radio.RadioHelper;
 import com.jmoordb.core.ui.radio.RadioHorizontalListGroup;
 import com.jmoordb.core.ui.radio.RadioHorizontalListGroupHeader;
 import com.jmoordb.core.ui.radio.RadioItem;
 import com.jmoordb.core.ui.radio.RadioItemLink;
+import com.jmoordb.core.ui.radio.RadioDropdown;
 import com.jmoordb.core.ui.radio.RadioListGroup;
 import com.jmoordb.core.ui.radio.RadioListGroupElement;
 import com.jmoordb.core.ui.radio.RadioListGroupHeader;
@@ -189,12 +192,11 @@ public class AnalisisFlowBiteView extends JettraView {
             ));
 
             RadioListGroup radioListIdentificacion = new RadioListGroup(radioListGroupElements);
-            
-            
+
             /**
              * RadioHorizontalListGroup
              */
-           RadioHorizontalListGroupHeader rhlghPais = new RadioHorizontalListGroupHeader("Pais");
+            RadioHorizontalListGroupHeader rhlghPais = new RadioHorizontalListGroupHeader("Pais");
             List<RadioListGroupElement> radioHorizontalListGroupElements = new ArrayList<>();
 
             radioHorizontalListGroupElements.add(new RadioListGroupElement(
@@ -207,12 +209,24 @@ public class AnalisisFlowBiteView extends JettraView {
             ));
 
             RadioHorizontalListGroup radioHorizontalListIdentificacion = new RadioHorizontalListGroup(radioHorizontalListGroupElements);
-            
-            
-            
-            
-            
-            
+
+            /**
+             * Radio in dropdown
+             */
+            RadioDropdownButton radioDropdownButton = new RadioDropdownButton("dropdownHelperRadioButton", "dropdownHelperRadio", "Dropdown radio");
+
+            List<RadioListGroupElement> radioListGroupElementLenguajes = new ArrayList<>();
+
+            radioListGroupElementLenguajes.add(new RadioListGroupElement(
+                    new RadioItem("java", "lenguaje", RadioDropdownCss.Input.css),
+                    new Label("Java", RadioDropdownCss.Label.css, "java").setSubText("Creado por J. Gosling")
+            ));
+            radioListGroupElementLenguajes.add(new RadioListGroupElement(
+                    new RadioItem("c", "lenguaje", RadioDropdownCss.Input.css),
+                    new Label("C", RadioDropdownCss.Label.css, "lenguaje").setSubText("Inicio de todo")
+            ));
+
+            RadioDropdown radioDropdownLenguajes = new RadioDropdown("dropdownHelperRadio", radioListGroupElementLenguajes);
 
             //            <div class="flex">
             //    <div class="flex items-center h-5">
@@ -232,12 +246,15 @@ public class AnalisisFlowBiteView extends JettraView {
             mainForm.add(radioHelperSandia);
             mainForm.add(radioBorderLimon);
             mainForm.add(radioBorderPapaya);
-            
+
             mainForm.add(rlgh);
             mainForm.add(radioListIdentificacion);
-            
+
             mainForm.add(rhlghPais);
             mainForm.add(radioHorizontalListIdentificacion);
+
+            mainForm.add(radioDropdownButton);
+            mainForm.add(radioDropdownLenguajes);
 
 //            <div class="flex items-center">
 //    <input id="link-radio" type="radio" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">

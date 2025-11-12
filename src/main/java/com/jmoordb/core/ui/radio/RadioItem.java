@@ -12,7 +12,7 @@ import com.jmoordb.core.ui.Tag;
  * @author avbravo
  */
 public class RadioItem extends Tag {
-
+String id;
     /**
      * Color red, blue
      *
@@ -31,6 +31,7 @@ public class RadioItem extends Tag {
         super("input");
         withAttribute("type", "radio");
         withAttribute("id", id);
+        this.id = id;
         withAttribute("name", name);
         if (styleClass == null || styleClass.equals("")) {
 
@@ -50,6 +51,7 @@ public class RadioItem extends Tag {
 
     public RadioItem id(String id) {
         withAttribute("id", id);
+        this.id=id;
         return this;
     }
 
@@ -92,6 +94,13 @@ public class RadioItem extends Tag {
 
         return this;
     }
+
+    public String getId() {
+        return id;
+    }
+    
+    
+    
 
     public Tag build() {
         return this;

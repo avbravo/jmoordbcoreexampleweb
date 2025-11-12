@@ -7,8 +7,6 @@ package com.jmoordb.core.ui;
 import static com.jmoordb.core.ui.ButtonType.BUTTON;
 import static com.jmoordb.core.ui.ButtonType.RESET;
 import static com.jmoordb.core.ui.ButtonType.SUBMIT;
-import com.jmoordb.core.ui.Label;
-import com.jmoordb.core.ui.Tag;
 
 /**
  *
