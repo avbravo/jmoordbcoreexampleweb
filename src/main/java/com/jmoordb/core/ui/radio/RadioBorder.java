@@ -6,14 +6,13 @@ package com.jmoordb.core.ui.radio;
 
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.css.RadioCss;
+import com.jmoordb.core.ui.css.RadioBorderCss;
 
 /**
  *
  * @author avbravo
  */
-public class Radio extends Tag {
-
+public class RadioBorder extends Tag {
 
     /**
      * Color red, blue
@@ -21,42 +20,33 @@ public class Radio extends Tag {
      * @param tagName
      * @param color
      */
-    public Radio() {
+    public RadioBorder() {
         super("div");
-        withClass(RadioCss.Div.css);
+        withClass(RadioBorderCss.Div.css);
 
     }
-  
 
-    public Radio addClass(String styleClass) {
+    public RadioBorder addClass(String styleClass) {
         withClass(styleClass);
         return this;
     }
 
-    public Radio add(Label label) {
+    public RadioBorder add(Label label) {
         if (label != null) {
             withChild(label);
         }
-
         return this;
     }
 
-    public Radio add(RadioItem radioItem) {
-
+    public RadioBorder add(RadioItem radioItem) {
         if (radioItem != null) {
             withChild(radioItem);
         }
-
         return this;
     }
-
-   
-    
 
     public Tag build() {
         return this;
     }
-
-   
 
 }

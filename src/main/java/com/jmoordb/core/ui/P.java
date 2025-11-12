@@ -21,6 +21,11 @@ public class P extends Tag {
     public P() {
         super("p");
     }
+    public P(String text, String styleClass) {
+        super("p");
+         withText(text);
+         withClass(styleClass);
+    }
 
     public P text(String text) {
         withText(text);

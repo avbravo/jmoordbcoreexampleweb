@@ -6,14 +6,14 @@ package com.jmoordb.core.ui.radio;
 
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.css.RadioCss;
+import com.jmoordb.core.ui.css.RadioListGroupCss;
+import com.jmoordb.core.ui.headings.H3;
 
 /**
  *
  * @author avbravo
  */
-public class Radio extends Tag {
-
+public class RadioHorizontalListGroupHeader extends Tag {
 
     /**
      * Color red, blue
@@ -21,19 +21,18 @@ public class Radio extends Tag {
      * @param tagName
      * @param color
      */
-    public Radio() {
-        super("div");
-        withClass(RadioCss.Div.css);
+    public RadioHorizontalListGroupHeader(String title) {
+        super("h3");
+        add(new H3(title).addClass(RadioListGroupCss.H3.css));
 
     }
-  
 
-    public Radio addClass(String styleClass) {
+    public RadioHorizontalListGroupHeader addClass(String styleClass) {
         withClass(styleClass);
         return this;
     }
 
-    public Radio add(Label label) {
+    public RadioHorizontalListGroupHeader add(Label label) {
         if (label != null) {
             withChild(label);
         }
@@ -41,22 +40,8 @@ public class Radio extends Tag {
         return this;
     }
 
-    public Radio add(RadioItem radioItem) {
-
-        if (radioItem != null) {
-            withChild(radioItem);
-        }
-
-        return this;
-    }
-
-   
-    
-
     public Tag build() {
         return this;
     }
-
-   
 
 }

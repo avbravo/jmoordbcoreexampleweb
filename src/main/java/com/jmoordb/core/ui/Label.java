@@ -4,7 +4,7 @@
  */
 package com.jmoordb.core.ui;
 
-import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.radio.RadioItemLink;
 
 /**
  *
@@ -23,58 +23,75 @@ public class Label extends Tag {
         super("label");
 
     }
+
     public Label(String text) {
 
         super("label");
         withText(text);
     }
-    public Label(String text,String styleClass) {
+
+    public Label(String text, String styleClass) {
 
         super("label");
         withText(text);
         withClass(styleClass);
-        
+
     }
-    public Label(String text,String styleClass,String forField) {
+
+    public Label(String text, String styleClass, String forField) {
 
         super("label");
         withText(text);
-        if(styleClass == null || styleClass.equals("")){
-            
-        }else{
-              withClass(styleClass);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
         }
-        if(forField == null || forField.equals("")){
-            
-        }else{
-               withAttribute("for", forField);
+        if (forField == null || forField.equals("")) {
+
+        } else {
+            withAttribute("for", forField);
         }
-      
-       
+
     }
 
-   
-    
+    public Label(String text, String styleClass, String forField, RadioItemLink radioItemLink) {
+
+        super("label");
+        withText(text);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+        if (forField == null || forField.equals("")) {
+
+        } else {
+            withAttribute("for", forField);
+        }
+
+        add(radioItemLink);
+    }
 
     public Label text(String text) {
         withText(text);
         return this;
     }
-  public Label addClass(String styleClass) {
-      withClass(styleClass);
+
+    public Label addClass(String styleClass) {
+        withClass(styleClass);
         return this;
     }
-
 
     public Label forField(String field) {
         withAttribute("for", field);
         return this;
     }
+
     public Label id(String id) {
         withAttribute("id", id);
         return this;
     }
-   
 
     public Tag build() {
         return this;

@@ -1,0 +1,39 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 12 nov 2025, 8:32:14
+    Author     : avbravo
+*/
+
+
+/* Para radio buttons */
+
+/* Añadir esta clase a la sección de estilos CSS */
+.radio-group-container.two-columns {
+    /* Usar Flexbox para el contenedor principal */
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea */
+    column-count: 2; /* Intentar dividir en 2 columnas (funciona bien en navegadores modernos) */
+    gap: 15px 30px; /* Separación vertical y horizontal */
+}
+
+/* Modificar el estilo del ítem de radio para que ocupe el ancho adecuado */
+.radio-group-container.two-columns .radio-item {
+    /* Cada ítem ocupará la mitad del ancho del contenedor, menos el espacio del gap */
+    flex: 1 1 calc(50% - 30px);
+    min-width: 250px; /* Asegura que no se aprieten demasiado */
+}
+
+/* Media Query para volver a una sola columna en pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+    .radio-group-container.two-columns {
+        display: block; /* Desactiva las columnas en móvil */
+        column-count: 1;
+    }
+    .radio-group-container.two-columns .radio-item {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
