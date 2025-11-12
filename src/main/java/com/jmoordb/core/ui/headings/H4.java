@@ -25,6 +25,12 @@ public class H4 extends Tag {
 
     }
     
+       public H4(String text) {
+
+        super("h4");
+    withText(text);
+    }
+    
         public H4 addClass(String styleClass) {
 
         withClass(styleClass);

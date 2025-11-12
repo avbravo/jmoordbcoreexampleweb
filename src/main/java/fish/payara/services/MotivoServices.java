@@ -32,12 +32,5 @@ public interface MotivoServices {
 
     public Long count(Bson filter, Document sort, Integer page, Integer size);
 
-//    
-//     public Long countLikeByMotivo(String motivo);
-//    
-//    // <editor-fold defaultstate="collapsed" desc="List<Motivo> likeByMotivo( String motivoview)">
-//    public List<Motivo> likeByMotivo( String motivo);
-//    // </editor-fold>
-//    
-//      public Boolean existsMotivo(Motivo motivo);
+
 }

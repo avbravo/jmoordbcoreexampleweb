@@ -2,16 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.jmoordb.core.ui.input;
+package com.jmoordb.core.ui.radio;
 
-import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.Tag;
 
 /**
  *
  * @author avbravo
  */
-public class InputRadio extends Tag {
+public class RadioItem extends Tag {
 
     /**
      * Color red, blue
@@ -19,17 +18,17 @@ public class InputRadio extends Tag {
      * @param tagName
      * @param color
      */
-    public InputRadio() {
+    public RadioItem() {
 
         super("input");
         withAttribute("type", "radio");
 
     }
 
-     public InputRadio(String id, String name, String styleClass) {
+    public RadioItem(String id, String name, String styleClass) {
 
         super("input");
-   withAttribute("type", "radio");
+        withAttribute("type", "radio");
         withAttribute("id", id);
         withAttribute("name", name);
         if (styleClass == null || styleClass.equals("")) {
@@ -39,51 +38,50 @@ public class InputRadio extends Tag {
         }
 
     }
-    
-    public InputRadio text(String text) {
+
+    public RadioItem text(String text) {
         withText(text);
         return this;
     }
 
-    public InputRadio id(String id) {
+    public RadioItem id(String id) {
         withAttribute("id", id);
         return this;
     }
-    
-        public InputRadio name(String name) {
+
+    public RadioItem name(String name) {
         withAttribute("name", name);
         return this;
     }
 
-     public InputRadio addClass(String withClass) {
-      withClass(withClass);
-        return this;
-    }
-    public InputRadio placeholder(String placeholder) {
-        withAttribute("placeholder", placeholder);
+    public RadioItem addClass(String withClass) {
+        withClass(withClass);
         return this;
     }
 
+     public RadioItem disabled(Boolean disabled) {
+        if (disabled) {
+            withAttribute("disabled", "");
+        }
+        return this;
+    }
 
-    public InputRadio value(String value) {
+    public RadioItem checked(Boolean checked) {
+        if (checked) {
+            withAttribute("checked", "");
+        }
+        return this;
+    
+    }
+
+    public RadioItem value(String value) {
         withAttribute("value", value);
         return this;
     }
 
-    public InputRadio step(String step) {
-        withAttribute("step", step);
-        return this;
-    }
+   
 
-    public InputRadio readonly(Boolean readonly) {
-        if (readonly) {
-            withAttribute("readonly", "");
-        }
-
-        return this;
-    }
-
-    public InputRadio required(Boolean required) {
+    public RadioItem required(Boolean required) {
         if (required) {
             withAttribute("required", "true");
         }
@@ -94,5 +92,4 @@ public class InputRadio extends Tag {
     public Tag build() {
         return this;
     }
-
 }

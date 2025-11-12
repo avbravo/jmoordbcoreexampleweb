@@ -27,6 +27,11 @@ public class H1 extends Tag {
         super("h1");
 
     }
+    public H1(String text) {
+
+        super("h1");
+    withText(text);
+    }
 
     
     public H1 addClass(String styleClass) {

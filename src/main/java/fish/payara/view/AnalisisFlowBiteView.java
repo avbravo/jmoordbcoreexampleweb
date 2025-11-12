@@ -5,6 +5,7 @@
 package fish.payara.view;
 
 import com.jmoordb.core.ui.Button;
+import com.jmoordb.core.ui.FieldSet;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.div.Div;
 import com.jmoordb.core.ui.form.Form;
@@ -14,16 +15,20 @@ import com.jmoordb.core.ui.stepper.StepperData;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.css.GridColCss;
+import com.jmoordb.core.ui.css.RadioSimpleCss;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
 import com.jmoordb.core.ui.form.Grid;
 import com.jmoordb.core.ui.form.GridCol;
 import com.jmoordb.core.ui.form.FormRow;
+import com.jmoordb.core.ui.headings.H3;
 import com.jmoordb.core.ui.input.InputText;
 import com.jmoordb.core.ui.input.TypeInput;
 import com.jmoordb.core.ui.jettra.JettraView;
 import com.jmoordb.core.ui.model.WebModelSession;
 import com.jmoordb.core.ui.panel.Panel;
 import com.jmoordb.core.ui.properties.JettraResourcesFiles;
+import com.jmoordb.core.ui.radio.Radio;
+import com.jmoordb.core.ui.radio.RadioItem;
 import fish.payara.config.ConfigurationProperties;
 import fish.payara.dashboard.MenuSideBar;
 import fish.payara.model.Motivo;
@@ -61,27 +66,15 @@ public class AnalisisFlowBiteView extends JettraView {
     @Override
     protected String init() {
         webModelSession = webModelOfSession(request);
-//        String contextPath = request.getContextPath();
-//        headers.add(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/microdetection.css"));
-
-//        String message = jettraResourcesFiles.fromMessage("menubar.home");
-//        System.out.println("\tmessages.properties <bar.home> " + message);
-//
-//        String core = jettraResourcesFiles.fromCore("button.add");
-//        System.out.println("\tcore.properties<button.add> " + core);
-//
-//        String configuration = jettraResourcesFiles.fromConfiguration("application.title");
-//        System.out.println("\tconfiguration.properties<application.title> " + configuration);
-
         List<Motivo> motivos = motivoServices.findAll();
-        if(motivos== null || motivos.isEmpty()){
-            
-        }else{
-            for(Motivo m:motivos){
-                System.out.println("\t "+m.getMotivo());
+        if (motivos == null || motivos.isEmpty()) {
+
+        } else {
+            for (Motivo m : motivos) {
+                System.out.println("\t " + m.getMotivo());
             }
         }
-        
+
         return DashboardLayout.buildPage(
                 request,
                 webModelSession.getUsername(),
@@ -122,47 +115,79 @@ public class AnalisisFlowBiteView extends JettraView {
             /**
              * Stepper son divisor
              */
-            List<StepperData> stepperDatas = new ArrayList<>();
+           
+            H3 h3Autos = new H3("Autos");
 
-            stepperDatas.add(new StepperData("1", "Motivo del Estudio", "Seleccione uno", Boolean.TRUE));
+            Div divMazda = new Div("flex items-center mb-4")
+                    .add(new RadioItem("mazda", "autos", RadioSimpleCss.Input.css))
+                    .add(new Label("Mazda", RadioSimpleCss.Label.css, "mazda"));
+            Div divFerrari = new Div("flex items-center mb-4")
+                    .add(new RadioItem("ferrari", "autos", RadioSimpleCss.Input.css))
+                    .add(new Label("Ferrari", RadioSimpleCss.Label.css, "ferrari"));
+            
+            
+            mainForm.add(h3Autos);
+            mainForm.add(divMazda);
+            mainForm.add(divFerrari);
+            
+            
+            H3 h3 = new H3("Frutas");
+            Radio radioManzana = new Radio()
+                    .add(new RadioItem("manzana", "frutas", RadioSimpleCss.Input.css).disabled(Boolean.TRUE))    
+                    .add(new Label("Manzana", RadioSimpleCss.Label.css, "manzana")) 
+                    ;  
+            
+            Radio radioUva = new Radio()
+                    .add(new RadioItem("uva", "frutas", RadioSimpleCss.Input.css).checked(Boolean.TRUE))    
+                    .add(new Label("Uva", RadioSimpleCss.Label.css, "uva")) 
+                    ;  
+            Radio radioPera = new Radio()
+                    .add(new RadioItem("pera", "frutas", RadioSimpleCss.Input.css).checked(Boolean.TRUE))    
+                    .add(new Label("Pera", RadioSimpleCss.Label.css, "pera")) 
+                    ;  
+            
+            mainForm.add(h3);
+            mainForm.add(radioManzana);
+            mainForm.add(radioUva);
+            mainForm.add(radioPera);
 
-            mainForm.add(new Stepper(stepperDatas));
+            Div divReasonSection = new Div().id("reason-section")
+                    .add(new FieldSet().text("Motivo del estudio"))
+                    .add(
+                            new Div().addClass("radio-group-container two-columns")
+                                    .add(
+                                            new Div().addClass("radio-item")
+                                                    .add(new RadioItem().id("motivo1").name("motivo").required(Boolean.TRUE).value("Vaginitis"))
+                                                    .add(new Label().forField("motivo1").text("Vaginitis").addClass(GridColCss.Label.css))
+                                    )
+                                    .add(
+                                            new Div().addClass("radio-item")
+                                                    .add(new RadioItem().id("motivo2").name("motivo").required(Boolean.TRUE).value("Candidiasis previa"))
+                                                    .add(new Label().forField("motivo2").text("Candidiasis previa").addClass(GridColCss.Label.css))
+                                    )
+                                    .add(
+                                            new Div().addClass("radio-item")
+                                                    .add(new RadioItem().id("motivo3").name("motivo").required(Boolean.TRUE).value("Coitorragia"))
+                                                    .add(new Label().forField("motivo3").text("Coitorragia").addClass(GridColCss.Label.css))
+                                    )
+                                    .add(
+                                            new Div().addClass("radio-item")
+                                                    .add(new RadioItem().id("motivo4").name("motivo").required(Boolean.TRUE).value("Dispareunia"))
+                                                    .add(new Label().forField("motivo4").text("Dispareunia").addClass(GridColCss.Label.css))
+                                    )
+                                    .add(
+                                            new Div().addClass("radio-item")
+                                                    .add(new RadioItem().id("motivo5").name("motivo").required(Boolean.TRUE).value("Disuaria/Cistitis"))
+                                                    .add(new Label().forField("motivo5").text("Disuaria/Cistitis").addClass(GridColCss.Label.css))
+                                    )
+                                    .add(
+                                            new Div().addClass("radio-item")
+                                                    .add(new RadioItem().id("motivo6").name("motivo").required(Boolean.TRUE).value("Gestante"))
+                                                    .add(new Label().forField("motivo6").text("Gestante").addClass(GridColCss.Label.css))
+                                    )
+                    );
+            mainForm.add(divReasonSection);
 
-//            Div divReasonSection = new Div().id("reason-section")
-//                    .add(new FieldSet().text("Motivo del estudio"))
-//                    .add(
-//                            new Div().addClass("radio-group-container two-columns")
-//                                    .add(
-//                                            new Div().addClass("radio-item")
-//                                                    .add(new InputRadio().id("motivo1").name("motivo").required(Boolean.TRUE).value("Vaginitis"))
-//                                                    .add(new Label().forField("motivo1").text("Vaginitis").addClass(labelClass))
-//                                    )
-//                                    .add(
-//                                            new Div().addClass("radio-item")
-//                                                    .add(new InputRadio().id("motivo2").name("motivo").required(Boolean.TRUE).value("Candidiasis previa"))
-//                                                    .add(new Label().forField("motivo2").text("Candidiasis previa").addClass(labelClass))
-//                                    )
-//                                    .add(
-//                                            new Div().addClass("radio-item")
-//                                                    .add(new InputRadio().id("motivo3").name("motivo").required(Boolean.TRUE).value("Coitorragia"))
-//                                                    .add(new Label().forField("motivo3").text("Coitorragia").addClass(labelClass))
-//                                    )
-//                                    .add(
-//                                            new Div().addClass("radio-item")
-//                                                    .add(new InputRadio().id("motivo4").name("motivo").required(Boolean.TRUE).value("Dispareunia"))
-//                                                    .add(new Label().forField("motivo4").text("Dispareunia").addClass(labelClass))
-//                                    )
-//                                    .add(
-//                                            new Div().addClass("radio-item")
-//                                                    .add(new InputRadio().id("motivo5").name("motivo").required(Boolean.TRUE).value("Disuaria/Cistitis"))
-//                                                    .add(new Label().forField("motivo5").text("Disuaria/Cistitis").addClass(labelClass))
-//                                    )
-//                                    .add(
-//                                            new Div().addClass("radio-item")
-//                                                    .add(new InputRadio().id("motivo6").name("motivo").required(Boolean.TRUE).value("Gestante"))
-//                                                    .add(new Label().forField("motivo6").text("Gestante").addClass(labelClass))
-//                                    )
-//                    );
             /**
              *
              */

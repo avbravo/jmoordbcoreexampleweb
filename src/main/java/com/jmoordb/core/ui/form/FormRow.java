@@ -16,12 +16,12 @@ import com.jmoordb.core.ui.input.InputFile;
 import com.jmoordb.core.ui.input.InputHidden;
 import com.jmoordb.core.ui.input.InputNumber;
 import com.jmoordb.core.ui.input.InputPassword;
-import com.jmoordb.core.ui.input.InputRadio;
 import com.jmoordb.core.ui.input.InputRange;
 import com.jmoordb.core.ui.input.InputSearch;
 import com.jmoordb.core.ui.input.InputText;
 import com.jmoordb.core.ui.input.InputTime;
 import com.jmoordb.core.ui.input.TypeInput;
+import com.jmoordb.core.ui.radio.RadioItem;
 
 /**
  *
@@ -118,7 +118,7 @@ public class FormRow extends Tag {
                 break;
             case TypeInput.RADIO:
                 add(
-                        new InputRadio(id, name, inputClass)
+                        new RadioItem(id, name, inputClass)
                 );
                 break;
             case TypeInput.RANGE:
@@ -195,7 +195,7 @@ public class FormRow extends Tag {
                 break;
             case TypeInput.RADIO:
                 add(
-                        new InputRadio(id, name, inputClass).required(required).readonly(readonly)
+                        new RadioItem(id, name, inputClass).required(required).disabled(readonly)
                 );
                 break;
             case TypeInput.RANGE:

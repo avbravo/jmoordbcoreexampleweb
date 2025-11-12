@@ -9,7 +9,6 @@ import com.jmoordb.core.ui.div.Div;
 import com.jmoordb.core.ui.FieldSet;
 import com.jmoordb.core.ui.form.Form;
 import com.jmoordb.core.ui.Label;
-import com.jmoordb.core.ui.Link;
 import com.jmoordb.core.ui.Span;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
@@ -17,11 +16,11 @@ import com.jmoordb.core.ui.dashboard.DashboardLayout;
 import com.jmoordb.core.ui.headings.H2;
 import com.jmoordb.core.ui.input.InputDate;
 import com.jmoordb.core.ui.input.InputNumber;
-import com.jmoordb.core.ui.input.InputRadio;
 import com.jmoordb.core.ui.input.InputText;
 import com.jmoordb.core.ui.jettra.JettraView;
 import com.jmoordb.core.ui.model.WebModelSession;
 import com.jmoordb.core.ui.panel.Panel;
+import com.jmoordb.core.ui.radio.RadioItem;
 import fish.payara.config.ConfigurationProperties;
 import fish.payara.dashboard.MenuSideBar;
 import jakarta.enterprise.context.RequestScoped;
@@ -104,32 +103,32 @@ public class AnalisisView extends JettraView {
                             new Div().addClass("radio-group-container two-columns")
                                     .add(
                                             new Div().addClass("radio-item")
-                                                    .add(new InputRadio().id("motivo1").name("motivo").required(Boolean.TRUE).value("Vaginitis"))
+                                                    .add(new RadioItem().id("motivo1").name("motivo").required(Boolean.TRUE).value("Vaginitis"))
                                                     .add(new Label().forField("motivo1").text("Vaginitis").addClass(labelClass))
                                     )
                                     .add(
                                             new Div().addClass("radio-item")
-                                                    .add(new InputRadio().id("motivo2").name("motivo").required(Boolean.TRUE).value("Candidiasis previa"))
+                                                    .add(new RadioItem().id("motivo2").name("motivo").required(Boolean.TRUE).value("Candidiasis previa"))
                                                     .add(new Label().forField("motivo2").text("Candidiasis previa").addClass(labelClass))
                                     )
                                     .add(
                                             new Div().addClass("radio-item")
-                                                    .add(new InputRadio().id("motivo3").name("motivo").required(Boolean.TRUE).value("Coitorragia"))
+                                                    .add(new RadioItem().id("motivo3").name("motivo").required(Boolean.TRUE).value("Coitorragia"))
                                                     .add(new Label().forField("motivo3").text("Coitorragia").addClass(labelClass))
                                     )
                                     .add(
                                             new Div().addClass("radio-item")
-                                                    .add(new InputRadio().id("motivo4").name("motivo").required(Boolean.TRUE).value("Dispareunia"))
+                                                    .add(new RadioItem().id("motivo4").name("motivo").required(Boolean.TRUE).value("Dispareunia"))
                                                     .add(new Label().forField("motivo4").text("Dispareunia").addClass(labelClass))
                                     )
                                     .add(
                                             new Div().addClass("radio-item")
-                                                    .add(new InputRadio().id("motivo5").name("motivo").required(Boolean.TRUE).value("Disuaria/Cistitis"))
+                                                    .add(new RadioItem().id("motivo5").name("motivo").required(Boolean.TRUE).value("Disuaria/Cistitis"))
                                                     .add(new Label().forField("motivo5").text("Disuaria/Cistitis").addClass(labelClass))
                                     )
                                     .add(
                                             new Div().addClass("radio-item")
-                                                    .add(new InputRadio().id("motivo6").name("motivo").required(Boolean.TRUE).value("Gestante"))
+                                                    .add(new RadioItem().id("motivo6").name("motivo").required(Boolean.TRUE).value("Gestante"))
                                                     .add(new Label().forField("motivo6").text("Gestante").addClass(labelClass))
                                     )
                     );
