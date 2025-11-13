@@ -14,6 +14,7 @@ public class Label extends Tag {
 String text;
 String subText;
 String id;
+String forField;
     /**
      * Color red, blue
      *
@@ -36,7 +37,7 @@ String id;
 
         super("label");
         withText(text);
-        this.text=text;
+        this.text=text;        
         withClass(styleClass);
 
     }
@@ -55,12 +56,13 @@ String id;
 
         } else {
             withAttribute("for", forField);
+            this.forField =forField;
         }
 
     }
     
      public Label setSubText(String subText) {
-                this.subText = text;
+                this.subText = subText;
                 return this;
 
     }
@@ -80,6 +82,7 @@ String id;
 
         } else {
             withAttribute("for", forField);
+             this.forField =forField;
         }
 
         add(radioItemLink);
@@ -98,6 +101,7 @@ String id;
 
     public Label forField(String field) {
         withAttribute("for", field);
+         this.forField =field;
         return this;
     }
 
@@ -117,6 +121,10 @@ String id;
 
     public String getSubText() {
         return subText;
+    }
+
+    public String getForField() {
+        return forField;
     }
     
     

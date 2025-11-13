@@ -107,7 +107,6 @@ public class DashboardLayout {
                 .withChild(new Tag("script").withAttribute("src", contextPath + "/js/chart-setup.js"))
                 .withChild(new Tag("script").withAttribute("src", contextPath + "/js/htmx.min.js"))
                 .withChild(new Tag("script").withAttribute("src", contextPath + "/js/flowbite.min.js"))
-                .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/flowbite@4.0.0/dist/flowbite.min.js"))
                 .withChild(scriptTag)
                 .withChild(new Tag("script").withAttribute("src", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"));
         //  .withChild(new Tag("script").withAttribute("src", contextPath + "/js/bootstrap.bundle.min.js"));

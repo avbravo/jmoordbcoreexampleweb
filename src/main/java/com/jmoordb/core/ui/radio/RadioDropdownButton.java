@@ -30,7 +30,6 @@ public class RadioDropdownButton extends Tag {
                         .add(new SvgPath().stroke("currentColor").stroke_linecap("round").stroke_linejoin("round").stroke_width("2").d("m1 1 4 4 4-4")
                         )
         );
-//       
     }
 
     public RadioDropdownButton add(WebComponent webComponent) {

@@ -24,31 +24,34 @@ public class RadioDropdownItem extends Tag {
      * @param tagName
      * @param color
      */
-    public RadioDropdownItem(String id, List<RadioListGroupElement> radioListGroupElements) {
+    public RadioDropdownItem(String id, String aria_labelledby, List<RadioListGroupElement> radioListGroupElements) {
         super("ul");
         withClass(RadioDropdownCss.UL.css);
-        withAttribute("aria-labelledby", id);
+        withAttribute("aria-labelledby", aria_labelledby);
 
         if (radioListGroupElements == null || radioListGroupElements.isEmpty()) {
-            System.out.println("\t test ---> lista vacia");
+
         } else {
 
             for (RadioListGroupElement rge : radioListGroupElements) {
-                System.out.println("\t añadiendo elemento " + rge.radioItem().getId());
-                System.out.println("\t....................rge.radioItem().build():" + rge.radioItem().build());
-
+                String valueText = rge.label().getText();
+                String forField = rge.label().getForField();
+                String subText = rge.label().getSubText();
                 add(
                         new Li()
                                 .add(
-                                        new Div(RadioDropdownCss.DivInput.css)
-                                                .add(new Div(RadioDropdownCss.DivInputElement.css)
+                                        new Div(RadioDropdownCss.DivLI.css)
+                                                .add(new Div(RadioDropdownCss.DivInput.css)
                                                         .add(rge.radioItem())
                                                 )
-                                )
-                                .add(
-                                        new Div(RadioDropdownCss.DivLabel.css)
-                                                .add(rge.label().add(new Div().text(rge.label().getText())))
-                                                .add(new P(rge.label().getSubText(), RadioDropdownCss.P.css).id(rge.radioItem().getId() + "text"))
+                                                .add(
+                                                        new Div(RadioDropdownCss.DivLabel.css)
+                                                                .add(
+                                                                        new Label("", RadioDropdownCss.Label.css, forField)
+                                                                                .add(new Div().text(valueText))
+                                                                                .add(new P(subText, RadioDropdownCss.P.css).id(id + "-text"))
+                                                                )
+                                                )
                                 )
                 );
             }
