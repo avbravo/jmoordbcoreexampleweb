@@ -8,17 +8,18 @@ import com.jmoordb.core.ui.Button;
 import com.jmoordb.core.ui.FieldSet;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Link;
+import com.jmoordb.core.ui.Script;
 import com.jmoordb.core.ui.div.Div;
 import com.jmoordb.core.ui.form.Form;
 import com.jmoordb.core.ui.Span;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.css.GridColCss;
-import com.jmoordb.core.ui.css.RadioBorderCss;
-import com.jmoordb.core.ui.css.RadioCss;
-import com.jmoordb.core.ui.css.RadioDropdownCss;
-import com.jmoordb.core.ui.css.RadioHorizontalListGroupCss;
-import com.jmoordb.core.ui.css.RadioListGroupCss;
+import com.jmoordb.core.ui.radio.css.RadioBorderCss;
+import com.jmoordb.core.ui.radio.css.RadioCss;
+import com.jmoordb.core.ui.radio.css.RadioDropdownCss;
+import com.jmoordb.core.ui.radio.css.RadioHorizontalListGroupCss;
+import com.jmoordb.core.ui.radio.css.RadioListGroupCss;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
 import com.jmoordb.core.ui.form.Grid;
 import com.jmoordb.core.ui.form.GridCol;
@@ -35,13 +36,15 @@ import com.jmoordb.core.ui.radio.RadioBorder;
 import com.jmoordb.core.ui.radio.RadioDropdownButton;
 import com.jmoordb.core.ui.radio.RadioHelper;
 import com.jmoordb.core.ui.radio.RadioHorizontalListGroup;
-import com.jmoordb.core.ui.radio.RadioHorizontalListGroupHeader;
 import com.jmoordb.core.ui.radio.RadioItem;
 import com.jmoordb.core.ui.radio.RadioItemLink;
 import com.jmoordb.core.ui.radio.RadioDropdown;
+import com.jmoordb.core.ui.radio.RadioInline;
 import com.jmoordb.core.ui.radio.RadioListGroup;
-import com.jmoordb.core.ui.radio.RadioListGroupElement;
-import com.jmoordb.core.ui.radio.RadioListGroupHeader;
+import com.jmoordb.core.ui.radio.element.RadioElement;
+import com.jmoordb.core.ui.radio.css.RadioCssType;
+import com.jmoordb.core.ui.radio.css.RadioInlineCss;
+import com.jmoordb.core.ui.radio.header.RadioHeader;
 import fish.payara.config.ConfigurationProperties;
 import fish.payara.dashboard.MenuSideBar;
 import fish.payara.model.Motivo;
@@ -179,31 +182,31 @@ public class AnalisisFlowBiteView extends JettraView {
             /**
              * RadioListGroup
              */
-            RadioListGroupHeader rlgh = new RadioListGroupHeader("Identificación");
-            List<RadioListGroupElement> radioListGroupElements = new ArrayList<>();
+            RadioHeader rlgh = new RadioHeader("Identificación", RadioCssType.RadioListGroup);
+            List<RadioElement> radioElements = new ArrayList<>();
 
-            radioListGroupElements.add(new RadioListGroupElement(
+            radioElements.add(new RadioElement(
                     new RadioItem("cedula", "identificacion", RadioListGroupCss.Input.css),
                     new Label("Cedula", RadioListGroupCss.Label.css, "cedula")
             ));
-            radioListGroupElements.add(new RadioListGroupElement(
+            radioElements.add(new RadioElement(
                     new RadioItem("pasaporte", "identificacion", RadioListGroupCss.Input.css),
                     new Label("Pasaporte", RadioListGroupCss.Label.css, "pasaporte")
             ));
 
-            RadioListGroup radioListIdentificacion = new RadioListGroup(radioListGroupElements);
+            RadioListGroup radioListIdentificacion = new RadioListGroup(radioElements);
 
             /**
              * RadioHorizontalListGroup
              */
-            RadioHorizontalListGroupHeader rhlghPais = new RadioHorizontalListGroupHeader("Pais");
-            List<RadioListGroupElement> radioHorizontalListGroupElements = new ArrayList<>();
+            RadioHeader rhlghPais = new RadioHeader("Pais", RadioCssType.RadioHorizontalListGroup);
+            List<RadioElement> radioHorizontalListGroupElements = new ArrayList<>();
 
-            radioHorizontalListGroupElements.add(new RadioListGroupElement(
+            radioHorizontalListGroupElements.add(new RadioElement(
                     new RadioItem("panama", "pais", RadioHorizontalListGroupCss.Input.css),
                     new Label("Panama", RadioHorizontalListGroupCss.Label.css, "cedula")
             ));
-            radioHorizontalListGroupElements.add(new RadioListGroupElement(
+            radioHorizontalListGroupElements.add(new RadioElement(
                     new RadioItem("colombia", "pais", RadioHorizontalListGroupCss.Input.css),
                     new Label("Colombia", RadioHorizontalListGroupCss.Label.css, "pasaporte")
             ));
@@ -215,21 +218,22 @@ public class AnalisisFlowBiteView extends JettraView {
              */
             RadioDropdownButton radioDropdownButton = new RadioDropdownButton("dropdownHelperRadioButton", "dropdownHelperRadio", "Dropdown radio");
 
-            List<RadioListGroupElement> radioListGroupElementLenguajes = new ArrayList<>();
+            List<RadioElement> radioElementLenguajes = new ArrayList<>();
 
-            radioListGroupElementLenguajes.add(new RadioListGroupElement(
+            radioElementLenguajes.add(new RadioElement(
                     new RadioItem("java", "lenguaje", RadioDropdownCss.Input.css),
                     new Label("Java", RadioDropdownCss.Label.css, "java").setSubText("Creado por J. Gosling")
             ));
-            radioListGroupElementLenguajes.add(new RadioListGroupElement(
+            radioElementLenguajes.add(new RadioElement(
                     new RadioItem("c", "lenguaje", RadioDropdownCss.Input.css),
                     new Label("C", RadioDropdownCss.Label.css, "lenguaje").setSubText("Inicio de todo")
             ));
 
-            RadioDropdown radioDropdownLenguajes = new RadioDropdown("dropdownHelperRadio","dropdownHelperRadioButton", radioListGroupElementLenguajes);
- Grid gridRadioDropdwon = new Grid();
- gridRadioDropdwon.add(radioDropdownButton);
- gridRadioDropdwon.add(radioDropdownLenguajes);
+            RadioDropdown radioDropdownLenguajes = new RadioDropdown("dropdownHelperRadio", "dropdownHelperRadioButton", radioElementLenguajes);
+            Grid gridRadioDropdwon = new Grid();
+            gridRadioDropdwon.add(radioDropdownButton);
+            gridRadioDropdwon.add(radioDropdownLenguajes);
+
             //            <div class="flex">
             //    <div class="flex items-center h-5">
             //        <input id="helper-radio" aria-describedby="helper-radio-text" type="radio" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -239,7 +243,47 @@ public class AnalisisFlowBiteView extends JettraView {
             //        <p id="helper-radio-text" class="text-xs font-normal text-gray-500 dark:text-gray-300">For orders shipped from $25 in books or $29 in other categories</p>
             //    </div>
             //</div>
-            //                
+            //      
+            /**
+             * Radio in dropdown 2
+             */
+            RadioDropdownButton radioDropdownButton2 = new RadioDropdownButton("dropdownHelperRadioButton3", "", "Peliculas");
+
+            List<RadioElement> radioElementLenguajes2 = new ArrayList<>();
+
+            radioElementLenguajes2.add(new RadioElement(
+                    new RadioItem("matrix", "pelicula", RadioDropdownCss.Input.css),
+                    new Label("Matrix", RadioDropdownCss.Label.css, "matrix").setSubText("Reloaded")
+            ));
+            radioElementLenguajes2.add(new RadioElement(
+                    new RadioItem("senoranillos", "pelicula", RadioDropdownCss.Input.css),
+                    new Label("El señor de los anillos", RadioDropdownCss.Label.css, "senoranillos").setSubText("Las dos torres")
+            ));
+
+            RadioDropdown radioDropdownLenguajes2 = new RadioDropdown("dropdownHelperRadio2", "dropdownHelperRadioButton2", radioElementLenguajes2);
+            Grid gridRadioDropdwon2 = new Grid();
+            gridRadioDropdwon2.add(radioDropdownButton2);
+            gridRadioDropdwon2.add(radioDropdownLenguajes2);
+            Script scriptFecth = new Script()
+                    .code(javaScriptCode());
+
+            /*
+            * RadioInline
+             */
+            RadioHeader radioHeadDeportes = new RadioHeader("Deportes", RadioCssType.RadioInline);
+            List<RadioElement> radioElementDeportes = new ArrayList<>();
+
+            radioElementDeportes.add(new RadioElement(
+                    new RadioItem("baloncesto", "deporte", RadioInlineCss.Input.css).checked(Boolean.TRUE),
+                    new Label("Baloncesto", RadioInlineCss.Label.css, "baloncesto")
+            ));
+            radioElementDeportes.add(new RadioElement(
+                    new RadioItem("tenis", "deporte", RadioInlineCss.Input.css),
+                    new Label("Tenis", RadioInlineCss.Label.css, "tenis")
+            ));
+
+            RadioInline radioInline = new RadioInline(radioElementDeportes);
+
             mainForm.add(h3);
             mainForm.add(radioManzana);
             mainForm.add(radioUva);
@@ -257,9 +301,12 @@ public class AnalisisFlowBiteView extends JettraView {
 
 //            mainForm.add(radioDropdownButton);
 //            mainForm.add(radioDropdownLenguajes);
-            
             mainForm.add(gridRadioDropdwon);
-            
+            mainForm.add(gridRadioDropdwon2);
+            mainForm.add(scriptFecth);
+
+            mainForm.add(radioHeadDeportes);
+            mainForm.add(radioInline);
 
 //            <div class="flex items-center">
 //    <input id="link-radio" type="radio" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -338,7 +385,30 @@ public class AnalisisFlowBiteView extends JettraView {
 
     @Override
     protected String javaScriptCode() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String result = "";
+        try {
+            result = """
+              document.addEventListener('DOMContentLoaded', () => {
+                          const targetEl = document.getElementById('dropdownHelperRadio2');
+                          const triggerEl = document.getElementById('dropdownHelperRadioButton2');
+                          
+                          // Verificamos que el constructor de Flowbite esté disponible
+                          if (targetEl && triggerEl && typeof Flowbite !== 'undefined') {
+                              
+                              // 🚀 Inicialización única y controlada para tu dropdown
+                              const options = {
+                                  placement: 'right' // Usa el posicionamiento que ya corregiste
+                              };
+                              
+                              const dropdown = new Flowbite.Dropdown(targetEl, triggerEl, options);
+                          }
+                          // NOTA: El resto de los componentes de Flowbite se inicializarán automáticamente.
+                      });
+                     """;
+        } catch (Exception e) {
+            System.out.println("\t content() " + e.getLocalizedMessage());
+        }
+        return result;
     }
 
 }

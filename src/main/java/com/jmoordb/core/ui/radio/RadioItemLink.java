@@ -6,7 +6,7 @@ package com.jmoordb.core.ui.radio;
 
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
-import com.jmoordb.core.ui.css.RadioCss;
+import com.jmoordb.core.ui.radio.css.RadioCss;
 
 /**
  *

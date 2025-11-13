@@ -4,8 +4,12 @@
  */
 package com.jmoordb.core.ui.dashboard;
 
+import com.jmoordb.core.ui.Head;
+import com.jmoordb.core.ui.Link;
+import com.jmoordb.core.ui.Meta;
 import com.jmoordb.core.ui.Script;
 import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.Title;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.menu.MenuLink;
 import jakarta.servlet.http.HttpServletRequest;
@@ -123,17 +127,29 @@ public class DashboardLayout {
 //                    .withAttribute("href", contextPath + "/cs/bootstrap.min.css");
         }
 
-        Tag head = new Tag("head")
-                .withChild(new Tag("meta").withAttribute("charset", "UTF-8"))
-                .withChild(new Tag("meta").withAttribute("name", "viewport").withAttribute("content", "width=device-width, initial-scale=1"))
-                .withChild(new Tag("title").withText(title))
-                .withChild(frameworkLink)
-                // ⭐ 3. Cargar el CSS de la gráfica
-                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/chart-styles.css"))
-                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/main-styles.css"))
-                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/main-styles.css"))
-                //                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/microdetection.css"))
-                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"));
+        
+//        Tag head = new Tag("head")
+//                .withChild(new Tag("meta").withAttribute("charset", "UTF-8"))
+//                .withChild(new Tag("meta").withAttribute("name", "viewport").withAttribute("content", "width=device-width, initial-scale=1"))
+//                .withChild(new Tag("title").withText(title))
+//                .withChild(frameworkLink)
+//                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/chart-styles.css"))
+//                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/main-styles.css"))
+//                .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"));
+//        
+        
+          Head head = new Head()
+                .add(new Meta().charset("UTF-8"))
+                .add(new Meta().name("viewport").content("width=device-width, initial-scale=1"))
+                .add(new Title().text(title))
+                .add(frameworkLink)
+                .add( new Link().rel("stylesheet").href(contextPath + "/css/chart-styles.css"))
+                .add( new Link().rel("stylesheet").href(contextPath + "/css/main-styles.css"))
+                .add( new Link().rel("stylesheet").href( "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"))
+                
+                ;
+        
+        
         //  .withChild(new Tag("link").withAttribute("rel", "stylesheet").withAttribute("href", contextPath + "/css/all.min.css"));
         // ⭐ Cuando un Controller necesita añadir mas parametros al header los pasa como una lista
         // se procesan en esta seccionñ

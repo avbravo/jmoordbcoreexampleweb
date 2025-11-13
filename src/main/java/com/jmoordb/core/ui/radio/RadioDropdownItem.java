@@ -4,11 +4,12 @@
  */
 package com.jmoordb.core.ui.radio;
 
+import com.jmoordb.core.ui.radio.element.RadioElement;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Li;
 import com.jmoordb.core.ui.P;
 import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.css.RadioDropdownCss;
+import com.jmoordb.core.ui.radio.css.RadioDropdownCss;
 import com.jmoordb.core.ui.div.Div;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class RadioDropdownItem extends Tag {
      * @param tagName
      * @param color
      */
-    public RadioDropdownItem(String id, String aria_labelledby, List<RadioListGroupElement> radioListGroupElements) {
+    public RadioDropdownItem(String id, String aria_labelledby, List<RadioElement> radioListGroupElements) {
         super("ul");
         withClass(RadioDropdownCss.UL.css);
         withAttribute("aria-labelledby", aria_labelledby);
@@ -33,7 +34,7 @@ public class RadioDropdownItem extends Tag {
 
         } else {
 
-            for (RadioListGroupElement rge : radioListGroupElements) {
+            for (RadioElement rge : radioListGroupElements) {
                 String valueText = rge.label().getText();
                 String forField = rge.label().getForField();
                 String subText = rge.label().getSubText();

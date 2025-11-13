@@ -8,15 +8,15 @@ import com.jmoordb.core.ui.radio.element.RadioElement;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Li;
 import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.radio.css.RadioHorizontalListGroupCss;
 import com.jmoordb.core.ui.div.Div;
+import com.jmoordb.core.ui.radio.css.RadioInlineCss;
 import java.util.List;
 
 /**
  *
  * @author avbravo
  */
-public class RadioHorizontalListGroup extends Tag {
+public class RadioInline extends Tag {
 
     /**
      * Color red, blue
@@ -24,31 +24,31 @@ public class RadioHorizontalListGroup extends Tag {
      * @param tagName
      * @param color
      */
-    public RadioHorizontalListGroup(List<RadioElement> radioListGroupElements) {
-        super("ul");
-        withClass(RadioHorizontalListGroupCss.UL.css);
+    public RadioInline(List<RadioElement> radioListGroupElements) {
+        super("div");
+        withClass(RadioInlineCss.Div.css);
 
         if (radioListGroupElements == null || radioListGroupElements.isEmpty()) {
         } else {
             for (RadioElement rge : radioListGroupElements) {
                 add(
-                        new Li(RadioHorizontalListGroupCss.LI.css)
+                        new Div(RadioInlineCss.DivRow.css)
                                 .add(
-                                        new Div(RadioHorizontalListGroupCss.DIV.css)
-                                                .add(rge.radioItem())
-                                                .add(rge.label())
+                                        rge.radioItem()
                                 )
+                                .add(rge.label())
                 );
+
             }
         }
     }
 
-    public RadioHorizontalListGroup addClass(String styleClass) {
+    public RadioInline addClass(String styleClass) {
         withClass(styleClass);
         return this;
     }
 
-    public RadioHorizontalListGroup add(Label label) {
+    public RadioInline add(Label label) {
         if (label != null) {
             withChild(label);
         }
@@ -56,7 +56,7 @@ public class RadioHorizontalListGroup extends Tag {
         return this;
     }
 
-    public RadioHorizontalListGroup add(RadioItem radioItem) {
+    public RadioInline add(RadioItem radioItem) {
 
         if (radioItem != null) {
             withChild(radioItem);
