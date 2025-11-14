@@ -28,7 +28,7 @@ public class RadioAdvancedLayout extends Tag {
      * @param tagName
      * @param color
      */
-    public RadioAdvancedLayout(String id, List<RadioElement> radioElements) {
+    public RadioAdvancedLayout( List<RadioElement> radioElements) {
         super("ul");
         withClass(RadioAdvancedLayoutCss.UL.css);
 
@@ -55,7 +55,7 @@ public class RadioAdvancedLayout extends Tag {
                                                 .withAttribute("width", "24")
                                                 .withAttribute("fill", "none")
                                                 .withAttribute("viewBox", "0 0 24 24")
-                                                .withAttribute(id, valueText)
+                                
                                                 .add(new SvgPath()
                                                         .stroke("currentColor")
                                                         .stroke_linecap("round")

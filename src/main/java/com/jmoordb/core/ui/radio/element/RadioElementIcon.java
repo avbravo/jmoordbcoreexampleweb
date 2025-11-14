@@ -1,0 +1,17 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.jmoordb.core.ui.radio.element;
+
+import com.jmoordb.core.ui.Label;
+import com.jmoordb.core.ui.Svg;
+import com.jmoordb.core.ui.radio.item.RadioItem;
+
+/**
+ *
+ * @author avbravo
+ */
+public record RadioElementIcon(RadioItem radioItem,Label label, Svg svg ){
+
+}

@@ -66,7 +66,7 @@ String forField;
         super("label");
         this.text = text;
         withText(text);
-         withClass(cssType);
+         withClass(getCssTypeLabelServices().toCss(cssType));
         
                 
        
@@ -96,7 +96,7 @@ String forField;
         super("label");
         this.text = text;
         withText(text);
-        withClass(cssType);
+              withClass(getCssTypeLabelServices().toCss(cssType));
          
                 
         if (forField == null || forField.equals("")) {
@@ -108,41 +108,7 @@ String forField;
 
     }
     
-    public Label withClass(CssType cssType){
-        switch (cssType) {
-              case FormRow:
-               withClass(FormRowCss.Label.css);
-               break;
-            case GridCol:
-               withClass(GridColCss.Label.css);
-               break;
-            case Radio:
-                withClass(RadioCss.Label.css);
-                break;
-            case RadioBorder:
-                withClass(RadioBorderCss.Label.css);
-                break;
-            case RadioDropdown:
-                withClass(RadioDropdownCss.Label.css);
-                break;
-            case RadioHorizontalListGroup:
-                 withClass(RadioHorizontalListGroupCss.Label.css);
-                break;
-            case RadioInline:
-                withClass(RadioInlineCss.Label.css);
-                break;
-            case RadioListGroup:
-                withClass(RadioListGroupCss.Label.css);
-                break;
-            case RadioTwoColumns:
-               withClass(RadioTwoColumnsCss.Label.css);
-                break;
-
-            default:
-
-        }
-        return this;
-    }
+   
      public Label setSubText(String subText) {
                 this.subText = subText;
                 return this;
@@ -174,8 +140,7 @@ String forField;
         super("label");
                 this.text = text;
         withText(text);
-        withClass(cssType);
-        
+            withClass(getCssTypeLabelServices().toCss(cssType));
         if (forField == null || forField.equals("")) {
 
         } else {

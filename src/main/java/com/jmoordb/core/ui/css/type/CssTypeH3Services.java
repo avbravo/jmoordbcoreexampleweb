@@ -4,17 +4,11 @@
  */
 package com.jmoordb.core.ui.css.type;
 
-import com.jmoordb.core.ui.css.FormRowCss;
-import com.jmoordb.core.ui.css.GridColCss;
-import com.jmoordb.core.ui.css.InputFileCss;
 import com.jmoordb.core.ui.css.RadioAdvancedLayoutCss;
-import com.jmoordb.core.ui.css.RadioBorderCss;
-import com.jmoordb.core.ui.css.RadioCss;
-import com.jmoordb.core.ui.css.RadioDropdownCss;
+import com.jmoordb.core.ui.css.RadioAdvancedLayoutIconCss;
 import com.jmoordb.core.ui.css.RadioHorizontalListGroupCss;
 import com.jmoordb.core.ui.css.RadioInlineCss;
 import com.jmoordb.core.ui.css.RadioListGroupCss;
-import com.jmoordb.core.ui.css.RadioTwoColumnsCss;
 import static com.jmoordb.core.ui.css.type.CssType.FormRow;
 import static com.jmoordb.core.ui.css.type.CssType.GridCol;
 import static com.jmoordb.core.ui.css.type.CssType.InputFile;
@@ -47,6 +41,9 @@ public class CssTypeH3Services {
                 break;
             case RadioAdvancedLayout:
                 result = (RadioAdvancedLayoutCss.H3.css);
+                break;
+            case RadioAdvancedLayoutIcon:
+                result = (RadioAdvancedLayoutIconCss.H3.css);
                 break;
             case RadioBorder:
              //   result = (RadioBorderCss.H3.css);

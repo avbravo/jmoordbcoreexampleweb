@@ -8,6 +8,7 @@ import com.jmoordb.core.ui.css.FormRowCss;
 import com.jmoordb.core.ui.css.GridColCss;
 import com.jmoordb.core.ui.css.InputFileCss;
 import com.jmoordb.core.ui.css.RadioAdvancedLayoutCss;
+import com.jmoordb.core.ui.css.RadioAdvancedLayoutIconCss;
 import com.jmoordb.core.ui.css.RadioBorderCss;
 import com.jmoordb.core.ui.css.RadioCss;
 import com.jmoordb.core.ui.css.RadioDropdownCss;
@@ -20,6 +21,7 @@ import static com.jmoordb.core.ui.css.type.CssType.GridCol;
 import static com.jmoordb.core.ui.css.type.CssType.InputFile;
 import static com.jmoordb.core.ui.css.type.CssType.Radio;
 import static com.jmoordb.core.ui.css.type.CssType.RadioAdvancedLayout;
+import static com.jmoordb.core.ui.css.type.CssType.RadioAdvancedLayoutIcon;
 import static com.jmoordb.core.ui.css.type.CssType.RadioBorder;
 import static com.jmoordb.core.ui.css.type.CssType.RadioDropdown;
 import static com.jmoordb.core.ui.css.type.CssType.RadioHorizontalListGroup;
@@ -48,6 +50,9 @@ public class CssTypeInputServices {
                 break;
             case RadioAdvancedLayout:
                 result = (RadioAdvancedLayoutCss.Input.css);
+                break;
+                   case RadioAdvancedLayoutIcon:
+                result = (RadioAdvancedLayoutIconCss.Input.css);
                 break;
             case RadioBorder:
                 result = (RadioBorderCss.Input.css);

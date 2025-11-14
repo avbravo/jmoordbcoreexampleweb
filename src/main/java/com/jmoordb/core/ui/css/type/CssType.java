@@ -13,6 +13,7 @@ public enum CssType {
     GridCol,
     InputFile,
     RadioAdvancedLayout,
+    RadioAdvancedLayoutIcon,
     Radio,
     RadioBorder,
     RadioDropdown,
