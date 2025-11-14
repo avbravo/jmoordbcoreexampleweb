@@ -8,13 +8,50 @@ package com.jmoordb.core.ui;
  *
  * @author avbravo
  */
+import com.jmoordb.core.ui.css.type.CssTypeH3Services;
+import com.jmoordb.core.ui.css.type.CssTypeInputServices;
+import com.jmoordb.core.ui.css.type.CssTypeLabelServices;
 import java.util.*;
 
 public class Tag implements WebComponent {
+    // <editor-fold defaultstate="collapsed" desc="css">
 
+    CssTypeH3Services cssTypeH3Services = new CssTypeH3Services();
+    CssTypeInputServices cssTypeInputServices = new CssTypeInputServices();
+    CssTypeLabelServices cssTypeLabelServices = new CssTypeLabelServices();
+    // </editor-fold>
     private final String tagName;
     private final List<WebComponent> childs = new ArrayList<>();
     private final Map<String, String> attributes = new HashMap<>();
+
+    // <editor-fold defaultstate="collapsed" desc="set/get">
+
+    public CssTypeH3Services getCssTypeH3Services() {
+        return cssTypeH3Services;
+    }
+
+    public void setCssTypeH3Services(CssTypeH3Services cssTypeH3Services) {
+        this.cssTypeH3Services = cssTypeH3Services;
+    }
+
+    public CssTypeInputServices getCssTypeInputServices() {
+        return cssTypeInputServices;
+    }
+
+    public void setCssTypeInputServices(CssTypeInputServices cssTypeInputServices) {
+        this.cssTypeInputServices = cssTypeInputServices;
+    }
+
+    public CssTypeLabelServices getCssTypeLabelServices() {
+        return cssTypeLabelServices;
+    }
+
+    public void setCssTypeLabelServices(CssTypeLabelServices cssTypeLabelServices) {
+        this.cssTypeLabelServices = cssTypeLabelServices;
+    }
+    
+    // </editor-fold>
+    
 
     /**
      * Constructor.
@@ -125,4 +162,7 @@ public class Tag implements WebComponent {
             return content;
         }
     }
+    
+    
+    
 }

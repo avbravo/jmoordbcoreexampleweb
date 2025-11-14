@@ -9,6 +9,7 @@ import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.css.FormRowCss;
+import com.jmoordb.core.ui.css.type.CssType;
 import com.jmoordb.core.ui.input.InputColor;
 import com.jmoordb.core.ui.input.InputDate;
 import com.jmoordb.core.ui.input.InputEmail;
@@ -21,7 +22,7 @@ import com.jmoordb.core.ui.input.InputSearch;
 import com.jmoordb.core.ui.input.InputText;
 import com.jmoordb.core.ui.input.InputTime;
 import com.jmoordb.core.ui.input.TypeInput;
-import com.jmoordb.core.ui.radio.RadioItem;
+import com.jmoordb.core.ui.radio.item.RadioItem;
 
 /**
  *
@@ -29,7 +30,7 @@ import com.jmoordb.core.ui.radio.RadioItem;
  */
 public class FormRow extends Tag {
 
-    String labelClass = FormRowCss.Label.css;
+//    String labelClass = FormRowCss.Label.css;
     String inputClass = FormRowCss.Input.css;
 //    String labelClass = "block mb-2 text-sm font-medium text-gray-900 dark:text-white";
 //    String inputClass = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
@@ -44,7 +45,7 @@ public class FormRow extends Tag {
         super("div");
         withClass("mb-6");
         add(
-                new Label(label, labelClass, idAndName)
+                new Label(label, CssType.FormRow, idAndName)
         );
         add(
                 new InputText(idAndName, idAndName, inputClass)
@@ -56,7 +57,7 @@ public class FormRow extends Tag {
         super("div");
         withClass("mb-6");
         add(
-                new Label(label, labelClass, id)
+                new Label(label, CssType.FormRow, id)
         );
         add(
                 new InputText(id, name, inputClass)
@@ -78,7 +79,7 @@ public class FormRow extends Tag {
         super("div");
         withClass("mb-6");
         add(
-                new Label(label, labelClass, id)
+                new Label(label, CssType.FormRow, id)
         );
         switch (typeInput) {
             case TypeInput.COLOR:
@@ -98,7 +99,7 @@ public class FormRow extends Tag {
                 break;
             case TypeInput.FILE:
                 add(
-                        new InputFile(id, name, inputClass)
+                        new InputFile(id, name, CssType.InputFile)
                 );
                 break;
             case TypeInput.HIDDEN:
@@ -154,7 +155,7 @@ public class FormRow extends Tag {
         super("div");
         withClass("mb-6");
         add(
-                new Label(label, labelClass, id)
+                new Label(label, CssType.FormRow, id)
         );
 
         switch (typeInput) {
@@ -243,13 +244,13 @@ public class FormRow extends Tag {
         return this;
     }
 
-    public String getLabelClass() {
-        return labelClass;
-    }
-
-    public void setLabelClass(String labelClass) {
-        this.labelClass = labelClass;
-    }
+//    public String getLabelClass() {
+//        return labelClass;
+//    }
+//
+//    public void setLabelClass(String labelClass) {
+//        this.labelClass = labelClass;
+//    }
 
     public String getInputClass() {
         return inputClass;

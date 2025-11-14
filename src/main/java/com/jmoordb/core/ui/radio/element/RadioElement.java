@@ -5,7 +5,7 @@
 package com.jmoordb.core.ui.radio.element;
 
 import com.jmoordb.core.ui.Label;
-import com.jmoordb.core.ui.radio.RadioItem;
+import com.jmoordb.core.ui.radio.item.RadioItem;
 
 /**
  *

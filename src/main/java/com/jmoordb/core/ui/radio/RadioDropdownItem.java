@@ -4,13 +4,15 @@
  */
 package com.jmoordb.core.ui.radio;
 
+import com.jmoordb.core.ui.radio.item.RadioItem;
 import com.jmoordb.core.ui.radio.element.RadioElement;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Li;
 import com.jmoordb.core.ui.P;
 import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.radio.css.RadioDropdownCss;
+import com.jmoordb.core.ui.css.RadioDropdownCss;
 import com.jmoordb.core.ui.div.Div;
+import com.jmoordb.core.ui.css.type.CssType;
 import java.util.List;
 
 /**
@@ -38,17 +40,13 @@ public class RadioDropdownItem extends Tag {
                 String valueText = rge.label().getText();
                 String forField = rge.label().getForField();
                 String subText = rge.label().getSubText();
-                add(
-                        new Li()
-                                .add(
-                                        new Div(RadioDropdownCss.DivLI.css)
+                add(new Li()
+                                .add(new Div(RadioDropdownCss.DivLI.css)
                                                 .add(new Div(RadioDropdownCss.DivInput.css)
                                                         .add(rge.radioItem())
                                                 )
-                                                .add(
-                                                        new Div(RadioDropdownCss.DivLabel.css)
-                                                                .add(
-                                                                        new Label("", RadioDropdownCss.Label.css, forField)
+                                                .add(new Div(RadioDropdownCss.DivLabel.css)
+                                                                .add(new Label("", CssType.RadioDropdown, forField)
                                                                                 .add(new Div().text(valueText))
                                                                                 .add(new P(subText, RadioDropdownCss.P.css).id(id + "-text"))
                                                                 )

@@ -5,19 +5,21 @@
 package com.jmoordb.core.ui.radio;
 
 import com.jmoordb.core.ui.radio.item.RadioItem;
+import com.jmoordb.core.ui.FieldSet;
 import com.jmoordb.core.ui.radio.element.RadioElement;
 import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Li;
 import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.css.RadioListGroupCss;
 import com.jmoordb.core.ui.div.Div;
+import com.jmoordb.core.ui.css.RadioInlineCss;
+import com.jmoordb.core.ui.css.RadioTwoColumnsCss;
 import java.util.List;
 
 /**
  *
  * @author avbravo
  */
-public class RadioListGroup extends Tag {
+public class RadioTwoColumnsItem extends Tag {
 
     /**
      * Color red, blue
@@ -25,31 +27,34 @@ public class RadioListGroup extends Tag {
      * @param tagName
      * @param color
      */
-    public RadioListGroup(List<RadioElement> radioListGroupElements) {
-        super("ul");
-        withClass(RadioListGroupCss.UL.css);
+    public RadioTwoColumnsItem(String id, String title, List<RadioElement> radioElements) {
+        super("div");
+        withClass(RadioTwoColumnsCss.Div.css);
 
-        if (radioListGroupElements == null || radioListGroupElements.isEmpty()) {
+        if (radioElements == null || radioElements.isEmpty()) {
         } else {
-            for (RadioElement rge : radioListGroupElements) {
+            for (RadioElement rge : radioElements) {
                 add(
-                        new Li(RadioListGroupCss.LI.css)
+                        new Div(RadioTwoColumnsCss.DivRow.css)
                                 .add(
-                                        new Div(RadioListGroupCss.DIV.css)
-                                                .add(rge.radioItem())
-                                                .add(rge.label())
+                                        rge.radioItem()
                                 )
+                                .add(rge.label())
                 );
+
             }
         }
     }
-
-    public RadioListGroup addClass(String styleClass) {
+public RadioTwoColumnsItem id(String id) {
+        withAttribute("id", id);
+        return this;
+    }
+    public RadioTwoColumnsItem addClass(String styleClass) {
         withClass(styleClass);
         return this;
     }
 
-    public RadioListGroup add(Label label) {
+    public RadioTwoColumnsItem add(Label label) {
         if (label != null) {
             withChild(label);
         }
@@ -57,7 +62,7 @@ public class RadioListGroup extends Tag {
         return this;
     }
 
-    public RadioListGroup add(RadioItem radioItem) {
+    public RadioTwoColumnsItem add(RadioItem radioItem) {
 
         if (radioItem != null) {
             withChild(radioItem);

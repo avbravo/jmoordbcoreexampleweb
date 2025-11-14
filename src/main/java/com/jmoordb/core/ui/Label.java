@@ -4,7 +4,26 @@
  */
 package com.jmoordb.core.ui;
 
+import com.jmoordb.core.ui.css.FormRowCss;
+import com.jmoordb.core.ui.css.GridColCss;
 import com.jmoordb.core.ui.radio.RadioItemLink;
+import com.jmoordb.core.ui.css.RadioBorderCss;
+import com.jmoordb.core.ui.css.RadioCss;
+import com.jmoordb.core.ui.css.type.CssType;
+import static com.jmoordb.core.ui.css.type.CssType.FormRow;
+import static com.jmoordb.core.ui.css.type.CssType.GridCol;
+import static com.jmoordb.core.ui.css.type.CssType.Radio;
+import static com.jmoordb.core.ui.css.type.CssType.RadioBorder;
+import static com.jmoordb.core.ui.css.type.CssType.RadioDropdown;
+import static com.jmoordb.core.ui.css.type.CssType.RadioHorizontalListGroup;
+import static com.jmoordb.core.ui.css.type.CssType.RadioInline;
+import static com.jmoordb.core.ui.css.type.CssType.RadioListGroup;
+import static com.jmoordb.core.ui.css.type.CssType.RadioTwoColumns;
+import com.jmoordb.core.ui.css.RadioDropdownCss;
+import com.jmoordb.core.ui.css.RadioHorizontalListGroupCss;
+import com.jmoordb.core.ui.css.RadioInlineCss;
+import com.jmoordb.core.ui.css.RadioListGroupCss;
+import com.jmoordb.core.ui.css.RadioTwoColumnsCss;
 
 /**
  *
@@ -41,6 +60,18 @@ String forField;
         withClass(styleClass);
 
     }
+    
+     public Label(String text, CssType cssType) {
+
+        super("label");
+        this.text = text;
+        withText(text);
+         withClass(cssType);
+        
+                
+       
+    }
+    
 
     public Label(String text, String styleClass, String forField) {
 
@@ -60,7 +91,58 @@ String forField;
         }
 
     }
+    public Label(String text, CssType cssType, String forField) {
+
+        super("label");
+        this.text = text;
+        withText(text);
+        withClass(cssType);
+         
+                
+        if (forField == null || forField.equals("")) {
+
+        } else {
+            withAttribute("for", forField);
+            this.forField =forField;
+        }
+
+    }
     
+    public Label withClass(CssType cssType){
+        switch (cssType) {
+              case FormRow:
+               withClass(FormRowCss.Label.css);
+               break;
+            case GridCol:
+               withClass(GridColCss.Label.css);
+               break;
+            case Radio:
+                withClass(RadioCss.Label.css);
+                break;
+            case RadioBorder:
+                withClass(RadioBorderCss.Label.css);
+                break;
+            case RadioDropdown:
+                withClass(RadioDropdownCss.Label.css);
+                break;
+            case RadioHorizontalListGroup:
+                 withClass(RadioHorizontalListGroupCss.Label.css);
+                break;
+            case RadioInline:
+                withClass(RadioInlineCss.Label.css);
+                break;
+            case RadioListGroup:
+                withClass(RadioListGroupCss.Label.css);
+                break;
+            case RadioTwoColumns:
+               withClass(RadioTwoColumnsCss.Label.css);
+                break;
+
+            default:
+
+        }
+        return this;
+    }
      public Label setSubText(String subText) {
                 this.subText = subText;
                 return this;
@@ -71,7 +153,7 @@ String forField;
     public Label(String text, String styleClass, String forField, RadioItemLink radioItemLink) {
 
         super("label");
-                this.text = text;
+        this.text = text;
         withText(text);
         if (styleClass == null || styleClass.equals("")) {
 
@@ -82,11 +164,37 @@ String forField;
 
         } else {
             withAttribute("for", forField);
+            this.forField = forField;
+        }
+
+        add(radioItemLink);
+    }
+    public Label(String text, CssType cssType, String forField, RadioItemLink radioItemLink) {
+
+        super("label");
+                this.text = text;
+        withText(text);
+        withClass(cssType);
+        
+        if (forField == null || forField.equals("")) {
+
+        } else {
+            withAttribute("for", forField);
              this.forField =forField;
         }
 
         add(radioItemLink);
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     public Label text(String text) {
                 this.text = text;

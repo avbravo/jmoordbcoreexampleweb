@@ -15,11 +15,11 @@ import com.jmoordb.core.ui.Span;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.css.GridColCss;
-import com.jmoordb.core.ui.radio.css.RadioBorderCss;
-import com.jmoordb.core.ui.radio.css.RadioCss;
-import com.jmoordb.core.ui.radio.css.RadioDropdownCss;
-import com.jmoordb.core.ui.radio.css.RadioHorizontalListGroupCss;
-import com.jmoordb.core.ui.radio.css.RadioListGroupCss;
+import com.jmoordb.core.ui.css.RadioBorderCss;
+import com.jmoordb.core.ui.css.RadioCss;
+import com.jmoordb.core.ui.css.RadioDropdownCss;
+import com.jmoordb.core.ui.css.RadioHorizontalListGroupCss;
+import com.jmoordb.core.ui.css.RadioListGroupCss;
 import com.jmoordb.core.ui.dashboard.DashboardLayout;
 import com.jmoordb.core.ui.form.Grid;
 import com.jmoordb.core.ui.form.GridCol;
@@ -36,14 +36,16 @@ import com.jmoordb.core.ui.radio.RadioBorder;
 import com.jmoordb.core.ui.radio.RadioDropdownButton;
 import com.jmoordb.core.ui.radio.RadioHelper;
 import com.jmoordb.core.ui.radio.RadioHorizontalListGroup;
-import com.jmoordb.core.ui.radio.RadioItem;
+import com.jmoordb.core.ui.radio.item.RadioItem;
 import com.jmoordb.core.ui.radio.RadioItemLink;
 import com.jmoordb.core.ui.radio.RadioDropdown;
 import com.jmoordb.core.ui.radio.RadioInline;
 import com.jmoordb.core.ui.radio.RadioListGroup;
+import com.jmoordb.core.ui.radio.RadioTwoColumns;
 import com.jmoordb.core.ui.radio.element.RadioElement;
-import com.jmoordb.core.ui.radio.css.RadioCssType;
-import com.jmoordb.core.ui.radio.css.RadioInlineCss;
+import com.jmoordb.core.ui.css.type.CssType;
+import com.jmoordb.core.ui.css.RadioInlineCss;
+import com.jmoordb.core.ui.css.RadioTwoColumnsCss;
 import com.jmoordb.core.ui.radio.header.RadioHeader;
 import fish.payara.config.ConfigurationProperties;
 import fish.payara.dashboard.MenuSideBar;
@@ -123,10 +125,10 @@ public class AnalisisFlowBiteView extends JettraView {
             grid.add(new GridCol("Fecha de Registro3", "fechaRegistro3", "fechaRegistro3", TypeInput.DATE));
 
             grid.add(new GridCol(
-                    new Label("Apellido", GridColCss.Label.css, "apellido"),
+                    new Label("Apellido", CssType.GridCol, "apellido"),
                     new InputText("apellido", "apellido", GridColCss.Input.css).required(Boolean.TRUE)));
             grid.add(new GridCol(
-                    new Label("Salario", GridColCss.Label.css, "salario"),
+                    new Label("Salario", CssType.GridCol, "salario"),
                     new InputText("salario", "salario", GridColCss.Input.css).required(Boolean.TRUE)));
 
             mainForm.add(grid);
@@ -137,11 +139,11 @@ public class AnalisisFlowBiteView extends JettraView {
             H3 h3Autos = new H3("Autos");
 
             Div divMazda = new Div(RadioCss.Div.css)
-                    .add(new RadioItem("mazda", "autos", RadioCss.Input.css))
-                    .add(new Label("Mazda", RadioCss.Label.css, "mazda"));
+                    .add(new RadioItem("mazda", "autos", CssType.Radio))
+                    .add(new Label("Mazda", CssType.Radio, "mazda"));
             Div divFerrari = new Div("flex items-center mb-4")
-                    .add(new RadioItem("ferrari", "autos", RadioCss.Input.css))
-                    .add(new Label("Ferrari", RadioCss.Label.css, "ferrari"));
+                    .add(new RadioItem("ferrari", "autos", CssType.Radio))
+                    .add(new Label("Ferrari", CssType.Radio, "ferrari"));
 
             mainForm.add(h3Autos);
             mainForm.add(divMazda);
@@ -149,49 +151,49 @@ public class AnalisisFlowBiteView extends JettraView {
 
             H3 h3 = new H3("Frutas");
             Radio radioManzana = new Radio()
-                    .add(new RadioItem("manzana", "frutas", RadioCss.Input.css).disabled(Boolean.TRUE))
-                    .add(new Label("Manzana", RadioCss.Label.css, "manzana"));
+                    .add(new RadioItem("manzana", "frutas", CssType.Radio).disabled(Boolean.TRUE))
+                    .add(new Label("Manzana", CssType.Radio, "manzana"));
 
             Radio radioUva = new Radio()
-                    .add(new RadioItem("uva", "frutas", RadioCss.Input.css).checked(Boolean.TRUE))
-                    .add(new Label("Uva", RadioCss.Label.css, "uva"));
+                    .add(new RadioItem("uva", "frutas", CssType.Radio).checked(Boolean.TRUE))
+                    .add(new Label("Uva", CssType.Radio, "uva"));
             Radio radioPera = new Radio()
-                    .add(new RadioItem("pera", "frutas", RadioCss.Input.css).checked(Boolean.TRUE))
-                    .add(new Label("Pera", RadioCss.Label.css, "pera"));
+                    .add(new RadioItem("pera", "frutas", CssType.Radio).checked(Boolean.TRUE))
+                    .add(new Label("Pera", CssType.Radio, "pera"));
 
             Radio radioLink = new Radio()
-                    .add(new RadioItem("guineo", "frutas", RadioCss.Input.css)
+                    .add(new RadioItem("guineo", "frutas", CssType.Radio)
                             .checked(Boolean.TRUE)
                     )
-                    .add(new Label("Guineo", RadioCss.Label.css, "guineo", new RadioItemLink("#", "link inside")));
+                    .add(new Label("Guineo", CssType.Radio, "guineo", new RadioItemLink("#", "link inside")));
 
-            RadioItem radioItemSandia = new RadioItem("sandia", "frutas", RadioCss.Input.css).checked(Boolean.TRUE);
-            Label labelSandia = new Label("Sandia", RadioCss.Label.css, "sandia");
+            RadioItem radioItemSandia = new RadioItem("sandia", "frutas",CssType.Radio).checked(Boolean.TRUE);
+            Label labelSandia = new Label("Sandia", CssType.Radio, "sandia");
             RadioHelper radioHelperSandia = new RadioHelper(
                     radioItemSandia,
                     labelSandia, "Es una fruta tropical"
             );
 
             RadioBorder radioBorderLimon = new RadioBorder()
-                    .add(new RadioItem("limon", "frutas", RadioBorderCss.Input.css).checked(Boolean.TRUE))
-                    .add(new Label("Limon", RadioBorderCss.Label.css, "limon"));
+                    .add(new RadioItem("limon", "frutas", CssType.RadioBorder).checked(Boolean.TRUE))
+                    .add(new Label("Limon", CssType.RadioBorder, "limon"));
             RadioBorder radioBorderPapaya = new RadioBorder()
-                    .add(new RadioItem("papaya", "frutas", RadioBorderCss.Input.css).checked(Boolean.TRUE))
-                    .add(new Label("Papaya", RadioBorderCss.Label.css, "papaya"));
+                    .add(new RadioItem("papaya", "frutas", CssType.RadioBorder).checked(Boolean.TRUE))
+                    .add(new Label("Papaya", CssType.RadioBorder, "papaya"));
 
             /**
              * RadioListGroup
              */
-            RadioHeader rlgh = new RadioHeader("Identificación", RadioCssType.RadioListGroup);
+            RadioHeader rlgh = new RadioHeader("Identificación", CssType.RadioListGroup);
             List<RadioElement> radioElements = new ArrayList<>();
 
             radioElements.add(new RadioElement(
-                    new RadioItem("cedula", "identificacion", RadioListGroupCss.Input.css),
-                    new Label("Cedula", RadioListGroupCss.Label.css, "cedula")
+                    new RadioItem("cedula", "identificacion", CssType.RadioListGroup),
+                    new Label("Cedula", CssType.RadioListGroup, "cedula")
             ));
             radioElements.add(new RadioElement(
-                    new RadioItem("pasaporte", "identificacion", RadioListGroupCss.Input.css),
-                    new Label("Pasaporte", RadioListGroupCss.Label.css, "pasaporte")
+                    new RadioItem("pasaporte", "identificacion", CssType.RadioListGroup),
+                    new Label("Pasaporte", CssType.RadioListGroup, "pasaporte")
             ));
 
             RadioListGroup radioListIdentificacion = new RadioListGroup(radioElements);
@@ -199,16 +201,16 @@ public class AnalisisFlowBiteView extends JettraView {
             /**
              * RadioHorizontalListGroup
              */
-            RadioHeader rhlghPais = new RadioHeader("Pais", RadioCssType.RadioHorizontalListGroup);
+            RadioHeader rhlghPais = new RadioHeader("Pais", CssType.RadioHorizontalListGroup);
             List<RadioElement> radioHorizontalListGroupElements = new ArrayList<>();
 
             radioHorizontalListGroupElements.add(new RadioElement(
-                    new RadioItem("panama", "pais", RadioHorizontalListGroupCss.Input.css),
-                    new Label("Panama", RadioHorizontalListGroupCss.Label.css, "cedula")
+                    new RadioItem("panama", "pais", CssType.RadioHorizontalListGroup),
+                    new Label("Panama", CssType.RadioHorizontalListGroup, "cedula")
             ));
             radioHorizontalListGroupElements.add(new RadioElement(
-                    new RadioItem("colombia", "pais", RadioHorizontalListGroupCss.Input.css),
-                    new Label("Colombia", RadioHorizontalListGroupCss.Label.css, "pasaporte")
+                    new RadioItem("colombia", "pais", CssType.RadioHorizontalListGroup),
+                    new Label("Colombia", CssType.RadioHorizontalListGroup, "pasaporte")
             ));
 
             RadioHorizontalListGroup radioHorizontalListIdentificacion = new RadioHorizontalListGroup(radioHorizontalListGroupElements);
@@ -221,12 +223,12 @@ public class AnalisisFlowBiteView extends JettraView {
             List<RadioElement> radioElementLenguajes = new ArrayList<>();
 
             radioElementLenguajes.add(new RadioElement(
-                    new RadioItem("java", "lenguaje", RadioDropdownCss.Input.css),
-                    new Label("Java", RadioDropdownCss.Label.css, "java").setSubText("Creado por J. Gosling")
+                    new RadioItem("java", "lenguaje", CssType.RadioDropdown),
+                    new Label("Java", CssType.RadioDropdown, "java").setSubText("Creado por J. Gosling")
             ));
             radioElementLenguajes.add(new RadioElement(
-                    new RadioItem("c", "lenguaje", RadioDropdownCss.Input.css),
-                    new Label("C", RadioDropdownCss.Label.css, "lenguaje").setSubText("Inicio de todo")
+                    new RadioItem("c", "lenguaje", CssType.RadioDropdown),
+                    new Label("C", CssType.RadioDropdown, "lenguaje").setSubText("Inicio de todo")
             ));
 
             RadioDropdown radioDropdownLenguajes = new RadioDropdown("dropdownHelperRadio", "dropdownHelperRadioButton", radioElementLenguajes);
@@ -252,12 +254,12 @@ public class AnalisisFlowBiteView extends JettraView {
             List<RadioElement> radioElementLenguajes2 = new ArrayList<>();
 
             radioElementLenguajes2.add(new RadioElement(
-                    new RadioItem("matrix", "pelicula", RadioDropdownCss.Input.css),
-                    new Label("Matrix", RadioDropdownCss.Label.css, "matrix").setSubText("Reloaded")
+                    new RadioItem("matrix", "pelicula", CssType.RadioDropdown),
+                    new Label("Matrix", CssType.RadioDropdown, "matrix").setSubText("Reloaded")
             ));
             radioElementLenguajes2.add(new RadioElement(
-                    new RadioItem("senoranillos", "pelicula", RadioDropdownCss.Input.css),
-                    new Label("El señor de los anillos", RadioDropdownCss.Label.css, "senoranillos").setSubText("Las dos torres")
+                    new RadioItem("senoranillos", "pelicula", CssType.RadioDropdown),
+                    new Label("El señor de los anillos", CssType.RadioDropdown, "senoranillos").setSubText("Las dos torres")
             ));
 
             RadioDropdown radioDropdownLenguajes2 = new RadioDropdown("dropdownHelperRadio2", "dropdownHelperRadioButton2", radioElementLenguajes2);
@@ -270,19 +272,49 @@ public class AnalisisFlowBiteView extends JettraView {
             /*
             * RadioInline
              */
-            RadioHeader radioHeadDeportes = new RadioHeader("Deportes", RadioCssType.RadioInline);
+            RadioHeader radioHeadDeportes = new RadioHeader("Deportes", CssType.RadioInline);
             List<RadioElement> radioElementDeportes = new ArrayList<>();
 
             radioElementDeportes.add(new RadioElement(
-                    new RadioItem("baloncesto", "deporte", RadioInlineCss.Input.css).checked(Boolean.TRUE),
-                    new Label("Baloncesto", RadioInlineCss.Label.css, "baloncesto")
+                    new RadioItem("baloncesto", "deporte", CssType.RadioInline).checked(Boolean.TRUE),
+                    new Label("Baloncesto", CssType.RadioInline, "baloncesto")
             ));
             radioElementDeportes.add(new RadioElement(
-                    new RadioItem("tenis", "deporte", RadioInlineCss.Input.css),
-                    new Label("Tenis", RadioInlineCss.Label.css, "tenis")
+                    new RadioItem("tenis", "deporte", CssType.RadioInline),
+                    new Label("Tenis", CssType.RadioInline, "tenis")
             ));
 
             RadioInline radioInline = new RadioInline(radioElementDeportes);
+            
+              /**
+             * radioTwoColumns
+             */
+            List<RadioElement> radioElementTowColumns = new ArrayList<>();
+
+            radioElementTowColumns.add(new RadioElement(
+                    new RadioItem("auto", "vehiculo", CssType.RadioTwoColumns),
+                    new Label("Auto", CssType.RadioTwoColumns, "auto")
+            ));
+            radioElementTowColumns.add(new RadioElement(
+                    new RadioItem("auto", "vehiculo", CssType.RadioTwoColumns),
+                    new Label("Auto", CssType.RadioTwoColumns, "auto")
+            ));
+            radioElementTowColumns.add(new RadioElement(
+                    new RadioItem("barco", "vehiculo", CssType.RadioTwoColumns),
+                    new Label("Barco", CssType.RadioHorizontalListGroup, "barco")
+            ));
+            radioElementTowColumns.add(new RadioElement(
+                    new RadioItem("tren", "vehiculo", CssType.RadioTwoColumns),
+                    new Label("Tren", CssType.RadioTwoColumns, "tren")
+            ));
+            radioElementTowColumns.add(new RadioElement(
+                    new RadioItem("avion", "vehiculo", CssType.RadioTwoColumns),
+                    new Label("Avion", CssType.RadioTwoColumns, "avion")
+            ));
+
+            RadioTwoColumns radioTwoColumns = new RadioTwoColumns("vehiculo-section","Vehiculos", radioElementTowColumns);
+
+            
 
             mainForm.add(h3);
             mainForm.add(radioManzana);
@@ -307,6 +339,8 @@ public class AnalisisFlowBiteView extends JettraView {
 
             mainForm.add(radioHeadDeportes);
             mainForm.add(radioInline);
+            
+            mainForm.add(radioTwoColumns);
 
 //            <div class="flex items-center">
 //    <input id="link-radio" type="radio" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -316,42 +350,9 @@ public class AnalisisFlowBiteView extends JettraView {
 //            
 //            </label>
 //</div>
-            Div divReasonSection2 = new Div().id("reason-section")
-                    .add(new FieldSet().text("Motivo del estudio"))
-                    .add(
-                            new Div().addClass("radio-group-container two-columns")
-                                    .add(
-                                            new Div().addClass("radio-item")
-                                                    .add(new RadioItem().id("motivo1").name("motivo").required(Boolean.TRUE).value("Vaginitis"))
-                                                    .add(new Label().forField("motivo1").text("Vaginitis").addClass(RadioCss.Label.css))
-                                    )
-                                    .add(
-                                            new Div().addClass("radio-item")
-                                                    .add(new RadioItem().id("motivo2").name("motivo").required(Boolean.TRUE).value("Candidiasis previa"))
-                                                    .add(new Label().forField("motivo2").text("Candidiasis previa").addClass(RadioCss.Label.css))
-                                    )
-                                    .add(
-                                            new Div().addClass("radio-item")
-                                                    .add(new RadioItem().id("motivo3").name("motivo").required(Boolean.TRUE).value("Coitorragia"))
-                                                    .add(new Label().forField("motivo3").text("Coitorragia").addClass(RadioCss.Label.css))
-                                    )
-                                    .add(
-                                            new Div().addClass("radio-item")
-                                                    .add(new RadioItem().id("motivo4").name("motivo").required(Boolean.TRUE).value("Dispareunia"))
-                                                    .add(new Label().forField("motivo4").text("Dispareunia").addClass(RadioCss.Label.css))
-                                    )
-                                    .add(
-                                            new Div().addClass("radio-item")
-                                                    .add(new RadioItem().id("motivo5").name("motivo").required(Boolean.TRUE).value("Disuaria/Cistitis"))
-                                                    .add(new Label().forField("motivo5").text("Disuaria/Cistitis").addClass(RadioCss.Label.css))
-                                    )
-                                    .add(
-                                            new Div().addClass("radio-item")
-                                                    .add(new RadioItem().id("motivo6").name("motivo").required(Boolean.TRUE).value("Gestante"))
-                                                    .add(new Label().forField("motivo6").text("Gestante").addClass(RadioCss.Label.css))
-                                    )
-                    );
-            mainForm.add(divReasonSection2);
+          
+           
+   
 
             /**
              *

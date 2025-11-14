@@ -5,16 +5,21 @@
 package com.jmoordb.core.ui.radio;
 
 import com.jmoordb.core.ui.radio.item.RadioItem;
+import com.jmoordb.core.ui.FieldSet;
 import com.jmoordb.core.ui.radio.element.RadioElement;
 import com.jmoordb.core.ui.Label;
+import com.jmoordb.core.ui.Li;
 import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.div.Div;
+import com.jmoordb.core.ui.css.RadioInlineCss;
+import com.jmoordb.core.ui.css.RadioTwoColumnsCss;
 import java.util.List;
 
 /**
  *
  * @author avbravo
  */
-public class RadioDropdown extends Tag {
+public class RadioTwoColumns extends Tag {
 
     /**
      * Color red, blue
@@ -22,25 +27,26 @@ public class RadioDropdown extends Tag {
      * @param tagName
      * @param color
      */
-    public RadioDropdown(String id, String aria_labelledby, List<RadioElement> radioListGroupElements) {
+    public RadioTwoColumns(String id, String title, List<RadioElement> radioElements) {
         super("div");
-        withClass("z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-60 dark:bg-gray-700 dark:divide-gray-600");
+        //withClass(RadioTwoColumnsCss.Div.css);
         withAttribute("id", id);
-        withAttribute("data-popper-reference-hidden", "");
-        withAttribute("data-popper-escaped", "");
-        withAttribute("data-popper-placement", "top");
+        add(new FieldSet().text(title));
+        add(new RadioTwoColumnsItem(id, title, radioElements));
 
-
-        withAttribute("style", "position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 6119.5px, 0px);");
-        add(new RadioDropdownItem(id, aria_labelledby, radioListGroupElements));
     }
 
-    public RadioDropdown addClass(String styleClass) {
+    public RadioTwoColumns id(String id) {
+        withAttribute("id", id);
+        return this;
+    }
+
+    public RadioTwoColumns addClass(String styleClass) {
         withClass(styleClass);
         return this;
     }
 
-    public RadioDropdown add(Label label) {
+    public RadioTwoColumns add(Label label) {
         if (label != null) {
             withChild(label);
         }
@@ -48,7 +54,7 @@ public class RadioDropdown extends Tag {
         return this;
     }
 
-    public RadioDropdown add(RadioItem radioItem) {
+    public RadioTwoColumns add(RadioItem radioItem) {
 
         if (radioItem != null) {
             withChild(radioItem);

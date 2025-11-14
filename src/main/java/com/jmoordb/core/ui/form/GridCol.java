@@ -9,6 +9,7 @@ import com.jmoordb.core.ui.Label;
 import com.jmoordb.core.ui.Tag;
 import com.jmoordb.core.ui.WebComponent;
 import com.jmoordb.core.ui.css.GridColCss;
+import com.jmoordb.core.ui.css.type.CssType;
 import com.jmoordb.core.ui.input.InputColor;
 import com.jmoordb.core.ui.input.InputDate;
 import com.jmoordb.core.ui.input.InputEmail;
@@ -21,7 +22,7 @@ import com.jmoordb.core.ui.input.InputSearch;
 import com.jmoordb.core.ui.input.InputText;
 import com.jmoordb.core.ui.input.InputTime;
 import com.jmoordb.core.ui.input.TypeInput;
-import com.jmoordb.core.ui.radio.RadioItem;
+import com.jmoordb.core.ui.radio.item.RadioItem;
 
 /**
  *
@@ -29,7 +30,7 @@ import com.jmoordb.core.ui.radio.RadioItem;
  */
 public class GridCol extends Tag {
 
-    String labelClass = GridColCss.Label.css;
+    //String labelClass = GridColCss.Label.css;
     String inputClass = GridColCss.Input.css;
 
     /**
@@ -43,7 +44,7 @@ public class GridCol extends Tag {
     public GridCol(String label, String idAndName) {
         super("div");
         add(
-                new Label(label, labelClass, idAndName)
+                new Label(label, CssType.GridCol, idAndName)
         );
         add(
                 new InputText(idAndName, idAndName, inputClass)
@@ -56,7 +57,7 @@ public class GridCol extends Tag {
 
         super("div");
         add(
-                new Label(label, labelClass, id)
+                new Label(label, CssType.GridCol, id)
         );
         add(
                 new InputText(id, name, inputClass)
@@ -79,7 +80,7 @@ public class GridCol extends Tag {
 
         super("div");
         add(
-                new Label(label, labelClass, id)
+                new Label(label, CssType.GridCol, id)
         );
         switch (typeInput) {
             case TypeInput.COLOR:
@@ -156,7 +157,7 @@ public class GridCol extends Tag {
 
         super("div");
         add(
-                new Label(label, labelClass, id)
+                new Label(label, CssType.GridCol, id)
         );
 
         switch (typeInput) {
@@ -177,7 +178,7 @@ public class GridCol extends Tag {
                 break;
             case TypeInput.FILE:
                 add(
-                        new InputFile(id, name, inputClass).required(required).readonly(readonly)
+                        new InputFile(id, name, CssType.InputFile).required(required).readonly(readonly)
                 );
                 break;
             case TypeInput.HIDDEN:
@@ -246,13 +247,13 @@ public class GridCol extends Tag {
         return this;
     }
 
-    public String getLabelClass() {
-        return labelClass;
-    }
-
-    public void setLabelClass(String labelClass) {
-        this.labelClass = labelClass;
-    }
+//    public String getLabelClass() {
+//        return labelClass;
+//    }
+//
+//    public void setLabelClass(String labelClass) {
+//        this.labelClass = labelClass;
+//    }
 
     public String getInputClass() {
         return inputClass;

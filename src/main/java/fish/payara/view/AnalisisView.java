@@ -20,7 +20,7 @@ import com.jmoordb.core.ui.input.InputText;
 import com.jmoordb.core.ui.jettra.JettraView;
 import com.jmoordb.core.ui.model.WebModelSession;
 import com.jmoordb.core.ui.panel.Panel;
-import com.jmoordb.core.ui.radio.RadioItem;
+import com.jmoordb.core.ui.radio.item.RadioItem;
 import fish.payara.config.ConfigurationProperties;
 import fish.payara.dashboard.MenuSideBar;
 import jakarta.enterprise.context.RequestScoped;

@@ -5,7 +5,27 @@
 package com.jmoordb.core.ui.input;
 
 import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.css.FormRowCss;
+import com.jmoordb.core.ui.css.GridColCss;
+import com.jmoordb.core.ui.css.InputFileCss;
+import com.jmoordb.core.ui.css.type.CssType;
+import static com.jmoordb.core.ui.css.type.CssType.FormRow;
+import static com.jmoordb.core.ui.css.type.CssType.GridCol;
+import static com.jmoordb.core.ui.css.type.CssType.Radio;
+import static com.jmoordb.core.ui.css.type.CssType.RadioBorder;
+import static com.jmoordb.core.ui.css.type.CssType.RadioDropdown;
+import static com.jmoordb.core.ui.css.type.CssType.RadioHorizontalListGroup;
+import static com.jmoordb.core.ui.css.type.CssType.RadioInline;
+import static com.jmoordb.core.ui.css.type.CssType.RadioListGroup;
+import static com.jmoordb.core.ui.css.type.CssType.RadioTwoColumns;
+import com.jmoordb.core.ui.css.RadioBorderCss;
+import com.jmoordb.core.ui.css.RadioCss;
+import com.jmoordb.core.ui.css.RadioDropdownCss;
+import com.jmoordb.core.ui.css.RadioHorizontalListGroupCss;
+import com.jmoordb.core.ui.css.RadioInlineCss;
+import com.jmoordb.core.ui.css.RadioListGroupCss;
+import com.jmoordb.core.ui.css.RadioTwoColumnsCss;
+import static com.jmoordb.core.ui.css.type.CssType.InputFile;
 
 /**
  *
@@ -39,7 +59,57 @@ public class InputEmail extends Tag {
         }
 
     }
+         public InputEmail(String id, String name,CssType cssType) {
 
+        super("input");
+      withAttribute("type", "email");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        
+            withClass(cssType);
+       
+
+    }
+
+         
+         public InputEmail withClass(CssType cssType){
+        switch (cssType) {
+              case FormRow:
+               withClass(FormRowCss.Input.css);
+               break;
+            case GridCol:
+               withClass(GridColCss.Input.css);
+               break;
+            case InputFile:
+               withClass(InputFileCss.Input.css);
+               break;
+            case Radio:
+                withClass(RadioCss.Input.css);
+                break;
+            case RadioBorder:
+                withClass(RadioBorderCss.Input.css);
+                break;
+            case RadioDropdown:
+                withClass(RadioDropdownCss.Input.css);
+                break;
+            case RadioHorizontalListGroup:
+                 withClass(RadioHorizontalListGroupCss.Input.css);
+                break;
+            case RadioInline:
+                withClass(RadioInlineCss.Input.css);
+                break;
+            case RadioListGroup:
+                withClass(RadioListGroupCss.Input.css);
+                break;
+            case RadioTwoColumns:
+               withClass(RadioTwoColumnsCss.Input.css);
+                break;
+
+            default:
+
+        }
+        return this;
+    }
     public InputEmail text(String text) {
         withText(text);
         return this;

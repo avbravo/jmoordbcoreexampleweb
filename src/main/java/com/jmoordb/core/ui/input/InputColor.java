@@ -5,7 +5,27 @@
 package com.jmoordb.core.ui.input;
 
 import com.jmoordb.core.ui.Tag;
-import com.jmoordb.core.ui.Tag;
+import com.jmoordb.core.ui.css.FormRowCss;
+import com.jmoordb.core.ui.css.GridColCss;
+import com.jmoordb.core.ui.css.InputFileCss;
+import com.jmoordb.core.ui.css.type.CssType;
+import static com.jmoordb.core.ui.css.type.CssType.FormRow;
+import static com.jmoordb.core.ui.css.type.CssType.GridCol;
+import static com.jmoordb.core.ui.css.type.CssType.Radio;
+import static com.jmoordb.core.ui.css.type.CssType.RadioBorder;
+import static com.jmoordb.core.ui.css.type.CssType.RadioDropdown;
+import static com.jmoordb.core.ui.css.type.CssType.RadioHorizontalListGroup;
+import static com.jmoordb.core.ui.css.type.CssType.RadioInline;
+import static com.jmoordb.core.ui.css.type.CssType.RadioListGroup;
+import static com.jmoordb.core.ui.css.type.CssType.RadioTwoColumns;
+import com.jmoordb.core.ui.css.RadioBorderCss;
+import com.jmoordb.core.ui.css.RadioCss;
+import com.jmoordb.core.ui.css.RadioDropdownCss;
+import com.jmoordb.core.ui.css.RadioHorizontalListGroupCss;
+import com.jmoordb.core.ui.css.RadioInlineCss;
+import com.jmoordb.core.ui.css.RadioListGroupCss;
+import com.jmoordb.core.ui.css.RadioTwoColumnsCss;
+import static com.jmoordb.core.ui.css.type.CssType.InputFile;
 
 /**
  *
@@ -25,11 +45,11 @@ public class InputColor extends Tag {
         withAttribute("type", "color");
 
     }
-    
-     public InputColor(String id, String name, String styleClass) {
+
+    public InputColor(String id, String name, String styleClass) {
 
         super("input");
-       withAttribute("type", "color");
+        withAttribute("type", "color");
         withAttribute("id", id);
         withAttribute("name", name);
         if (styleClass == null || styleClass.equals("")) {
@@ -40,6 +60,19 @@ public class InputColor extends Tag {
 
     }
 
+    public InputColor(String id, String name, CssType cssType) {
+
+        super("input");
+        withAttribute("type", "color");
+        withAttribute("id", id);
+        withAttribute("name", name);
+
+        withClass(getCssTypeInputServices().toCss(cssType));
+
+    }
+
+
+
     public InputColor text(String text) {
         withText(text);
         return this;
@@ -49,14 +82,14 @@ public class InputColor extends Tag {
         withAttribute("id", id);
         return this;
     }
-    
-        public InputColor name(String name) {
+
+    public InputColor name(String name) {
         withAttribute("name", name);
         return this;
     }
 
-     public InputColor addClass(String withClass) {
-      withClass(withClass);
+    public InputColor addClass(String withClass) {
+        withClass(withClass);
         return this;
     }
 
