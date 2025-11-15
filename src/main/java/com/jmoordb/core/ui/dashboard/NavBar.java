@@ -92,18 +92,18 @@ public class NavBar implements WebComponent {
                 .withChild(new Tag("i").withClass("fas fa-sun")));
 
           // ⭐ 4. Selector de Framework CSS (Desplegable)
-        String dropdownMenuClass = isTailwind ? "absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-content z-50" : "dropdown-menu dropdown-menu-end";
-        String dropdownItemClass = isTailwind ? "block px-4 py-2 text-sm text-text-color hover:bg-gray-700" : "dropdown-item";
+//        String dropdownMenuClass = isTailwind ? "absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-content z-50" : "dropdown-menu dropdown-menu-end";
+//        String dropdownItemClass = isTailwind ? "block px-4 py-2 text-sm text-text-color hover:bg-gray-700" : "dropdown-item";
 
-        Tag frameworkDropdown = new Tag("div").withClass("dropdown me-3");
-
-        Tag dropdownButton = new Tag("button").withClass(dropdownBtnClass)
-                .withAttribute("type", "button")
-                .withAttribute("data-bs-toggle", "dropdown")
-                .withAttribute("aria-expanded", "false")
-                .withText(framework.toUpperCase());
-
-        Tag dropdownMenu = new Tag("ul").withClass(dropdownMenuClass);
+//        Tag frameworkDropdown = new Tag("div").withClass("dropdown me-3");
+//
+//        Tag dropdownButton = new Tag("button").withClass(dropdownBtnClass)
+//                .withAttribute("type", "button")
+//                .withAttribute("data-bs-toggle", "dropdown")
+//                .withAttribute("aria-expanded", "false")
+//                .withText(framework.toUpperCase());
+//
+//        Tag dropdownMenu = new Tag("ul").withClass(dropdownMenuClass);
 
       
     //         // Opción Bootstrap
@@ -122,19 +122,19 @@ public class NavBar implements WebComponent {
         
         
         
-// Opción Bootstrap
-dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
-    .withAttribute("href", "javascript:void(0)")
-    // ⭐ SIMPLIFIED LOGIC: Call setCssFramework only. The reload handles the close.
-    .withAttribute("onclick", "setCssFramework('bootstrap');") 
-    .withText("Bootstrap")));
-
-// Opción Tailwind CSS
-dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
-    .withAttribute("href", "javascript:void(0)")
-    // ⭐ SIMPLIFIED LOGIC: Call setCssFramework only. The reload handles the close.
-    .withAttribute("onclick", "setCssFramework('tailwind');") 
-    .withText("Tailwind CSS")));
+//// Opción Bootstrap
+//dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+//    .withAttribute("href", "javascript:void(0)")
+//    // ⭐ SIMPLIFIED LOGIC: Call setCssFramework only. The reload handles the close.
+//    .withAttribute("onclick", "setCssFramework('bootstrap');") 
+//    .withText("Bootstrap")));
+//
+//// Opción Tailwind CSS
+//dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownItemClass)
+//    .withAttribute("href", "javascript:void(0)")
+//    // ⭐ SIMPLIFIED LOGIC: Call setCssFramework only. The reload handles the close.
+//    .withAttribute("onclick", "setCssFramework('tailwind');") 
+//    .withText("Tailwind CSS")));
 
 
 
@@ -163,8 +163,8 @@ dropdownMenu.withChild(new Tag("li").withChild(new Tag("a").withClass(dropdownIt
 // ...
 
         
-        frameworkDropdown.withChild(dropdownButton).withChild(dropdownMenu);
-        rightContainer.withChild(frameworkDropdown);
+//        frameworkDropdown.withChild(dropdownButton).withChild(dropdownMenu);
+//        rightContainer.withChild(frameworkDropdown);
 
         // 5. Información de Usuario Logeado
         String usernameClass = isTailwind ? "hidden md:block text-sm text-gray-400 mr-3" : "navbar-text me-3 text-white-50";

@@ -92,7 +92,7 @@ public class AnalisisFlowBiteView extends JettraView {
             }
         }
 
-        headers.add(new Link().rel("stylesheet").href(request.getContextPath() + "/css/radio.css"));
+       headers.add(new Link().rel("stylesheet").href(request.getContextPath() + "/css/radio.css"));
 
         return DashboardLayout.buildPage(
                 request,
@@ -235,28 +235,7 @@ public class AnalisisFlowBiteView extends JettraView {
             gridRadioDropdwon.add(radioDropdownButton);
             gridRadioDropdwon.add(radioDropdownLenguajes);
 
-            /**
-             * Radio in dropdown 2
-             */
-            RadioDropdownButton radioDropdownButton2 = new RadioDropdownButton("dropdownHelperRadioButton3", "", "RadioDropdownButton Peliculas");
-
-            List<RadioElement> radioElementLenguajes2 = new ArrayList<>();
-
-            radioElementLenguajes2.add(new RadioElement(
-                    new RadioItem("matrix", "pelicula", CssType.RadioDropdown),
-                    new Label("Matrix", CssType.RadioDropdown, "matrix").setSubText("Reloaded")
-            ));
-            radioElementLenguajes2.add(new RadioElement(
-                    new RadioItem("senoranillos", "pelicula", CssType.RadioDropdown),
-                    new Label("El señor de los anillos", CssType.RadioDropdown, "senoranillos").setSubText("Las dos torres")
-            ));
-
-            RadioDropdown radioDropdownLenguajes2 = new RadioDropdown("dropdownHelperRadio2", "dropdownHelperRadioButton2", radioElementLenguajes2);
-            Grid gridRadioDropdwon2 = new Grid();
-            gridRadioDropdwon2.add(radioDropdownButton2);
-            gridRadioDropdwon2.add(radioDropdownLenguajes2);
-            Script scriptFecth = new Script()
-                    .code(javaScriptCode());
+            
 
             /*
             * RadioInline
@@ -377,8 +356,7 @@ public class AnalisisFlowBiteView extends JettraView {
 //            mainForm.add(radioDropdownLenguajes);
             mainForm.add(gridRadioDropdwon);
             mainForm.add(new Hr());
-            mainForm.add(gridRadioDropdwon2);
-            mainForm.add(scriptFecth);
+
             mainForm.add(new Hr());
             mainForm.add(radioHeadDeportes);
             mainForm.add(radioInline);
