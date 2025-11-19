@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+    <head>
+        <title>Once Cargas y Formulario Completo - FlowbieCSS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="htmx-config" content='{"selfRequestsOnly": false}'>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
+
+        <style>
+            /* FlowbieCSS usa variables de Bootstrap. Solo añadimos ajustes específicos */
+            body {
+                font-family: 'Montserrat', sans-serif;
+                background-color: var(--bs-body-bg); /* Usa el color de fondo de Bootstrap (se adapta al tema) */
+                color: var(--bs-body-color);
+            }
+            .page-container {
+                max-width: 1000px; /* Contenedor principal para centrar */
+                width: 100%;
+                margin: 0 auto;
+                padding: 30px 15px;
+            }
+            .form-card {
+                /* Sombra personalizada y color de fondo para el formulario principal */
+                background-color: var(--bs-body-bg);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+            .upload-section {
+                /* Recreación del estilo dashed-border con Flowbie/Bootstrap */
+                border: 2px dashed var(--bs-primary);
+                background-color: var(--bs-primary-bg-subtle);
+            }
+            .preview-box {
+                /* Recreación de la caja de previsualización */
+                height: 200px;
+                overflow: hidden;
+                border: 1px solid var(--bs-border-color);
+                border-radius: var(--bs-border-radius);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: var(--bs-body-bg);
+            }
+            .preview-box img {
+                max-width: 100%; max-height: 100%; height: auto; width: auto; display: none;
+                object-fit: contain;
+            }
+            .preview-box p {
+                color: var(--bs-secondary);
+                text-align: center;
+                margin: 0;
+            }
+
+            /* Hojas de estilo para HTMX y Spinner (Adaptadas a Flowbie) */
+            .spinner { border: 3px solid rgba(255, 255, 255, 0.3); border-top-color: #fff; border-radius: 50%; width: 1.2em; height: 1.2em; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-left: 8px;}
+            
+            /* Clases HTMX para el botón de carga/guardado */
+            .btn .htmx-indicator { display: none; }
+            .htmx-request .button-text { display: none; }
+            .htmx-request .htmx-indicator { display: inline-block; }
+            
+            #save-feedback.pending {
+                border-color: var(--bs-primary);
+                background-color: var(--bs-primary-bg-subtle);
+                color: var(--bs-primary);
+            }
+            /* Animación para el spinner */
+            @keyframes spin {
+                to { transform: rotate(360deg); }
+            }
+        </style>
+    </head>
+    <body class="d-flex justify-content-center align-items-start min-vh-100">
+        <div class="page-container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="text-primary text-center w-100">Gestión de Expedientes de Pacientes</h1>
+                <button id="themeToggle" class="btn btn-outline-secondary" onclick="toggleTheme()" title="Cambiar Tema">
+                    <i class="bi bi-sun-fill" id="themeIcon"></i>
+                </button>
+            </div>
+
+            <form id='mainForm' class="card p-4 p-md-5 form-card border-0">
+                
+                <div id="patient-data" class="p-3 p-md-4 mb-5 border border-primary rounded-3 bg-primary-subtle shadow-sm">
+                    <h2 class="text-primary mb-4 pb-2 border-bottom border-primary">Datos del Paciente</h2>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="nhrc" class="form-label fw-semibold">NHRC (Número de Historia Clínica):</label>
+                                <input type="text" id="nhrc" name="nhrc" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="prioridad" class="form-label fw-semibold">Prioridad:</label>
+                                <select id="prioridad" name="prioridad" class="form-select" required>
+                                    <option value="">Seleccione</option>
+                                    <option value="grave">Grave</option>
+                                    <option value="alta">Alta</option>
+                                    <option value="media">Media</option>
+                                    <option value="baja">Baja</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="edad" class="form-label fw-semibold">Edad del Paciente:</label>
+                                <input type="number" id="edad" name="edad" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    // Genera los bloques de carga dinámicamente o usa la estructura fija. 
+                    // Para simplificar y mantener la consistencia con el código original:
+                    // Se utiliza la estructura HTML fija y se aplica FlowbieCSS.
+                </script>
+
+                <div class="upload-section p-4 mb-4 rounded-3">
+                    <h2 class="fs-5 fw-bold mb-3">Carga 1: Radiografía Frontal</h2>
+                    <input type='file' name='fileUpload1' class="form-control mb-3" onchange="previewImage(event, 'image-preview1', 'placeholder-text1')">
+                    <button id="uploadButton1" type="button" class="btn btn-primary" hx-post='/jmoordbcoreexampleweb/api/files/upload1' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload1']" hx-indicator="#uploadButton1 .htmx-indicator">
+                        <span class="button-text">Subir Imagen 1</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                    
+                    <div class="row g-4 mt-3">
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Vista Previa Local</h3>
+                                <div class="preview-box">
+                                    <img id="image-preview1" alt="Vista previa de la imagen 1">
+                                    <p id="placeholder-text1">Selecciona una imagen para previsualizar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Imagen del Servidor</h3>
+                                <div id="server-image-preview1" class="preview-box">
+                                    <img id="server-image1" alt="Imagen del Servidor 1">
+                                    <p id="server-placeholder1">La imagen aparecerá aquí después de la carga.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-fields1" class="p-3 mt-4 border rounded-3 bg-light-subtle">
+                        <p id="feedback-message1" class="fw-semibold text-primary">Resultados de Carga 1:</p>
+                        <div class="mb-2">
+                            <label for="fileIdInput1" class="form-label small mb-1">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput1" name="fileId1" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="originalFileNameInput1" class="form-label small mb-1">Nombre Original:</label>
+                            <input type="text" id="originalFileNameInput1" name="originalFileName1" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-0">
+                            <label for="fileRemoteIdInput1" class="form-label small mb-1">ID de Foto (Servidor):</label>
+                            <input type="text" id="fileRemoteIdInput1" name="fileRemoteId1" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr class="my-5">
+
+                <div class="upload-section p-4 mb-4 rounded-3">
+                    <h2 class="fs-5 fw-bold mb-3">Carga 2: Radiografía Lateral</h2>
+                    <input type='file' name='fileUpload2' class="form-control mb-3" onchange="previewImage(event, 'image-preview2', 'placeholder-text2')">
+                    <button id="uploadButton2" type="button" class="btn btn-primary" hx-post='/jmoordbcoreexampleweb/api/files/upload2' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload2']" hx-indicator="#uploadButton2 .htmx-indicator">
+                        <span class="button-text">Subir Imagen 2</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                    
+                    <div class="row g-4 mt-3">
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Vista Previa Local</h3>
+                                <div class="preview-box">
+                                    <img id="image-preview2" alt="Vista previa de la imagen 2">
+                                    <p id="placeholder-text2">Selecciona una imagen para previsualizar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Imagen del Servidor</h3>
+                                <div id="server-image-preview2" class="preview-box">
+                                    <img id="server-image2" alt="Imagen del Servidor 2">
+                                    <p id="server-placeholder2">La imagen aparecerá aquí después de la carga.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-fields2" class="p-3 mt-4 border rounded-3 bg-light-subtle">
+                        <p id="feedback-message2" class="fw-semibold text-primary">Resultados de Carga 2:</p>
+                        <div class="mb-2">
+                            <label for="fileIdInput2" class="form-label small mb-1">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput2" name="fileId2" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="originalFileNameInput2" class="form-label small mb-1">Nombre Original:</label>
+                            <input type="text" id="originalFileNameInput2" name="originalFileName2" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-0">
+                            <label for="fileRemoteIdInput2" class="form-label small mb-1">ID de Foto (Servidor):</label>
+                            <input type="text" id="fileRemoteIdInput2" name="fileRemoteId2" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="upload-section p-4 mb-4 rounded-3">
+                    <h2 class="fs-5 fw-bold mb-3">Carga 3: Radiografía Oblicua</h2>
+                    <input type='file' name='fileUpload3' class="form-control mb-3" onchange="previewImage(event, 'image-preview3', 'placeholder-text3')">
+                    <button id="uploadButton3" type="button" class="btn btn-primary" hx-post='/jmoordbcoreexampleweb/api/files/upload3' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload3']" hx-indicator="#uploadButton3 .htmx-indicator">
+                        <span class="button-text">Subir Imagen 3</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                    
+                    <div class="row g-4 mt-3">
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Vista Previa Local</h3>
+                                <div class="preview-box">
+                                    <img id="image-preview3" alt="Vista previa de la imagen 3">
+                                    <p id="placeholder-text3">Selecciona una imagen para previsualizar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Imagen del Servidor</h3>
+                                <div id="server-image-preview3" class="preview-box">
+                                    <img id="server-image3" alt="Imagen del Servidor 3">
+                                    <p id="server-placeholder3">La imagen aparecerá aquí después de la carga.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-fields3" class="p-3 mt-4 border rounded-3 bg-light-subtle">
+                        <p id="feedback-message3" class="fw-semibold text-primary">Resultados de Carga 3:</p>
+                        <div class="mb-2">
+                            <label for="fileIdInput3" class="form-label small mb-1">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput3" name="fileId3" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="originalFileNameInput3" class="form-label small mb-1">Nombre Original:</label>
+                            <input type="text" id="originalFileNameInput3" name="originalFileName3" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-0">
+                            <label for="fileRemoteIdInput3" class="form-label small mb-1">ID de Foto (Servidor):</label>
+                            <input type="text" id="fileRemoteIdInput3" name="fileRemoteId3" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="upload-section p-4 mb-4 rounded-3">
+                    <h2 class="fs-5 fw-bold mb-3">Carga 4: Tomografía/Resonancia</h2>
+                    <input type='file' name='fileUpload4' class="form-control mb-3" onchange="previewImage(event, 'image-preview4', 'placeholder-text4')">
+                    <button id="uploadButton4" type="button" class="btn btn-primary" hx-post='/jmoordbcoreexampleweb/api/files/upload4' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload4']" hx-indicator="#uploadButton4 .htmx-indicator">
+                        <span class="button-text">Subir Imagen 4</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                    
+                    <div class="row g-4 mt-3">
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Vista Previa Local</h3>
+                                <div class="preview-box">
+                                    <img id="image-preview4" alt="Vista previa de la imagen 4">
+                                    <p id="placeholder-text4">Selecciona una imagen para previsualizar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Imagen del Servidor</h3>
+                                <div id="server-image-preview4" class="preview-box">
+                                    <img id="server-image4" alt="Imagen del Servidor 4">
+                                    <p id="server-placeholder4">La imagen aparecerá aquí después de la carga.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-fields4" class="p-3 mt-4 border rounded-3 bg-light-subtle">
+                        <p id="feedback-message4" class="fw-semibold text-primary">Resultados de Carga 4:</p>
+                        <div class="mb-2">
+                            <label for="fileIdInput4" class="form-label small mb-1">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput4" name="fileId4" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="originalFileNameInput4" class="form-label small mb-1">Nombre Original:</label>
+                            <input type="text" id="originalFileNameInput4" name="originalFileName4" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-0">
+                            <label for="fileRemoteIdInput4" class="form-label small mb-1">ID de Foto (Servidor):</label>
+                            <input type="text" id="fileRemoteIdInput4" name="fileRemoteId4" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="upload-section p-4 mb-4 rounded-3">
+                    <h2 class="fs-5 fw-bold mb-3">Carga 5: Documento Adicional 1</h2>
+                    <input type='file' name='fileUpload5' class="form-control mb-3" onchange="previewImage(event, 'image-preview5', 'placeholder-text5')">
+                    <button id="uploadButton5" type="button" class="btn btn-primary" hx-post='/jmoordbcoreexampleweb/api/files/upload5' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload5']" hx-indicator="#uploadButton5 .htmx-indicator">
+                        <span class="button-text">Subir Imagen 5</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                    
+                    <div class="row g-4 mt-3">
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Vista Previa Local</h3>
+                                <div class="preview-box">
+                                    <img id="image-preview5" alt="Vista previa de la imagen 5">
+                                    <p id="placeholder-text5">Selecciona una imagen para previsualizar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Imagen del Servidor</h3>
+                                <div id="server-image-preview5" class="preview-box">
+                                    <img id="server-image5" alt="Imagen del Servidor 5">
+                                    <p id="server-placeholder5">La imagen aparecerá aquí después de la carga.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-fields5" class="p-3 mt-4 border rounded-3 bg-light-subtle">
+                        <p id="feedback-message5" class="fw-semibold text-primary">Resultados de Carga 5:</p>
+                        <div class="mb-2">
+                            <label for="fileIdInput5" class="form-label small mb-1">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput5" name="fileId5" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="originalFileNameInput5" class="form-label small mb-1">Nombre Original:</label>
+                            <input type="text" id="originalFileNameInput5" name="originalFileName5" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-0">
+                            <label for="fileRemoteIdInput5" class="form-label small mb-1">ID de Foto (Servidor):</label>
+                            <input type="text" id="fileRemoteIdInput5" name="fileRemoteId5" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="upload-section p-4 mb-4 rounded-3">
+                    <h2 class="fs-5 fw-bold mb-3">Carga 6: Documento Adicional 2</h2>
+                    <input type='file' name='fileUpload6' class="form-control mb-3" onchange="previewImage(event, 'image-preview6', 'placeholder-text6')">
+                    <button id="uploadButton6" type="button" class="btn btn-primary" hx-post='/jmoordbcoreexampleweb/api/files/upload6' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload6']" hx-indicator="#uploadButton6 .htmx-indicator">
+                        <span class="button-text">Subir Imagen 6</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                    
+                    <div class="row g-4 mt-3">
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Vista Previa Local</h3>
+                                <div class="preview-box">
+                                    <img id="image-preview6" alt="Vista previa de la imagen 6">
+                                    <p id="placeholder-text6">Selecciona una imagen para previsualizar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Imagen del Servidor</h3>
+                                <div id="server-image-preview6" class="preview-box">
+                                    <img id="server-image6" alt="Imagen del Servidor 6">
+                                    <p id="server-placeholder6">La imagen aparecerá aquí después de la carga.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-fields6" class="p-3 mt-4 border rounded-3 bg-light-subtle">
+                        <p id="feedback-message6" class="fw-semibold text-primary">Resultados de Carga 6:</p>
+                        <div class="mb-2">
+                            <label for="fileIdInput6" class="form-label small mb-1">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput6" name="fileId6" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="originalFileNameInput6" class="form-label small mb-1">Nombre Original:</label>
+                            <input type="text" id="originalFileNameInput6" name="originalFileName6" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-0">
+                            <label for="fileRemoteIdInput6" class="form-label small mb-1">ID de Foto (Servidor):</label>
+                            <input type="text" id="fileRemoteIdInput6" name="fileRemoteId6" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="upload-section p-4 mb-4 rounded-3">
+                    <h2 class="fs-5 fw-bold mb-3">Carga 7: Documento Adicional 3</h2>
+                    <input type='file' name='fileUpload7' class="form-control mb-3" onchange="previewImage(event, 'image-preview7', 'placeholder-text7')">
+                    <button id="uploadButton7" type="button" class="btn btn-primary" hx-post='/jmoordbcoreexampleweb/api/files/upload7' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload7']" hx-indicator="#uploadButton7 .htmx-indicator">
+                        <span class="button-text">Subir Imagen 7</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                    
+                    <div class="row g-4 mt-3">
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Vista Previa Local</h3>
+                                <div class="preview-box">
+                                    <img id="image-preview7" alt="Vista previa de la imagen 7">
+                                    <p id="placeholder-text7">Selecciona una imagen para previsualizar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Imagen del Servidor</h3>
+                                <div id="server-image-preview7" class="preview-box">
+                                    <img id="server-image7" alt="Imagen del Servidor 7">
+                                    <p id="server-placeholder7">La imagen aparecerá aquí después de la carga.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-fields7" class="p-3 mt-4 border rounded-3 bg-light-subtle">
+                        <p id="feedback-message7" class="fw-semibold text-primary">Resultados de Carga 7:</p>
+                        <div class="mb-2">
+                            <label for="fileIdInput7" class="form-label small mb-1">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput7" name="fileId7" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="originalFileNameInput7" class="form-label small mb-1">Nombre Original:</label>
+                            <input type="text" id="originalFileNameInput7" name="originalFileName7" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-0">
+                            <label for="fileRemoteIdInput7" class="form-label small mb-1">ID de Foto (Servidor):</label>
+                            <input type="text" id="fileRemoteIdInput7" name="fileRemoteId7" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="upload-section p-4 mb-4 rounded-3">
+                    <h2 class="fs-5 fw-bold mb-3">Carga 8: Documento Adicional 4</h2>
+                    <input type='file' name='fileUpload8' class="form-control mb-3" onchange="previewImage(event, 'image-preview8', 'placeholder-text8')">
+                    <button id="uploadButton8" type="button" class="btn btn-primary" hx-post='/jmoordbcoreexampleweb/api/files/upload8' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload8']" hx-indicator="#uploadButton8 .htmx-indicator">
+                        <span class="button-text">Subir Imagen 8</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                    
+                    <div class="row g-4 mt-3">
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Vista Previa Local</h3>
+                                <div class="preview-box">
+                                    <img id="image-preview8" alt="Vista previa de la imagen 8">
+                                    <p id="placeholder-text8">Selecciona una imagen para previsualizar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Imagen del Servidor</h3>
+                                <div id="server-image-preview8" class="preview-box">
+                                    <img id="server-image8" alt="Imagen del Servidor 8">
+                                    <p id="server-placeholder8">La imagen aparecerá aquí después de la carga.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-fields8" class="p-3 mt-4 border rounded-3 bg-light-subtle">
+                        <p id="feedback-message8" class="fw-semibold text-primary">Resultados de Carga 8:</p>
+                        <div class="mb-2">
+                            <label for="fileIdInput8" class="form-label small mb-1">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput8" name="fileId8" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="originalFileNameInput8" class="form-label small mb-1">Nombre Original:</label>
+                            <input type="text" id="originalFileNameInput8" name="originalFileName8" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-0">
+                            <label for="fileRemoteIdInput8" class="form-label small mb-1">ID de Foto (Servidor):</label>
+                            <input type="text" id="fileRemoteIdInput8" name="fileRemoteId8" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="upload-section p-4 mb-4 rounded-3">
+                    <h2 class="fs-5 fw-bold mb-3">Carga 9: Documento Adicional 5</h2>
+                    <input type='file' name='fileUpload9' class="form-control mb-3" onchange="previewImage(event, 'image-preview9', 'placeholder-text9')">
+                    <button id="uploadButton9" type="button" class="btn btn-primary" hx-post='/jmoordbcoreexampleweb/api/files/upload9' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload9']" hx-indicator="#uploadButton9 .htmx-indicator">
+                        <span class="button-text">Subir Imagen 9</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                    
+                    <div class="row g-4 mt-3">
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Vista Previa Local</h3>
+                                <div class="preview-box">
+                                    <img id="image-preview9" alt="Vista previa de la imagen 9">
+                                    <p id="placeholder-text9">Selecciona una imagen para previsualizar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Imagen del Servidor</h3>
+                                <div id="server-image-preview9" class="preview-box">
+                                    <img id="server-image9" alt="Imagen del Servidor 9">
+                                    <p id="server-placeholder9">La imagen aparecerá aquí después de la carga.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-fields9" class="p-3 mt-4 border rounded-3 bg-light-subtle">
+                        <p id="feedback-message9" class="fw-semibold text-primary">Resultados de Carga 9:</p>
+                        <div class="mb-2">
+                            <label for="fileIdInput9" class="form-label small mb-1">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput9" name="fileId9" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="originalFileNameInput9" class="form-label small mb-1">Nombre Original:</label>
+                            <input type="text" id="originalFileNameInput9" name="originalFileName9" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-0">
+                            <label for="fileRemoteIdInput9" class="form-label small mb-1">ID de Foto (Servidor):</label>
+                            <input type="text" id="fileRemoteIdInput9" name="fileRemoteId9" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="upload-section p-4 mb-4 rounded-3">
+                    <h2 class="fs-5 fw-bold mb-3">Carga 10: Documento Adicional 6</h2>
+                    <input type='file' name='fileUpload10' class="form-control mb-3" onchange="previewImage(event, 'image-preview10', 'placeholder-text10')">
+                    <button id="uploadButton10" type="button" class="btn btn-primary" hx-post='/jmoordbcoreexampleweb/api/files/upload10' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload10']" hx-indicator="#uploadButton10 .htmx-indicator">
+                        <span class="button-text">Subir Imagen 10</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                    
+                    <div class="row g-4 mt-3">
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Vista Previa Local</h3>
+                                <div class="preview-box">
+                                    <img id="image-preview10" alt="Vista previa de la imagen 10">
+                                    <p id="placeholder-text10">Selecciona una imagen para previsualizar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Imagen del Servidor</h3>
+                                <div id="server-image-preview10" class="preview-box">
+                                    <img id="server-image10" alt="Imagen del Servidor 10">
+                                    <p id="server-placeholder10">La imagen aparecerá aquí después de la carga.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-fields10" class="p-3 mt-4 border rounded-3 bg-light-subtle">
+                        <p id="feedback-message10" class="fw-semibold text-primary">Resultados de Carga 10:</p>
+                        <div class="mb-2">
+                            <label for="fileIdInput10" class="form-label small mb-1">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput10" name="fileId10" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="originalFileNameInput10" class="form-label small mb-1">Nombre Original:</label>
+                            <input type="text" id="originalFileNameInput10" name="originalFileName10" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-0">
+                            <label for="fileRemoteIdInput10" class="form-label small mb-1">ID de Foto (Servidor):</label>
+                            <input type="text" id="fileRemoteIdInput10" name="fileRemoteId10" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <div class="upload-section p-4 mb-4 rounded-3">
+                    <h2 class="fs-5 fw-bold mb-3">Carga 11: Documento Adicional 7</h2>
+                    <input type='file' name='fileUpload11' class="form-control mb-3" onchange="previewImage(event, 'image-preview11', 'placeholder-text11')">
+                    <button id="uploadButton11" type="button" class="btn btn-primary" hx-post='/jmoordbcoreexampleweb/api/files/upload11' hx-encoding='multipart/form-data' hx-swap="none" hx-include="[name='fileUpload11']" hx-indicator="#uploadButton11 .htmx-indicator">
+                        <span class="button-text">Subir Imagen 11</span>
+                        <span class="htmx-indicator spinner"></span>
+                    </button>
+                    
+                    <div class="row g-4 mt-3">
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Vista Previa Local</h3>
+                                <div class="preview-box">
+                                    <img id="image-preview11" alt="Vista previa de la imagen 11">
+                                    <p id="placeholder-text11">Selecciona una imagen para previsualizar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card p-3 shadow-sm h-100">
+                                <h3 class="fs-6 fw-normal text-secondary mb-3">Imagen del Servidor</h3>
+                                <div id="server-image-preview11" class="preview-box">
+                                    <img id="server-image11" alt="Imagen del Servidor 11">
+                                    <p id="server-placeholder11">La imagen aparecerá aquí después de la carga.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-fields11" class="p-3 mt-4 border rounded-3 bg-light-subtle">
+                        <p id="feedback-message11" class="fw-semibold text-primary">Resultados de Carga 11:</p>
+                        <div class="mb-2">
+                            <label for="fileIdInput11" class="form-label small mb-1">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput11" name="fileId11" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label for="originalFileNameInput11" class="form-label small mb-1">Nombre Original:</label>
+                            <input type="text" id="originalFileNameInput11" name="originalFileName11" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                        <div class="mb-0">
+                            <label for="fileRemoteIdInput11" class="form-label small mb-1">ID de Foto (Servidor):</label>
+                            <input type="text" id="fileRemoteIdInput11" name="fileRemoteId11" value="" class="form-control form-control-sm" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="saveButton" type="button"
+                        class="btn btn-success btn-lg mt-5 w-50 mx-auto d-block"
+                        hx-post='/jmoordbcoreexampleweb/api/FormularioController'
+                        hx-target="#save-feedback"
+                        hx-swap="innerHTML"
+                        hx-include="#mainForm" hx-indicator="#saveButton .htmx-indicator">
+                    <span class="button-text">Guardar Expediente</span>
+                    <span class="htmx-indicator spinner"></span>
+                </button>
+                <div id="save-feedback" class="mt-4 p-3 rounded-3 border-1"></div>
+            </form>
+        </div>
+
+        <script>
+            // --- Lógica de Cambio de Tema (Dark/Light) ---
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const htmlElement = document.documentElement;
+
+            // Inicializa el tema basado en el atributo data-bs-theme o localStorage
+            function initializeTheme() {
+                const storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                setTheme(storedTheme);
+            }
+
+            function setTheme(theme) {
+                htmlElement.setAttribute('data-bs-theme', theme);
+                localStorage.setItem('theme', theme);
+                if (theme === 'dark') {
+                    themeIcon.classList.remove('bi-sun-fill');
+                    themeIcon.classList.add('bi-moon-fill');
+                } else {
+                    themeIcon.classList.remove('bi-moon-fill');
+                    themeIcon.classList.add('bi-sun-fill');
+                }
+            }
+
+            function toggleTheme() {
+                const currentTheme = htmlElement.getAttribute('data-bs-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                setTheme(newTheme);
+            }
+
+            document.addEventListener('DOMContentLoaded', initializeTheme);
+
+
+            // --- Lógica Original de Manejo de Archivos (Mantenida) ---
+            const IMAGE_BASE_URL = 'http://localhost/ver-contour/';
+
+            // Mapeo de IDs de inputs y mensajes por número de carga
+            const INPUT_MAP = {
+                '1': { buttonId: 'uploadButton1', fileId: 'fileIdInput1', originalFileName: 'originalFileNameInput1', fileRemoteId: 'fileRemoteIdInput1', feedback: 'feedback-message1', serverImage: 'server-image1', serverPlaceholder: 'server-placeholder1' },
+                '2': { buttonId: 'uploadButton2', fileId: 'fileIdInput2', originalFileName: 'originalFileNameInput2', fileRemoteId: 'fileRemoteIdInput2', feedback: 'feedback-message2', serverImage: 'server-image2', serverPlaceholder: 'server-placeholder2' },
+                '3': { buttonId: 'uploadButton3', fileId: 'fileIdInput3', originalFileName: 'originalFileNameInput3', fileRemoteId: 'fileRemoteIdInput3', feedback: 'feedback-message3', serverImage: 'server-image3', serverPlaceholder: 'server-placeholder3' },
+                '4': { buttonId: 'uploadButton4', fileId: 'fileIdInput4', originalFileName: 'originalFileNameInput4', fileRemoteId: 'fileRemoteIdInput4', feedback: 'feedback-message4', serverImage: 'server-image4', serverPlaceholder: 'server-placeholder4' },
+                '5': { buttonId: 'uploadButton5', fileId: 'fileIdInput5', originalFileName: 'originalFileNameInput5', fileRemoteId: 'fileRemoteIdInput5', feedback: 'feedback-message5', serverImage: 'server-image5', serverPlaceholder: 'server-placeholder5' },
+                '6': { buttonId: 'uploadButton6', fileId: 'fileIdInput6', originalFileName: 'originalFileNameInput6', fileRemoteId: 'fileRemoteIdInput6', feedback: 'feedback-message6', serverImage: 'server-image6', serverPlaceholder: 'server-placeholder6' },
+                '7': { buttonId: 'uploadButton7', fileId: 'fileIdInput7', originalFileName: 'originalFileNameInput7', fileRemoteId: 'fileRemoteIdInput7', feedback: 'feedback-message7', serverImage: 'server-image7', serverPlaceholder: 'server-placeholder7' },
+                '8': { buttonId: 'uploadButton8', fileId: 'fileIdInput8', originalFileName: 'originalFileNameInput8', fileRemoteId: 'fileRemoteIdInput8', feedback: 'feedback-message8', serverImage: 'server-image8', serverPlaceholder: 'server-placeholder8' },
+                '9': { buttonId: 'uploadButton9', fileId: 'fileIdInput9', originalFileName: 'originalFileNameInput9', fileRemoteId: 'fileRemoteIdInput9', feedback: 'feedback-message9', serverImage: 'server-image9', serverPlaceholder: 'server-placeholder9' },
+                '10': { buttonId: 'uploadButton10', fileId: 'fileIdInput10', originalFileName: 'originalFileNameInput10', fileRemoteId: 'fileRemoteIdInput10', feedback: 'feedback-message10', serverImage: 'server-image10', serverPlaceholder: 'server-placeholder10' },
+                '11': { buttonId: 'uploadButton11', fileId: 'fileIdInput11', originalFileName: 'originalFileNameInput11', fileRemoteId: 'fileRemoteIdInput11', feedback: 'feedback-message11', serverImage: 'server-image11', serverPlaceholder: 'server-placeholder11' }
+            };
+            
+            function getElementRefs(suffix) {
+                const map = INPUT_MAP[suffix];
+                if (!map) {
+                     console.error(`Error: Mapeo no encontrado para el sufijo ${suffix}`);
+                     return null;
+                }
+                return {
+                    fileIdInput: document.getElementById(map.fileId),
+                    originalFileNameInput: document.getElementById(map.originalFileName),
+                    fileRemoteIdInput: document.getElementById(map.fileRemoteId),
+                    feedbackMessage: document.getElementById(map.feedback),
+                    serverImage: document.getElementById(map.serverImage),
+                    serverPlaceholder: document.getElementById(map.serverPlaceholder),
+                };
+            }
+
+            // --- LÓGICA CENTRALIZADA DE PREVISUALIZACIÓN DE IMAGEN CLIENTE ---
+            function previewImage(event, previewId, placeholderId) {
+                const file = event.target.files[0];
+                const preview = document.getElementById(previewId);
+                const placeholder = document.getElementById(placeholderId);
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                        placeholder.style.display = 'none';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '';
+                    preview.style.display = 'none';
+                    placeholder.style.display = 'block';
+                }
+            }
+            
+            // Función auxiliar para verificar sufijo
+            function isValidUploadSuffix(suffix) {
+                const num = parseInt(suffix);
+                return !isNaN(num) && num >= 1 && num <= 11;
+            }
+
+            // --- HTMX EVENT HANDLERS (Tu lógica original mantenida) ---
+            
+            // 1. Deshabilitar botones al inicio de la petición
+            htmx.on(document.body, 'htmx:beforeRequest', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                
+                if (buttonId.startsWith('uploadButton')) {
+                    const suffix = buttonId.replace('uploadButton', '');	
+                    
+                    if (isValidUploadSuffix(suffix)) {	
+                        const refs = getElementRefs(suffix);
+                        if (!refs) return;	
+                        
+                        evt.detail.elt.disabled = true;
+                        
+                        refs.fileIdInput.value = '';
+                        refs.fileRemoteIdInput.value = '';
+                        refs.originalFileNameInput.value = '';
+                        refs.feedbackMessage.textContent = `Subiendo Imagen ${suffix}...`;	
+                        refs.serverImage.src = '';
+                        refs.serverImage.style.display = 'none';
+                        refs.serverPlaceholder.style.display = 'block';
+                        refs.serverPlaceholder.textContent = 'La imagen aparecerá aquí después de la carga.';
+                    }
+                }
+                
+                if (buttonId === 'saveButton') {
+                    evt.detail.elt.disabled = true;
+                    const feedbackDiv = document.getElementById('save-feedback');
+                    feedbackDiv.innerHTML = "Guardando formulario, espere...";
+                    feedbackDiv.className = 'pending p-3 text-center';	
+                }
+            });
+
+            // 2. Habilitar botones al finalizar la petición
+            htmx.on(document.body, 'htmx:afterRequest', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                
+                if (buttonId.startsWith('uploadButton')) {
+                    evt.detail.elt.disabled = false;
+                }
+                
+                if (buttonId === 'saveButton') {
+                    const saveButton = document.getElementById('saveButton');
+                    if (saveButton) {
+                        saveButton.disabled = false;
+                    }
+                }
+            });
+
+            // 3. Manejo de Respuesta JSON (UPLOAD) - Asignación de valores
+            htmx.on(document.body, 'htmx:afterSettle', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                const suffix = buttonId.replace('uploadButton', '');	
+
+                if (buttonId.startsWith('uploadButton') && evt.detail.successful) {
+                    if (!isValidUploadSuffix(suffix)) return;	
+                    
+                    const refs = getElementRefs(suffix);
+                    if (!refs) return;	
+
+                    const xhr = evt.detail.xhr;
+
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        
+                        refs.fileIdInput.value = response.fileId || '';
+                        refs.fileRemoteIdInput.value = response.fileRemoteId || '';
+                        refs.originalFileNameInput.value = response.originalFileName || '';
+                        
+                        refs.feedbackMessage.textContent = `✅ Carga ${suffix} exitosa.`;
+
+                        if (response.fileRemoteId) {
+                            
+                            const imageUrl = response.urlRemote + response.fileRemoteId;
+                            
+                            refs.serverImage.src = imageUrl;
+                            refs.serverImage.style.display = 'block';
+                            refs.serverPlaceholder.style.display = 'none';
+
+                            refs.serverImage.onerror = function() {
+                                refs.serverImage.style.display = 'none';
+                                refs.serverPlaceholder.textContent = 'Error al cargar imagen.';
+                                refs.serverPlaceholder.style.display = 'block';
+                            };
+                        }
+
+                    } catch (e) {
+                        refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}: JSON inválido o incompleto.`;
+                    }
+                } else if (buttonId.startsWith('uploadButton') && !evt.detail.successful) {
+                    if (!isValidUploadSuffix(suffix)) return;	
+
+                    const refs = getElementRefs(suffix);
+                    if (!refs) return;	
+                    refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}. Código: ${evt.detail.xhr.status}`;
+                }
+            });
+            
+            // 4. Manejo de Respuesta (SAVE) - Feedback Visual
+            htmx.on(document.body, 'htmx:afterSettle', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                if (buttonId === 'saveButton') {
+                    const feedbackDiv = document.getElementById('save-feedback');
+                    if (evt.detail.successful) {
+                        feedbackDiv.innerHTML = '✅ Formulario guardado exitosamente.';
+                        feedbackDiv.className = 'alert alert-success mt-4 text-center'; // FlowbieCSS alert
+                    } else {
+                        feedbackDiv.innerHTML = '❌ Error al guardar el formulario.';
+                        feedbackDiv.className = 'alert alert-danger mt-4 text-center'; // FlowbieCSS alert
+                    }
+                }
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>
+</html>

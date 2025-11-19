@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Formulario Login - Flowbite con Alertas</title>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.js"></script>
+
+        <script>
+            tailwind.config = {
+                darkMode: 'class',
+                theme: {
+                    extend: {}
+                }
+            }
+        </script>
+    </head>
+    <body class="bg-white dark:bg-gray-900 min-h-screen flex justify-center items-center p-4">
+
+        <div class="w-full max-w-sm">
+            <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mb-4 float-right">
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.356 4.634a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707zM17 10h-1a1 1 0 110-2h1a1 1 0 110 2zm-5.634 4.356a1 1 0 11-1.414 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707zM10 15a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zM4.644 14.356a1 1 0 111.414-1.414l-.707.707a1 1 0 11-1.414 1.414l-.707-.707zM3 10h1a1 1 0 110 2H3a1 1 0 110-2zm3.634-4.356a1 1 0 011.414 1.414l.707-.707a1 1 0 01-1.414-1.414l-.707.707z"></path></svg>
+            </button>
+
+            <div class="mb-4 rounded-lg overflow-hidden shadow-md">
+
+                <img src="https://picsum.photos/400/150" alt="Ilustración de Bienvenida" class="w-full h-auto object-cover">
+            </div>
+
+            <div id="alert-container" class="mb-4">
+                <div id="alert-border-3" class="flex items-center p-4 text-orange-800 border-t-4 border-orange-300 bg-orange-50 dark:text-orange-300 dark:bg-gray-800 dark:border-orange-800 rounded-lg" role="alert">
+                    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 1 1-2 0V6a1 1 0 0 1 2 0v5Z"/>
+                    </svg>
+                    <div class="ms-3 text-sm font-medium">
+                        ⚠️ **Advertencia:** Ingresa credenciales válidas y selecciona un rol antes de continuar.
+                    </div>
+                    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-orange-50 text-orange-500 rounded-lg focus:ring-2 focus:ring-orange-400 p-1.5 hover:bg-orange-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-orange-300 dark:hover:bg-gray-700" data-dismiss-target="#alert-border-3" aria-label="Close">
+                        <span class="sr-only">Cerrar</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <form class="max-w-sm mx-auto p-8 bg-white border border-gray-200 rounded-lg shadow-2xl dark:bg-gray-800 dark:border-gray-700">
+                <h2 class="text-2xl font-bold mb-6 text-heading dark:text-white">Iniciar Sesión</h2>
+
+                <div class="mb-5">
+                    <label for="email" class="block mb-2.5 text-sm font-medium text-heading dark:text-white">Tu email</label>
+                    <input type="email" id="email" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-brand dark:focus:border-brand" placeholder="name@flowbite.com" required />
+                </div>
+
+                <div class="mb-5">
+                    <label for="password" class="block mb-2.5 text-sm font-medium text-heading dark:text-white">Tu contraseña</label>
+                    <input type="password" id="password" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-brand dark:focus:border-brand" placeholder="••••••••" required />
+                </div>
+
+                <div class="mb-5">
+                    <label for="roles" class="block mb-2.5 text-sm font-medium text-heading dark:text-white">Selecciona tu Rol</label>
+                    <select id="roles" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-brand dark:focus:border-brand">
+                        <option value="guest" selected>Guest</option>
+                        <option value="admin">Admin</option>
+                        <option value="financial">Financial</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center justify-between mb-5">
+                    <label for="remember" class="flex items-start">
+                        <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-brand-soft" required />
+                        <p class="ms-2 text-sm font-medium text-heading select-none dark:text-gray-300">Acepto <a href="#" class="text-fg-brand hover:underline dark:text-blue-500">términos y condiciones</a>.</p>
+                    </label>
+
+                    <a href="#" class="text-sm text-fg-brand hover:underline dark:text-blue-500">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="w-full text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
+
+                <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                        &copy; 2025 Mi Aplicación. ¿Necesitas una cuenta? <a href="#" class="text-fg-brand hover:underline dark:text-blue-500">Regístrate aquí.</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
+
+            // Inicializa el tema
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                htmlElement.classList.add('dark');
+            } else {
+                htmlElement.classList.remove('dark');
+            }
+
+            // Función para alternar el tema
+            themeToggleBtn.addEventListener('click', function () {
+                htmlElement.classList.toggle('dark');
+                if (htmlElement.classList.contains('dark')) {
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    localStorage.setItem('color-theme', 'light');
+                }
+            });
+
+            // Asegúrate de que los iconos se muestren correctamente
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+            function toggleIcons() {
+                if (htmlElement.classList.contains('dark')) {
+                    darkIcon.classList.remove('hidden');
+                    lightIcon.classList.add('hidden');
+                } else {
+                    darkIcon.classList.add('hidden');
+                    lightIcon.classList.remove('hidden');
+                }
+            }
+
+            toggleIcons();
+            themeToggleBtn.addEventListener('click', toggleIcons);
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Expediente Médico con 11 Cargas - Flowbite/HTMX</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="htmx-config" content='{"selfRequestsOnly": false}'>
+    
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Estilos personalizados para la tipografía y componentes específicos */
+        body { font-family: 'Montserrat', sans-serif; }
+        
+        /* Ajuste crucial para previsualización de imagen sin deformar */
+        .preview-box { 
+            height: 200px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            border: 1px solid #e5e7eb; 
+            border-radius: 0.5rem; 
+            overflow: hidden; 
+            background-color: #f3f4f6; /* light mode default */
+        }
+        .dark .preview-box { 
+            background-color: #374151; /* dark mode */
+            border: 1px solid #4b5563;
+        }
+        .preview-box img { 
+            max-width: 100%; 
+            max-height: 100%; 
+            height: auto; 
+            width: auto; 
+            object-fit: contain; 
+            display: none; 
+        }
+        /* Indicadores de carga HTMX */
+        .htmx-request .button-text { display: none; }
+        .htmx-request .htmx-indicator { display: inline-block !important; }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300 p-4 sm:p-6 md:p-10">
+
+    <button id="theme-toggle" type="button" class="fixed top-4 right-4 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 transition-colors duration-300 z-50">
+        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.929a1.001 1.001 0 00-1.414 0l-5.656 5.656a1 1 0 000 1.414l5.656 5.656a1 1 0 001.414-1.414l-4.95-4.95 4.95-4.95a1 1 0 000-1.414z"></path></svg>
+        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm6 11a1 1 0 100-2 1 1 0 000 2zm-6 4a1 1 0 110-2 1 1 0 010 2zm-4-6a1 1 0 100-2 1 1 0 000 2zm11.707-3.707a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM5.293 14.707a1 1 0 000-1.414l-.707-.707a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414 0zM17 11a7 7 0 10-7 7h1a1 1 0 110 2 9 9 0 01-9-9 9 9 0 0118 0z"></path></svg>
+    </button>
+
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-10 text-blue-600 dark:text-blue-400">📝 Expediente con 11 Cargas de Imágenes (Flowbite/HTMX)</h1>
+
+        <form id='mainForm' class="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 md:p-8">
+            
+            <div id="patient-data" class="border border-blue-300 dark:border-blue-600 rounded-lg p-5 mb-8 bg-blue-50 dark:bg-gray-700/50">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-700 dark:text-blue-300 border-b pb-2 border-blue-200 dark:border-blue-500">Datos del Paciente</h2>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="mb-3">
+                        <label for="nhrc" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NHRC (Número de Historia Clínica):</label>
+                        <input type="text" id="nhrc" name="nhrc" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="prioridad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prioridad:</label>
+                        <select id="prioridad" name="prioridad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                            <option value="">Seleccione</option>
+                            <option value="grave">Grave</option>
+                            <option value="alta">Alta</option>
+                            <option value="media">Media</option>
+                            <option value="baja">Baja</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Edad del Paciente:</label>
+                        <input type="number" id="edad" name="edad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+            <div id="image-uploads-container">
+                </div>
+
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+            <button id="saveButton"
+                hx-post='/jmoordbcoreexampleweb/api/FormularioController'
+                hx-target="#form-response-container"
+                hx-swap="innerHTML"
+                hx-include="#mainForm"
+                hx-indicator="#saveButton .htmx-indicator"
+                class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-3 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="button-text">💾 Guardar Expediente y Consultar IA</span>
+                <div class="htmx-indicator inline-block ml-2 w-5 h-5 border-4 border-gray-200 border-t-4 border-t-white rounded-full animate-spin hidden"></div>
+            </button>
+            
+            <div id="form-response-container" class="mt-8 p-4 border border-dashed border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 min-h-20 transition-all duration-300">
+                <div class="p-4 text-gray-500 dark:text-gray-400 text-center">La **respuesta de la IA** (texto e imágenes) aparecerá aquí después de enviar el formulario principal.</div>
+            </div>
+
+        </form>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+
+    <script>
+        // --- CONSTANTES Y CONFIGURACIÓN ---
+        const IMAGE_BASE_URL = 'http://localhost/ver-contour/';
+        const NUM_UPLOADS = 11;
+        
+        /**
+         * Obtiene las referencias de los elementos de una sección de carga por su sufijo (1 a 11).
+         */
+        function getElementRefs(suffix) {
+             const index = suffix;
+             return {
+                 fileIdInput: document.getElementById(`fileIdInput${index}`),
+                 originalFileNameInput: document.getElementById(`originalFileNameInput${index}`),
+                 fileRemoteIdInput: document.getElementById(`fileRemoteIdInput${index}`),
+                 feedbackMessage: document.getElementById(`feedback-message${index}`),
+                 serverImage: document.getElementById(`server-image${index}`),
+                 serverPlaceholder: document.getElementById(`server-placeholder${index}`),
+             };
+        }
+
+        /**
+         * Verifica que el sufijo sea un número válido de carga (1 a 11).
+         */
+        function isValidUploadSuffix(suffix) {
+            const num = parseInt(suffix);
+            return !isNaN(num) && num >= 1 && num <= NUM_UPLOADS;
+        }
+
+        // --- LÓGICA CENTRALIZADA DE PREVISUALIZACIÓN DE IMAGEN CLIENTE ---
+        /**
+         * Muestra la imagen seleccionada por el usuario localmente.
+         */
+        function previewImage(event, previewId, placeholderId) {
+            const file = event.target.files[0];
+            const preview = document.getElementById(previewId);
+            const placeholder = document.getElementById(placeholderId);
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    placeholder.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+                placeholder.style.display = 'block';
+            }
+        }
+        
+        // --- FUNCIÓN PARA GENERAR DINÁMICAMENTE LAS 11 SECCIONES ---
+        function createUploadSection(index, title) {
+            const container = document.getElementById('image-uploads-container');
+            const section = document.createElement('div');
+            // Clases Flowbite para el estilo de la sección de carga
+            section.className = 'upload-section mb-10 p-5 border border-dashed border-purple-300 dark:border-purple-600 rounded-xl bg-purple-50 dark:bg-gray-700/30';
+            section.innerHTML = `
+                <h2 class="text-xl font-semibold mb-4 text-purple-700 dark:text-purple-300">Carga ${index}: ${title}</h2>
+                
+                <input type='file' name='fileUpload${index}' onchange="previewImage(event, 'image-preview${index}', 'placeholder-text${index}')"
+                       class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 p-2.5">
+                
+                <button id="uploadButton${index}"
+                        hx-post='/jmoordbcoreexampleweb/api/files/upload${index}' 
+                        hx-encoding='multipart/form-data' 
+                        hx-swap="none" 
+                        hx-include="[name='fileUpload${index}']" 
+                        hx-indicator="#uploadButton${index} .htmx-indicator"
+                        class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 transition-colors duration-200">
+                    <span class="button-text">⬆️ Subir Imagen ${index}</span>
+                    <div class="htmx-indicator inline-block ml-2 w-4 h-4 border-2 border-gray-200 border-t-2 border-t-white rounded-full animate-spin hidden"></div>
+                </button>
+                
+                <div class="grid md:grid-cols-2 gap-6 mt-6">
+                    <div class="p-4 bg-white dark:bg-gray-800 shadow-md rounded-lg">
+                        <h3 class="text-md font-medium mb-3 text-gray-900 dark:text-white">Vista Previa Local</h3>
+                        <div class="preview-box">
+                            <img id="image-preview${index}" alt="Vista previa de la imagen ${index}">
+                            <p id="placeholder-text${index}" class="text-gray-500 dark:text-gray-400 text-sm">Selecciona una imagen para previsualizar.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white dark:bg-gray-800 shadow-md rounded-lg">
+                        <h3 class="text-md font-medium mb-3 text-gray-900 dark:text-white">Resultado del Servidor</h3>
+                        <div id="server-image-preview${index}" class="preview-box">
+                            <img id="server-image${index}" alt="Imagen del Servidor ${index}">
+                            <p id="server-placeholder${index}" class="text-gray-500 dark:text-gray-400 text-sm">Aquí aparecerá la imagen procesada.</p>
+                        </div>
+                        
+                        <div id="result-fields${index}" class="mt-4 p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-sm">
+                            <p id="feedback-message${index}" class="font-semibold text-blue-600 dark:text-blue-400 mb-2">Detalles de Carga ${index}:</p>
+                            
+                            <label class="block text-gray-700 dark:text-gray-300 mt-2">ID de Archivo:</label>
+                            <input type="text" id="fileIdInput${index}" name="fileId${index}" value="" readonly class="w-full p-1 border border-gray-300 dark:border-gray-500 rounded-md bg-white dark:bg-gray-600 text-gray-900 dark:text-white">
+                            
+                            <label class="block text-gray-700 dark:text-gray-300 mt-2">ID Remoto (Foto):</label>
+                            <input type="text" id="fileRemoteIdInput${index}" name="fileRemoteId${index}" value="" readonly class="w-full p-1 border border-gray-300 dark:border-gray-500 rounded-md bg-white dark:bg-gray-600 text-gray-900 dark:text-white">
+                            
+                            <input type="hidden" id="originalFileNameInput${index}" name="originalFileName${index}" value=""> 
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(section);
+            
+            if (index < NUM_UPLOADS) {
+                const hr = document.createElement('hr');
+                hr.className = 'h-px my-8 bg-gray-200 border-0 dark:bg-gray-700';
+                container.appendChild(hr);
+            }
+        }
+        
+        /**
+         * Inicializa la generación de las 11 secciones con títulos semánticos.
+         */
+        function initializeUploadSections() {
+            const titles = [
+                'Radiografía Frontal', 'Radiografía Lateral', 'Tomografía 1', 'Tomografía 2', 
+                'Análisis de Sangre', 'Reporte Histopatológico', 'Imagen Clínica 1', 
+                'Imagen Clínica 2', 'ECG', 'Ecografía', 'Resonancia Magnética'
+            ];
+            for (let i = 1; i <= NUM_UPLOADS; i++) {
+                const title = titles[i - 1] || `Documento Adicional ${i}`;
+                createUploadSection(i, title);
+            }
+        }
+        
+        // --- HTMX EVENT HANDLERS ---
+        
+        // 1. Deshabilitar botones y limpiar campos al inicio de la petición
+        htmx.on(document.body, 'htmx:beforeRequest', function(evt) {
+            const buttonId = evt.detail.elt.id;
+            
+            if (buttonId.startsWith('uploadButton')) {
+                const suffix = buttonId.replace('uploadButton', '');
+                if (isValidUploadSuffix(suffix)) {
+                    const refs = getElementRefs(suffix);
+                    if (!refs) return;
+                    
+                    evt.detail.elt.disabled = true;
+                    
+                    // Limpieza y feedback visual
+                    refs.fileIdInput.value = '';
+                    refs.fileRemoteIdInput.value = '';
+                    refs.originalFileNameInput.value = '';
+                    refs.feedbackMessage.textContent = `⏳ Subiendo Imagen ${suffix}...`;
+                    refs.feedbackMessage.classList.remove('text-green-500', 'text-red-500');
+                    refs.feedbackMessage.classList.add('text-yellow-500', 'dark:text-yellow-400');
+                    refs.serverImage.src = '';
+                    refs.serverImage.style.display = 'none';
+                    refs.serverPlaceholder.style.display = 'block';
+                    refs.serverPlaceholder.textContent = 'Procesando carga en el servidor.';
+                }
+            }
+            
+            if (buttonId === 'saveButton') {
+                evt.detail.elt.disabled = true;
+                const feedbackDiv = document.getElementById('form-response-container'); 
+                feedbackDiv.innerHTML = `<div class="p-4 text-lg font-semibold text-center text-blue-700 dark:text-blue-300">Enviando formulario a **${'ServidorAIConsultaHelidon'}**... Por favor, espere.</div>`;
+            }
+        });
+
+        // 2. Habilitar botones al finalizar la petición
+        htmx.on(document.body, 'htmx:afterRequest', function(evt) {
+            const buttonId = evt.detail.elt.id;
+            
+            if (buttonId.startsWith('uploadButton')) {
+                evt.detail.elt.disabled = false;
+            }
+            
+            if (buttonId === 'saveButton') {
+                const saveButton = document.getElementById('saveButton');
+                if (saveButton) {
+                    saveButton.disabled = false;
+                }
+            }
+        });
+
+        // 3. Manejo de Respuesta JSON (UPLOAD) - Asignación de valores y feedback
+        htmx.on(document.body, 'htmx:afterSettle', function(evt) {
+            const buttonId = evt.detail.elt.id;
+            const suffix = buttonId.replace('uploadButton', '');
+
+            if (buttonId.startsWith('uploadButton')) {
+                if (!isValidUploadSuffix(suffix)) return;
+
+                const refs = getElementRefs(suffix);
+                if (!refs) return;
+
+                const xhr = evt.detail.xhr;
+
+                try {
+                    const response = JSON.parse(xhr.responseText);
+
+                    if (evt.detail.successful && xhr.status === 200) {
+                        refs.fileIdInput.value = response.fileId || '';
+                        refs.fileRemoteIdInput.value = response.fileRemoteId || '';
+                        refs.originalFileNameInput.value = response.originalFileName || '';
+                        
+                        refs.feedbackMessage.textContent = `✅ Carga ${suffix} exitosa.`;
+                        refs.feedbackMessage.classList.remove('text-yellow-500', 'text-red-500');
+                        refs.feedbackMessage.classList.add('text-green-500'); 
+
+                        if (response.fileRemoteId) {
+                            // Construye la URL usando el IMAGE_BASE_URL (o response.urlRemote si existe)
+                            const imageUrl = (response.urlRemote || IMAGE_BASE_URL) + response.fileRemoteId;
+                            
+                            refs.serverImage.src = imageUrl;
+                            refs.serverImage.style.display = 'block';
+                            refs.serverPlaceholder.style.display = 'none';
+
+                            refs.serverImage.onerror = function() {
+                                refs.serverImage.style.display = 'none';
+                                refs.serverPlaceholder.textContent = 'Error al cargar imagen del servidor.';
+                                refs.serverPlaceholder.style.display = 'block';
+                            };
+                        } else {
+                             refs.serverImage.style.display = 'none';
+                             refs.serverPlaceholder.style.display = 'block';
+                             refs.serverPlaceholder.textContent = 'Carga exitosa. No hay URL de imagen remota para mostrar.';
+                        }
+
+                    } else {
+                        refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}. Código: ${xhr.status || 'Error desconocido'}.`;
+                        refs.feedbackMessage.classList.remove('text-yellow-500', 'text-green-500');
+                        refs.feedbackMessage.classList.add('text-red-500');
+                    }
+
+                } catch (e) {
+                    refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}: Fallo en el servidor o JSON inválido.`;
+                    refs.feedbackMessage.classList.remove('text-yellow-500', 'text-green-500');
+                    refs.feedbackMessage.classList.add('text-red-500');
+                }
+            }
+        });
+        
+        // --- Inicialización del DOM y Tema ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeUploadSections(); // Genera las 11 secciones dinámicamente
+            
+            // Lógica para el botón de cambio de tema
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const toggleTheme = () => {
+                if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            };
+
+            // Establecer el tema inicial
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            
+            themeToggleBtn.addEventListener('click', toggleTheme);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+    <head>
+        <title>Once Cargas y Formulario Completo - Flowbite</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="htmx-config" content='{"selfRequestsOnly": false}'>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+        <script>
+            // Configuración de Tailwind para incluir colores
+            tailwind.config = {
+              darkMode: 'class', // Habilitar modo oscuro
+              theme: {
+                extend: {
+                  colors: {
+                    'primary': {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#3b82f6","600":"#2563eb","700":"#1d4ed8","800":"#1e40af","900":"#1e3a8a","950":"#172554"} 
+                  }
+                }
+              }
+            }
+            
+            // Script para alternar Light/Dark Mode
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            function toggleTheme() {
+                const html = document.documentElement;
+                if (html.classList.contains('dark')) {
+                    html.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    html.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+
+            // Función de vista previa de imagen (mantenida)
+            function previewImage(event, previewId, placeholderId) {
+                const reader = new FileReader();
+                reader.onload = function(){
+                    const preview = document.getElementById(previewId);
+                    const placeholder = document.getElementById(placeholderId);
+                    preview.src = reader.result;
+                    preview.style.display = 'block';
+                    placeholder.style.display = 'none';
+                }
+                if (event.target.files[0]) {
+                    reader.readAsDataURL(event.target.files[0]);
+                } else {
+                     const preview = document.getElementById(previewId);
+                     const placeholder = document.getElementById(placeholderId);
+                     preview.src = '';
+                     preview.style.display = 'none';
+                     placeholder.style.display = 'block';
+                }
+            }
+            
+            // Función para manejar la respuesta HTMX (Incluye código de retorno y mensaje de error)
+            document.body.addEventListener('htmx:afterRequest', function(evt) {
+                const target = evt.target;
+                
+                // Manejo de Cargas Individuales
+                if (target.id.startsWith('uploadButton')) {
+                    const uploadNumber = target.id.replace('uploadButton', '');
+                    const feedbackElement = document.getElementById(`feedback-message${uploadNumber}`);
+                    
+                    if (evt.detail.xhr.status === 200) {
+                        try {
+                            const response = JSON.parse(evt.detail.xhr.responseText);
+                            
+                            // Actualizar campos de resultado
+                            document.getElementById(`fileIdInput${uploadNumber}`).value = response.fileId || 'N/A';
+                            document.getElementById(`originalFileNameInput${uploadNumber}`).value = response.originalFileName || 'N/A';
+                            document.getElementById(`fileRemoteIdInput${uploadNumber}`).value = response.fileRemoteId || 'N/A';
+                            feedbackElement.innerHTML = '<span class="text-green-600 dark:text-green-400">✅ Carga Exitosa</span>';
+
+                            // Actualizar vista previa del servidor
+                            const serverImage = document.getElementById(`server-image${uploadNumber}`);
+                            const serverPlaceholder = document.getElementById(`server-placeholder${uploadNumber}`);
+                            if (response.imageURL) {
+                                serverImage.src = response.imageURL;
+                                serverImage.style.display = 'block';
+                                serverPlaceholder.style.display = 'none';
+                            } else {
+                                serverImage.src = '';
+                                serverImage.style.display = 'none';
+                                serverPlaceholder.style.display = 'block';
+                                serverPlaceholder.textContent = 'Carga Exitosa (Sin URL de imagen)';
+                            }
+                        } catch (e) {
+                             feedbackElement.innerHTML = `<span class="text-red-600 dark:text-red-400">❌ Error: La respuesta del servidor no es un JSON válido.</span>`;
+                        }
+                    } else {
+                        // MANEJO DE ERROR HTTP Y CONTENIDO DE RESPUESTA
+                        const httpStatus = evt.detail.xhr.status;
+                        let errorMessage = `❌ Error de Carga: **Código HTTP ${httpStatus}**.`;
+                        
+                        if (evt.detail.xhr.responseText) {
+                            try {
+                               // Intenta parsear la respuesta del cuerpo si el servidor envía un JSON de error
+                               const errorResponse = JSON.parse(evt.detail.xhr.responseText);
+                               errorMessage += ` Mensaje: **${errorResponse.message || evt.detail.xhr.responseText}**`;
+                            } catch (e) {
+                               // Si no es JSON, muestra el texto sin formato.
+                               errorMessage += ` Detalle: **${evt.detail.xhr.responseText.substring(0, 100)}...**`;
+                            }
+                        }
+
+                        feedbackElement.innerHTML = `<span class="text-red-600 dark:text-red-400 font-semibold">${errorMessage}</span>`;
+                    }
+                }
+
+                // Manejo de feedback al Guardar (Botón Final)
+                if (target.id === 'saveButton') {
+                    const feedbackDiv = document.getElementById('save-feedback');
+                    const httpStatus = evt.detail.xhr.status;
+                    let feedbackMessage;
+                    
+                    if (httpStatus === 200) {
+                        feedbackMessage = `<div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">✅ Expediente guardado exitosamente.</div>`;
+                    } else {
+                        let errorDetails = `Error: **Código HTTP ${httpStatus}**`;
+                        if (evt.detail.xhr.responseText) {
+                             errorDetails += ` (Detalles: ${evt.detail.xhr.responseText.substring(0, 50)}...)`;
+                        }
+                        feedbackMessage = `<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">❌ ${errorDetails}</div>`;
+                    }
+                    feedbackDiv.innerHTML = feedbackMessage;
+                }
+            });
+        </script>
+        <style>
+            /* Clase para el spinner HTMX */
+            .spinner { border: 3px solid rgba(255, 255, 255, 0.3); border-top-color: #fff; border-radius: 50%; width: 1.2em; height: 1.2em; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-left: 8px;}
+            @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+            /* Ocultar texto y mostrar spinner durante HTMX request */
+            button .htmx-indicator { display: none; }
+            .htmx-request .button-text { display: none; }
+            .htmx-request .htmx-indicator { display: inline-block; }
+        </style>
+    </head>
+    <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300 font-sans p-4 sm:p-8">
+        <div class="max-w-4xl w-full mx-auto">
+            
+            <header class="flex justify-between items-center mb-10">
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-primary-600 dark:text-primary-400">
+                    Gestión de Expedientes de Pacientes
+                </h1>
+                <button id="theme-toggle" type="button" onclick="toggleTheme()"
+                    class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 transition-colors duration-300">
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 dark:block" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.969 5.512A1 1 0 0113.5 16h-7a1 1 0 01-.531-.488l-.271-.541a1 1 0 011.8-1.016l.135.271A.5.5 0 007.5 15h5a.5.5 0 00.485-.375l.135-.271a1 1 0 011.8 1.016l-.27.541z"></path></svg>
+                    <svg id="theme-toggle-dark-icon" class="w-5 h-5 dark:hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.91l-1.071-.879a.5.5 0 00-.773.016 7.001 7.001 0 01-13.491-1.026c-.197-.589-.785-1.127-1.465-1.127H1a1 1 0 000 2h.493a9.001 9.001 0 0017.014-1.026.5.5 0 00-.214-.403zM10 2a8 8 0 100 16 8 8 0 000-16zM3.465 15.698l.27-.541a.5.5 0 01.969 0l.271.541A1 1 0 005.5 16h9a1 1 0 00.531-.488l.27-.541a.5.5 0 01.969 0l.271.541A1 1 0 0016.5 17H3.5a1 1 0 00-.035-1.302z"></path></svg>
+                </button>
+            </header>
+            
+            <form id='mainForm' class="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-6 sm:p-8">
+                
+                <div id="patient-data" class="bg-primary-50 dark:bg-gray-700 border border-primary-300 dark:border-primary-700 rounded-lg p-5 mb-8 shadow-inner">
+                    <h2 class="text-2xl font-semibold mb-4 text-primary-700 dark:text-primary-300 border-b pb-2 border-primary-200 dark:border-primary-600">
+                        Datos del Paciente
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="flex flex-col">
+                            <label for="nhrc" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NHRC:</label>
+                            <input type="text" id="nhrc" name="nhrc" required
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Escribe NHRC">
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="prioridad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prioridad:</label>
+                            <select id="prioridad" name="prioridad" required
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="">Seleccione</option>
+                                <option value="grave">Grave</option>
+                                <option value="alta">Alta</option>
+                                <option value="media">Media</option>
+                                <option value="baja">Baja</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="edad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Edad del Paciente:</label>
+                            <input type="number" id="edad" name="edad" required
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Ej: 45">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="upload-sections-container">
+                    <script>
+                        // Se han extendido los datos para incluir las 11 cargas originales
+                        const uploadSections = [
+                            { id: 1, title: 'Radiografía Frontal' },
+                            { id: 2, title: 'Radiografía Lateral' },
+                            { id: 3, title: 'Radiografía Oblicua' },
+                            { id: 4, title: 'Tomografía/Resonancia' },
+                            { id: 5, title: 'Documento Adicional 1' },
+                            { id: 6, title: 'Documento Adicional 2' },
+                            { id: 7, title: 'Documento Adicional 3' },
+                            { id: 8, title: 'Documento Adicional 4' },
+                            { id: 9, title: 'Documento Adicional 5' }, // Originalmente solo 8, se añaden las 3 faltantes
+                            { id: 10, title: 'Documento Adicional 6' },
+                            { id: 11, title: 'Documento Adicional 7' },
+                        ];
+
+                        const container = document.getElementById('upload-sections-container');
+
+                        uploadSections.forEach((section, index) => {
+                            const html = `
+                                <div class="upload-section border-4 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-5 mb-8 bg-gray-50 dark:bg-gray-700">
+                                    <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">${section.id}. Carga ${section.title}</h2>
+                                    
+                                    <div class="mb-4">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="fileUpload${section.id}">Seleccionar archivo (${section.title})</label>
+                                        <input type='file' id='fileUpload${section.id}' name='fileUpload${section.id}' onchange="previewImage(event, 'image-preview${section.id}', 'placeholder-text${section.id}')"
+                                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white dark:text-gray-400 focus:outline-none dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 p-2.5">
+                                    </div>
+                                    
+                                    <button id="uploadButton${section.id}" 
+                                        hx-post='/jmoordbcoreexampleweb/api/files/upload${section.id}' 
+                                        hx-encoding='multipart/form-data' 
+                                        hx-swap="none" 
+                                        hx-include="[name='fileUpload${section.id}']" 
+                                        hx-indicator="#uploadButton${section.id} .htmx-indicator"
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 inline-flex items-center transition-colors duration-200">
+                                        <span class="button-text">Subir Imagen ${section.id}</span>
+                                        <span class="htmx-indicator spinner"></span>
+                                    </button>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+                                        <div class="image-container-box bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+                                            <h3 class="text-base font-medium mb-3 text-gray-900 dark:text-white">Vista Previa Local</h3>
+                                            <div class="preview-box h-48 border border-gray-300 dark:border-gray-600 rounded-md flex justify-center items-center overflow-hidden bg-gray-100 dark:bg-gray-900">
+                                                <img id="image-preview${section.id}" alt="Vista previa de la imagen ${section.id}" class="max-w-full max-h-full h-auto w-auto hidden object-contain">
+                                                <p id="placeholder-text${section.id}" class="text-gray-500 dark:text-gray-400 text-center p-3">Selecciona una imagen para previsualizar.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="image-container-box bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+                                            <h3 class="text-base font-medium mb-3 text-gray-900 dark:text-white">Imagen del Servidor</h3>
+                                            <div id="server-image-preview${section.id}" class="preview-box h-48 border border-gray-300 dark:border-gray-600 rounded-md flex justify-center items-center overflow-hidden bg-gray-100 dark:bg-gray-900">
+                                                <img id="server-image${section.id}" alt="Imagen del Servidor ${section.id}" class="max-w-full max-h-full h-auto w-auto hidden object-contain">
+                                                <p id="server-placeholder${section.id}" class="text-gray-500 dark:text-gray-400 text-center p-3">La imagen aparecerá aquí después de la carga.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="result-fields${section.id}" class="result-fields-container mt-5 p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 shadow-sm">
+                                        <p id="feedback-message${section.id}" class="text-base font-semibold mb-3 text-primary-600 dark:text-primary-400">Resultados de Carga ${section.id}:</p>
+                                        
+                                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                            <div class="flex flex-col">
+                                                <label for="fileIdInput${section.id}" class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-300">ID de Archivo:</label>
+                                                <input type="text" id="fileIdInput${section.id}" name="fileId${section.id}" value="" readonly
+                                                    class="bg-gray-100 dark:bg-gray-700 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                                    placeholder="N/A">
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <label for="originalFileNameInput${section.id}" class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-300">Nombre Original:</label>
+                                                <input type="text" id="originalFileNameInput${section.id}" name="originalFileName${section.id}" value="" readonly
+                                                    class="bg-gray-100 dark:bg-gray-700 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                                    placeholder="N/A">
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <label for="fileRemoteIdInput${section.id}" class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-300">ID de Foto (Servidor):</label>
+                                                <input type="text" id="fileRemoteIdInput${section.id}" name="fileRemoteId${section.id}" value="" readonly
+                                                    class="bg-gray-100 dark:bg-gray-700 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                                    placeholder="N/A">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                ${index < uploadSections.length - 1 ? '<hr class="my-8 h-px bg-gray-200 border-0 dark:bg-gray-700">' : ''}
+                            `;
+                            container.innerHTML += html;
+                        });
+                    </script>
+                </div>
+                
+
+                <hr class="my-8 h-px bg-gray-200 border-0 dark:bg-gray-700">
+
+                <button id="saveButton"
+                    hx-post='/jmoordbcoreexampleweb/api/FormularioController'
+                    hx-target="#save-feedback"
+                    hx-swap="innerHTML"
+                    hx-include="#mainForm"
+                    hx-indicator="#saveButton .htmx-indicator"
+                    class="block w-auto mx-auto px-10 py-3 text-lg font-semibold text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 transition-all duration-200 disabled:bg-green-400 disabled:cursor-not-allowed inline-flex items-center justify-center">
+                    <span class="button-text">Guardar Expediente</span>
+                    <span class="htmx-indicator spinner"></span>
+                </button>
+                
+                <div id="save-feedback" class="mt-6">
+                    </div>
+
+            </form>
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+        <script>
+            // --- CONSTANTES Y REFERENCIAS GENERALES ---
+            const IMAGE_BASE_URL = 'http://localhost/ver-contour/';
+
+            // Mapeo de IDs de inputs y mensajes por número de carga
+            const INPUT_MAP = {
+                // Secciones 1 a 4 (Existentes)
+                '1': { buttonId: 'uploadButton1', fileId: 'fileIdInput1', originalFileName: 'originalFileNameInput1', fileRemoteId: 'fileRemoteIdInput1', feedback: 'feedback-message1', serverImage: 'server-image1', serverPlaceholder: 'server-placeholder1' },
+                '2': { buttonId: 'uploadButton2', fileId: 'fileIdInput2', originalFileName: 'originalFileNameInput2', fileRemoteId: 'fileRemoteIdInput2', feedback: 'feedback-message2', serverImage: 'server-image2', serverPlaceholder: 'server-placeholder2' },
+                '3': { buttonId: 'uploadButton3', fileId: 'fileIdInput3', originalFileName: 'originalFileNameInput3', fileRemoteId: 'fileRemoteIdInput3', feedback: 'feedback-message3', serverImage: 'server-image3', serverPlaceholder: 'server-placeholder3' },
+                '4': { buttonId: 'uploadButton4', fileId: 'fileIdInput4', originalFileName: 'originalFileNameInput4', fileRemoteId: 'fileRemoteIdInput4', feedback: 'feedback-message4', serverImage: 'server-image4', serverPlaceholder: 'server-placeholder4' },
+                
+                // Secciones 5 a 11 (Nuevas)
+                '5': { buttonId: 'uploadButton5', fileId: 'fileIdInput5', originalFileName: 'originalFileNameInput5', fileRemoteId: 'fileRemoteIdInput5', feedback: 'feedback-message5', serverImage: 'server-image5', serverPlaceholder: 'server-placeholder5' },
+                '6': { buttonId: 'uploadButton6', fileId: 'fileIdInput6', originalFileName: 'originalFileNameInput6', fileRemoteId: 'fileRemoteIdInput6', feedback: 'feedback-message6', serverImage: 'server-image6', serverPlaceholder: 'server-placeholder6' },
+                '7': { buttonId: 'uploadButton7', fileId: 'fileIdInput7', originalFileName: 'originalFileNameInput7', fileRemoteId: 'fileRemoteIdInput7', feedback: 'feedback-message7', serverImage: 'server-image7', serverPlaceholder: 'server-placeholder7' },
+                '8': { buttonId: 'uploadButton8', fileId: 'fileIdInput8', originalFileName: 'originalFileNameInput8', fileRemoteId: 'fileRemoteIdInput8', feedback: 'feedback-message8', serverImage: 'server-image8', serverPlaceholder: 'server-placeholder8' },
+                '9': { buttonId: 'uploadButton9', fileId: 'fileIdInput9', originalFileName: 'originalFileNameInput9', fileRemoteId: 'fileRemoteIdInput9', feedback: 'feedback-message9', serverImage: 'server-image9', serverPlaceholder: 'server-placeholder9' },
+                '10': { buttonId: 'uploadButton10', fileId: 'fileIdInput10', originalFileName: 'originalFileNameInput10', fileRemoteId: 'fileRemoteIdInput10', feedback: 'feedback-message10', serverImage: 'server-image10', serverPlaceholder: 'server-placeholder10' },
+                '11': { buttonId: 'uploadButton11', fileId: 'fileIdInput11', originalFileName: 'originalFileNameInput11', fileRemoteId: 'fileRemoteIdInput11', feedback: 'feedback-message11', serverImage: 'server-image11', serverPlaceholder: 'server-placeholder11' }
+            };
+            
+            function getElementRefs(suffix) {
+                const map = INPUT_MAP[suffix];
+                // Verifica si el mapeo existe antes de intentar acceder a las propiedades
+                if (!map) {
+                     console.error(`Error: Mapeo no encontrado para el sufijo ${suffix}`);
+                     return null;
+                }
+                return {
+                    fileIdInput: document.getElementById(map.fileId),
+                    originalFileNameInput: document.getElementById(map.originalFileName),
+                    fileRemoteIdInput: document.getElementById(map.fileRemoteId),
+                    feedbackMessage: document.getElementById(map.feedback),
+                    serverImage: document.getElementById(map.serverImage),
+                    serverPlaceholder: document.getElementById(map.serverPlaceholder),
+                };
+            }
+
+            // --- LÓGICA CENTRALIZADA DE PREVISUALIZACIÓN DE IMAGEN CLIENTE ---
+            function previewImage(event, previewId, placeholderId) {
+                const file = event.target.files[0];
+                const preview = document.getElementById(previewId);
+                const placeholder = document.getElementById(placeholderId);
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                        placeholder.style.display = 'none';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '';
+                    preview.style.display = 'none';
+                    placeholder.style.display = 'block';
+                }
+            }
+            
+            // Función auxiliar para verificar sufijo
+            function isValidUploadSuffix(suffix) {
+                // Verifica que el sufijo esté en el rango 1 a 11
+                const num = parseInt(suffix);
+                return !isNaN(num) && num >= 1 && num <= 11;
+            }
+
+            // --- HTMX EVENT HANDLERS ---
+            
+            // 1. Deshabilitar botones al inicio de la petición
+            htmx.on(document.body, 'htmx:beforeRequest', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                
+                if (buttonId.startsWith('uploadButton')) {
+                    // Extrae el sufijo (número) del ID del botón
+                    const suffix = buttonId.replace('uploadButton', ''); 
+                    
+                    if (isValidUploadSuffix(suffix)) { 
+                        const refs = getElementRefs(suffix);
+                        if (!refs) return; 
+                        
+                        evt.detail.elt.disabled = true;
+                        
+                        refs.fileIdInput.value = '';
+                        refs.fileRemoteIdInput.value = '';
+                        refs.originalFileNameInput.value = '';
+                        refs.feedbackMessage.textContent = `Subiendo Imagen ${suffix}...`; 
+                        refs.serverImage.src = '';
+                        refs.serverImage.style.display = 'none';
+                        refs.serverPlaceholder.style.display = 'block';
+                        refs.serverPlaceholder.textContent = 'La imagen aparecerá aquí después de la carga.';
+                    }
+                }
+                
+                if (buttonId === 'saveButton') {
+                    evt.detail.elt.disabled = true;
+                    const feedbackDiv = document.getElementById('save-feedback');
+                    feedbackDiv.innerHTML = "Guardando formulario, espere...";
+                    feedbackDiv.className = 'pending'; 
+                }
+            });
+
+            // 2. Habilitar botones al finalizar la petición
+            htmx.on(document.body, 'htmx:afterRequest', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                
+                if (buttonId.startsWith('uploadButton')) {
+                    evt.detail.elt.disabled = false;
+                }
+                
+                if (buttonId === 'saveButton') {
+                    const saveButton = document.getElementById('saveButton');
+                    if (saveButton) {
+                        saveButton.disabled = false;
+                    }
+                }
+            });
+
+            // 3. Manejo de Respuesta JSON (UPLOAD) - Asignación de valores
+            htmx.on(document.body, 'htmx:afterSettle', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                const suffix = buttonId.replace('uploadButton', ''); 
+
+                if (buttonId.startsWith('uploadButton') && evt.detail.successful) {
+                    if (!isValidUploadSuffix(suffix)) return; 
+                    
+                    const refs = getElementRefs(suffix);
+                    if (!refs) return; 
+
+                    const xhr = evt.detail.xhr;
+
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        
+                        refs.fileIdInput.value = response.fileId || '';
+                        refs.fileRemoteIdInput.value = response.fileRemoteId || '';
+                        refs.originalFileNameInput.value = response.originalFileName || '';
+                        
+                        refs.feedbackMessage.textContent = `✅ Carga ${suffix} exitosa.`;
+
+                        if (response.fileRemoteId) {
+                           
+                            const imageUrl = response.urlRemote + response.fileRemoteId;
+                            
+                            refs.serverImage.src = imageUrl;
+                            refs.serverImage.style.display = 'block';
+                            refs.serverPlaceholder.style.display = 'none';
+
+                            refs.serverImage.onerror = function() {
+                                refs.serverImage.style.display = 'none';
+                                refs.serverPlaceholder.textContent = 'Error al cargar imagen.';
+                                refs.serverPlaceholder.style.display = 'block';
+                            };
+                        }
+
+                    } catch (e) {
+                        refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}: JSON inválido o incompleto.`;
+                    }
+                } else if (buttonId.startsWith('uploadButton') && !evt.detail.successful) {
+                    if (!isValidUploadSuffix(suffix)) return; 
+
+                    const refs = getElementRefs(suffix);
+                    if (!refs) return; 
+                    refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}. Código: ${evt.detail.xhr.status}`;
+                }
+            });
+            
+            // 4. Manejo de Respuesta (SAVE) - Feedback Visual
+            htmx.on(document.body, 'htmx:afterSettle', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                if (buttonId === 'saveButton') {
+                    const feedbackDiv = document.getElementById('save-feedback');
+                    if (evt.detail.successful) {
+                        feedbackDiv.innerHTML = '✅ Formulario guardado exitosamente.';
+                        feedbackDiv.className = 'success';
+                    } else {
+                        feedbackDiv.innerHTML = '❌ Error al guardar el formulario.';
+                        feedbackDiv.className = 'error';
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

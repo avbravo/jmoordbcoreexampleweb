@@ -38,9 +38,13 @@ public class LoginController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="Roles disponibles (Value HTML -> Texto visible)">
     private static final Map<String, String> ROLES_LIST = Map.of(
-            "admin", "Administrador",
-            "supervisor", "Supervisor de Ventas",
-            "standard", "Usuario Estándar"
+            "admin", "Facultativo",
+            "supervisor", "Tecnico",
+            "standard", "Coordinador Centro",
+            "analista", "Analista Desarrollador",
+            "tecnico-verificador", "Técnico Verificado",
+            "consultor-externo", "Consultor Externo"
+            
     );
 
 // </editor-fold>

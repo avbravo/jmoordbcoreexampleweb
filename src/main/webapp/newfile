@@ -1,70 +1,482 @@
-<div id="dropdownHelperRadio" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-60 dark:bg-gray-700 dark:divide-gray-600"
-     data-popper-reference-hidden="" 
-     data-popper-escaped="" 
-     data-popper-placement="top" 
-     style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 6119.5px, 0px);">
-    <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" 
-        aria-labelledby="dropdownHelperRadioButton">
-      <li>
-        <div class="flex p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
-          <div class="flex items-center h-5">
-              <input id="helper-radio-4" name="helper-radio" type="radio" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-          </div>
-          <div class="ms-2 text-sm">
-              <label for="helper-radio-4" class="font-medium text-gray-900 dark:text-gray-300">
-                <div>Individual</div>
-                <p id="helper-radio-text-4" class="text-xs font-normal text-gray-500 dark:text-gray-300">Some helpful instruction goes over here.</p>
-              </label>
-          </div>
+
+
+
+           
+            
+            <hr> 
+<div class="calidad-tincion-section">
+    <fieldset>
+        <legend>Calidad de Tinción</legend>
+        
+        <div class="input-group">
+            <label for="calidadTincionSelect">**Seleccione la calidad de la muestra:**</label>
+            
+            <select id="calidadTincionSelect" name="calidadTincion" required 
+                    style="width: 100%; padding: 10px; font-size: 1em;">
+                
+                <option value="" disabled selected>--- Elegir Calidad ---</option>
+                <option value="Buena">Buena</option>
+                <option value="Regular">Regular</option>
+                <option value="Mala">Mala</option>
+                
+            </select>
         </div>
-      </li>
-      <li>
-        <div class="flex p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
-          <div class="flex items-center h-5">
-              <input id="helper-radio-5" name="helper-radio" type="radio" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-          </div>
-          <div class="ms-2 text-sm">
-              <label for="helper-radio-5" class="font-medium text-gray-900 dark:text-gray-300">
-                <div>Company</div>
-                <p id="helper-radio-text-5" class="text-xs font-normal text-gray-500 dark:text-gray-300">Some helpful instruction goes over here.</p>
-              </label>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="flex p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
-          <div class="flex items-center h-5">
-              <input id="helper-radio-6" name="helper-radio" type="radio" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-          </div>
-          <div class="ms-2 text-sm">
-              <label for="helper-radio-6" class="font-medium text-gray-900 dark:text-gray-300">
-                <div>Non profit</div>
-                <p id="helper-radio-text-6" class="text-xs font-normal text-gray-500 dark:text-gray-300">Some helpful instruction goes over here.</p>
-              </label>
-          </div>
-        </div>
-      </li>
-    </ul>
+        
+    </fieldset>
 </div>
-
-
-
-<div style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(224px, -313px);" id="dropdownHelperRadio" class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-60 dark:bg-gray-700 dark:divide-gray-600 block" data-popper-placement="top" data-popper-reference-hidden="">
-
-
-<ul aria-labelledby="dropdownHelperRadioButton"
- class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200">
-<li>
-<div class="flex p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
-
-   <div class="flex items-center h-5">
-<input name="lenguaje" id="java" type="radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-
-
+            
+            <hr> 
+<div class="cultivo-orina-section">
+    <fieldset>
+        <legend>Cultivo u Orina</legend>
+        
+        <div class="radio-group-container single-column-orina" style="display: flex; gap: 30px;">
+            <div class="radio-item">
+                <input type="radio" id="orinaNoPedido" name="cultivoOrinaResultado" value="No pedido" required>
+                <label for="orinaNoPedido">No pedido</label>
+            </div>
+            <div class="radio-item">
+                <input type="radio" id="orinaNegativo" name="cultivoOrinaResultado" value="Negativo">
+                <label for="orinaNegativo">Negativo</label>
+            </div>
+            <div class="radio-item">
+                <input type="radio" id="orinaContaminada" name="cultivoOrinaResultado" value="Contaminada">
+                <label for="orinaContaminada">Contaminada</label>
+            </div>
+            <div class="radio-item">
+                <input type="radio" id="orinaPositivo" name="cultivoOrinaResultado" value="Positivo">
+                <label for="orinaPositivo">Positivo</label>
+            </div>
+        </div>
+        
+    </fieldset>
 </div>
-<div class="ms-2 text-sm">
+            
+            <hr> 
+<div class="discrepancia-section">
+    <fieldset>
+        <legend>Imagen con potencial discrepancia</legend>
+        
+        <p style="font-size: 0.95em; color: var(--secondary-color); margin-bottom: 15px;">
+            Indicar si existe discrepancia con el informe realizado por los técnicos en SERVOLAB:
+        </p>
+        
+        <div class="switch-container">
+            <label class="switch-label">¿Hay Discrepancia?</label>
+            
+            <label class="toggle-switch">
+                <input type="checkbox" id="discrepancia" name="discrepancia"  value="si" >
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <p style="font-size: 0.85em; color: var(--secondary-color); margin-top: 10px;">
+            <span id="discrepanciaStatus">Estado: **NO**</span> (Mueva el switch a SÍ si detecta discrepancia.)
+        </p>
+    </fieldset>
+</div>
+            
+            <hr>
 
-<label for="java" class="font-medium text-gray-900 dark:text-gray-300">
-<div>Java</div>
-</label>
-<p id="javatext" class="text-xs font-normal text-gray-500 dark:text-gray-300">Creado por J. Gosling</p></div></div></li><li><div class="flex p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600"><div class="flex items-center h-5"><input name="lenguaje" id="c" type="radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"></div><div class="ms-2 text-sm"><label for="lenguaje" class="font-medium text-gray-900 dark:text-gray-300"><div>C</div></label><p id="ctext" class="text-xs font-normal text-gray-500 dark:text-gray-300">Inicio de todo</p></div></div></li></ul></div>
+           <button id="saveButton"
+                    hx-post='/jmoordbcoreexampleweb/api/FormularioController'
+                    hx-target="#save-feedback"
+                    hx-swap="innerHTML"
+                    hx-include="#mainForm"  hx-indicator="#saveButton .htmx-indicator">
+                <span class="button-text">Guardar Expediente</span>
+                <span class="htmx-indicator spinner"></span>
+            </button>
+            <div id="save-feedback"></div>
+
+        </form>
+    </body>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            setTodayDate();
+            // ... (El resto de tu lógica JS como previewImage, etc. debería estar aquí) ...
+        });
+
+        function setTodayDate() {
+            const dateInput = document.getElementById('fechaRegistro');
+            if (dateInput) {
+                const today = new Date();
+                const year = today.getFullYear();
+                // El mes se obtiene con getMonth() que es base 0, por eso se suma 1.
+                // Se usa padStart(2, '0') para asegurar dos dígitos (ej: 01, 12).
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+
+                // Formato ISO 8601 (YYYY-MM-DD) requerido por input type="date"
+                const todayDate = `${year}-${month}-${day}`;
+                dateInput.value = todayDate;
+            }
+        }
+
+        function previewImage(event, imgId, textId) {
+            const reader = new FileReader();
+            const imagePreview = document.getElementById(imgId);
+            const placeholderText = document.getElementById(textId);
+
+            reader.onload = function () {
+                if (reader.readyState == 2) {
+                    imagePreview.src = reader.result;
+                    imagePreview.style.display = 'block';
+                    if (placeholderText)
+                        placeholderText.style.display = 'none';
+                }
+            }
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            } else {
+                imagePreview.src = '';
+                imagePreview.style.display = 'none';
+                if (placeholderText)
+                    placeholderText.style.display = 'block';
+            }
+        }
+
+
+        function validateAge(inputElement) {
+            // Obtenemos el valor actual del campo, convertido a un número
+            let value = parseInt(inputElement.value);
+
+            // Si el valor es menor que 0 (negativo), lo forzamos a ser 0
+            if (value < 0) {
+                inputElement.value = 0;
+            }
+
+            // Opcional: También puedes truncar los valores demasiado altos aquí
+            // let max = parseInt(inputElement.getAttribute('max'));
+            // if (value > max) {
+            //     inputElement.value = max;
+            // }
+        }
+
+        // Si tienes más funciones o listeners htmx, colócalos aquí.
+
+        // FUNCIÓN PARA GESTIONAR EL CAMPO 'OTRO MOTIVO'
+        function handleMotivoChange(event) {
+            const otherMotivoInputGroup = document.getElementById('other-reason-input-group');
+            const otherMotivoInput = document.getElementById('otroMotivoInput');
+
+            // Si el valor seleccionado es 'Otro'
+            if (event.target.value === 'Otro') {
+                // Mostrar y hacer requerido el campo 'Otro Motivo'
+                otherMotivoInputGroup.classList.add('visible');
+                otherMotivoInput.required = true;
+                otherMotivoInput.removeAttribute('disabled'); // Habilitar la edición
+                otherMotivoInput.focus();
+            } else {
+                // Ocultar y quitar requerimiento al campo 'Otro Motivo'
+                otherMotivoInputGroup.classList.remove('visible');
+                otherMotivoInput.required = false;
+                otherMotivoInput.setAttribute('disabled', 'disabled'); // Deshabilitar
+                otherMotivoInput.value = ''; // Limpiar el valor para que no se envíe
+            }
+        }
+
+// Asegurarse de que el listener se aplique al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('input[name="motivo"]').forEach(radio => {
+                radio.addEventListener('change', handleMotivoChange);
+            });
+        });
+
+
+        // FUNCIÓN PARA MANEJAR LA LÓGICA DE EXCLUSIVIDAD DE LEUCOCITOS
+        function handleLeucocitosInput() {
+            const customInput = document.getElementById('otroLeucocitoValor');
+            const checkboxes = document.querySelectorAll('.leucocitos-section .leuco-option');
+
+            // Listener para los checkboxes
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    // Si cualquier checkbox es marcado, borrar el input de texto
+                    if (checkbox.checked) {
+                        customInput.value = '';
+                        // Opcional: Desmarcar los otros checkboxes para forzar una única selección de rango.
+                        checkboxes.forEach(otherCheckbox => {
+                            if (otherCheckbox !== checkbox) {
+                                otherCheckbox.checked = false;
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Listener para el input de texto
+            customInput.addEventListener('input', () => {
+                // Si hay texto en el input, desmarcar todos los checkboxes
+                if (customInput.value.trim().length > 0) {
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                }
+            });
+        }
+
+// *** IMPORTANTE: Asegúrate de llamar a esta función al cargar el DOM ***
+        document.addEventListener('DOMContentLoaded', () => {
+            // ... [listeners existentes] ...
+
+            // [NUEVO LISTENER para Leucocitos]
+            handleLeucocitosInput();
+        });
+
+
+// FUNCIÓN PARA MANEJAR LA LÓGICA DE EXCLUSIVIDAD DE LEVADURAS
+        function handleLevadurasInput() {
+            const customInput = document.getElementById('otroLevaduraValor');
+            const radioButtons = document.querySelectorAll('.levaduras-section .levadura-option');
+
+            // Listener para los radio buttons
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    // Si cualquier radio button es seleccionado, borrar el input de texto
+                    if (radio.checked) {
+                        customInput.value = '';
+                    }
+                });
+            });
+
+            // Listener para el input de texto
+            customInput.addEventListener('input', () => {
+                // Si hay texto en el input, deseleccionar todos los radio buttons
+                if (customInput.value.trim().length > 0) {
+                    radioButtons.forEach(radio => {
+                        radio.checked = false;
+                    });
+                }
+            });
+        }
+
+// *** IMPORTANTE: Asegúrate de llamar a esta función al cargar el DOM ***
+        document.addEventListener('DOMContentLoaded', () => {
+            // ... [listeners existentes] ...
+
+            // [NUEVO LISTENER para Levaduras]
+            handleLevadurasInput();
+        });
+
+        // FUNCIÓN PARA MANEJAR LA LÓGICA DE EXCLUSIVIDAD DE CÉLULAS EPITELIALES
+        function handleEpitelialesInput() {
+            const customInput = document.getElementById('otroEpitelialValor');
+            const radioButtons = document.querySelectorAll('.epiteliales-section .epitelial-option');
+
+            // Listener para los radio buttons
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    // Si cualquier radio button es seleccionado, borrar el input de texto
+                    if (radio.checked) {
+                        customInput.value = '';
+                    }
+                });
+            });
+
+            // Listener para el input de texto
+            customInput.addEventListener('input', () => {
+                // Si hay texto en el input, deseleccionar todos los radio buttons
+                if (customInput.value.trim().length > 0) {
+                    radioButtons.forEach(radio => {
+                        radio.checked = false;
+                    });
+                }
+            });
+        }
+
+// *** IMPORTANTE: Asegúrate de llamar a esta función al cargar el DOM ***
+        document.addEventListener('DOMContentLoaded', () => {
+            // ... [listeners existentes] ...
+
+            // [NUEVO LISTENER para Células Epiteliales]
+            handleEpitelialesInput();
+        });
+
+        // FUNCIÓN PARA MANEJAR LA LÓGICA DE EXCLUSIVIDAD EN CULTIVO
+        function handleCultivoChange() {
+            const noResult = document.getElementById('cultivo9'); // No procede/ No se aísla candida
+            const allResults = document.querySelectorAll('.cultivo-section .cultivo-result:not(#cultivo9)'); // Todos los demás resultados
+
+            // Listener para el campo "No procede"
+            noResult.addEventListener('change', () => {
+                if (noResult.checked) {
+                    // Si se marca "No procede", desmarcar todos los demás
+                    allResults.forEach(checkbox => {
+                        checkbox.checked = false;
+                        checkbox.disabled = true; // Opcional: Deshabilitar el resto
+                    });
+                } else {
+                    // Si se desmarca "No procede", habilitar todos los demás
+                    allResults.forEach(checkbox => {
+                        checkbox.disabled = false;
+                    });
+                }
+            });
+
+            // Listener para los demás resultados (para desmarcar "No procede" si se marca un positivo)
+            allResults.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.checked && noResult.checked) {
+                        noResult.checked = false;
+                        // Al desmarcar noResult, se re-habilitan todos los demás automáticamente por el listener anterior
+                    }
+                });
+            });
+        }
+
+// *** IMPORTANTE: Asegúrate de llamar a esta función al cargar el DOM ***
+        document.addEventListener('DOMContentLoaded', () => {
+            // ... [listeners existentes] ...
+
+            // [NUEVO LISTENER para Resultado Cultivo]
+            handleCultivoChange();
+        });
+
+
+
+// *** IMPORTANTE: Asegúrate de llamar a esta función al cargar el DOM ***
+        document.addEventListener('DOMContentLoaded', () => {
+            // ... [listeners existentes] ...
+
+            // [NUEVO LISTENER para Recuento Hongos]
+            handleRecuentoHongosChange();
+        });
+        
+        
+        
+        
+         const INPUT_MAP = {
+                '1': { buttonId: 'uploadButton1', fileId: 'fileIdInput1', originalFileName: 'originalFileNameInput1',  feedback: 'feedback-message1' },
+                '2': { buttonId: 'uploadButton2', fileId: 'fileIdInput2', originalFileName: 'originalFileNameInput2',  feedback: 'feedback-message2' },
+                '3': { buttonId: 'uploadButton3', fileId: 'fileIdInput3', originalFileName: 'originalFileNameInput3',  feedback: 'feedback-message3' },
+                '4': { buttonId: 'uploadButton4', fileId: 'fileIdInput4', originalFileName: 'originalFileNameInput4',  feedback: 'feedback-message4' },
+                '5': { buttonId: 'uploadButton5', fileId: 'fileIdInput5', originalFileName: 'originalFileNameInput5',  feedback: 'feedback-message5' },
+                '6': { buttonId: 'uploadButton6', fileId: 'fileIdInput6', originalFileName: 'originalFileNameInput6',  feedback: 'feedback-message6' },
+                '7': { buttonId: 'uploadButton7', fileId: 'fileIdInput7', originalFileName: 'originalFileNameInput7',  feedback: 'feedback-message7' },
+                '8': { buttonId: 'uploadButton8', fileId: 'fileIdInput8', originalFileName: 'originalFileNameInput8',  feedback: 'feedback-message8' },
+                '9': { buttonId: 'uploadButton9', fileId: 'fileIdInput9', originalFileName: 'originalFileNameInput9',  feedback: 'feedback-message9' },
+                '10': { buttonId: 'uploadButton10', fileId: 'fileIdInput10', originalFileName: 'originalFileNameInput10',  feedback: 'feedback-message10' },
+                '11': { buttonId: 'uploadButton11', fileId: 'fileIdInput11', originalFileName: 'originalFileNameInput11',  feedback: 'feedback-message11' }
+            };
+            
+            function getElementRefs(suffix) {
+                const map = INPUT_MAP[suffix];
+                if (!map) {
+                     console.error(`Error: Mapeo no encontrado para el sufijo ${suffix}`);
+                     return null;
+                }
+                return {
+                    fileIdInput: document.getElementById(map.fileId),
+                    originalFileNameInput: document.getElementById(map.originalFileName),
+                    feedbackMessage: document.getElementById(map.feedback),
+                };
+            }
+
+            // --- LÓGICA CENTRALIZADA DE PREVISUALIZACIÓN DE IMAGEN CLIENTE (Mantenida) ---
+            function previewImage(event, previewId, placeholderId) {
+                const file = event.target.files[0];
+                const preview = document.getElementById(previewId);
+                const placeholder = document.getElementById(placeholderId);
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                        placeholder.style.display = 'none';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '';
+                    preview.style.display = 'none';
+                    placeholder.style.display = 'block';
+                }
+            }
+            
+            // Función auxiliar para verificar sufijo (Actualizada para 1 a 11)
+            function isValidUploadSuffix(suffix) {
+                const num = parseInt(suffix);
+                return num >= 1 && num <= 11;
+            }
+
+            // --- HTMX EVENT HANDLERS ---
+            
+            // 1. Deshabilitar botones al inicio de la petición
+            htmx.on(document.body, 'htmx:beforeRequest', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                
+                if (buttonId.startsWith('uploadButton')) {
+                    const suffix = buttonId.replace('uploadButton', ''); 
+                    
+                    if (isValidUploadSuffix(suffix)) { 
+                        const refs = getElementRefs(suffix);
+                        if (!refs || !refs.fileIdInput) return; 
+                        
+                        evt.detail.elt.disabled = true;
+                        
+                        // Limpiar campos de resultado
+                        refs.fileIdInput.value = '';
+                        refs.originalFileNameInput.value = '';
+                        refs.feedbackMessage.textContent = `Subiendo Imagen ${suffix}...`; 
+                    }
+                }
+                
+                if (buttonId === 'saveButton') {
+                    evt.detail.elt.disabled = true;
+                    const feedbackDiv = document.getElementById('save-feedback');
+                    feedbackDiv.innerHTML = "Guardando formulario, espere...";
+                    feedbackDiv.className = 'pending'; 
+                }
+            });
+
+            // 2. Habilitar botones al finalizar la petición (Mantenida)
+            htmx.on(document.body, 'htmx:afterRequest', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                
+                if (buttonId.startsWith('uploadButton')) {
+                    evt.detail.elt.disabled = false;
+                }
+                
+                if (buttonId === 'saveButton') {
+                    const saveButton = document.getElementById('saveButton');
+                    if (saveButton) {
+                        saveButton.disabled = false;
+                    }
+                }
+            });
+
+            // 3. Manejo de Respuesta JSON (UPLOAD) - Asignación de valores
+            htmx.on(document.body, 'htmx:afterSettle', function(evt) {
+                const buttonId = evt.detail.elt.id;
+                const suffix = buttonId.replace('uploadButton', ''); 
+
+                if (buttonId.startsWith('uploadButton') && evt.detail.successful) {
+                    if (!isValidUploadSuffix(suffix)) return; 
+                    
+                    const refs = getElementRefs(suffix);
+                    if (!refs || !refs.fileIdInput) return; 
+
+                    const xhr = evt.detail.xhr;
+
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        
+                        refs.fileIdInput.value = response.fileId || '';
+                        refs.originalFileNameInput.value = response.originalFileName || '';
+                        refs.feedbackMessage.textContent = `✅ Carga ${suffix} exitosa.`;
+
+                    } catch (e) {
+                        refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}: JSON inválido o incompleto.`;
+                        console.error(`Error al parsear JSON para carga ${suffix}:`, e);
+                    }
+                } else if (buttonId.startsWith('uploadButton') && !evt.detail.successful) {
+                    if (!isValidUploadSuffix(suffix)) return; 
+
+                    const refs = getElementRefs(suffix);
+                    if (!refs || !refs.fileIdInput) return; 
+                    refs.feedbackMessage.textContent = `❌ Error Carga ${suffix}. Código: ${evt.detail.xhr.status}`;
+                }
+            });
+            
+    </script>
+</html>

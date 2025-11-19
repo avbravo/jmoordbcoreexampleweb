@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Datos para Análisis - Mejorado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css" rel="stylesheet" />
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQG1kkFuU7iT3TnS3QG3eGx7x2w5rQLTpdkOuN+Prif1gDWTdZInir+sK7R" crossorigin="anonymous"></script>
+
+    <style>
+        /* Estilo base para el contenedor principal centrado */
+        .main-container {
+            max-width: 1000px; /* Ancho máximo para pantallas grandes */
+            margin: 0 auto; /* Centrar el contenedor */
+            padding: 2rem;
+        }
+
+        /* Estilos de los inputs y labels (generalmente Flowbite se encarga, pero para consistencia) */
+        label {
+            @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+        }
+        input[type="text"], input[type="date"], input[type="number"] {
+            @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+        }
+        fieldset {
+            @apply border border-gray-300 dark:border-gray-600 rounded-lg p-4 mb-4;
+        }
+        legend {
+            @apply text-lg font-semibold text-gray-900 dark:text-white px-2;
+        }
+
+        /* Estilos personalizados para la estructura de la cuadrícula de los motivos */
+        .radio-group-container {
+            @apply grid gap-4;
+        }
+        .two-columns {
+            @apply grid-cols-2 sm:grid-cols-3 md:grid-cols-4; /* 4 columnas en desktop, 3 en tablet, 2 en mobile */
+        }
+        .radio-item, .checkbox-item {
+            @apply flex items-center p-2 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer;
+        }
+        .radio-item input, .checkbox-item input {
+            @apply w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
+        }
+        .radio-item label, .checkbox-item label {
+            @apply ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+    <div class="main-container">
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white">Registro de Datos para Análisis 📊</h1>
+            <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.793A8.999 8.999 0 0113.793 17.293a8.99 8.99 0 01-12.228-12.228 9.048 9.048 0 00.063-.075A8.99 8.99 0 0017.293 13.793z"></path></svg>
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm4.356 3.644a1 1 0 00-.707-.293H14a1 1 0 00-.707-.293l-.707.707a1 1 0 001.414 1.414l.707-.707zM15 10a1 1 0 01-1 1h-1a1 1 0 010-2h1a1 1 0 011 1zm-3.644 4.356a1 1 0 001.414 0l.707-.707a1 1 0 00-1.414-1.414l-.707.707a1 1 0 000 1.414zM10 16a1 1 0 01-1 1v1a1 1 0 102 0v-1a1 1 0 01-1-1zm-4.356-3.644a1 1 0 00-.707.293l-.707.707a1 1 0 001.414 1.414l.707-.707a1 1 0 000-1.414zM4 10a1 1 0 01-1 1H2a1 1 0 100 2h1a1 1 0 011-1zm3.644-4.356a1 1 0 001.414 0l.707.707a1 1 0 00-1.414-1.414l-.707-.707z"></path></svg>
+            </button>
+        </header>
+
+        <form id='mainForm' class="space-y-8">
+            
+            <div class="card p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Datos del Paciente</h2>
+                <div id="patient-data" class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    
+                    <div class="input-group">
+                        <label for="fechaRegistro">Fecha de Registro:</label>
+                        <input type="date" id="fechaRegistro" name="fechaRegistro" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="nhrc">NHRC (Número de Historia Clínica):</label>
+                        <input type="text" id="nhrc" name="nhrc" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="numeromuestra">Número de muestra:</label>
+                        <input type="text" id="numeromuestra" name="numeromuestra" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="edad">Edad del Paciente:</label>
+                        <input type="number" id="edad" name="edad" required min="0" max="125" oninput="validateAge(this)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card reason-section">
+                <fieldset>
+                    <legend>Motivo del Estudio</legend>
+                    <div class="radio-group-container two-columns">
+                        <div class="radio-item">
+                            <input type="radio" id="motivo1" name="motivo" value="Vaginitis" required>
+                            <label for="motivo1">Vaginitis</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo2" name="motivo" value="Candidiasis previa">
+                            <label for="motivo2">Candidiasis previa</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo3" name="motivo" value="Coitorragia">
+                            <label for="motivo3">Coitorragia</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo4" name="motivo" value="Dispareunia">
+                            <label for="motivo4">Dispareunia</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo5" name="motivo" value="Disuaria/Cistitis">
+                            <label for="motivo5">Disuria/Cistitis</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo6" name="motivo" value="Gestante">
+                            <label for="motivo6">Gestante</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo7" name="motivo" value="TS previa">
+                            <label for="motivo7">TS previa</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo8" name="motivo" value="Leucorrea">
+                            <label for="motivo8">Leucorrea</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo9" name="motivo" value="Prurito">
+                            <label for="motivo9">Prurito</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo10" name="motivo" value="Sospecha cadidiasis">
+                            <label for="motivo10">Sospecha candidiasis</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo11" name="motivo" value="Sospecha ITS">
+                            <label for="motivo11">Sospecha ITS</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo12" name="motivo" value="Contracepción">
+                            <label for="motivo12">Contracepción</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo13" name="motivo" value="Sin datos/Actividades">
+                            <label for="motivo13">Sin datos/Actividades</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo14" name="motivo" value="Preventivas">
+                            <label for="motivo14">Preventivas</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="motivo23" name="motivo" value="Otro">
+                            <label for="motivo23">Otro</label>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="input-group mt-4" id="other-reason-input-group">
+                    <label for="otroMotivoInput" class="font-bold">Otro Motivo Específico:</label>
+                    <input type="text" id="otroMotivoInput" name="otroMotivo" placeholder="Especifique el motivo aquí" disabled>
+                </div>
+            </div>
+
+            <div class="card diagnosis-section">
+                <fieldset>
+                    <legend>Diagnóstico del Estudio</legend>
+                    <div class="radio-group-container two-columns">
+                        <div class="radio-item">
+                            <input type="radio" id="diag1" name="diagnostico" value="Normal" required>
+                            <label for="diag1">Normal</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="diag2" name="diagnostico" value="Vaginosis">
+                            <label for="diag2">Vaginosis</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="diag3" name="diagnostico" value="Levaduras">
+                            <label for="diag3">Levaduras</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="diag4" name="diagnostico" value="Escasa flora">
+                            <label for="diag4">Escasa flora</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="diag5" name="diagnostico" value="Leucocitos">
+                            <label for="diag5">Leucocitos</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="card pcrits-section">
+                <fieldset>
+                    <legend>PCRits</legend>
+                    <div class="checkbox-group-container two-columns md:grid-cols-4">
+                        
+                        <div class="checkbox-group positive-results-group space-y-2">
+                            <h3 class="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-2">Estado</h3>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pcrNoRealizada" name="pcritsStatus" value="No Realizada" class="pcrits-status-control">
+                                <label for="pcrNoRealizada">No Realizada</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pcrNegativa" name="pcritsStatus" value="Negativa" class="pcrits-status-control">
+                                <label for="pcrNegativa">Negativa</label>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-group positive-results-group space-y-2">
+                            <h3 class="text-sm font-semibold text-green-600 dark:text-green-400 mb-2">Resultados ITS (1)</h3>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pcrGono" name="pcritsResultados" value="+ Gonococo" class="pcrits-result">
+                                <label for="pcrGono">+ Gonococo</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pcrClamidia" name="pcritsResultados" value="+ Clamidia" class="pcrits-result">
+                                <label for="pcrClamidia">+ Clamidia</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pcrHerpes" name="pcritsResultados" value="+ Herpes (1 o 2)" class="pcrits-result">
+                                <label for="pcrHerpes">+ Herpes (1 o 2)</label>
+                            </div>
+                        </div>
+                        
+                        <div class="checkbox-group positive-results-group space-y-2">
+                             <h3 class="text-sm font-semibold text-green-600 dark:text-green-400 mb-2">Resultados ITS (2)</h3>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pcrVPH" name="pcritsResultados" value="+ VPH" class="pcrits-result">
+                                <label for="pcrVPH">+ VPH</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pcrMico" name="pcritsResultados" value="+ Micoplasma" class="pcrits-result">
+                                <label for="pcrMico">+ Micoplasma</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pcrTricho" name="pcritsResultados" value="+ Trichomonas" class="pcrits-result">
+                                <label for="pcrTricho">+ Trichomonas</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="card ct-section-standalone p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Registro de Valores CT</h2>
+                <div class="input-group ct-value-input">
+                    <label for="ctPcrPositiva" class="font-bold">CT PCR Positiva (Valores Negativos):</label>
+                    <input type="text" id="ctPcrPositiva" name="ctPcrPositiva" placeholder="Ingrese el valor CT">
+                </div>
+            </div>
+
+            <div class="card etiquetado-gram-section">
+                <fieldset>
+                    <legend>Etiquetado Imagen GRAM</legend>
+                    <h3 class="mb-3 text-sm font-medium text-gray-700 dark:text-gray-300">Datos referidos a IMG 1</h3>
+
+                    <div class="checkbox-group-container two-columns lg:grid-cols-4">
+
+                        <div class="checkbox-group space-y-2">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gram1" name="gramEtiquetado" value="Artefacto">
+                                <label for="gram1">Artefacto</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gram2" name="gramEtiquetado" value="Bacilos Gram positivos (lactobacillus)">
+                                <label for="gram2">Bacilos Gram positivos (lactobacillus)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gram3" name="gramEtiquetado" value="Bacilos Gram negativos">
+                                <label for="gram3">Bacilos Gram negativos</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gram4" name="gramEtiquetado" value="Células 'atípicas'">
+                                <label for="gram4">Células 'atípicas'</label>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-group space-y-2">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gram5" name="gramEtiquetado" value="Células clave">
+                                <label for="gram5">Células clave</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gram6" name="gramEtiquetado" value="Cocos positivos en cadena">
+                                <label for="gram6">Cocos positivos en cadena</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gram7" name="gramEtiquetado" value="Diplococos gran negativos">
+                                <label for="gram7">Diplococos Gram negativos</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gram8" name="gramEtiquetado" value="Hematíes">
+                                <label for="gram8">Hematíes</label>
+                            </div>
+                        </div>
+                        
+                        <div class="checkbox-group space-y-2">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gram9" name="gramEtiquetado" value="Hifas">
+                                <label for="gram9">Hifas</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gram10" name="gramEtiquetado" value="Leucocitos">
+                                <label for="gram10">Leucocitos</label>
+                            </div>
+                             <div class="checkbox-item">
+                                <input type="checkbox" id="gram11" name="gramEtiquetado" value="Levaduras">
+                                <label for="gram11">Levaduras</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gram12" name="gramEtiquetado" value="Acúmulos/agregados de bacterias">
+                                <label for="gram12">Acúmulos/agregados de bacterias</label>
+                            </div>
+                        </div>
+                        
+                         <div class="checkbox-group space-y-2">
+                             <div class="checkbox-item">
+                                <input type="checkbox" id="gram13" name="gramEtiquetado" value="Mobiluncus (Morfología compatible)">
+                                <label for="gram13">Mobiluncus (Morfología compatible)</label>
+                            </div>
+                            </div>
+
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="grid gap-8 md:grid-cols-3">
+                
+                <div class="card leucocitos-section">
+                    <fieldset>
+                        <legend>Presencia Leucocitos (Img 1)</legend>
+                        <div class="flex flex-wrap gap-4 mb-4">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="leuco0" name="leucocitosPresencia" value="0" class="leuco-option">
+                                <label for="leuco0">0</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="leuco1" name="leucocitosPresencia" value="1" class="leuco-option">
+                                <label for="leuco1">1</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="leuco5_29" name="leucocitosPresencia" value="5-29" class="leuco-option">
+                                <label for="leuco5_29">5-29</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="leuco30" name="leucocitosPresencia" value=">30" class="leuco-option">
+                                <label for="leuco30">>30</label>
+                            </div>
+                        </div>
+                        <div class="input-group pt-4 border-t border-dashed border-gray-300 dark:border-gray-600">
+                            <label for="otroLeucocitoValor" class="text-sm">Ingresar un valor no listado (exacto):</label>
+                            <input type="text" id="otroLeucocitoValor" name="otroLeucocitoValor" placeholder="Ej: 3, 4, 40">
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="card levaduras-section">
+                    <fieldset>
+                        <legend>Presencia Levaduras (Img 1)</legend>
+                        <div class="flex flex-wrap gap-4 mb-4">
+                            <div class="radio-item">
+                                <input type="radio" id="levadura0" name="levadurasPresencia" value="0" class="levadura-option">
+                                <label for="levadura0">0</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="levadura1" name="levadurasPresencia" value="1" class="levadura-option">
+                                <label for="levadura1">1</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="levadura5_29" name="levadurasPresencia" value="5-29" class="levadura-option">
+                                <label for="levadura5_29">5-29</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="levadura30" name="levadurasPresencia" value=">30" class="levadura-option">
+                                <label for="levadura30">>30</label>
+                            </div>
+                        </div>
+                        <div class="input-group pt-4 border-t border-dashed border-gray-300 dark:border-gray-600">
+                            <label for="otroLevaduraValor" class="text-sm">Ingresar un valor no listado (exacto):</label>
+                            <input type="text" id="otroLevaduraValor" name="otroLevaduraValor" placeholder="Ej: 3, 4, 40">
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="card epiteliales-section">
+                    <fieldset>
+                        <legend>Presencia Epiteliales (Img 1)</legend>
+                        <div class="flex flex-wrap gap-4 mb-4">
+                            <div class="radio-item">
+                                <input type="radio" id="epitelial0" name="epitelialesPresencia" value="0" class="epitelial-option">
+                                <label for="epitelial0">0</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="epitelial1" name="epitelialesPresencia" value="1" class="epitelial-option">
+                                <label for="epitelial1">1</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="epitelial5_29" name="epitelialesPresencia" value="5-29" class="epitelial-option">
+                                <label for="epitelial5_29">5-29</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="epitelial30" name="epitelialesPresencia" value=">30" class="epitelial-option">
+                                <label for="epitelial30">>30</label>
+                            </div>
+                        </div>
+                        <div class="input-group pt-4 border-t border-dashed border-gray-300 dark:border-gray-600">
+                            <label for="otroEpitelialValor" class="text-sm">Ingresar un valor no listado (exacto):</label>
+                            <input type="text" id="otroEpitelialValor" name="otroEpitelialValor" placeholder="Ej: 3, 4, 40">
+                        </div>
+                    </fieldset>
+                </div>
+
+            </div>
+
+            <div class="card nugent-section">
+                <fieldset>
+                    <legend>Escala Nugent observador</legend>
+                    <div class="flex flex-col md:flex-row md:items-center gap-6">
+                        <div class="input-group nugent-input-group flex items-center">
+                            <label for="nugentScore" class="font-bold whitespace-nowrap mr-4">Puntuación (0-10):</label>
+                            <input type="number" id="nugentScore" name="nugentScore" min="0" max="10" placeholder="0 a 10" class="w-24 text-center text-lg font-extrabold p-2">
+                        </div>
+
+                        <div class="nugent-description p-4 bg-gray-100 dark:bg-gray-700 rounded-lg flex-grow">
+                            <p class="font-semibold text-gray-900 dark:text-white mb-2">
+                                Criterios de Interpretación:
+                            </p>
+                            <ul class="list-disc list-inside text-sm text-gray-700 dark:text-gray-300">
+                                <li>**0-3:** Normal</li>
+                                <li>**4-6:** Intermedio (Mixto)</li>
+                                <li>**>7:** Vaginosis bacteriana</li>
+                            </ul>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            
+             <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                Guardar Datos de Análisis
+            </button>
+
+
+        </form>
+
+        <footer class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+            Desarrollado con Flowbite (Tailwind CSS) y HTMX.
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.js"></script>
+    <script>
+        // Funcionalidad para el cambio de tema Dark/Light
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Función para cambiar el tema
+        function toggleTheme() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                htmlElement.classList.add('light');
+                localStorage.setItem('color-theme', 'light');
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            } else {
+                htmlElement.classList.remove('light');
+                htmlElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            }
+        }
+
+        // Cargar el tema guardado o por defecto
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+            darkIcon.classList.add('hidden');
+            lightIcon.classList.remove('hidden');
+        } else {
+            htmlElement.classList.add('light');
+            darkIcon.classList.remove('hidden');
+            lightIcon.classList.add('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        
+        // Funcionalidad para habilitar/deshabilitar el input "Otro Motivo"
+        const otroMotivoRadio = document.getElementById('motivo23');
+        const otroMotivoInput = document.getElementById('otroMotivoInput');
+        const motivoRadios = document.querySelectorAll('input[name="motivo"]');
+
+        motivoRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (otroMotivoRadio.checked) {
+                    otroMotivoInput.disabled = false;
+                    otroMotivoInput.required = true;
+                    otroMotivoInput.focus();
+                } else {
+                    otroMotivoInput.disabled = true;
+                    otroMotivoInput.required = false;
+                    otroMotivoInput.value = '';
+                }
+            });
+        });
+        
+        // Funcionalidad de validación de edad
+        function validateAge(input) {
+            if (input.value < 0) input.value = 0;
+            if (input.value > 125) input.value = 125;
+        }
+    </script>
+    <script>
+        // HTMX: Puedes usar HTMX para enviar el formulario sin recargar la página
+        // Por ejemplo, para enviar los datos a un endpoint:
+        /*
+        document.getElementById('mainForm').setAttribute('hx-post', '/api/registro');
+        document.getElementById('mainForm').setAttribute('hx-target', '#message-area');
+        document.getElementById('mainForm').setAttribute('hx-swap', 'innerHTML');
+        */
+        
+        // Si usas el código de Helidon que mencionaste, el backend gestionaría la respuesta
+        // En este ejemplo, se mantiene el envío estándar o se añade un listener para simular HTMX
+    </script>
+</body>
+</html>
